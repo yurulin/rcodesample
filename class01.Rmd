@@ -1,0 +1,85 @@
+---
+title       : Class01
+subtitle    : example code used in DM class01
+author      : 
+job         : 
+framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+  
+## Install R packages
+  
+R has a lot of powerful packages. You need to load a package into memory before using it.
+
+```r
+library(ggplot2) ## a package for plotting
+```
+
+---
+  
+## Install R packages
+
+If you see an error message:
+```
+there is no package called 'ggplot2'
+```
+it means you don't have this package and you need to install it.
+
+* Using GUI
+* Using command
+
+--- .modal
+
+## Install R packages (using command)
+
+```{r eval=FALSE, tidy=TRUE}
+## install directly from the default repository http://cran.r-project.org/
+install.packages('ggplot2') 
+
+## download the package source, and then install from the downloaded file 
+download.file('http://cran.r-project.org/src/contrib/ggplot2_0.9.3.1.tar.gz',
+             destfile='~/Downloads/ggplot2_0.9.3.1.tar.gz')
+install.packages('~/Downloads/ggplot2_0.9.3.1.tar.gz',repo=NULL,type='source')
+```
+
+---  .modal
+
+## Getting help
+
+```{r eval=FALSE}
+?read.delim # Access a function's help file
+??base::delim # Search for 'delim' in all help files for functions in 'base'
+help.search("delim") # Search for 'delimited' in all help files
+RSiteSearch("parsing text") # Search for the term 'parsing text' on the R site
+```
+
+---  .modal
+
+## Working with data
+
+```r
+## give the filename of your data; the file can be an URL
+data.file = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/01_heights_weights_genders.csv'
+heights.weights = read.csv(data.file , header = TRUE , sep = ',')
+View(heights.weights)
+```
+
+```{r, results='asis'}
+class(heights.weights)
+```
+
+---  
+
+## Working with data
+
+---  
+
+## R summary function
+
+## 
+
+

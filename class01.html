@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Class01</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Class01">
+	<meta name="author" content="">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>Class01</h1>
+	</header>
+  <section class="slide " id="slide-1">
+  <div>
+    <h2>Install R packages</h2>
+    <p>R has a lot of powerful packages. You need to load a package into memory before using it.</p>
+
+<pre><code class="r">library(ggplot2) ## a package for plotting
+</code></pre>
+
+  </div>
+</section>
+<section class="slide " id="slide-2">
+  <div>
+    <h2>Install R packages</h2>
+    <p>If you see an error message:</p>
+
+<pre><code>there is no package called &#39;ggplot2&#39;
+</code></pre>
+
+<p>it means you don&#39;t have this package and you need to install it.</p>
+
+<ul>
+<li>Using GUI</li>
+<li>Using command</li>
+</ul>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-3">
+  <div>
+    <h2>Install R packages (using command)</h2>
+    <pre><code class="r">## install directly from the default repository http://cran.r-project.org/
+install.packages(&quot;ggplot2&quot;)
+
+## download the package source, and then install from the downloaded file
+download.file(&quot;http://cran.r-project.org/src/contrib/ggplot2_0.9.3.1.tar.gz&quot;, 
+    destfile = &quot;~/Downloads/ggplot2_0.9.3.1.tar.gz&quot;)
+install.packages(&quot;~/Downloads/ggplot2_0.9.3.1.tar.gz&quot;, repo = NULL, type = &quot;source&quot;)
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-4">
+  <div>
+    <h2>Getting help</h2>
+    <pre><code class="r">?read.delim # Access a function&#39;s help file
+??base::delim # Search for &#39;delim&#39; in all help files for functions in &#39;base&#39;
+help.search(&quot;delim&quot;) # Search for &#39;delimited&#39; in all help files
+RSiteSearch(&quot;parsing text&quot;) # Search for the term &#39;parsing text&#39; on the R site
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-5">
+  <div>
+    <h2>Working with data</h2>
+    <pre><code class="r">## give the filename of your data; the file can be an URL
+data.file = &#39;http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/01_heights_weights_genders.csv&#39;
+heights.weights = read.csv(data.file , header = TRUE , sep = &#39;,&#39;)
+View(heights.weights)
+</code></pre>
+
+<pre><code class="r">class(heights.weights)
+</code></pre>
+
+<p>[1] &quot;data.frame&quot;</p>
+
+  </div>
+</section>
+<section class="slide " id="slide-6">
+  <div>
+    <h2>Working with data</h2>
+    
+  </div>
+</section>
+<section class="slide " id="slide-7">
+  <div>
+    <h2>R summary function</h2>
+    
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>
