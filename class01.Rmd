@@ -69,16 +69,15 @@ data.file = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/
 heights.weights = read.csv(data.file , header = TRUE , sep = ',')
 View(heights.weights)
 ```
-
-```{r}
-class(heights.weights)
-```
+![pic](assets/img/data_frame.png)
 
 ---  .modal
 
 ## Working with data
 
 ```{r}
+class(heights.weights)
+
 dim(heights.weights) # show the dimension of the data
 ```
 
