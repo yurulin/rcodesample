@@ -22,5 +22,9 @@ pre code {
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */	
     
+    margin-top: -10px ;
+    margin-bottom: -10px ;
+    padding-top: -10px ;
+    padding-bottom: -10px ;	
     
   }
