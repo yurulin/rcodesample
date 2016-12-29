@@ -5,6 +5,12 @@ library(devtools)
 install_github('slidify', 'ramnathv')
 install_github('slidifyLibraries', 'ramnathv')
 
+## Step 1: Author Deck
+author("mydeck-DM-slides")
+
+## Step 2: Edit Deck
+# add mystyle.css to mydeck-DM-slides/assets/css
+
 ## Step 3: Generate Deck
 slidify("index.Rmd")
 slidify("class01.Rmd")
