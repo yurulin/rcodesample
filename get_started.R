@@ -14,6 +14,7 @@ author("mydeck-DM-slides")
 ## Step 3: Generate Deck
 slidify("index.Rmd")
 slidify("class01.Rmd")
+slidify("class02.Rmd")
 
 ## Step 4: Publish Deck
 publish(user = "yurulin", repo = "rcodesample", host = 'github')

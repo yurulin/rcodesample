@@ -46,7 +46,7 @@
 
   </div>
 </section>
-<section class="slide modal" id="slide-2">
+<section class="slide " id="slide-2">
   <div>
     <h2>Install R packages</h2>
     <p>If you see an error message:</p>
@@ -67,12 +67,13 @@
   <div>
     <h2>Install R packages (using command)</h2>
     <pre><code class="r">## install directly from the default repository http://cran.r-project.org/
-install.packages(&quot;ggplot2&quot;)
+install.packages(&#39;ggplot2&#39;) 
+</code></pre>
 
-## download the package source, and then install from the downloaded file
-download.file(&quot;http://cran.r-project.org/src/contrib/ggplot2_0.9.3.1.tar.gz&quot;, 
-    destfile = &quot;~/Downloads/ggplot2_0.9.3.1.tar.gz&quot;)
-install.packages(&quot;~/Downloads/ggplot2_0.9.3.1.tar.gz&quot;, repo = NULL, type = &quot;source&quot;)
+<pre><code class="r">## download the package source, and then install from the downloaded file 
+download.file(&#39;http://cran.r-project.org/src/contrib/ggplot2_0.9.3.1.tar.gz&#39;,
+             destfile=&#39;~/Downloads/ggplot2_0.9.3.1.tar.gz&#39;)
+install.packages(&#39;~/Downloads/ggplot2_0.9.3.1.tar.gz&#39;,repo=NULL,type=&#39;source&#39;)
 </code></pre>
 
   </div>
@@ -94,14 +95,20 @@ RSiteSearch(&quot;parsing text&quot;) # Search for the term &#39;parsing text&#3
 <section class="slide modal" id="slide-5">
   <div>
     <h2>Working with data</h2>
-    <pre><code class="r">## give the filename of your data; the file can be an URL
+      
+<div class='left' style='float:left;width:40%'>
+<p><img src="assets/img/data_frame.png" alt="pic"></p>
+
+</div>    
+<div class='right' style='float:right;width:60%'>
+  <pre><code class="r">## give the filename of your data; the file can be an URL
 data.file = &#39;http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/01_heights_weights_genders.csv&#39;
 heights.weights = read.csv(data.file , header = TRUE , sep = &#39;,&#39;)
+
 View(heights.weights)
 </code></pre>
 
-<p><img src="assets/img/data_frame.png" alt="pic"></p>
-
+</div>
   </div>
 </section>
 <section class="slide modal" id="slide-6">
@@ -257,7 +264,7 @@ ggplot(heights.weights, aes(x = Height)) +
   geom_histogram(binwidth=1) 
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10"></p>
+<p><img src="assets/fig/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11"></p>
 
   </div>
 </section>
@@ -268,7 +275,7 @@ ggplot(heights.weights, aes(x = Height)) +
   geom_histogram(binwidth=0.5) # try different value for binwidth 
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11"></p>
+<p><img src="assets/fig/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12"></p>
 
   </div>
 </section>
@@ -279,7 +286,7 @@ ggplot(heights.weights, aes(x = Height)) +
   geom_density()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12"></p>
+<p><img src="assets/fig/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13"></p>
 
   </div>
 </section>
@@ -291,7 +298,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
   geom_density(alpha = 0.5) 
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13"></p>
+<p><img src="assets/fig/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14"></p>
 
   </div>
 </section>
@@ -302,7 +309,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
   geom_density(alpha = 0.5) + facet_grid(Gender ~ .) 
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14"></p>
+<p><img src="assets/fig/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15"></p>
 
   </div>
 </section>
@@ -313,7 +320,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
   geom_density(alpha = 0.5) + facet_grid(Gender ~ .)  
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15"></p>
+<p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"></p>
 
   </div>
 </section>
@@ -324,7 +331,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"></p>
+<p><img src="assets/fig/unnamed-chunk-17-1.png" alt="plot of chunk unnamed-chunk-17"></p>
 
   </div>
 </section>
@@ -334,7 +341,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
     <pre><code class="r">ggplot(heights.weights, aes(x = Weight, y = Height, color = Gender)) + geom_point()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-17-1.png" alt="plot of chunk unnamed-chunk-17"></p>
+<p><img src="assets/fig/unnamed-chunk-18-1.png" alt="plot of chunk unnamed-chunk-18"></p>
 
   </div>
 </section>
@@ -346,7 +353,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
               se=FALSE) # (by default includes 95% confidence region)  
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-18-1.png" alt="plot of chunk unnamed-chunk-18"></p>
+<p><img src="assets/fig/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19"></p>
 
   </div>
 </section>
@@ -361,7 +368,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">require(lattice)  
-require(nutshell) 
+require(nutshell) # you will need to install this package
 data(births2006.smpl)
 births2006.smpl[1:3,]
 </code></pre>
@@ -410,7 +417,7 @@ births.dow
     <pre><code class="r">barchart(births.dow,ylab=&quot;Day of Week&quot;,col=&quot;black&quot;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22"></p>
+<p><img src="assets/fig/unnamed-chunk-23-1.png" alt="plot of chunk unnamed-chunk-23"></p>
 
   </div>
 </section>
@@ -424,7 +431,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK))) +
   coord_flip()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-23-1.png" alt="plot of chunk unnamed-chunk-23"></p>
+<p><img src="assets/fig/unnamed-chunk-24-1.png" alt="plot of chunk unnamed-chunk-24"></p>
 
   </div>
 </section>
@@ -479,7 +486,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) +
   coord_flip()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-26-1.png" alt="plot of chunk unnamed-chunk-26"></p>
+<p><img src="assets/fig/unnamed-chunk-27-1.png" alt="plot of chunk unnamed-chunk-27"></p>
 
   </div>
 </section>
@@ -490,7 +497,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) +
 histogram(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),col=&quot;black&quot;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-27-1.png" alt="plot of chunk unnamed-chunk-27"></p>
+<p><img src="assets/fig/unnamed-chunk-28-1.png" alt="plot of chunk unnamed-chunk-28"></p>
 
   </div>
 </section>
@@ -502,7 +509,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales=&quot;f
   geom_histogram(binwidth=500)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-28-1.png" alt="plot of chunk unnamed-chunk-28"></p>
+<p><img src="assets/fig/unnamed-chunk-29-1.png" alt="plot of chunk unnamed-chunk-29"></p>
 
   </div>
 </section>
@@ -512,7 +519,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales=&quot;f
     <pre><code class="r">histogram(~DBWT|DMETH_REC,data=births2006.smpl,layout=c(1,3),col=&quot;black&quot;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-29-1.png" alt="plot of chunk unnamed-chunk-29"></p>
+<p><img src="assets/fig/unnamed-chunk-30-1.png" alt="plot of chunk unnamed-chunk-30"></p>
 
   </div>
 </section>
@@ -522,7 +529,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales=&quot;f
     <pre><code class="r">densityplot(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),plot.points=FALSE,col=&quot;black&quot;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-30-1.png" alt="plot of chunk unnamed-chunk-30"></p>
+<p><img src="assets/fig/unnamed-chunk-31-1.png" alt="plot of chunk unnamed-chunk-31"></p>
 
   </div>
 </section>
@@ -534,7 +541,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~., scales=&quot;
   geom_density()  
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-31-1.png" alt="plot of chunk unnamed-chunk-31"></p>
+<p><img src="assets/fig/unnamed-chunk-32-1.png" alt="plot of chunk unnamed-chunk-32"></p>
 
   </div>
 </section>
@@ -568,7 +575,7 @@ ggplot(data=D, aes(x=X, linetype=distribution)) +
   scale_x_continuous(limits = c(-6, 6))
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-33-1.png" alt="plot of chunk unnamed-chunk-33"></p>
+<p><img src="assets/fig/unnamed-chunk-34-1.png" alt="plot of chunk unnamed-chunk-34"></p>
 
   </div>
 </section>
@@ -603,7 +610,7 @@ data = sort(data,decreasing=TRUE)
 hist(data,xlab=&#39;Number of Family Surnames&#39;,main=&#39;Histogram of Family Surnames&#39;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-35-1.png" alt="plot of chunk unnamed-chunk-35"></p>
+<p><img src="assets/fig/unnamed-chunk-36-1.png" alt="plot of chunk unnamed-chunk-36"></p>
 
   </div>
 </section>
@@ -616,7 +623,7 @@ hist(data,xlab=&#39;Number of Family Surnames&#39;,main=&#39;Histogram of Family
      main=&#39;Plot of Family Surnames&#39;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-36-1.png" alt="plot of chunk unnamed-chunk-36"></p>
+<p><img src="assets/fig/unnamed-chunk-37-1.png" alt="plot of chunk unnamed-chunk-37"></p>
 
   </div>
 </section>
@@ -629,7 +636,18 @@ hist(data,xlab=&#39;Number of Family Surnames&#39;,main=&#39;Histogram of Family
      main=&#39;Log-log Plot of Family Surnames&#39;)  
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-37-1.png" alt="plot of chunk unnamed-chunk-37"></p>
+<p><img src="assets/fig/unnamed-chunk-38-1.png" alt="plot of chunk unnamed-chunk-38"></p>
+
+  </div>
+</section>
+<section class="slide " id="slide-42">
+  <div>
+    <h2>References</h2>
+    <ul>
+<li>Ledolter, Johannes. Data mining and business analytics with R. John Wiley &amp; Sons, 2013.</li>
+<li>Conway, Drew, and John White. Machine learning for hackers. O&#39;Reilly Media, Inc., 2012.</li>
+<li>Lai, Willy. &quot;Fitting power law distributions to data.&quot; (2016). </li>
+</ul>
 
   </div>
 </section>

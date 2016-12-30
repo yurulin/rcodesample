@@ -1,14 +1,49 @@
-pre code {
-  font-weight: 500;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  
+.compact p, li, ol {
+  font-size: 90%;
+  line-height: 1.1em;
+
+  /* line wrapping */
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */	
+
+  /* smaller margin */
+    margin-top: -6px ;
+    margin-bottom: -6px ;
+    padding-top: -6px ;
+    padding-bottom: -6px ;	
+}
+
+.compact-nowrap p, li, ol {
+  font-size: 90%;
+  line-height: 1.1em;
+
+  /* smaller margin */
+    margin-top: -6px ;
+    margin-bottom: -6px ;
+    padding-top: -6px ;
+    padding-bottom: -6px ;	
+}
+
+pre code {
+  font-weight: 500;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
   
+  /* line wrapping */
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */	
+
+  /* smaller margin */
+    margin-top: -6px ;
+    margin-bottom: -6px ;
+    padding-top: -6px ;
+    padding-bottom: -6px ;	
 }
 
 /* Smaller code fonts in modal popup */
@@ -28,3 +63,29 @@ pre code {
     padding-bottom: -10px ;	
     
   }
+  
+  .scode pre code {
+    font-size: 16px;
+    line-height: 1.1em;	
+    
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */	
+    
+    margin-top: -10px ;
+    margin-bottom: -10px ;
+    padding-top: -10px ;
+    padding-bottom: -10px ;	
+  }  
+  
+  .scode-nowrap pre code {
+    font-size: 16px;
+    line-height: 1.1em;	
+    
+    margin-top: -10px ;
+    margin-bottom: -10px ;
+    padding-top: -10px ;
+    padding-bottom: -10px ;	
+  }    

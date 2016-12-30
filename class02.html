@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Class02</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Class02">
+	<meta name="author" content="">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>Class02</h1>
+	</header>
+  <section class="slide modal" id="slide-1">
+  <div>
+    <h2>Simple Regression</h2>
+    <p>The examples are taken from <a href="http://www.manning.com/kabacoff/">R in Action</a>
+\[\hat{y}=\alpha +\beta x\]</p>
+
+<pre><code class="r">## we&#39;ll use an exmaple dataset &#39;women&#39; in the &#39;car&#39; package
+library(car) ## load the package
+women
+</code></pre>
+
+<pre><code>##    height weight
+## 1      58    115
+## 2      59    117
+## 3      60    120
+## 4      61    123
+## 5      62    126
+## 6      63    129
+## 7      64    132
+## 8      65    135
+## 9      66    139
+## 10     67    142
+## 11     68    146
+## 12     69    150
+## 13     70    154
+## 14     71    159
+## 15     72    164
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-2">
+  <div>
+    <h2>Simple Regression</h2>
+    <pre><code class="r">## data summary
+summary(women)
+</code></pre>
+
+<pre><code>##      height         weight     
+##  Min.   :58.0   Min.   :115.0  
+##  1st Qu.:61.5   1st Qu.:124.5  
+##  Median :65.0   Median :135.0  
+##  Mean   :65.0   Mean   :136.7  
+##  3rd Qu.:68.5   3rd Qu.:148.0  
+##  Max.   :72.0   Max.   :164.0
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-3">
+  <div>
+    <h2>Simple Regression</h2>
+    <pre><code class="r">## plot the data
+plot(women$height, women$weight)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"></p>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-4">
+  <div>
+    <h2>Simple Regression</h2>
+    <pre><code class="r">library(ggplot2) ## load the plotting package
+theme_set(theme_bw()) ## set default theme with a white background
+ggplot(data=women, aes(x=height,y=weight)) + geom_point() 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-5">
+  <div>
+    <h2>Simple Regression</h2>
+    <pre><code class="r">## plot with regression line
+ggplot(women, aes(x = height, y = weight)) + geom_point() + 
+  geom_smooth(method=lm, # add linear regression line
+              se=FALSE) # (by default includes 95% confidence region)  
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"></p>
+
+  </div>
+</section>
+<section class="slide modalS" id="slide-6">
+  <div>
+    <h2>Simple Regression</h2>
+    <pre><code class="r">## perform linear regression
+fit = lm(weight ~ height, data=women)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+  </div>
+</section>
+<section class="slide compact modalS1" id="slide-7">
+  <div>
+    <h2>What does the result mean?</h2>
+      
+<div class='left' style='float:left;width:40%'>
+<p>\[ \hat{weight}=-87.52+3.45\times height \]
+There&#39;s an expected increase of 3.45 pounds of weight for every 1 inch increase in height. </p>
+
+<p>The intercept is merely an adjustment constant.  </p>
+
+</div>    
+<div class='right' style='float:right;width:60%'>
+  <pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+</div>
+  </div>
+</section>
+<section class="slide compact modalS1" id="slide-8">
+  <div>
+    <h2>Understand the summary</h2>
+      
+<div class='left' style='float:left;width:40%'>
+<ul>
+<li><em>Is the model statistically significant?</em> 
+
+<ul>
+<li>Check the <strong>F statistic</strong> at the bottom of the summary.</li>
+<li>The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance.</li>
+</ul></li>
+</ul>
+
+</div>    
+<div class='right' style='float:right;width:60%'>
+  <pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+</div>
+  </div>
+</section>
+<section class="slide compact modalS1" id="slide-9">
+  <div>
+    <h2>Understand the summary</h2>
+      
+<div class='left' style='float:left;width:40%'>
+<ul>
+<li><em>Are the coefficients significant?</em>
+
+<ul>
+<li>Check the coefficient&#39;s <strong>t statistics</strong> and <strong>p-values</strong> in the summary, or check their confidence intervals.</li>
+<li>If a variable&#39;s coefficient is zero then the variable is worthless; it adds nothing to the model. </li>
+<li>The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.</li>
+<li>The regression coefficient (3.45) is significantly different from zero (p &lt; 0.001).</li>
+</ul></li>
+</ul>
+
+</div>    
+<div class='right' style='float:right;width:60%'>
+  <pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+</div>
+  </div>
+</section>
+<section class="slide compact modalS1" id="slide-10">
+  <div>
+    <h2>Understand the summary</h2>
+      
+<div class='left' style='float:left;width:50%'>
+<ul>
+<li><em>Is the model useful?</em>
+
+<ul>
+<li>Check the <strong>R-squared</strong> near the bottom of the summary.</li>
+<li>R-squared is a measure of the model&#39;s quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.</li>
+<li>The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value.</li>
+<li>The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.</li>
+</ul></li>
+</ul>
+
+</div>    
+<div class='right' style='float:right;width:50%'>
+  <pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+</div>
+  </div>
+</section>
+<section class="slide compact modalS1" id="slide-11">
+  <div>
+    <h2>Understand the summary</h2>
+      
+<div class='left' style='float:left;width:40%'>
+<ul>
+<li><em>Does the model fit the data well?</em>
+
+<ul>
+<li>Plot the residuals and check the regression diagnostics.</li>
+<li>The residual standard error (1.53 lbs.) can be thought of as the average error in predicting weight from height using this model. </li>
+</ul></li>
+</ul>
+
+</div>    
+<div class='right' style='float:right;width:60%'>
+  <pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+</div>
+  </div>
+</section>
+<section class="slide compact modalS1" id="slide-12">
+  <div>
+    <h2>Understand the summary</h2>
+      
+<div class='left' style='float:left;width:40%'>
+<ul>
+<li><em>Does the data satisfy the assumptions behind linear regression?</em>
+
+<ul>
+<li>Check whether the diagnostics confirm that a linear model is reasonable for your data.</li>
+<li>If the residuals have a normal distribution, then the first quartile (1Q) and third quartile (3Q) should have about the same magnitude.</li>
+</ul></li>
+</ul>
+
+</div>    
+<div class='right' style='float:right;width:60%'>
+  <pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+</div>
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {
+	      inlineMath: [['$','$'], ['\\(','\\)']],
+	      processEscapes: true
+	    }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script> -->
+	<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>
