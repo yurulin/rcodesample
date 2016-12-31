@@ -9,7 +9,7 @@ hitheme     : tomorrow      #
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
---- .modal
+--- .modal 
 
 ## Simple Regression
 
@@ -61,7 +61,7 @@ ggplot(women, aes(x = height, y = weight)) + geom_point() +
               se=FALSE) # (by default includes 95% confidence region)  
 ```
 
---- .modalS
+--- .scode
 
 ## Simple Regression
 
@@ -71,118 +71,457 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .modalS1
+--- &twocolvar w1:40% w2:60% .compact .scode
 
 ### What does the result mean?  
 
 *** =left
-
 $$ \hat{weight}=-87.52+3.45\times height $$
-There's an expected increase of 3.45 pounds of weight for every 1 inch increase in height. 
 
-The intercept is merely an adjustment constant.  
+* There's an expected increase of 3.45 pounds of weight for every 1 inch increase in height. 
+* The intercept is merely an adjustment constant.  
 
 
 *** =right
-
 ```{r, echo=FALSE}
 ## perform linear regression
 fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .modalS1
+--- &twocolvar w1:40% w2:60% .compact .scode
 
 ### Understand the summary
 
 *** =left
+**Is the model statistically significant?**
 
-* *Is the model statistically significant?* 
-   * Check the **F statistic** at the bottom of the summary.
-   * The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance.
-
+* Check the **F statistic** at the bottom of the summary.
+* The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance.
 
 *** =right
-
 ```{r, echo=FALSE}
 ## perform linear regression
 fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .modalS1
+--- &twocolvar w1:40% w2:60% .compact .scode
 
 ### Understand the summary
 
 *** =left
+**Are the coefficients significant?**
 
-* *Are the coefficients significant?*
    * Check the coefficient's **t statistics** and **p-values** in the summary, or check their confidence intervals.
    * If a variable's coefficient is zero then the variable is worthless; it adds nothing to the model. 
    * The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.
    * The regression coefficient (3.45) is significantly different from zero (p < 0.001).
 
 *** =right
-
 ```{r, echo=FALSE}
 ## perform linear regression
 fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:50% w2:50% .compact .modalS1
+--- &twocolvar w1:50% w2:50% .compact .scode
 
 ### Understand the summary
 
 *** =left
+**Is the model useful?**
 
-* *Is the model useful?*
    * Check the **R-squared** near the bottom of the summary.
    * R-squared is a measure of the model's quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.
    * The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value.
    * The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.
 
 *** =right
-
 ```{r, echo=FALSE}
 ## perform linear regression
 fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .modalS1
+--- &twocolvar w1:40% w2:60% .compact .scode
 
 ### Understand the summary
 
 *** =left
+**Does the model fit the data well?**
 
-* *Does the model fit the data well?*
    * Plot the residuals and check the regression diagnostics.
    * The residual standard error (1.53 lbs.) can be thought of as the average error in predicting weight from height using this model. 
 
 *** =right
-
 ```{r, echo=FALSE}
 ## perform linear regression
 fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
+--- .modal
 
---- &twocolvar w1:40% w2:60% .compact .modalS1
+## Plot the residuals
+
+```{r, fig.height=4, fig.width=4}
+## plot the residuals and check if the residuals appear to be approximately normal
+plot(density(resid(fit)))
+```
+
+
+--- &twocolvar w1:40% w2:60% .compact .scode
 
 ### Understand the summary
-
 *** =left
-
-* *Does the data satisfy the assumptions behind linear regression?*
+**Does the data satisfy the assumptions behind linear regression?**
    * Check whether the diagnostics confirm that a linear model is reasonable for your data.
    * If the residuals have a normal distribution, then the first quartile (1Q) and third quartile (3Q) should have about the same magnitude.
    
 *** =right
-
 ```{r, echo=FALSE}
 ## perform linear regression
 fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
+
+--- .modal
+
+## Plot the residuals
+
+```{r, fig.height=4, fig.width=4}
+qqnorm(resid(fit)) # a quantile normal plot 
+qqline(resid(fit))
+```
+
+--- .modal
+
+## Check statistical assumptions
+
+```{r, fig.height=5, fig.width=5}
+## plot regression diagnostics
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+--- &twocolvar w1:50% w2:50% .compact .scode
+
+### Check statistical assumptions
+*** =left
+**Normality**
+   * If the dependent variable is normally distributed for a fixed set of predictor values, then the residual values should be normally distributed with a mean of 0. 
+   * The **Normal Q-Q plot** (upper right) is a probability plot of the standardized residuals against the values that would be expected under normality. If you've met the normality assumption, the points on this graph should fall on the straight 45-degree line. If they don't, you've clearly violated the normality assumption.
+
+*** =right
+```{r, echo=FALSE, fig.height=5, fig.width=5}
+## plot regression diagnostics
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+--- &twocolvar w1:50% w2:50% .compact .scode
+
+### Check statistical assumptions
+*** =left
+**Independence**
+   * You have to use your understanding of how the data were collected. There's no a priori reason to believe that one woman's weight influences another woman's weight. If you found out that the data were sampled from families, you may have to adjust your assumption of independence.
+
+*** =right
+```{r, echo=FALSE, fig.height=5, fig.width=5}
+## plot regression diagnostics
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+--- &twocolvar w1:50% w2:50% .compact .scode
+
+### Check statistical assumptions
+*** =left
+**Linearity**
+   * If the dependent variable is linearly related to the independent variables, there should be no systematic relationship between the residuals and the predicted (that is, fitted) values. 
+   * In other words, the model should capture all the systematic variance present in the data, leaving nothing but random noise. 
+   * In the **Residuals vs Fitted** graph (upper left), you see clear evidence of a curved relationship, which suggests that you may want to add a quadratic term to the regression.
+* Homoscedasticity
+   * If you've met the constant variance assumption, the points in the **Scale-Location** graph (bottom left) should be a random band around a horizontal line. You seem to meet this assumption.
+
+*** =right
+```{r, echo=FALSE, fig.height=5, fig.width=5}
+## plot regression diagnostics
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+--- &twocolvar w1:50% w2:50% .compact .scode
+
+### Check statistical assumptions
+*** =left
+**Homoscedasticity**
+   * If you've met the constant variance assumption, the points in the **Scale-Location** graph (bottom left) should be a random band around a horizontal line. You seem to meet this assumption.
+
+*** =right
+```{r, echo=FALSE, fig.height=5, fig.width=5}
+## plot regression diagnostics
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+--- .modal
+
+## Multiple linear regression
+```{r}
+## we'll use the state.x77 dataset in the base package
+states = as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
+head(states)
+```
+
+--- .modal
+
+## Examining data 
+```{r}
+cor(states)
+```
+
+--- .modal
+
+## Examining data 
+```{r, fig.height=5, fig.width=5, warning=FALSE}
+## examining bivariate relationships using 'scatterplotMatrix' in the 'car' package
+scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
+                  main="Scatter Plot Matrix")
+```
+
+--- .modal
+
+## Multiple linear regression
+```{r}
+fit = lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+summary(fit)
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
+
+### What does the result mean?  
+
+*** =left
+   * In multiple regression, the coefficients indicate the increase in the dependent variable for a unit change in a predictor variable, *holding all other predictor variables constant*. 
+   * For example, the regression coefficient for Illiteracy is 4.14, suggesting that an increase of 1 percent in illiteracy is associated with a 4.14 percent increase in the murder rate, controlling for population, income, and temperature. 
+
+*** =right
+```{r, echo=FALSE}
+fit = lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+summary(fit)
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
+
+### What does the result mean?  
+
+*** =left
+   * The coefficient is significantly different from zero at the p < .0001 level. The coefficient for Frost isn't significantly different from zero (p = 0.954) suggesting that Frost and Murder aren't linearly related when controlling for the other predictor variables. 
+   * Taken together, the predictor variables account for 57 percent of the variance in murder rates across states.
+
+*** =right
+```{r, echo=FALSE}
+fit = lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+summary(fit)
+```
+
+--- .compact
+
+## Variable selection
+**Stepwise selection**: variables are added to or deleted from a model one at a time.
+* forward: add predictor variables to the model one at a time, stopping when the addition of variables would no longer improve the model
+* backward: start with a model that includes all predictor variables, and then delete them one at a time until removing variables would degrade the quality of the model
+
+--- .scode
+
+## Variable selection
+```{r}
+## backward stepwise selection
+library(MASS)
+fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
+          data=states)
+stepAIC(fit, direction="backward")
+```
+
+--- .sscode
+
+## Variable selection
+```{r, echo=FALSE}
+## backward stepwise selection
+library(MASS)
+fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
+          data=states)
+stepAIC(fit, direction="backward")
+```
+
+--- .compact
+
+## Variable selection
+You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
+Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
+Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
+
+
+--- .compact .scode
+
+## Model performance
+```{r}
+## compute R-squared for the woman data
+y = women$weight; x = women$height
+fit = lm(y~x)
+summary(fit)
+```
+
+--- .compact .scode
+
+## Model performance
+```{r}
+## compute R-squared for the woman data
+mean.mse = mean((rep(mean(y),length(y)) - y)^2)
+model.mse = mean(residuals(fit)^2)
+rmse = sqrt(model.mse)
+rmse ## root mean square error
+r2 = 1 - (model.mse / mean.mse)
+r2
+cor(y, fit$fitted.values)^2
+```
+
+--- .compact .scode
+
+## Model performance
+```{r}
+## leave-one-out cross validation
+n = length(women$weight)
+error = dim(n)
+for (k in 1:n) {
+  train1 = c(1:n)
+  train = train1[train1!=k] ## pick elements that are different from k
+  m2 = lm(weight ~ height, data=women[train ,])
+  pred = predict(m2, newdat=women[-train ,])
+  obs = women$weight[-train]
+  error[k] = obs-pred
+}
+me=mean(error)
+me ## mean error
+rmse=sqrt(mean(error^2))
+rmse ## root mean square error (out-of-sample)
+```
+
+
+--- .compact .scode
+
+## Polynomial regression
+```{r}
+fit2 = lm(weight ~ height + I(height^2), data=women)
+summary(fit2)
+```
+
+--- .compact .scode
+
+## Polynomial regression
+```{r, fig.height=4, fig.width=4}
+plot(women$height,women$weight,
+     xlab="Height (in inches)",
+     ylab="Weight (in lbs)")
+lines(women$height,fitted(fit2))
+```
+
+
+--- &twocolvar w1:48% w2:50% .compact .sscode
+
+## Polynomial regression
+
+*** =left
+$$ \hat{weight}= 261.88- 7.35\times height +0.083 \times height^2 $$
+Both regression coefficients are significant at the p < 0.0001 level. The amount of variance accounted for has increased to 99.9 percent. The significance of the squared term (t = 13.89, p < .001) suggests that inclusion of the quadratic term improves the model fit.
+
+*** =right
+```{r, echo=FALSE}
+fit2 = lm(weight ~ height + I(height^2), data=women)
+summary(fit2)
+```
+
+--- .modal 
+
+## Non-linear Data
+```{r, fig.height=4, fig.width=4}
+## create testing data (sine wave)
+set.seed(1)
+x = seq(0, 1, by = 0.01)
+y = sin(2 * pi * x) + rnorm(length(x), 0, 0.1)
+df = data.frame(X = x, Y = y)
+ggplot(df, aes(x = X, y = Y)) + geom_point()
+```
+
+--- .scode 
+
+## Non-linear Data
+```{r, fig.height=4, fig.width=4}
+## fit with linear regression
+summary(lm(Y ~ X, data = df)) # explain 60% of the variance
+```
+
+--- .scode
+
+## Non-linear Data
+```{r, fig.height=4, fig.width=4}
+ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE)
+```
+
+--- .scode 
+
+## Non-linear Data
+```{r, fig.height=4, fig.width=4}
+## add new features
+df <- transform(df, X2 = X ^ 2)
+df <- transform(df, X3 = X ^ 3)
+summary(lm(Y ~ X + X2 + X3, data = df)) # R2 from 60% to 97%, by adding two more inputs
+```
+
+--- .scode 
+
+## Non-linear Data
+```{r, fig.height=4, fig.width=4}
+## add more features
+df <- transform(df, X4 = X ^ 4)
+df <- transform(df, X5 = X ^ 5)
+df <- transform(df, X6 = X ^ 6)
+df <- transform(df, X7 = X ^ 7)
+df <- transform(df, X8 = X ^ 8)
+df <- transform(df, X9 = X ^ 9)
+df <- transform(df, X10 = X ^ 10)
+df <- transform(df, X11 = X ^ 11)
+df <- transform(df, X12 = X ^ 12)
+df <- transform(df, X13 = X ^ 13)
+df <- transform(df, X14 = X ^ 14)
+df <- transform(df, X15 = X ^ 15)
+summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13 + X14 , data = df))
+```
+
+--- .sscode .compact
+
+## Non-linear Data
+```{r, echo=FALSE, fig.height=4, fig.width=4}
+## add more features
+df <- transform(df, X4 = X ^ 4)
+df <- transform(df, X5 = X ^ 5)
+df <- transform(df, X6 = X ^ 6)
+df <- transform(df, X7 = X ^ 7)
+df <- transform(df, X8 = X ^ 8)
+df <- transform(df, X9 = X ^ 9)
+df <- transform(df, X10 = X ^ 10)
+df <- transform(df, X11 = X ^ 11)
+df <- transform(df, X12 = X ^ 12)
+df <- transform(df, X13 = X ^ 13)
+df <- transform(df, X14 = X ^ 14)
+df <- transform(df, X15 = X ^ 15)
+summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13 + X14 , data = df))
+```
+* new feature correlated with the old columns
+* the linear regression breaks down and can't find coefficients for all of the columns separately
+

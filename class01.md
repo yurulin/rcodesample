@@ -687,7 +687,7 @@ plot(data,type='p',log='xy',
 
 ![plot of chunk unnamed-chunk-38](assets/fig/unnamed-chunk-38-1.png)
 
---- 
+--- .ul: build
 
 ## References
 * Ledolter, Johannes. Data mining and business analytics with R. John Wiley & Sons, 2013.

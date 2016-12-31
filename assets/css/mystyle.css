@@ -10,10 +10,10 @@
     word-wrap: break-word;       /* Internet Explorer 5.5+ */	
 
   /* smaller margin */
-    margin-top: -6px ;
-    margin-bottom: -6px ;
-    padding-top: -6px ;
-    padding-bottom: -6px ;	
+    margin-top: 2px ;
+    margin-bottom: 2px ;
+    padding-top: 2px ;
+    padding-bottom: 2px ;	
 }
 
 .compact-nowrap p, li, ol {
@@ -21,10 +21,10 @@
   line-height: 1.1em;
 
   /* smaller margin */
-    margin-top: -6px ;
-    margin-bottom: -6px ;
-    padding-top: -6px ;
-    padding-bottom: -6px ;	
+    margin-top: 2px ;
+    margin-bottom: 2px ;
+    padding-top: 2px ;
+    padding-bottom: 2px ;	
 }
 
 pre code {
@@ -63,7 +63,7 @@ pre code {
     padding-bottom: -10px ;	
     
   }
-  
+
   .scode pre code {
     font-size: 16px;
     line-height: 1.1em;	
@@ -89,3 +89,35 @@ pre code {
     padding-top: -10px ;
     padding-bottom: -10px ;	
   }    
+  
+  .sscode pre code {
+    font-size: 14px;
+    line-height: 1em;	
+    
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */	
+    
+    margin-top: -20px ;
+    margin-bottom: -20px ;
+    padding-top: -20px ;
+    padding-bottom: -20px ;	
+  }   
+  
+  .ssscode pre code {
+    font-size: 12px;
+    line-height: .9em;	
+    
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */	
+    
+    margin-top: -20px ;
+    margin-bottom: -20px ;
+    padding-top: -20px ;
+    padding-bottom: -20px ;	
+  }     

@@ -459,7 +459,7 @@ plot(data,type='p',log='xy',
      main='Log-log Plot of Family Surnames')  
 ```
 
---- 
+--- .ul: build
 
 ## References
 * Ledolter, Johannes. Data mining and business analytics with R. John Wiley & Sons, 2013.
