@@ -1,0 +1,30 @@
+---
+title       : R Lab: Part I
+subtitle    : 
+author      : 
+job         : 
+framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- #toc
+
+## R Lab
+**Contents**
+@see https://piazza-resources.s3.amazonaws.com/isew91zaava2ps/it1wk1xe69y6ka/IntroR2.html?AWSAccessKeyId=AKIAIEDNRLJ4AZKBW6HA&Expires=1483222919&Signature=LMRUTA%2FdBmp4pLRMYiMHsjHMVWY%3D#/1
+@see http://www.cyclismo.org/tutorial/R/scripting.html#
+@see https://bookdown.org/rdpeng/exdata/getting-started-with-r.html
+@see https://ismayc.github.io/rbasics-book/3-rstudiobasics.html
+@see http://r4ds.had.co.nz/
+
+Basics
+Assignment and Operators
+First Lines of R
+Data Types
+Data Structures
+Functions
+Control Statements
+Data Input and Output
+Data Manipulation

@@ -9,7 +9,21 @@ hitheme     : tomorrow      #
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
---- .modal 
+--- #toc
+
+## Class02
+* [Simple Regression](#simple-regression)
+* [Multiple linear regression](#multiple-linear-regression)
+* [Variable selection](#variable-selection)
+* [Model performance](#model-performance)
+* [Polynomial regression](#polynomial-regression)
+* Non-linear Data
+* Cross-validation
+* Regularization
+* Local Polynomial Regression
+* LASSO
+
+--- #simple-regression .modal 
 
 ## Simple Regression
 
@@ -417,7 +431,7 @@ plot(fit)
 *** =right
 ![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
 
---- .modal
+--- #multiple-linear-regression .modal
 
 ## Multiple linear regression
 

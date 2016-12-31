@@ -36,7 +36,22 @@
   <header class="caption">
   	<h1>Class01</h1>
 	</header>
-  <section class="slide " id="slide-1">
+  <section class="slide " id="toc">
+  <div>
+    <h2>Class01</h2>
+    <p><strong>Contents</strong></p>
+
+<ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#working-with-data">Working with data</a></li>
+<li><a href="#example1">Example 1: explore the &quot;births&quot;&quot; data</a></li>
+<li><a href="#example2">Example 2: thin-tailed v. heavy-tailed</a></li>
+<li><a href="#example3">Example 3: Power law</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="getting-started">
   <div>
     <h2>Install R packages</h2>
     <p>R has a lot of powerful packages. You need to load a package into memory before using it.</p>
@@ -46,7 +61,7 @@
 
   </div>
 </section>
-<section class="slide " id="slide-2">
+<section class="slide " id="slide-3">
   <div>
     <h2>Install R packages</h2>
     <p>If you see an error message:</p>
@@ -63,7 +78,7 @@
 
   </div>
 </section>
-<section class="slide modal" id="slide-3">
+<section class="slide modal" id="slide-4">
   <div>
     <h2>Install R packages (using command)</h2>
     <pre><code class="r">## install directly from the default repository http://cran.r-project.org/
@@ -78,7 +93,7 @@ install.packages(&#39;~/Downloads/ggplot2_0.9.3.1.tar.gz&#39;,repo=NULL,type=&#3
 
   </div>
 </section>
-<section class="slide modal" id="slide-4">
+<section class="slide modal" id="slide-5">
   <div>
     <h2>Getting help</h2>
     <pre><code class="r">?read.delim # Access a function&#39;s help file
@@ -92,7 +107,7 @@ RSiteSearch(&quot;parsing text&quot;) # Search for the term &#39;parsing text&#3
 
   </div>
 </section>
-<section class="slide modal" id="slide-5">
+<section class="slide modal" id="working-with-data">
   <div>
     <h2>Working with data</h2>
       
@@ -111,7 +126,7 @@ View(heights.weights)
 </div>
   </div>
 </section>
-<section class="slide modal" id="slide-6">
+<section class="slide modal" id="slide-7">
   <div>
     <h2>Working with data</h2>
     <pre><code class="r">class(heights.weights)
@@ -128,7 +143,7 @@ View(heights.weights)
 
   </div>
 </section>
-<section class="slide modal" id="slide-7">
+<section class="slide modal" id="slide-8">
   <div>
     <h2>Working with data: summary</h2>
     <pre><code class="r">## R summary function
@@ -147,7 +162,7 @@ summary(heights.weights)
 
   </div>
 </section>
-<section class="slide modal" id="slide-8">
+<section class="slide modal" id="slide-9">
   <div>
     <h2>Working with data: summary</h2>
     <pre><code class="r">summary(heights.weights$Height) # summary for the &#39;Height&#39; column  
@@ -159,7 +174,7 @@ summary(heights.weights)
 
   </div>
 </section>
-<section class="slide modal" id="slide-9">
+<section class="slide modal" id="slide-10">
   <div>
     <h2>Working with data</h2>
     <pre><code class="r">## Means, Medians, Modes
@@ -187,7 +202,7 @@ mean(heights)
 
   </div>
 </section>
-<section class="slide modal" id="slide-10">
+<section class="slide modal" id="slide-11">
   <div>
     <h2>Working with data: Quantiles</h2>
     <pre><code class="r">quantile(heights)
@@ -213,7 +228,7 @@ mean(heights)
 
   </div>
 </section>
-<section class="slide modal" id="slide-11">
+<section class="slide modal" id="slide-12">
   <div>
     <h2>Working with data</h2>
     <pre><code class="r">## Standard Deviations and Variances
@@ -240,7 +255,7 @@ table(heights.weights$Gender)
 
   </div>
 </section>
-<section class="slide modal" id="slide-12">
+<section class="slide modal" id="slide-13">
   <div>
     <h2>Working with data</h2>
     <pre><code class="r">## Correlation 
@@ -253,7 +268,7 @@ cor(heights,weights)
 
   </div>
 </section>
-<section class="slide modal" id="slide-13">
+<section class="slide modal" id="slide-14">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">## Histogram and Density
@@ -268,7 +283,7 @@ ggplot(heights.weights, aes(x = Height)) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-14">
+<section class="slide modal" id="slide-15">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">ggplot(heights.weights, aes(x = Height)) +
@@ -279,7 +294,7 @@ ggplot(heights.weights, aes(x = Height)) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-15">
+<section class="slide modal" id="slide-16">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">ggplot(heights.weights, aes(x = Height)) +
@@ -290,7 +305,7 @@ ggplot(heights.weights, aes(x = Height)) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-16">
+<section class="slide modal" id="slide-17">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">## conditional density plot
@@ -302,7 +317,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-17">
+<section class="slide modal" id="slide-18">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">ggplot(heights.weights, aes(x = Weight)) +
@@ -313,7 +328,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-18">
+<section class="slide modal" id="slide-19">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
@@ -324,7 +339,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-19">
+<section class="slide modal" id="slide-20">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">## Scatterplot
@@ -335,7 +350,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 
   </div>
 </section>
-<section class="slide modal" id="slide-20">
+<section class="slide modal" id="slide-21">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">ggplot(heights.weights, aes(x = Weight, y = Height, color = Gender)) + geom_point()
@@ -345,7 +360,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 
   </div>
 </section>
-<section class="slide modal" id="slide-21">
+<section class="slide modal" id="slide-22">
   <div>
     <h2>Plotting</h2>
     <pre><code class="r">ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point(shape=1) + # use hollow circles 
@@ -357,14 +372,14 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 
   </div>
 </section>
-<section class="slide " id="slide-22">
+<section class="slide " id="slide-23">
   <div>
     <h2>More about plotting</h2>
     <p>See: <a href="http://www.cookbook-r.com/Graphs/">http://www.cookbook-r.com/Graphs/</a></p>
 
   </div>
 </section>
-<section class="slide modal" id="slide-23">
+<section class="slide modal" id="example1">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">require(lattice)  
@@ -385,7 +400,7 @@ births2006.smpl[1:3,]
 
   </div>
 </section>
-<section class="slide modal" id="slide-24">
+<section class="slide modal" id="slide-25">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">dim(births2006.smpl) # the dimension of the data frame (data matrix)
@@ -396,7 +411,7 @@ births2006.smpl[1:3,]
 
   </div>
 </section>
-<section class="slide modal" id="slide-25">
+<section class="slide modal" id="slide-26">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">## generate frequency tables
@@ -411,7 +426,7 @@ births.dow
 
   </div>
 </section>
-<section class="slide modal" id="slide-26">
+<section class="slide modal" id="slide-27">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">barchart(births.dow,ylab=&quot;Day of Week&quot;,col=&quot;black&quot;)
@@ -421,7 +436,7 @@ births.dow
 
   </div>
 </section>
-<section class="slide modal" id="slide-27">
+<section class="slide modal" id="slide-28">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">## plot by ggplot
@@ -435,7 +450,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK))) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-28">
+<section class="slide modal" id="slide-29">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">dob.dm.tbl=table(WK=births2006.smpl$DOB_WK,MM=births2006.smpl$DMETH_REC)
@@ -455,7 +470,7 @@ dob.dm.tbl
 
   </div>
 </section>
-<section class="slide modal" id="slide-29">
+<section class="slide modal" id="slide-30">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">dob.dm.tbl=dob.dm.tbl[,-2]
@@ -475,7 +490,7 @@ dob.dm.tbl
 
   </div>
 </section>
-<section class="slide modal" id="slide-30">
+<section class="slide modal" id="slide-31">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">## plot by ggplot
@@ -490,7 +505,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-31">
+<section class="slide modal" id="slide-32">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">## generate conditional histogram and density plots
@@ -501,7 +516,7 @@ histogram(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),col=&quot;black&quot;
 
   </div>
 </section>
-<section class="slide modal" id="slide-32">
+<section class="slide modal" id="slide-33">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">## plot by ggplot
@@ -513,7 +528,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales=&quot;f
 
   </div>
 </section>
-<section class="slide modal" id="slide-33">
+<section class="slide modal" id="slide-34">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">histogram(~DBWT|DMETH_REC,data=births2006.smpl,layout=c(1,3),col=&quot;black&quot;)
@@ -523,7 +538,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales=&quot;f
 
   </div>
 </section>
-<section class="slide modal" id="slide-34">
+<section class="slide modal" id="slide-35">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">densityplot(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),plot.points=FALSE,col=&quot;black&quot;)
@@ -533,7 +548,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales=&quot;f
 
   </div>
 </section>
-<section class="slide modal" id="slide-35">
+<section class="slide modal" id="slide-36">
   <div>
     <h2>Example 1</h2>
     <pre><code class="r">## plot by ggplot
@@ -545,7 +560,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~., scales=&quot;
 
   </div>
 </section>
-<section class="slide modal" id="slide-36">
+<section class="slide modal" id="example2">
   <div>
     <h2>Example 2: thin-tailed v. heavy-tailed</h2>
     <pre><code class="r">set.seed(1)
@@ -565,7 +580,7 @@ range(normal.values)
 
   </div>
 </section>
-<section class="slide modal" id="slide-37">
+<section class="slide modal" id="slide-38">
   <div>
     <h2>Example 2: thin-tailed v. heavy-tailed</h2>
     <pre><code class="r">D=data.frame(X = cauchy.values,distribution=&#39;cauchy&#39;)
@@ -579,7 +594,7 @@ ggplot(data=D, aes(x=X, linetype=distribution)) +
 
   </div>
 </section>
-<section class="slide modal" id="slide-38">
+<section class="slide modal" id="example3">
   <div>
     <h2>Example 3: Power law</h2>
     <pre><code class="r">## the frequency of family names can be downloaded from the 2000 Census:
@@ -601,7 +616,7 @@ D[1:3,]
 
   </div>
 </section>
-<section class="slide modal" id="slide-39">
+<section class="slide modal" id="slide-40">
   <div>
     <h2>Example 3: Power law</h2>
     <pre><code class="r">data = as.numeric(namecount$Count)
@@ -614,7 +629,7 @@ hist(data,xlab=&#39;Number of Family Surnames&#39;,main=&#39;Histogram of Family
 
   </div>
 </section>
-<section class="slide modal" id="slide-40">
+<section class="slide modal" id="slide-41">
   <div>
     <h2>Example 3: Power law</h2>
     <pre><code class="r">plot(data,type=&#39;l&#39;,
@@ -627,7 +642,7 @@ hist(data,xlab=&#39;Number of Family Surnames&#39;,main=&#39;Histogram of Family
 
   </div>
 </section>
-<section class="slide modal" id="slide-41">
+<section class="slide modal" id="slide-42">
   <div>
     <h2>Example 3: Power law</h2>
     <pre><code class="r">plot(data,type=&#39;p&#39;,log=&#39;xy&#39;,
@@ -640,7 +655,7 @@ hist(data,xlab=&#39;Number of Family Surnames&#39;,main=&#39;Histogram of Family
 
   </div>
 </section>
-<section class="slide ul:" id="slide-42">
+<section class="slide ul:" id="slide-43">
   <div>
     <h2>References</h2>
     <ul>
@@ -654,6 +669,9 @@ hist(data,xlab=&#39;Number of Family Surnames&#39;,main=&#39;Histogram of Family
   <div class="progress">
     <div></div>
   </div>
+    <footer class = 'foot'>
+      <a href="#toc"><img src = 'assets/img/info_icon.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
 	<script src="libraries/frameworks/shower/shower.js"></script>
 	<!-- LOAD HIGHLIGHTER JS FILES -->
 	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>

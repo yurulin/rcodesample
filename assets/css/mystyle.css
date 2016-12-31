@@ -1,3 +1,11 @@
+.foot a {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+  text-decoration: none;
+}
+
 .compact p, li, ol {
   font-size: 90%;
   line-height: 1.1em;

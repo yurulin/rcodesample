@@ -9,8 +9,18 @@ hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
----
-  
+--- #toc
+
+## Class01
+**Contents**
+* [Getting started](#getting-started)
+* [Working with data](#working-with-data)
+* [Example 1: explore the "births"" data](#example1)
+* [Example 2: thin-tailed v. heavy-tailed](#example2)
+* [Example 3: Power law](#example3)
+
+--- #getting-started
+
 ## Install R packages
   
 R has a lot of powerful packages. You need to load a package into memory before using it.
@@ -64,7 +74,7 @@ help.search("delim") # Search for 'delimited' in all help files
 RSiteSearch("parsing text") # Search for the term 'parsing text' on the R site
 ```
 
----  &twocolvar w1:40% w2:60% .modal
+--- #working-with-data &twocolvar w1:40% w2:60% .modal
 
 ## Working with data
 
@@ -371,7 +381,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point(shape=1) + # u
 
 See: [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
 
---- .modal
+--- #example1 .modal
 
 ## Example 1
 
@@ -578,7 +588,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~., scales="free_
 
 ![plot of chunk unnamed-chunk-32](assets/fig/unnamed-chunk-32-1.png)
 
---- .modal
+--- #example2 .modal
 
 ## Example 2: thin-tailed v. heavy-tailed
 
@@ -618,7 +628,7 @@ ggplot(data=D, aes(x=X, linetype=distribution)) +
 
 ![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
 
---- .modal
+--- #example3 .modal
 
 ## Example 3: Power law
 
