@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>R Lab -- Part I</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="R Lab -- Part I">
+	<meta name="author" content="">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>R Lab -- Part I</h1>
+	</header>
+  <section class="slide " id="toc">
+  <div>
+    <h2>R Lab -- Part I</h2>
+    <ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#input">Input</a></li>
+<li><a href="#basic-data-types">Basic Data Types</a></li>
+<li><a href="#operations">Basic Operations &amp; Numerical Descriptions</a></li>
+<li><a href="#prog">R Programming</a></li>
+<li><a href="#data-manipulation">Data Manipulation</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#ref">References</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="intro">
+  <div>
+    <h2>Introduction</h2>
+    <p>In this R Lab class, I will point you to several wonderful online resources (see <a href="#ref">References</a>), and ask you to follow the materials to master the basics of R.</p>
+
+<p><strong>Learning activity</strong>: Follow the mini <strong>Exercise</strong> and <strong>Learning Check</strong> in this tutorial.</p>
+
+  </div>
+</section>
+<section class="slide " id="overview">
+  <div>
+    <h2>Overview</h2>
+    <ul>
+<li>Why R?</li>
+<li>What is R?</li>
+<li>What is RStudio?</li>
+<li><a href="https://bookdown.org/rdpeng/exdata/getting-started-with-r.html">Installation</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="slide-4">
+  <div>
+    <h2>Why R?</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Read <a href="https://ismayc.github.io/rbasics-book/2-whyR.html">Why R</a>, <a href="http://thegrantlab.org/bio3d/79-static-content/85-why-use-r">the pros &amp; cons</a>, <a href="http://www.burns-stat.com/documents/tutorials/why-use-the-r-language/">Why use the R Language?</a></li>
+</ul>
+
+<p><strong>Further reading</strong></p>
+
+<ul>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/history-and-overview-of-r.html">History and Overview of R</a></li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<ul>
+<li>Can you list three pros &amp; cons of R?</li>
+<li>Is R a statistics software or a language?</li>
+<li>How does R facilitate statistical thinking?</li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="slide-5">
+  <div>
+    <h2>R &amp; RStudio</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Go over <a href="https://ismayc.github.io/rbasics-book/3-rstudiobasics.html">R and RStudio Basics</a>, <a href="https://bookdown.org/rdpeng/rprogdatascience/getting-started-with-r.html">Getting Started with R</a>.</li>
+<li>Follow the instruction to install R and RStudio on your computer.</li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<ul>
+<li>Have you installed R and RStudio on your computer?</li>
+<li>Do you know how to set your working directory?</li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="input">
+  <div>
+    <h2>Input</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Go over <a href="http://www.cyclismo.org/tutorial/R/input.html#assignment">Assignment</a>, <a href="http://www.cyclismo.org/tutorial/R/input.html#reading-a-csv-file">Reading from a file</a>.</li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<ul>
+<li>What does <code>c()</code> mean?</li>
+<li>What does <code>[]</code> mean in <code>bubba[2]</code>?</li>
+<li>How do you get columes and colume names from the file <code>simple.csv</code>?</li>
+</ul>
+
+<p><strong>Further reading</strong></p>
+
+<ul>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/getting-data-in-and-out-of-r.html">Getting Data In and Out of R</a></li>
+<li><a href="http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html">Use = or &lt;- for assignment?</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="basic-data-types">
+  <div>
+    <h2>Basic Data Types</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Go over <a href="http://www.cyclismo.org/tutorial/R/types.html">Basic Data Types</a>.</li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<ul>
+<li>How do you get access to particular entries in the vector?</li>
+<li>How do you get the data type for a variable?</li>
+<li>What is <code>factor</code>? How do you calculate the frequency that each factor occurs in a table?</li>
+</ul>
+
+<p><strong>Further reading</strong></p>
+
+<ul>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/r-nuts-and-bolts.html">R Nuts and Bolts</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="operations">
+  <div>
+    <h2>Basic Operations &amp; Numerical Descriptions</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Go over <a href="http://www.cyclismo.org/tutorial/R/basicOps.html">Basic Operations and Numerical Descriptions</a>.</li>
+<li>Read <a href="http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html">Use = or &lt;- for assignment?</a></li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<ul>
+<li>How do you assign a value to a variable? How do you create vectors?</li>
+<li>What is the difference between <code>=</code> and <code>-&gt;</code>?</li>
+<li>How do you take the square root, find e raised to each number, the logarithm, etc., of a number?</li>
+<li>How do you sort the given vector in either ascending or descending order?</li>
+</ul>
+
+<p><strong>Further reading</strong></p>
+
+<ul>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html">Vectorized Operations</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="prog">
+  <div>
+    <h2>R Programming</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Go over <a href="http://www.cyclismo.org/tutorial/R/scripting.html">Introduction to Programming</a>.</li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<ul>
+<li>How do you executed commands in a file as if you had typed them in from the command line?</li>
+<li>What are different ways to repeat a set of instructions? How do you stop the execution of the current loop?</li>
+<li>How do you define a function and assign default values to the arguments?</li>
+</ul>
+
+<p><strong>Further reading</strong></p>
+
+<ul>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/control-structures.html">Control Structures</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="data-manipulation">
+  <div>
+    <h2>Data Manipulation</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Go over <a href="http://www.cyclismo.org/tutorial/R/dataManagement.html">Data Management</a>.</li>
+</ul>
+
+<p><strong>Further reading</strong></p>
+
+<ul>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html">Subsetting R Objects</a></li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<ul>
+<li>How do you append rows or columns to a data frame?</li>
+<li>What are the differences among <code>[]</code>, <code>[[]]</code> and <code>$</code>?</li>
+<li>How do you remove missing values?</li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="example">
+  <div>
+    <h2>Example: Using R with periodic table dataset</h2>
+    <p><strong>Exercise</strong></p>
+
+<ul>
+<li>Go over <a href="https://ismayc.github.io/rbasics-book/5-rmdanal.html">Intro to R using R Markdown</a></li>
+</ul>
+
+<p><strong>Learning check</strong></p>
+
+<p>How do you get the &#39;block&#39; variable from the periodic table dataset? </p>
+
+<p>How do you convert &#39;block&#39; into a <code>factor</code> and count the number of elements in each block?</p>
+
+<p>What does the expression <code>friend_names[-c(2, 4)]</code> mean?</p>
+
+  </div>
+</section>
+<section class="slide " id="ref">
+  <div>
+    <h2>References</h2>
+    <ul>
+<li><a href="http://www.cyclismo.org/tutorial/R/index.html">R Tutorial by Kelly Black</a></li>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/">R Programming for Data Science by Roger D. Peng</a></li>
+<li><a href="https://bookdown.org/rdpeng/exdata/">Exploratory Data Analysis with R by Roger D. Peng</a></li>
+<li><a href="https://ismayc.github.io/rbasics-book/">R Basics Book by Chester Ismay</a></li>
+<li><a href="http://thegrantlab.org/bio3d/79-static-content/85-why-use-r">Why should I use R?</a></li>
+<li><a href="http://www.burns-stat.com/documents/tutorials/why-use-the-r-language/">Why use the R Language?</a></li>
+</ul>
+
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>

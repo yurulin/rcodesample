@@ -9,10 +9,9 @@ hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
---- #toc
 
+--- #toc
 ## Class01
-**Contents**
 * [Getting started](#getting-started)
 * [Working with data](#working-with-data)
 * [Example 1: explore the "births"" data](#example1)
@@ -20,9 +19,7 @@ knit        : slidify::knit2slides
 * [Example 3: Power law](#example3)
 
 --- #getting-started
-
 ## Install R packages
-  
 R has a lot of powerful packages. You need to load a package into memory before using it.
 
 ```r
@@ -30,9 +27,7 @@ library(ggplot2) ## a package for plotting
 ```
 
 --- 
-  
 ## Install R packages
-
 If you see an error message:
 ```
 there is no package called 'ggplot2'
@@ -42,9 +37,7 @@ it means you don't have this package and you need to install it.
 * Using command
 
 --- .modal
-
 ## Install R packages (using command)
-
 
 ```r
 ## install directly from the default repository http://cran.r-project.org/
@@ -60,9 +53,7 @@ install.packages('~/Downloads/ggplot2_0.9.3.1.tar.gz',repo=NULL,type='source')
 ```
 
 ---  .modal
-
 ## Getting help
-
 
 ```r
 ?read.delim # Access a function's help file
@@ -74,10 +65,8 @@ help.search("delim") # Search for 'delimited' in all help files
 RSiteSearch("parsing text") # Search for the term 'parsing text' on the R site
 ```
 
---- #working-with-data &twocolvar w1:40% w2:60% .modal
-
+--- #working-with-data &twocolvar w1:38% w2:60% .modal
 ## Working with data
-
 *** =left
 ![pic](assets/img/data_frame.png)
 
@@ -91,9 +80,7 @@ View(heights.weights)
 ```
 
 ---  .modal
-
 ## Working with data
-
 
 ```r
 class(heights.weights)
@@ -112,9 +99,7 @@ dim(heights.weights) # show the dimension of the data
 ```
 
 ---  .modal
-
 ## Working with data: summary
-
 
 ```r
 ## R summary function
@@ -133,9 +118,7 @@ summary(heights.weights)
 ```
 
 ---  .modal
-
 ## Working with data: summary
-
 
 ```r
 summary(heights.weights$Height) # summary for the 'Height' column  
@@ -147,9 +130,7 @@ summary(heights.weights$Height) # summary for the 'Height' column
 ```
 
 ---  .modal
-
 ## Working with data
-
 
 ```r
 ## Means, Medians, Modes
@@ -183,9 +164,7 @@ min(heights); max(heights)
 
 
 ---  .modal
-
 ## Working with data: Quantiles
-
 
 ```r
 quantile(heights)
@@ -215,9 +194,7 @@ quantile(heights, probs = seq(0, 1, by = 0.20))
 ```
 
 ---  .modal
-
 ## Working with data
-
 
 ```r
 ## Standard Deviations and Variances
@@ -248,9 +225,7 @@ table(heights.weights$Gender)
 ```
 
 ---  .modal
-
 ## Working with data
-
 
 ```r
 ## Correlation 
@@ -263,9 +238,7 @@ cor(heights,weights)
 ```
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ## Histogram and Density
@@ -279,9 +252,7 @@ ggplot(heights.weights, aes(x = Height)) +
 ![plot of chunk unnamed-chunk-11](assets/fig/unnamed-chunk-11-1.png)
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ggplot(heights.weights, aes(x = Height)) +
@@ -291,9 +262,7 @@ ggplot(heights.weights, aes(x = Height)) +
 ![plot of chunk unnamed-chunk-12](assets/fig/unnamed-chunk-12-1.png)
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ggplot(heights.weights, aes(x = Height)) +
@@ -303,7 +272,6 @@ ggplot(heights.weights, aes(x = Height)) +
 ![plot of chunk unnamed-chunk-13](assets/fig/unnamed-chunk-13-1.png)
 
 ---  .modal
-
 ## Plotting
 
 
@@ -316,9 +284,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 ![plot of chunk unnamed-chunk-14](assets/fig/unnamed-chunk-14-1.png)
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ggplot(heights.weights, aes(x = Weight)) +
@@ -328,9 +294,7 @@ ggplot(heights.weights, aes(x = Weight)) +
 ![plot of chunk unnamed-chunk-15](assets/fig/unnamed-chunk-15-1.png)
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
@@ -340,9 +304,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 ![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ## Scatterplot
@@ -352,9 +314,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 ![plot of chunk unnamed-chunk-17](assets/fig/unnamed-chunk-17-1.png)
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ggplot(heights.weights, aes(x = Weight, y = Height, color = Gender)) + geom_point()
@@ -363,9 +323,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height, color = Gender)) + geom_poin
 ![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
 
 ---  .modal
-
 ## Plotting
-
 
 ```r
 ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point(shape=1) + # use hollow circles 
@@ -378,13 +336,12 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point(shape=1) + # u
 --- 
 
 ## More about plotting
-
-See: [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
+See: 
+* [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
+* [R Lab: Part II](rlab02.html)
 
 --- #example1 .modal
-
 ## Example 1
-
 
 ```r
 require(lattice)  
@@ -405,9 +362,7 @@ births2006.smpl[1:3,]
 ```
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 dim(births2006.smpl) # the dimension of the data frame (data matrix)
@@ -419,9 +374,7 @@ dim(births2006.smpl) # the dimension of the data frame (data matrix)
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 ## generate frequency tables
@@ -436,9 +389,7 @@ births.dow
 ```
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 barchart(births.dow,ylab="Day of Week",col="black")
@@ -448,9 +399,7 @@ barchart(births.dow,ylab="Day of Week",col="black")
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 ## plot by ggplot
@@ -463,9 +412,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK))) +
 ![plot of chunk unnamed-chunk-24](assets/fig/unnamed-chunk-24-1.png)
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 dob.dm.tbl=table(WK=births2006.smpl$DOB_WK,MM=births2006.smpl$DMETH_REC)
@@ -486,9 +433,7 @@ dob.dm.tbl
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 dob.dm.tbl=dob.dm.tbl[,-2]
@@ -508,9 +453,7 @@ dob.dm.tbl
 ```
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 ## plot by ggplot
@@ -525,9 +468,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) +
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 ## generate conditional histogram and density plots
@@ -538,9 +479,7 @@ histogram(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),col="black")
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 ## plot by ggplot
@@ -552,9 +491,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales="free_y
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 histogram(~DBWT|DMETH_REC,data=births2006.smpl,layout=c(1,3),col="black")
@@ -564,9 +501,7 @@ histogram(~DBWT|DMETH_REC,data=births2006.smpl,layout=c(1,3),col="black")
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 densityplot(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),plot.points=FALSE,col="black")
@@ -576,9 +511,7 @@ densityplot(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),plot.points=FALSE,c
 
 
 --- .modal
-
 ## Example 1
-
 
 ```r
 ## plot by ggplot
@@ -589,9 +522,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~., scales="free_
 ![plot of chunk unnamed-chunk-32](assets/fig/unnamed-chunk-32-1.png)
 
 --- #example2 .modal
-
 ## Example 2: thin-tailed v. heavy-tailed
-
 
 ```r
 set.seed(1)
@@ -614,9 +545,7 @@ range(cauchy.values)
 
 
 --- .modal
-
 ## Example 2: thin-tailed v. heavy-tailed
-
 
 ```r
 D=data.frame(X = cauchy.values,distribution='cauchy')
@@ -629,9 +558,7 @@ ggplot(data=D, aes(x=X, linetype=distribution)) +
 ![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
 
 --- #example3 .modal
-
 ## Example 3: Power law
-
 
 ```r
 ## the frequency of family names can be downloaded from the 2000 Census:
@@ -654,9 +581,7 @@ D[1:3,]
 
 
 --- .modal
-
 ## Example 3: Power law
-
 
 ```r
 data = as.numeric(namecount$Count)
@@ -669,9 +594,7 @@ hist(data,xlab='Number of Family Surnames',main='Histogram of Family Surnames')
 
 
 --- .modal
-
 ## Example 3: Power law
-
 
 ```r
 plot(data,type='l',
@@ -684,9 +607,7 @@ plot(data,type='l',
 
 
 --- .modal
-
 ## Example 3: Power law
-
 
 ```r
 plot(data,type='p',log='xy',
@@ -697,8 +618,7 @@ plot(data,type='p',log='xy',
 
 ![plot of chunk unnamed-chunk-38](assets/fig/unnamed-chunk-38-1.png)
 
---- .ul: build
-
+--- 
 ## References
 * Ledolter, Johannes. Data mining and business analytics with R. John Wiley & Sons, 2013.
 * Conway, Drew, and John White. Machine learning for hackers. O'Reilly Media, Inc., 2012.

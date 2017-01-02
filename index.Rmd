@@ -9,20 +9,18 @@ hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
+
 --- #toc
-
 ## R Tutorials
-
-**Contents**
 * [class01: Introduction](class01.html)
 * [class02: Regression](class02.html)
 * [R Lab: Part I](rlab01.html)
 * [R Lab: Part II](rlab02.html)
 
 ---  
-
 ## Acknowledgements
 * Built by [Slidify](http://slidify.org/)
+* icons: [info](https://www.iconfinder.com/icons/763457/circle_detail_help_info_information_more_stroke_icon#size=128), [arrow](https://www.iconfinder.com/icons/1303874/arrow_arrows_circle_direction_navigation_top_up_icon#size=128)
 
 
 

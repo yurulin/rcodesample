@@ -9,10 +9,9 @@ hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
---- #toc
 
+--- #toc
 ## Class01
-**Contents**
 * [Getting started](#getting-started)
 * [Working with data](#working-with-data)
 * [Example 1: explore the "births"" data](#example1)
@@ -20,9 +19,7 @@ knit        : slidify::knit2slides
 * [Example 3: Power law](#example3)
 
 --- #getting-started
-
 ## Install R packages
-  
 R has a lot of powerful packages. You need to load a package into memory before using it.
 
 ```r
@@ -30,9 +27,7 @@ library(ggplot2) ## a package for plotting
 ```
 
 --- 
-  
 ## Install R packages
-
 If you see an error message:
 ```
 there is no package called 'ggplot2'
@@ -42,9 +37,7 @@ it means you don't have this package and you need to install it.
 * Using command
 
 --- .modal
-
 ## Install R packages (using command)
-
 ```{r eval=FALSE}
 ## install directly from the default repository http://cran.r-project.org/
 install.packages('ggplot2') 
@@ -58,9 +51,7 @@ install.packages('~/Downloads/ggplot2_0.9.3.1.tar.gz',repo=NULL,type='source')
 ```
 
 ---  .modal
-
 ## Getting help
-
 ```{r eval=FALSE}
 ?read.delim # Access a function's help file
 
@@ -71,10 +62,8 @@ help.search("delim") # Search for 'delimited' in all help files
 RSiteSearch("parsing text") # Search for the term 'parsing text' on the R site
 ```
 
---- #working-with-data &twocolvar w1:40% w2:60% .modal
-
+--- #working-with-data &twocolvar w1:38% w2:60% .modal
 ## Working with data
-
 *** =left
 ![pic](assets/img/data_frame.png)
 
@@ -88,9 +77,7 @@ View(heights.weights)
 ```
 
 ---  .modal
-
 ## Working with data
-
 ```{r}
 class(heights.weights)
 
@@ -98,9 +85,7 @@ dim(heights.weights) # show the dimension of the data
 ```
 
 ---  .modal
-
 ## Working with data: summary
-
 ```{r, results='markup'}
 ## R summary function
 # ?summary
@@ -108,17 +93,13 @@ summary(heights.weights)
 ```
 
 ---  .modal
-
 ## Working with data: summary
-
 ```{r}
 summary(heights.weights$Height) # summary for the 'Height' column  
 ```
 
 ---  .modal
-
 ## Working with data
-
 ```{r}
 ## Means, Medians, Modes
 heights = heights.weights$Height
@@ -131,9 +112,7 @@ min(heights); max(heights)
 
 
 ---  .modal
-
 ## Working with data: Quantiles
-
 ```{r}
 quantile(heights)
 
@@ -143,9 +122,7 @@ quantile(heights, probs = seq(0, 1, by = 0.20))
 ```
 
 ---  .modal
-
 ## Working with data
-
 ```{r}
 ## Standard Deviations and Variances
 sd(heights)
@@ -157,9 +134,7 @@ table(heights.weights$Gender)
 ```
 
 ---  .modal
-
 ## Working with data
-
 ```{r}
 ## Correlation 
 weights = heights.weights$Weight
@@ -167,9 +142,7 @@ cor(heights,weights)
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=4, fig.height=4}
 ## Histogram and Density
 library('ggplot2') 
@@ -180,25 +153,20 @@ ggplot(heights.weights, aes(x = Height)) +
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=4, fig.height=4}
 ggplot(heights.weights, aes(x = Height)) +
   geom_histogram(binwidth=0.5) # try different value for binwidth 
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=4, fig.height=4}
 ggplot(heights.weights, aes(x = Height)) +
   geom_density()
 ```
 
 ---  .modal
-
 ## Plotting
 
 ```{r, fig.width=5, fig.height=4}
@@ -208,44 +176,34 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=4, fig.height=4}
 ggplot(heights.weights, aes(x = Weight)) +
   geom_density(alpha = 0.5) + facet_grid(Gender ~ .) 
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=5, fig.height=4}
 ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
   geom_density(alpha = 0.5) + facet_grid(Gender ~ .)  
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=4, fig.height=4}
 ## Scatterplot
 ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=5, fig.height=4}
 ggplot(heights.weights, aes(x = Weight, y = Height, color = Gender)) + geom_point()
 ```
 
 ---  .modal
-
 ## Plotting
-
 ```{r, fig.width=4, fig.height=4}
 ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point(shape=1) + # use hollow circles 
   geom_smooth(method=lm, # add linear regression line
@@ -255,13 +213,12 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point(shape=1) + # u
 --- 
 
 ## More about plotting
-
-See: [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
+See: 
+* [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
+* [R Lab: Part II](rlab02.html)
 
 --- #example1 .modal
-
 ## Example 1
-
 ```{r}
 require(lattice)  
 require(nutshell) # you will need to install this package
@@ -270,18 +227,14 @@ births2006.smpl[1:3,]
 ```
 
 --- .modal
-
 ## Example 1
-
 ```{r}
 dim(births2006.smpl) # the dimension of the data frame (data matrix)
 ```
 
 
 --- .modal
-
 ## Example 1
-
 ```{r}
 ## generate frequency tables
 births.dow=table(births2006.smpl$DOB_WK)
@@ -289,18 +242,14 @@ births.dow
 ```
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=4, fig.width=4}
 barchart(births.dow,ylab="Day of Week",col="black")
 ```
 
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=4, fig.width=4, warning=FALSE}
 ## plot by ggplot
 ggplot(data = births2006.smpl, aes(x=factor(DOB_WK))) + 
@@ -310,9 +259,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK))) +
 ```
 
 --- .modal
-
 ## Example 1
-
 ```{r}
 dob.dm.tbl=table(WK=births2006.smpl$DOB_WK,MM=births2006.smpl$DMETH_REC)
 dob.dm.tbl
@@ -320,18 +267,14 @@ dob.dm.tbl
 
 
 --- .modal
-
 ## Example 1
-
 ```{r}
 dob.dm.tbl=dob.dm.tbl[,-2]
 dob.dm.tbl
 ```
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=4, fig.width=5, message=TRUE, warning=FALSE}
 ## plot by ggplot
 ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) + 
@@ -343,9 +286,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) +
 
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=4, fig.width=4}
 ## generate conditional histogram and density plots
 histogram(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),col="black")
@@ -353,9 +294,7 @@ histogram(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),col="black")
 
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=4, fig.width=4, message=TRUE, warning=FALSE}
 ## plot by ggplot
 ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales="free_y") + 
@@ -364,27 +303,21 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales="free_y
 
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=5, fig.width=5}
 histogram(~DBWT|DMETH_REC,data=births2006.smpl,layout=c(1,3),col="black")
 ```
 
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=5, fig.width=5}
 densityplot(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),plot.points=FALSE,col="black")
 ```
 
 
 --- .modal
-
 ## Example 1
-
 ```{r, fig.height=5, fig.width=5, warning=FALSE}
 ## plot by ggplot
 ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~., scales="free_y") + 
@@ -392,9 +325,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~., scales="free_
 ```
 
 --- #example2 .modal
-
 ## Example 2: thin-tailed v. heavy-tailed
-
 ```{r}
 set.seed(1)
 normal.values <- rnorm(100000, 0, 1)
@@ -406,9 +337,7 @@ range(cauchy.values)
 
 
 --- .modal
-
 ## Example 2: thin-tailed v. heavy-tailed
-
 ```{r, fig.height=4, fig.width=5, warning=FALSE}
 D=data.frame(X = cauchy.values,distribution='cauchy')
 D=rbind(D,data.frame(X = normal.values,distribution='normal'))
@@ -418,9 +347,7 @@ ggplot(data=D, aes(x=X, linetype=distribution)) +
 ```
 
 --- #example3 .modal
-
 ## Example 3: Power law
-
 ```{r}
 ## the frequency of family names can be downloaded from the 2000 Census:
 ## http://www.census.gov/genealogy/www/data/2000surnames/
@@ -435,9 +362,7 @@ D[1:3,]
 
 
 --- .modal
-
 ## Example 3: Power law
-
 ```{r, fig.height=4, fig.width=4}
 data = as.numeric(namecount$Count)
 # rank the family names according to frequency, from largest to smallest
@@ -447,9 +372,7 @@ hist(data,xlab='Number of Family Surnames',main='Histogram of Family Surnames')
 
 
 --- .modal
-
 ## Example 3: Power law
-
 ```{r, fig.height=4, fig.width=4}
 plot(data,type='l',
      ylab='Frequency of Family Surnames',
@@ -459,9 +382,7 @@ plot(data,type='l',
 
 
 --- .modal
-
 ## Example 3: Power law
-
 ```{r, fig.height=4, fig.width=4}
 plot(data,type='p',log='xy',
      ylab='Frequency of Family Surnames',
@@ -469,8 +390,7 @@ plot(data,type='p',log='xy',
      main='Log-log Plot of Family Surnames')  
 ```
 
---- .ul: build
-
+--- 
 ## References
 * Ledolter, Johannes. Data mining and business analytics with R. John Wiley & Sons, 2013.
 * Conway, Drew, and John White. Machine learning for hackers. O'Reilly Media, Inc., 2012.
