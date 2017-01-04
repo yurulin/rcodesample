@@ -13,7 +13,6 @@ knit        : slidify::knit2slides
 --- #toc
 ## R Tutorials
 * [class01: Introduction](class01.html)
-* [class02: Regression](class02.html)
 * [R Lab: Part I](rlab01.html)
 * [R Lab: Part II](rlab02.html)
 
