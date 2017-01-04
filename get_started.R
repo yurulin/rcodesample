@@ -10,11 +10,14 @@ author("mydeck-DM-slides")
 
 ## Step 2: Edit Deck
 # add mystyle.css to mydeck-DM-slides/assets/css
+library(slidify)
 
 ## Step 3: Generate Deck
 slidify("index.Rmd")
 slidify("class01.Rmd")
 slidify("class02.Rmd")
+slidify("rlab01.Rmd")
+slidify("rlab02.Rmd")
 
 ## Step 4: Publish Deck
 publish(user = "yurulin", repo = "rcodesample", host = 'github')

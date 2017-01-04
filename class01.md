@@ -71,6 +71,7 @@ RSiteSearch("parsing text") # Search for the term 'parsing text' on the R site
 ![pic](assets/img/data_frame.png)
 
 *** =right
+
 ```r
 ## give the filename of your data; the file can be an URL
 data.file = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/01_heights_weights_genders.csv'
@@ -249,7 +250,7 @@ ggplot(heights.weights, aes(x = Height)) +
   geom_histogram(binwidth=1) 
 ```
 
-![plot of chunk unnamed-chunk-11](assets/fig/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-12](assets/fig/unnamed-chunk-12-1.png)
 
 ---  .modal
 ## Plotting
@@ -259,7 +260,7 @@ ggplot(heights.weights, aes(x = Height)) +
   geom_histogram(binwidth=0.5) # try different value for binwidth 
 ```
 
-![plot of chunk unnamed-chunk-12](assets/fig/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-13](assets/fig/unnamed-chunk-13-1.png)
 
 ---  .modal
 ## Plotting
@@ -269,7 +270,7 @@ ggplot(heights.weights, aes(x = Height)) +
   geom_density()
 ```
 
-![plot of chunk unnamed-chunk-13](assets/fig/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-14](assets/fig/unnamed-chunk-14-1.png)
 
 ---  .modal
 ## Plotting
@@ -281,7 +282,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
   geom_density(alpha = 0.5) 
 ```
 
-![plot of chunk unnamed-chunk-14](assets/fig/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-15](assets/fig/unnamed-chunk-15-1.png)
 
 ---  .modal
 ## Plotting
@@ -291,7 +292,7 @@ ggplot(heights.weights, aes(x = Weight)) +
   geom_density(alpha = 0.5) + facet_grid(Gender ~ .) 
 ```
 
-![plot of chunk unnamed-chunk-15](assets/fig/unnamed-chunk-15-1.png)
+![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
 
 ---  .modal
 ## Plotting
@@ -301,7 +302,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
   geom_density(alpha = 0.5) + facet_grid(Gender ~ .)  
 ```
 
-![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-17](assets/fig/unnamed-chunk-17-1.png)
 
 ---  .modal
 ## Plotting
@@ -311,7 +312,7 @@ ggplot(heights.weights, aes(x = Weight, fill = Gender)) +
 ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 ```
 
-![plot of chunk unnamed-chunk-17](assets/fig/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
 
 ---  .modal
 ## Plotting
@@ -320,7 +321,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point()
 ggplot(heights.weights, aes(x = Weight, y = Height, color = Gender)) + geom_point()
 ```
 
-![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
 
 ---  .modal
 ## Plotting
@@ -331,7 +332,7 @@ ggplot(heights.weights, aes(x = Weight, y = Height)) + geom_point(shape=1) + # u
               se=FALSE) # (by default includes 95% confidence region)  
 ```
 
-![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png)
 
 --- 
 
@@ -395,7 +396,7 @@ births.dow
 barchart(births.dow,ylab="Day of Week",col="black")
 ```
 
-![plot of chunk unnamed-chunk-23](assets/fig/unnamed-chunk-23-1.png)
+![plot of chunk unnamed-chunk-24](assets/fig/unnamed-chunk-24-1.png)
 
 
 --- .modal
@@ -409,7 +410,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK))) +
   coord_flip()
 ```
 
-![plot of chunk unnamed-chunk-24](assets/fig/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-25](assets/fig/unnamed-chunk-25-1.png)
 
 --- .modal
 ## Example 1
@@ -464,7 +465,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) +
   coord_flip()
 ```
 
-![plot of chunk unnamed-chunk-27](assets/fig/unnamed-chunk-27-1.png)
+![plot of chunk unnamed-chunk-28](assets/fig/unnamed-chunk-28-1.png)
 
 
 --- .modal
@@ -475,7 +476,7 @@ ggplot(data = births2006.smpl, aes(x=factor(DOB_WK),fill=factor(DMETH_REC) )) +
 histogram(~DBWT|DPLURAL,data=births2006.smpl,layout=c(1,5),col="black")
 ```
 
-![plot of chunk unnamed-chunk-28](assets/fig/unnamed-chunk-28-1.png)
+![plot of chunk unnamed-chunk-29](assets/fig/unnamed-chunk-29-1.png)
 
 
 --- .modal
@@ -487,18 +488,7 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~.,scales="free_y
   geom_histogram(binwidth=500)
 ```
 
-![plot of chunk unnamed-chunk-29](assets/fig/unnamed-chunk-29-1.png)
-
-
---- .modal
-## Example 1
-
-```r
-histogram(~DBWT|DMETH_REC,data=births2006.smpl,layout=c(1,3),col="black")
-```
-
 ![plot of chunk unnamed-chunk-30](assets/fig/unnamed-chunk-30-1.png)
-
 
 --- .modal
 ## Example 1
@@ -520,6 +510,16 @@ ggplot(data = births2006.smpl,aes(x=DBWT)) + facet_grid(DPLURAL~., scales="free_
 ```
 
 ![plot of chunk unnamed-chunk-32](assets/fig/unnamed-chunk-32-1.png)
+
+--- .modal
+## Example 1
+
+```r
+histogram(~DBWT|DMETH_REC,data=births2006.smpl,layout=c(1,3),col="black")
+```
+
+![plot of chunk unnamed-chunk-33](assets/fig/unnamed-chunk-33-1.png)
+What's the ggplot way of doing it?
 
 --- #example2 .modal
 ## Example 2: thin-tailed v. heavy-tailed
@@ -555,7 +555,7 @@ ggplot(data=D, aes(x=X, linetype=distribution)) +
   scale_x_continuous(limits = c(-6, 6))
 ```
 
-![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-35](assets/fig/unnamed-chunk-35-1.png)
 
 --- #example3 .modal
 ## Example 3: Power law
@@ -590,7 +590,7 @@ data = sort(data,decreasing=TRUE)
 hist(data,xlab='Number of Family Surnames',main='Histogram of Family Surnames')
 ```
 
-![plot of chunk unnamed-chunk-36](assets/fig/unnamed-chunk-36-1.png)
+![plot of chunk unnamed-chunk-37](assets/fig/unnamed-chunk-37-1.png)
 
 
 --- .modal
@@ -603,7 +603,7 @@ plot(data,type='l',
      main='Plot of Family Surnames')
 ```
 
-![plot of chunk unnamed-chunk-37](assets/fig/unnamed-chunk-37-1.png)
+![plot of chunk unnamed-chunk-38](assets/fig/unnamed-chunk-38-1.png)
 
 
 --- .modal
@@ -616,7 +616,7 @@ plot(data,type='p',log='xy',
      main='Log-log Plot of Family Surnames')  
 ```
 
-![plot of chunk unnamed-chunk-38](assets/fig/unnamed-chunk-38-1.png)
+![plot of chunk unnamed-chunk-39](assets/fig/unnamed-chunk-39-1.png)
 
 --- 
 ## References

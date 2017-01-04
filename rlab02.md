@@ -15,9 +15,9 @@ knit        : slidify::knit2slides
 
 * [Review the Basics](rlab01.html)
 * [Plotting](#plot)
+* [More about Functions](#functions)
 * [Errors & Debugging](#debug)
 * [Manipulating Data](#dataframe)
-* [More about Functions](#functions)
 * [References](#ref)
 
 --- #intro
@@ -39,6 +39,15 @@ In this R Lab class, I will point you to several wonderful online resources (see
 * What's gone wrong with this code? Why are the points not blue?
 `ggplot(data = mpg) + geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))`
 
+--- #functions
+## More about Functions
+**Exercise**
+* [Functions](https://bookdown.org/rdpeng/rprogdatascience/functions.html)
+
+**Learning check**
+* Can you write a function called `PrintHelloWorld` that prints the message "Hello, world!" to the console a number of times indicated by an argument `num`?
+
+
 --- #debug
 ## Errors & Debugging
 **Exercise**
@@ -56,10 +65,6 @@ In this R Lab class, I will point you to several wonderful online resources (see
 **Further reading**
 * [Manipulating Data](http://www.cookbook-r.com/Manipulating_data/)
 
---- #functions
-## More about Functions
-**Exercise**
-* [Functions](https://bookdown.org/rdpeng/rprogdatascience/functions.html)
 
 --- #ref
 ## References

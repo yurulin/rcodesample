@@ -105,6 +105,9 @@ In this R Lab class, I will point you to several wonderful online resources (see
 * How do you take the square root, find e raised to each number, the logarithm, etc., of a number?
 * How do you sort the given vector in either ascending or descending order?
 
+--- 
+## Basic Operations & Numerical Descriptions
+
 **Further reading**
 * [Vectorized Operations](https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html)
 
