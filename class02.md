@@ -527,7 +527,7 @@ head(states)
 ## Colorado      6.8       2541        0.7   4884   166
 ```
 
---- .modal
+--- .modal .compact .scode
 
 ## Examining data 
 

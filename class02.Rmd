@@ -332,7 +332,7 @@ states = as.data.frame(state.x77[,c("Murder", "Population",
 head(states)
 ```
 
---- .modal
+--- .modal .compact .scode
 
 ## Examining data 
 ```{r}
