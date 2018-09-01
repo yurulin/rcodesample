@@ -612,7 +612,7 @@ ggplot(df0 , aes(x = X, y = Y)) +
 
 --- .sscode-nowrap .compact
 
-## Plot Non-linear Data
+## Plot Non-linear Data (degree=3)
 
 ```{r, fig.height=4, fig.width=4}
 poly.fit <- lm(Y ~ poly(X, degree = 3), data = df)
@@ -623,7 +623,7 @@ ggplot(df0 , aes(x = X, y = Y)) +
 
 --- .sscode-nowrap .compact
 
-## Plot Non-linear Data
+## Plot Non-linear Data (degree=5)
 
 ```{r, fig.height=4, fig.width=4}
 poly.fit <- lm(Y ~ poly(X, degree = 5), data = df)
@@ -634,13 +634,50 @@ ggplot(df0 , aes(x = X, y = Y)) +
 
 --- .sscode-nowrap .compact
 
-## Plot Non-linear Data
-
-model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data
+## Plot Non-linear Data (degree=25)
 
 ```{r, fig.height=4, fig.width=4}
 poly.fit <- lm(Y ~ poly(X, degree = 25), data = df)
 df <- transform(df, PredictedY = predict(poly.fit))
 ggplot(df0 , aes(x = X, y = Y)) +
   geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
+
+model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data
+
+--- .sscode-nowrap .compact
+## Cross-validation
+
+```{r, fig.height=3, fig.width=4}
+## split our data into a training set and test set
+n <- length(x)
+indices <- sort(sample(1:n, round (0.5 * n)))
+training.x <- x[indices]
+training.y <- y[indices]
+test.x <- x[-indices]
+test.y <- y[-indices]
+training.df <- data.frame(X = training.x, Y = training.y)
+test.df <- data.frame(X = test.x, Y = test.y)
+## use RMSE to measure the performance
+rmse <- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over a set of polynomial degrees (from 1 to 12)
+performance <- data.frame()
+for (d in 1:12) {
+  poly.fit <- lm(Y ~ poly(X, degree = d), data = training.df)
+  performance <- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = 'Training ',
+                                  RMSE = rmse(training.y, predict(poly.fit))))
+  performance <- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = 'Test ',
+                                  RMSE = rmse(test.y, predict(poly.fit ,
+                                                              newdata = test.df))))
+}
+## plot the performance of the polynomial regression models for all the degrees
+ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
+  geom_point() +
+  geom_line()
 ```

@@ -1276,7 +1276,7 @@ ggplot(df0 , aes(x = X, y = Y)) +
 </section>
 <section class="slide sscode-nowrap compact" id="slide-47">
   <div>
-    <h2>Plot Non-linear Data</h2>
+    <h2>Plot Non-linear Data (degree=3)</h2>
     <pre><code class="r">poly.fit &lt;- lm(Y ~ poly(X, degree = 3), data = df)
 df &lt;- transform(df, PredictedY = predict(poly.fit))
 ggplot(df0 , aes(x = X, y = Y)) +
@@ -1289,7 +1289,7 @@ ggplot(df0 , aes(x = X, y = Y)) +
 </section>
 <section class="slide sscode-nowrap compact" id="slide-48">
   <div>
-    <h2>Plot Non-linear Data</h2>
+    <h2>Plot Non-linear Data (degree=5)</h2>
     <pre><code class="r">poly.fit &lt;- lm(Y ~ poly(X, degree = 5), data = df)
 df &lt;- transform(df, PredictedY = predict(poly.fit))
 ggplot(df0 , aes(x = X, y = Y)) +
@@ -1302,16 +1302,56 @@ ggplot(df0 , aes(x = X, y = Y)) +
 </section>
 <section class="slide sscode-nowrap compact" id="slide-49">
   <div>
-    <h2>Plot Non-linear Data</h2>
-    <p>model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data</p>
-
-<pre><code class="r">poly.fit &lt;- lm(Y ~ poly(X, degree = 25), data = df)
+    <h2>Plot Non-linear Data (degree=25)</h2>
+    <pre><code class="r">poly.fit &lt;- lm(Y ~ poly(X, degree = 25), data = df)
 df &lt;- transform(df, PredictedY = predict(poly.fit))
 ggplot(df0 , aes(x = X, y = Y)) +
   geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
 </code></pre>
 
 <p><img src="assets/fig/unnamed-chunk-47-1.png" alt="plot of chunk unnamed-chunk-47"></p>
+
+<p>model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data</p>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-50">
+  <div>
+    <h2>Cross-validation</h2>
+    <pre><code class="r">## split our data into a training set and test set
+n &lt;- length(x)
+indices &lt;- sort(sample(1:n, round (0.5 * n)))
+training.x &lt;- x[indices]
+training.y &lt;- y[indices]
+test.x &lt;- x[-indices]
+test.y &lt;- y[-indices]
+training.df &lt;- data.frame(X = training.x, Y = training.y)
+test.df &lt;- data.frame(X = test.x, Y = test.y)
+## use RMSE to measure the performance
+rmse &lt;- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over a set of polynomial degrees (from 1 to 12)
+performance &lt;- data.frame()
+for (d in 1:12) {
+  poly.fit &lt;- lm(Y ~ poly(X, degree = d), data = training.df)
+  performance &lt;- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = &#39;Training &#39;,
+                                  RMSE = rmse(training.y, predict(poly.fit))))
+  performance &lt;- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = &#39;Test &#39;,
+                                  RMSE = rmse(test.y, predict(poly.fit ,
+                                                              newdata = test.df))))
+}
+## plot the performance of the polynomial regression models for all the degrees
+ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
+  geom_point() +
+  geom_line()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-48-1.png" alt="plot of chunk unnamed-chunk-48"></p>
 
   </div>
 </section>
