@@ -298,8 +298,6 @@ plot(fit)
    * If the dependent variable is linearly related to the independent variables, there should be no systematic relationship between the residuals and the predicted (that is, fitted) values. 
    * In other words, the model should capture all the systematic variance present in the data, leaving nothing but random noise. 
    * In the **Residuals vs Fitted** graph (upper left), you see clear evidence of a curved relationship, which suggests that you may want to add a quadratic term to the regression.
-* Homoscedasticity
-   * If you've met the constant variance assumption, the points in the **Scale-Location** graph (bottom left) should be a random band around a horizontal line. You seem to meet this assumption.
 
 *** =right
 ```{r, echo=FALSE, fig.height=5, fig.width=5}
@@ -420,7 +418,7 @@ You start with all four predictors in the model. For each step, the AIC column p
 Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
 Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
 
---- &twocolvar w1:60% w2:40% .compact .scode-nowrap
+--- &twocolvar w1:60% w2:40% .compact .sscode-nowrap
 
 ## Variable selection
 
