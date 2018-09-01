@@ -20,9 +20,9 @@ knit        : slidify::knit2slides
 * [Polynomial regression](#polynomial-regression)
 * [Non-linear Data](#non-linear)
 * [Cross-validation](#cross-validation)
-* Regularization
-* Local Polynomial Regression
-* LASSO
+* [Regularization](#regularization)
+* [Local Polynomial Regression](#local-poly)
+* [LASSO](#lasso)
 
 --- #set-up .modal 
 
@@ -1433,3 +1433,152 @@ coef(glmnet.fit , s = best.lambda)
 ## 9            .          
 ## 10           .
 ```
+
+--- .scode-nowrap .compact
+## Local Polynomial Regression
+
+
+```r
+library(locfit)
+```
+
+```
+## Error in library(locfit): there is no package called 'locfit'
+```
+
+```r
+## first we read in the data
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+ethanol <- read.csv(sprintf ("%s/ethanol.csv",data.url))
+colnames(ethanol) <- c('NOx','C','E')
+ethanol [1:3,]
+```
+
+```
+##     NOx  C     E
+## 1 3.741 12 0.907
+## 2 2.295 12 0.761
+## 3 1.498 12 1.108
+```
+
+--- .scode-nowrap .compact
+## Local Polynomial Regression
+
+
+```r
+## standard regression of NOx on the equivalence ratio dosen't work
+fitreg=lm(NOx~E,data=ethanol)
+plot(NOx~E,data=ethanol)
+abline(fitreg)
+```
+
+![plot of chunk unnamed-chunk-55](assets/fig/unnamed-chunk-55-1.png)
+
+--- .scode-nowrap .compact
+## Local Polynomial Regression
+
+
+```r
+## local polynomial regression of NOx on the equivalence ratio
+## fit with a 50% nearest neighbor bandwidth.
+fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)
+```
+
+```
+## Error in locfit(NOx ~ lp(E, nn = 0.5), data = ethanol): could not find function "locfit"
+```
+
+```r
+plot(fit)
+```
+
+![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-1.png)![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-2.png)![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-3.png)![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-4.png)
+
+--- .scode-nowrap .compact
+## Local Polynomial Regression
+
+
+```r
+## cross-validation
+alpha <-seq(0.20,1,by=0.01)
+n1=length(alpha)
+g=matrix(nrow=n1,ncol=4)
+for (k in 1:length(alpha)) {
+  g[k,]<-gcv(NOx~lp(E,nn=alpha[k]),data=ethanol)
+}
+```
+
+```
+## Error in gcv(NOx ~ lp(E, nn = alpha[k]), data = ethanol): could not find function "gcv"
+```
+
+```r
+head(g) 
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]   NA   NA   NA   NA
+## [2,]   NA   NA   NA   NA
+## [3,]   NA   NA   NA   NA
+## [4,]   NA   NA   NA   NA
+## [5,]   NA   NA   NA   NA
+## [6,]   NA   NA   NA   NA
+```
+
+
+--- .scode-nowrap .compact
+## Local Polynomial Regression
+
+
+```r
+plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
+```
+
+```
+## Warning in min(x): no non-missing arguments to min; returning Inf
+```
+
+```
+## Warning in max(x): no non-missing arguments to max; returning -Inf
+```
+
+```
+## Warning in min(x): no non-missing arguments to min; returning Inf
+```
+
+```
+## Warning in max(x): no non-missing arguments to max; returning -Inf
+```
+
+```
+## Error in plot.window(...): need finite 'xlim' values
+```
+
+![plot of chunk unnamed-chunk-58](assets/fig/unnamed-chunk-58-1.png)
+
+
+--- .scode-nowrap .compact
+## Local Polynomial Regression
+
+
+```r
+f1=locfit(NOx~lp(E,nn=0.30),data=ethanol)
+```
+
+```
+## Error in locfit(NOx ~ lp(E, nn = 0.3), data = ethanol): could not find function "locfit"
+```
+
+```r
+f1; plot(f1)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'f1' not found
+```
+
+```
+## Error in plot(f1): object 'f1' not found
+```
+
