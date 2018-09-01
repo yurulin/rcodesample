@@ -196,82 +196,10 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 ### Understand the summary
 
 *** =left
-**Is the model statistically significant?**
+**(1) Is the model statistically significant?**
 
-1. Check the **F statistic** at the bottom of the summary.
-2. The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance. (Further reading: F-statistic [1](http://www.statisticshowto.com/f-statistic/), [2](https://onlinecourses.science.psu.edu/stat501/node/295).)
-
-*** =right
-
-```
-## 
-## Call:
-## lm(formula = weight ~ height, data = women)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
-## height        3.45000    0.09114   37.85 1.09e-14 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.525 on 13 degrees of freedom
-## Multiple R-squared:  0.991,	Adjusted R-squared:  0.9903 
-## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
-```
-
---- &twocolvar w1:50% w2:50% .compact .scode
-
-### Understand the summary
-
-*** =left
-**Are the coefficients significant?**
-
-   1. Check the coefficient's **t statistics** and **p-values** in the summary, or check their confidence intervals.
-   2. If a variable's coefficient is zero then the variable is worthless; it adds nothing to the model. 
-   3. The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.
-   4. The regression coefficient (3.45) is significantly different from zero (p < 0.001).
-
-*** =right
-
-```
-## 
-## Call:
-## lm(formula = weight ~ height, data = women)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
-## height        3.45000    0.09114   37.85 1.09e-14 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.525 on 13 degrees of freedom
-## Multiple R-squared:  0.991,	Adjusted R-squared:  0.9903 
-## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
-```
-
-
-
---- &twocolvar w1:60% w2:50% .compact .scode
-
-### Understand the summary
-
-*** =left
-**Is the model useful?**
-
-   1. Check the **R-squared** near the bottom of the summary.
-   2. R-squared is a measure of the model's quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.
-   3. The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value. (Further reading: Correlation and R-Squared [1](http://mathworld.wolfram.com/CorrelationCoefficient.html), [2](https://economictheoryblog.com/2014/11/05/the-coefficient-of-determination-latex-r2/), [3](http://www.win-vector.com/blog/2011/11/correlation-and-r-squared/).)
-   4. The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.
+* Check the **F statistic** at the bottom of the summary.
+* The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance. (Further reading: F-statistic [1](http://www.statisticshowto.com/f-statistic/), [2](https://onlinecourses.science.psu.edu/stat501/node/295).)
 
 *** =right
 
@@ -301,10 +229,10 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 ### Understand the summary
 
 *** =left
-**Does the model fit the data well?**
+**(2) Are the coefficients significant?**
 
-   1. Plot the residuals and check the regression diagnostics.
-   2. The residual standard error (1.53 lbs.) can be thought of as the average error in predicting weight from height using this model. 
+   * Check the coefficient's **t statistics** and **p-values** in the summary, or check their confidence intervals.
+   * If a variable's coefficient is zero then the variable is worthless; it adds nothing to the model. 
 
 *** =right
 
@@ -334,7 +262,139 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 ### Understand the summary
 
 *** =left
-**Does the data satisfy the assumptions behind linear regression?**
+**(2) Are the coefficients significant?**
+
+   * The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.
+   * The regression coefficient (3.45) is significantly different from zero (p < 0.001).
+
+*** =right
+
+```
+## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,	Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(3) Is the model useful?**
+
+   * Check the **R-squared** near the bottom of the summary.
+   * R-squared is a measure of the model's quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.
+
+*** =right
+
+```
+## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,	Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(3) Is the model useful?**
+
+   * The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value. (Further reading: Correlation and R-Squared [1](http://mathworld.wolfram.com/CorrelationCoefficient.html), [2](https://economictheoryblog.com/2014/11/05/the-coefficient-of-determination-latex-r2/), [3](http://www.win-vector.com/blog/2011/11/correlation-and-r-squared/).)
+   * The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.
+
+*** =right
+
+```
+## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,	Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(4) Does the model fit the data well?**
+
+   * Plot the residuals and check the regression diagnostics.
+   * The residual standard error (1.53 lbs.) can be thought of as the average error in predicting weight from height using this model. 
+
+*** =right
+
+```
+## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,	Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(5) Does the data satisfy the assumptions behind linear regression?**
 
    * Check whether the diagnostics confirm that a linear model is reasonable for your data.
    * If the residuals have a normal distribution, then the first quartile (1Q) and third quartile (3Q) should have about the same magnitude.
@@ -372,7 +432,7 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 plot(density(resid(fit)))
 ```
 
-![plot of chunk unnamed-chunk-14](assets/fig/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
 
 
 --- &twocolvar w1:40% w2:60% .compact .scode
@@ -416,7 +476,7 @@ qqnorm(resid(fit)) # a quantile normal plot
 qqline(resid(fit))
 ```
 
-![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
 
 --- .modal
 
@@ -429,7 +489,7 @@ par(mfrow=c(2,2))
 plot(fit)
 ```
 
-![plot of chunk unnamed-chunk-17](assets/fig/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -440,7 +500,7 @@ plot(fit)
    * The **Normal Q-Q plot** (upper right) is a probability plot of the standardized residuals against the values that would be expected under normality. If you've met the normality assumption, the points on this graph should fall on the straight 45-degree line. If they don't, you've clearly violated the normality assumption.
 
 *** =right
-![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -450,7 +510,7 @@ plot(fit)
    * You have to use your understanding of how the data were collected. There's no a priori reason to believe that one woman's weight influences another woman's weight. If you found out that the data were sampled from families, you may have to adjust your assumption of independence.
 
 *** =right
-![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-21](assets/fig/unnamed-chunk-21-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -464,7 +524,7 @@ plot(fit)
    * If you've met the constant variance assumption, the points in the **Scale-Location** graph (bottom left) should be a random band around a horizontal line. You seem to meet this assumption.
 
 *** =right
-![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png)
+![plot of chunk unnamed-chunk-22](assets/fig/unnamed-chunk-22-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -474,7 +534,7 @@ plot(fit)
    * If you've met the constant variance assumption, the points in the **Scale-Location** graph (bottom left) should be a random band around a horizontal line. You seem to meet this assumption.
 
 *** =right
-![plot of chunk unnamed-chunk-21](assets/fig/unnamed-chunk-21-1.png)
+![plot of chunk unnamed-chunk-23](assets/fig/unnamed-chunk-23-1.png)
 
 --- #multiple-linear-regression .modal
 
@@ -524,7 +584,7 @@ scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
                   main="Scatter Plot Matrix")
 ```
 
-![plot of chunk unnamed-chunk-24](assets/fig/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-26](assets/fig/unnamed-chunk-26-1.png)
 
 --- .modal
 
@@ -880,7 +940,7 @@ plot(women$height,women$weight,
 lines(women$height,fitted(fit2))
 ```
 
-![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-36](assets/fig/unnamed-chunk-36-1.png)
 
 
 --- &twocolvar w1:48% w2:50% .compact .sscode
@@ -928,7 +988,7 @@ df = data.frame(X = x, Y = y)
 ggplot(df, aes(x = X, y = Y)) + geom_point()
 ```
 
-![plot of chunk unnamed-chunk-36](assets/fig/unnamed-chunk-36-1.png)
+![plot of chunk unnamed-chunk-38](assets/fig/unnamed-chunk-38-1.png)
 
 --- .scode 
 
@@ -970,7 +1030,7 @@ ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
   geom_smooth(method = 'lm', se = FALSE)
 ```
 
-![plot of chunk unnamed-chunk-38](assets/fig/unnamed-chunk-38-1.png)
+![plot of chunk unnamed-chunk-40](assets/fig/unnamed-chunk-40-1.png)
 
 --- .scode 
 

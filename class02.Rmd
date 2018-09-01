@@ -117,50 +117,10 @@ summary(fit)
 ### Understand the summary
 
 *** =left
-**Is the model statistically significant?**
+**(1) Is the model statistically significant?**
 
-1. Check the **F statistic** at the bottom of the summary.
-2. The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance. (Further reading: F-statistic [1](http://www.statisticshowto.com/f-statistic/), [2](https://onlinecourses.science.psu.edu/stat501/node/295).)
-
-*** =right
-```{r, echo=FALSE}
-## perform linear regression
-fit = lm(weight ~ height, data=women)
-summary(fit)
-```
-
---- &twocolvar w1:50% w2:50% .compact .scode
-
-### Understand the summary
-
-*** =left
-**Are the coefficients significant?**
-
-   1. Check the coefficient's **t statistics** and **p-values** in the summary, or check their confidence intervals.
-   2. If a variable's coefficient is zero then the variable is worthless; it adds nothing to the model. 
-   3. The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.
-   4. The regression coefficient (3.45) is significantly different from zero (p < 0.001).
-
-*** =right
-```{r, echo=FALSE}
-## perform linear regression
-fit = lm(weight ~ height, data=women)
-summary(fit)
-```
-
-
-
---- &twocolvar w1:60% w2:50% .compact .scode
-
-### Understand the summary
-
-*** =left
-**Is the model useful?**
-
-   1. Check the **R-squared** near the bottom of the summary.
-   2. R-squared is a measure of the model's quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.
-   3. The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value. (Further reading: Correlation and R-Squared [1](http://mathworld.wolfram.com/CorrelationCoefficient.html), [2](https://economictheoryblog.com/2014/11/05/the-coefficient-of-determination-latex-r2/), [3](http://www.win-vector.com/blog/2011/11/correlation-and-r-squared/).)
-   4. The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.
+* Check the **F statistic** at the bottom of the summary.
+* The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance. (Further reading: F-statistic [1](http://www.statisticshowto.com/f-statistic/), [2](https://onlinecourses.science.psu.edu/stat501/node/295).)
 
 *** =right
 ```{r, echo=FALSE}
@@ -174,10 +134,10 @@ summary(fit)
 ### Understand the summary
 
 *** =left
-**Does the model fit the data well?**
+**(2) Are the coefficients significant?**
 
-   1. Plot the residuals and check the regression diagnostics.
-   2. The residual standard error (1.53 lbs.) can be thought of as the average error in predicting weight from height using this model. 
+   * Check the coefficient's **t statistics** and **p-values** in the summary, or check their confidence intervals.
+   * If a variable's coefficient is zero then the variable is worthless; it adds nothing to the model. 
 
 *** =right
 ```{r, echo=FALSE}
@@ -191,7 +151,75 @@ summary(fit)
 ### Understand the summary
 
 *** =left
-**Does the data satisfy the assumptions behind linear regression?**
+**(2) Are the coefficients significant?**
+
+   * The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.
+   * The regression coefficient (3.45) is significantly different from zero (p < 0.001).
+
+*** =right
+```{r, echo=FALSE}
+## perform linear regression
+fit = lm(weight ~ height, data=women)
+summary(fit)
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(3) Is the model useful?**
+
+   * Check the **R-squared** near the bottom of the summary.
+   * R-squared is a measure of the model's quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.
+
+*** =right
+```{r, echo=FALSE}
+## perform linear regression
+fit = lm(weight ~ height, data=women)
+summary(fit)
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(3) Is the model useful?**
+
+   * The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value. (Further reading: Correlation and R-Squared [1](http://mathworld.wolfram.com/CorrelationCoefficient.html), [2](https://economictheoryblog.com/2014/11/05/the-coefficient-of-determination-latex-r2/), [3](http://www.win-vector.com/blog/2011/11/correlation-and-r-squared/).)
+   * The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.
+
+*** =right
+```{r, echo=FALSE}
+## perform linear regression
+fit = lm(weight ~ height, data=women)
+summary(fit)
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(4) Does the model fit the data well?**
+
+   * Plot the residuals and check the regression diagnostics.
+   * The residual standard error (1.53 lbs.) can be thought of as the average error in predicting weight from height using this model. 
+
+*** =right
+```{r, echo=FALSE}
+## perform linear regression
+fit = lm(weight ~ height, data=women)
+summary(fit)
+```
+
+--- &twocolvar w1:40% w2:60% .compact .scode
+
+### Understand the summary
+
+*** =left
+**(5) Does the data satisfy the assumptions behind linear regression?**
 
    * Check whether the diagnostics confirm that a linear model is reasonable for your data.
    * If the residuals have a normal distribution, then the first quartile (1Q) and third quartile (3Q) should have about the same magnitude.
