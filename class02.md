@@ -766,7 +766,7 @@ You start with all four predictors in the model. For each step, the AIC column p
 Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
 Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
 
---- &twocolvar w1:60% w2:40% .compact .sscode-nowrap
+--- &twocolvar w1:40% w2:60% .compact .sscode-nowrap
 
 ## Variable selection
 
