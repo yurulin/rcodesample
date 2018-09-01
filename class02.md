@@ -1088,9 +1088,15 @@ summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13
 ## F-statistic: 465.2 on 13 and 87 DF,  p-value: < 2.2e-16
 ```
 
---- .sscode .compact
+--- &twocolvar w1:30% w2:70% .compact .sscode-nowrap
 
 ## Non-linear Data
+
+*** =left
+* new feature correlated with the old columns
+* the linear regression breaks down and can't find coefficients for all of the columns separately
+
+*** =right
 
 ```
 ## 
@@ -1124,6 +1130,112 @@ summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13
 ## Multiple R-squared:  0.9858,	Adjusted R-squared:  0.9837 
 ## F-statistic: 465.2 on 13 and 87 DF,  p-value: < 2.2e-16
 ```
-* new feature correlated with the old columns
-* the linear regression breaks down and can't find coefficients for all of the columns separately
 
+--- .sscode-nowrap .compact
+
+## Non-linear Data
+
+
+```r
+## use 'poly' function
+## similar to X + X^2 + X^3 + ... + X^14, but with orthogonal columns
+
+summary(lm(Y ~ poly(X, degree = 14), data = df))
+```
+
+```
+## 
+## Call:
+## lm(formula = Y ~ poly(X, degree = 14), data = df)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.232557 -0.042933  0.002159  0.051021  0.209959 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)             0.010167   0.009038   1.125   0.2638    
+## poly(X, degree = 14)1  -5.455362   0.090827 -60.063  < 2e-16 ***
+## poly(X, degree = 14)2  -0.039389   0.090827  -0.434   0.6656    
+## poly(X, degree = 14)3   4.418054   0.090827  48.642  < 2e-16 ***
+## poly(X, degree = 14)4  -0.047966   0.090827  -0.528   0.5988    
+## poly(X, degree = 14)5  -0.706451   0.090827  -7.778 1.48e-11 ***
+## poly(X, degree = 14)6  -0.204221   0.090827  -2.248   0.0271 *  
+## poly(X, degree = 14)7  -0.051341   0.090827  -0.565   0.5734    
+## poly(X, degree = 14)8  -0.031001   0.090827  -0.341   0.7337    
+## poly(X, degree = 14)9   0.077232   0.090827   0.850   0.3975    
+## poly(X, degree = 14)10  0.048088   0.090827   0.529   0.5979    
+## poly(X, degree = 14)11  0.129990   0.090827   1.431   0.1560    
+## poly(X, degree = 14)12  0.024726   0.090827   0.272   0.7861    
+## poly(X, degree = 14)13  0.023706   0.090827   0.261   0.7947    
+## poly(X, degree = 14)14  0.087906   0.090827   0.968   0.3358    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.09083 on 86 degrees of freedom
+## Multiple R-squared:  0.986,	Adjusted R-squared:  0.9837 
+## F-statistic: 431.7 on 14 and 86 DF,  p-value: < 2.2e-16
+```
+
+--- .sscode-nowrap .compact
+
+## Plot Non-linear Data
+
+
+```r
+## restore testing data
+x <- seq(0, 1, by = 0.01)
+y <- sin(2 * pi * x) + rnorm(length(x), 0, 0.1)
+df0 <- data.frame(X = x, Y = y)
+## using poly with degrees of 1, 3, 5, and 25
+poly.fit <- lm(Y ~ poly(X, degree = 1), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
+
+![plot of chunk unnamed-chunk-44](assets/fig/unnamed-chunk-44-1.png)
+
+--- .sscode-nowrap .compact
+
+## Plot Non-linear Data
+
+
+```r
+poly.fit <- lm(Y ~ poly(X, degree = 3), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
+
+![plot of chunk unnamed-chunk-45](assets/fig/unnamed-chunk-45-1.png)
+
+--- .sscode-nowrap .compact
+
+## Plot Non-linear Data
+
+
+```r
+poly.fit <- lm(Y ~ poly(X, degree = 5), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
+
+![plot of chunk unnamed-chunk-46](assets/fig/unnamed-chunk-46-1.png)
+
+--- .sscode-nowrap .compact
+
+## Plot Non-linear Data
+
+model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data
+
+
+```r
+poly.fit <- lm(Y ~ poly(X, degree = 25), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
+
+![plot of chunk unnamed-chunk-47](assets/fig/unnamed-chunk-47-1.png)
