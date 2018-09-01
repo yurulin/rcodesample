@@ -29,8 +29,9 @@ knit        : slidify::knit2slides
 ## Install R packages
 
 ```r
-## this tutorial uses example data from the 'nutshell' package
+## this tutorial uses the following packages
 install.packages('nutshell') 
+install.packages('locfit')
 ```
 
 --- #simple-regression .modal 
