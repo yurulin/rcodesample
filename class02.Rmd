@@ -119,8 +119,9 @@ summary(fit)
 *** =left
 **Is the model statistically significant?**
 
-* Check the **F statistic** at the bottom of the summary.
-* The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance.
+1. Check the **F statistic** at the bottom of the summary.
+2. The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance.
+3. Further reading: F-statistic [1](http://www.statisticshowto.com/f-statistic/), [2](https://onlinecourses.science.psu.edu/stat501/node/295).
 
 *** =right
 ```{r, echo=FALSE}
