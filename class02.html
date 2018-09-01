@@ -258,18 +258,18 @@ summary(fit)
   <div>
     <h2>Understand the summary</h2>
       
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:50%'>
 <p><strong>Are the coefficients significant?</strong></p>
 
-<ul>
+<ol>
 <li>Check the coefficient&#39;s <strong>t statistics</strong> and <strong>p-values</strong> in the summary, or check their confidence intervals.</li>
 <li>If a variable&#39;s coefficient is zero then the variable is worthless; it adds nothing to the model. </li>
 <li>The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.</li>
 <li>The regression coefficient (3.45) is significantly different from zero (p &lt; 0.001).</li>
-</ul>
+</ol>
 
 </div>    
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:50%'>
   <pre><code>## 
 ## Call:
 ## lm(formula = weight ~ height, data = women)
@@ -297,18 +297,18 @@ summary(fit)
   <div>
     <h2>Understand the summary</h2>
       
-<div class='left' style='float:left;width:50%'>
+<div class='left' style='float:left;width:60%'>
 <p><strong>Is the model useful?</strong></p>
 
-<ul>
+<ol>
 <li>Check the <strong>R-squared</strong> near the bottom of the summary.</li>
 <li>R-squared is a measure of the model&#39;s quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.</li>
 <li>The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value.</li>
 <li>The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.</li>
-</ul>
+</ol>
 
 </div>    
-<div class='right' style='float:right;width:50%'>
+<div class='right' style='float:right;width:40%'>
   <pre><code>## 
 ## Call:
 ## lm(formula = weight ~ height, data = women)

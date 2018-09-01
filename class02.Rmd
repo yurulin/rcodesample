@@ -130,17 +130,17 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:50% w2:50% .compact .scode
 
 ### Understand the summary
 
 *** =left
 **Are the coefficients significant?**
 
-   * Check the coefficient's **t statistics** and **p-values** in the summary, or check their confidence intervals.
-   * If a variable's coefficient is zero then the variable is worthless; it adds nothing to the model. 
-   * The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.
-   * The regression coefficient (3.45) is significantly different from zero (p < 0.001).
+   1. Check the coefficient's **t statistics** and **p-values** in the summary, or check their confidence intervals.
+   2. If a variable's coefficient is zero then the variable is worthless; it adds nothing to the model. 
+   3. The p-value is a probability that the coefficient is not significant. Big is bad because it indicates a high likelihood of insignificance.
+   4. The regression coefficient (3.45) is significantly different from zero (p < 0.001).
 
 *** =right
 ```{r, echo=FALSE}
@@ -149,17 +149,19 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:50% w2:50% .compact .scode
+
+
+--- &twocolvar w1:60% w2:40% .compact .scode
 
 ### Understand the summary
 
 *** =left
 **Is the model useful?**
 
-   * Check the **R-squared** near the bottom of the summary.
-   * R-squared is a measure of the model's quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.
-   * The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value.
-   * The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.
+   1. Check the **R-squared** near the bottom of the summary.
+   2. R-squared is a measure of the model's quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.
+   3. The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value.
+   4. The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.
 
 *** =right
 ```{r, echo=FALSE}
