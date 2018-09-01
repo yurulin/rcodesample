@@ -255,7 +255,7 @@ qqline(resid(fit))
 
 ## Check statistical assumptions
 
-```{r, echo=TRUE, fig.height=5, fig.width=5}
+```{r, fig.height=5, fig.width=5}
 ## plot regression diagnostics
 par(mfrow=c(2,2))
 plot(fit)
