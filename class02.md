@@ -1240,7 +1240,7 @@ ggplot(df0 , aes(x = X, y = Y)) +
 
 model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data
 
---- #cross-validation .sscode-nowrap .compact
+--- &twocolvar w1:70% w2:30% #cross-validation .sscode-nowrap .compact
 ## Cross-validation
 
 
@@ -1279,6 +1279,8 @@ ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
 ```
 
 ![plot of chunk unnamed-chunk-48](assets/fig/unnamed-chunk-48-1.png)
+
+![plot of chunk unnamed-chunk-49](assets/fig/unnamed-chunk-49-1.png)
 
 --- #regularization .sscode-nowrap .compact
 ## Regularization
@@ -1398,7 +1400,7 @@ ggplot(performance , aes(x = Lambda , y = RMSE)) +
   geom_line()
 ```
 
-![plot of chunk unnamed-chunk-50](assets/fig/unnamed-chunk-50-1.png)
+![plot of chunk unnamed-chunk-51](assets/fig/unnamed-chunk-51-1.png)
 
 --- .sscode-nowrap .compact
 ## Regularization
