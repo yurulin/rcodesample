@@ -716,55 +716,6 @@ stepAIC(fit, direction="backward")
 ##   1.6515497    0.0002242    4.0807366
 ```
 
---- .sscode
-
-## Variable selection
-
-```
-## Start:  AIC=97.75
-## Murder ~ Population + Illiteracy + Income + Frost
-## 
-##              Df Sum of Sq    RSS     AIC
-## - Frost       1     0.021 289.19  95.753
-## - Income      1     0.057 289.22  95.759
-## <none>                    289.17  97.749
-## - Population  1    39.238 328.41 102.111
-## - Illiteracy  1   144.264 433.43 115.986
-## 
-## Step:  AIC=95.75
-## Murder ~ Population + Illiteracy + Income
-## 
-##              Df Sum of Sq    RSS     AIC
-## - Income      1     0.057 289.25  93.763
-## <none>                    289.19  95.753
-## - Population  1    43.658 332.85 100.783
-## - Illiteracy  1   236.196 525.38 123.605
-## 
-## Step:  AIC=93.76
-## Murder ~ Population + Illiteracy
-## 
-##              Df Sum of Sq    RSS     AIC
-## <none>                    289.25  93.763
-## - Population  1    48.517 337.76  99.516
-## - Illiteracy  1   299.646 588.89 127.311
-```
-
-```
-## 
-## Call:
-## lm(formula = Murder ~ Population + Illiteracy, data = states)
-## 
-## Coefficients:
-## (Intercept)   Population   Illiteracy  
-##   1.6515497    0.0002242    4.0807366
-```
-
---- .compact
-
-## Variable selection
-You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
-Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
-Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
 
 --- &twocolvar w1:40% w2:60% .compact .sscode-nowrap
 
@@ -957,10 +908,10 @@ plot(women$height,women$weight,
 lines(women$height,fitted(fit2))
 ```
 
-![plot of chunk unnamed-chunk-36](assets/fig/unnamed-chunk-36-1.png)
+![plot of chunk unnamed-chunk-35](assets/fig/unnamed-chunk-35-1.png)
 
 
---- &twocolvar w1:48% w2:50% .compact .sscode
+--- &twocolvar w1:48% w2:50% .compact .sscode-nowrap
 
 ## Polynomial regression
 
@@ -1005,7 +956,7 @@ df = data.frame(X = x, Y = y)
 ggplot(df, aes(x = X, y = Y)) + geom_point()
 ```
 
-![plot of chunk unnamed-chunk-38](assets/fig/unnamed-chunk-38-1.png)
+![plot of chunk unnamed-chunk-37](assets/fig/unnamed-chunk-37-1.png)
 
 --- .scode 
 
@@ -1047,7 +998,7 @@ ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
   geom_smooth(method = 'lm', se = FALSE)
 ```
 
-![plot of chunk unnamed-chunk-40](assets/fig/unnamed-chunk-40-1.png)
+![plot of chunk unnamed-chunk-39](assets/fig/unnamed-chunk-39-1.png)
 
 --- .scode 
 
@@ -1083,7 +1034,7 @@ summary(lm(Y ~ X + X2 + X3, data = df)) # R2 from 60% to 97%, by adding two more
 ## F-statistic:  1235 on 3 and 97 DF,  p-value: < 2.2e-16
 ```
 
---- .scode 
+--- .sscode-nowrap .compact
 
 ## Non-linear Data
 

@@ -804,58 +804,7 @@ stepAIC(fit, direction=&quot;backward&quot;)
 
   </div>
 </section>
-<section class="slide sscode" id="slide-32">
-  <div>
-    <h2>Variable selection</h2>
-    <pre><code>## Start:  AIC=97.75
-## Murder ~ Population + Illiteracy + Income + Frost
-## 
-##              Df Sum of Sq    RSS     AIC
-## - Frost       1     0.021 289.19  95.753
-## - Income      1     0.057 289.22  95.759
-## &lt;none&gt;                    289.17  97.749
-## - Population  1    39.238 328.41 102.111
-## - Illiteracy  1   144.264 433.43 115.986
-## 
-## Step:  AIC=95.75
-## Murder ~ Population + Illiteracy + Income
-## 
-##              Df Sum of Sq    RSS     AIC
-## - Income      1     0.057 289.25  93.763
-## &lt;none&gt;                    289.19  95.753
-## - Population  1    43.658 332.85 100.783
-## - Illiteracy  1   236.196 525.38 123.605
-## 
-## Step:  AIC=93.76
-## Murder ~ Population + Illiteracy
-## 
-##              Df Sum of Sq    RSS     AIC
-## &lt;none&gt;                    289.25  93.763
-## - Population  1    48.517 337.76  99.516
-## - Illiteracy  1   299.646 588.89 127.311
-</code></pre>
-
-<pre><code>## 
-## Call:
-## lm(formula = Murder ~ Population + Illiteracy, data = states)
-## 
-## Coefficients:
-## (Intercept)   Population   Illiteracy  
-##   1.6515497    0.0002242    4.0807366
-</code></pre>
-
-  </div>
-</section>
-<section class="slide compact" id="slide-33">
-  <div>
-    <h2>Variable selection</h2>
-    <p>You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
-Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
-Although stepwise selection may find a good model, there&#39;s no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library <code>leaps</code>.)</p>
-
-  </div>
-</section>
-<section class="slide compact sscode-nowrap" id="slide-34">
+<section class="slide compact sscode-nowrap" id="slide-32">
   <div>
     <h2>Variable selection</h2>
       
@@ -908,7 +857,7 @@ Although stepwise selection may find a good model, there&#39;s no guarantee that
 </div>
   </div>
 </section>
-<section class="slide compact scode" id="slide-35">
+<section class="slide compact scode" id="slide-33">
   <div>
     <h2>Model performance</h2>
     <pre><code class="r">## compute R-squared for the woman data
@@ -939,7 +888,7 @@ summary(fit)
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-36">
+<section class="slide compact scode" id="slide-34">
   <div>
     <h2>Model performance</h2>
     <pre><code class="r">## compute R-squared for the woman data
@@ -967,7 +916,7 @@ r2
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-37">
+<section class="slide compact scode" id="slide-35">
   <div>
     <h2>Model performance</h2>
     <pre><code class="r">## leave-one-out cross validation
@@ -997,7 +946,7 @@ rmse ## root mean square error (out-of-sample)
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-38">
+<section class="slide compact scode" id="slide-36">
   <div>
     <h2>Polynomial regression</h2>
     <pre><code class="r">fit2 = lm(weight ~ height + I(height^2), data=women)
@@ -1027,7 +976,7 @@ summary(fit2)
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-39">
+<section class="slide compact scode" id="slide-37">
   <div>
     <h2>Polynomial regression</h2>
     <pre><code class="r">plot(women$height,women$weight,
@@ -1036,11 +985,11 @@ summary(fit2)
 lines(women$height,fitted(fit2))
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-36-1.png" alt="plot of chunk unnamed-chunk-36"></p>
+<p><img src="assets/fig/unnamed-chunk-35-1.png" alt="plot of chunk unnamed-chunk-35"></p>
 
   </div>
 </section>
-<section class="slide compact sscode" id="slide-40">
+<section class="slide compact sscode-nowrap" id="slide-38">
   <div>
     <h2>Polynomial regression</h2>
       
@@ -1074,7 +1023,7 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 </div>
   </div>
 </section>
-<section class="slide modal" id="slide-41">
+<section class="slide modal" id="slide-39">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## create testing data (sine wave)
@@ -1085,11 +1034,11 @@ df = data.frame(X = x, Y = y)
 ggplot(df, aes(x = X, y = Y)) + geom_point()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-38-1.png" alt="plot of chunk unnamed-chunk-38"></p>
+<p><img src="assets/fig/unnamed-chunk-37-1.png" alt="plot of chunk unnamed-chunk-37"></p>
 
   </div>
 </section>
-<section class="slide scode" id="slide-42">
+<section class="slide scode" id="slide-40">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## fit with linear regression
@@ -1118,7 +1067,7 @@ summary(lm(Y ~ X, data = df)) # explain 60% of the variance
 
   </div>
 </section>
-<section class="slide scode" id="slide-43">
+<section class="slide scode" id="slide-41">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
@@ -1126,11 +1075,11 @@ summary(lm(Y ~ X, data = df)) # explain 60% of the variance
   geom_smooth(method = &#39;lm&#39;, se = FALSE)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-40-1.png" alt="plot of chunk unnamed-chunk-40"></p>
+<p><img src="assets/fig/unnamed-chunk-39-1.png" alt="plot of chunk unnamed-chunk-39"></p>
 
   </div>
 </section>
-<section class="slide scode" id="slide-44">
+<section class="slide scode" id="slide-42">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## add new features
@@ -1163,7 +1112,7 @@ summary(lm(Y ~ X + X2 + X3, data = df)) # R2 from 60% to 97%, by adding two more
 
   </div>
 </section>
-<section class="slide scode" id="slide-45">
+<section class="slide sscode-nowrap compact" id="slide-43">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## add more features
@@ -1216,7 +1165,7 @@ summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13
 
   </div>
 </section>
-<section class="slide sscode compact" id="slide-46">
+<section class="slide sscode compact" id="slide-44">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code>## 

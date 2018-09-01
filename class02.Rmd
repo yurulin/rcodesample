@@ -400,23 +400,6 @@ fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
 stepAIC(fit, direction="backward")
 ```
 
---- .sscode
-
-## Variable selection
-```{r, echo=FALSE}
-## backward stepwise selection
-library(MASS)
-fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
-          data=states)
-stepAIC(fit, direction="backward")
-```
-
---- .compact
-
-## Variable selection
-You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
-Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
-Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
 
 --- &twocolvar w1:40% w2:60% .compact .sscode-nowrap
 
@@ -501,7 +484,7 @@ lines(women$height,fitted(fit2))
 ```
 
 
---- &twocolvar w1:48% w2:50% .compact .sscode
+--- &twocolvar w1:48% w2:50% .compact .sscode-nowrap
 
 ## Polynomial regression
 
@@ -554,7 +537,7 @@ df <- transform(df, X3 = X ^ 3)
 summary(lm(Y ~ X + X2 + X3, data = df)) # R2 from 60% to 97%, by adding two more inputs
 ```
 
---- .scode 
+--- .sscode-nowrap .compact
 
 ## Non-linear Data
 ```{r, fig.height=4, fig.width=4}
