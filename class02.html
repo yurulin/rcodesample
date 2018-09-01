@@ -1517,12 +1517,8 @@ coef(glmnet.fit , s = best.lambda)
   <div>
     <h2>Local Polynomial Regression</h2>
     <pre><code class="r">library(locfit)
-</code></pre>
 
-<pre><code>## Error in library(locfit): there is no package called &#39;locfit&#39;
-</code></pre>
-
-<pre><code class="r">## first we read in the data
+## first we read in the data
 data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
 ethanol &lt;- read.csv(sprintf (&quot;%s/ethanol.csv&quot;,data.url))
 colnames(ethanol) &lt;- c(&#39;NOx&#39;,&#39;C&#39;,&#39;E&#39;)

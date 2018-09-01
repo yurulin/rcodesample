@@ -767,7 +767,7 @@ coef(glmnet.fit , s = best.lambda)
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
-```{r, warning=FALSE}
+```{r}
 library(locfit)
 
 ## first we read in the data

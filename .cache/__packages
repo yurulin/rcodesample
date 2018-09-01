@@ -21,3 +21,4 @@ PerformanceAnalytics
 Matrix
 foreach
 glmnet
+locfit

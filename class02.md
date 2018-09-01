@@ -1441,13 +1441,7 @@ coef(glmnet.fit , s = best.lambda)
 
 ```r
 library(locfit)
-```
 
-```
-## Error in library(locfit): there is no package called 'locfit'
-```
-
-```r
 ## first we read in the data
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
 ethanol <- read.csv(sprintf ("%s/ethanol.csv",data.url))
