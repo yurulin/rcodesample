@@ -18,8 +18,8 @@ knit        : slidify::knit2slides
 * [Variable selection](#variable-selection)
 * [Model performance](#model-performance)
 * [Polynomial regression](#polynomial-regression)
-* Non-linear Data
-* Cross-validation
+* [Non-linear Data](#non-linear)
+* [Cross-validation](#cross-validation)
 * Regularization
 * Local Polynomial Regression
 * LASSO
@@ -866,7 +866,7 @@ rmse ## root mean square error (out-of-sample)
 ```
 
 
---- .compact .scode
+--- #polynomial-regression .compact .scode
 
 ## Polynomial regression
 
@@ -943,7 +943,7 @@ Both regression coefficients are significant at the p < 0.0001 level. The amount
 ## F-statistic: 1.139e+04 on 2 and 12 DF,  p-value: < 2.2e-16
 ```
 
---- .modal 
+--- #non-linear .modal 
 
 ## Non-linear Data
 
@@ -1240,7 +1240,7 @@ ggplot(df0 , aes(x = X, y = Y)) +
 
 model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data
 
---- .sscode-nowrap .compact
+--- #cross-validation .sscode-nowrap .compact
 ## Cross-validation
 
 
@@ -1279,3 +1279,151 @@ ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
 ```
 
 ![plot of chunk unnamed-chunk-48](assets/fig/unnamed-chunk-48-1.png)
+
+--- #regularization .sscode-nowrap .compact
+## Regularization
+
+
+
+```r
+lm.fit <- lm(y ~ x)
+l2.model.complexity <- sum(coef(lm.fit) ^ 2) # L2 norm (sum of squaring values)
+l1.model.complexity <- sum(abs(coef(lm.fit))) # L1 norm (sum of absolute values)
+library('glmnet')
+x <- matrix(x) ## input of glmnet has to be in matrix form
+glmnet(poly(x, degree = 2), y)
+```
+
+```
+## 
+## Call:  glmnet(x = poly(x, degree = 2), y = y) 
+## 
+##       Df   %Dev   Lambda
+##  [1,]  0 0.0000 0.535300
+##  [2,]  1 0.1009 0.487800
+##  [3,]  1 0.1847 0.444500
+##  [4,]  1 0.2543 0.405000
+##  [5,]  1 0.3120 0.369000
+##  [6,]  1 0.3599 0.336200
+##  [7,]  1 0.3997 0.306300
+##  [8,]  1 0.4328 0.279100
+##  [9,]  1 0.4602 0.254300
+## [10,]  1 0.4830 0.231700
+## [11,]  1 0.5019 0.211200
+## [12,]  1 0.5176 0.192400
+## [13,]  1 0.5306 0.175300
+## [14,]  1 0.5415 0.159700
+## [15,]  1 0.5504 0.145500
+## [16,]  1 0.5579 0.132600
+## [17,]  1 0.5641 0.120800
+## [18,]  1 0.5692 0.110100
+## [19,]  1 0.5735 0.100300
+## [20,]  1 0.5770 0.091400
+## [21,]  1 0.5800 0.083280
+## [22,]  1 0.5824 0.075880
+## [23,]  1 0.5845 0.069140
+## [24,]  1 0.5861 0.063000
+## [25,]  1 0.5875 0.057400
+## [26,]  1 0.5887 0.052300
+## [27,]  1 0.5897 0.047660
+## [28,]  1 0.5905 0.043420
+## [29,]  1 0.5911 0.039570
+## [30,]  1 0.5917 0.036050
+## [31,]  1 0.5921 0.032850
+## [32,]  1 0.5925 0.029930
+## [33,]  1 0.5928 0.027270
+## [34,]  1 0.5931 0.024850
+## [35,]  1 0.5933 0.022640
+## [36,]  1 0.5935 0.020630
+## [37,]  1 0.5936 0.018800
+## [38,]  1 0.5938 0.017130
+## [39,]  1 0.5939 0.015610
+## [40,]  1 0.5940 0.014220
+## [41,]  2 0.5940 0.012960
+## [42,]  2 0.5942 0.011810
+## [43,]  2 0.5943 0.010760
+## [44,]  2 0.5943 0.009801
+## [45,]  2 0.5944 0.008930
+## [46,]  2 0.5945 0.008137
+## [47,]  2 0.5945 0.007414
+## [48,]  2 0.5946 0.006755
+## [49,]  2 0.5946 0.006155
+## [50,]  2 0.5946 0.005608
+## [51,]  2 0.5946 0.005110
+## [52,]  2 0.5947 0.004656
+## [53,]  2 0.5947 0.004243
+## [54,]  2 0.5947 0.003866
+## [55,]  2 0.5947 0.003522
+## [56,]  2 0.5947 0.003209
+## [57,]  2 0.5947 0.002924
+## [58,]  2 0.5947 0.002664
+## [59,]  2 0.5947 0.002428
+```
+
+--- .sscode-nowrap .compact
+## Regularization
+
+
+```r
+## get an entire set of possible regularizations (from the strongest to the weakest).
+## Df: how many nonzero coefficients in the model;
+## %Dev: the R2 for this model; 
+## Lambda: controls how complex the model is (a.k.a. hyperparameter)
+
+## split it into a training set and a test set
+n <- length(x)
+indices <- sort(sample(1:n, round (0.5 * n)))
+training.x <- x[indices]
+training.y <- y[indices]
+test.x <- x[-indices]
+test.y <- y[-indices]
+df <- data.frame(X = x, Y = y)
+training.df <- data.frame(X = training.x, Y = training.y)
+test.df <- data.frame(X = test.x, Y = test.y)
+rmse <- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over values of Lambda
+glmnet.fit <- with(training.df, glmnet(poly(X, degree = 10), Y))
+lambdas <- glmnet.fit$lambda ## regularization parameter (sequence)
+performance <- data.frame()
+for (lambda in lambdas) {
+  performance <- rbind(performance ,
+                       data.frame(Lambda = lambda ,
+                                  RMSE = rmse(test.y, with(test.df, predict(glmnet.fit , poly(X, degree = 10), s = lambda)))))
+}
+## plot to see the model performance w.r.t. the range of lambdas
+ggplot(performance , aes(x = Lambda , y = RMSE)) +
+  geom_point() +
+  geom_line()
+```
+
+![plot of chunk unnamed-chunk-50](assets/fig/unnamed-chunk-50-1.png)
+
+--- .sscode-nowrap .compact
+## Regularization
+
+
+```r
+## we get the best possible performance with Lambda near 0.05; select that value and train our model
+best.lambda <- with(performance , Lambda[which(RMSE == min(RMSE))])
+glmnet.fit <- with(df, glmnet(poly(X, degree = 10), Y))
+## use coef to examine the structure of our regularized model
+coef(glmnet.fit , s = best.lambda)
+```
+
+```
+## 11 x 1 sparse Matrix of class "dgCMatrix"
+##                        1
+## (Intercept) -0.001051649
+## 1           -4.969723232
+## 2            .          
+## 3            3.914406028
+## 4            .          
+## 5           -0.028623213
+## 6            .          
+## 7            .          
+## 8            .          
+## 9            .          
+## 10           .
+```
