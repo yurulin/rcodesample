@@ -225,8 +225,7 @@ summary(fit)
 
 <ol>
 <li>Check the <strong>F statistic</strong> at the bottom of the summary.</li>
-<li>The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance.</li>
-<li>Further reading: F-statistic <a href="http://www.statisticshowto.com/f-statistic/">1</a>, <a href="https://onlinecourses.science.psu.edu/stat501/node/295">2</a>.</li>
+<li>The F statistic tells you whether the model is insignificant or significant. Big p-value indicates a high likelihood of insignificance. (Further reading: F-statistic <a href="http://www.statisticshowto.com/f-statistic/">1</a>, <a href="https://onlinecourses.science.psu.edu/stat501/node/295">2</a>.)</li>
 </ol>
 
 </div>    
@@ -303,7 +302,7 @@ summary(fit)
 <ol>
 <li>Check the <strong>R-squared</strong> near the bottom of the summary.</li>
 <li>R-squared is a measure of the model&#39;s quality -- the fraction of the variance of y that is explained by the regression model. Bigger is better.</li>
-<li>The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value.</li>
+<li>The multiple R-squared (0.991) indicates that the model accounts for 99.1 percent of the variance in weights. The multiple R-squared is also the squared correlation between the actual and predicted value. (Further reading: Correlation and R-Squared <a href="http://mathworld.wolfram.com/CorrelationCoefficient.html">1</a>, <a href="https://economictheoryblog.com/2014/11/05/the-coefficient-of-determination-latex-r2/">2</a>, <a href="http://www.win-vector.com/blog/2011/11/correlation-and-r-squared/">3</a>.)</li>
 <li>The adjusted value accounts for the number of variables in your model and so is a more realistic assessment of its effectiveness.</li>
 </ol>
 
@@ -339,10 +338,10 @@ summary(fit)
 <div class='left' style='float:left;width:40%'>
 <p><strong>Does the model fit the data well?</strong></p>
 
-<ul>
+<ol>
 <li>Plot the residuals and check the regression diagnostics.</li>
 <li>The residual standard error (1.53 lbs.) can be thought of as the average error in predicting weight from height using this model. </li>
-</ul>
+</ol>
 
 </div>    
 <div class='right' style='float:right;width:60%'>
@@ -369,18 +368,7 @@ summary(fit)
 </div>
   </div>
 </section>
-<section class="slide modal" id="slide-14">
-  <div>
-    <h2>Plot the residuals</h2>
-    <pre><code class="r">## plot the residuals and check if the residuals appear to be approximately normal
-plot(density(resid(fit)))
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13"></p>
-
-  </div>
-</section>
-<section class="slide compact scode" id="slide-15">
+<section class="slide compact scode" id="slide-14">
   <div>
     <h2>Understand the summary</h2>
       
@@ -417,18 +405,66 @@ plot(density(resid(fit)))
 </div>
   </div>
 </section>
-<section class="slide modal" id="slide-16">
+<section class="slide modal" id="slide-15">
+  <div>
+    <h2>Plot the residuals</h2>
+    <pre><code class="r">## plot the residuals and check if the residuals appear to be approximately normal
+plot(density(resid(fit)))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14"></p>
+
+  </div>
+</section>
+<section class="slide compact scode" id="slide-16">
+  <div>
+    <h2>Understand the summary</h2>
+      
+<div class='left' style='float:left;width:40%'>
+<p><strong>Does the data satisfy the assumptions behind linear regression?</strong></p>
+
+<ul>
+<li>Check whether the diagnostics confirm that a linear model is reasonable for your data.</li>
+<li>If the residuals have a normal distribution, then the first quartile (1Q) and third quartile (3Q) should have about the same magnitude.</li>
+</ul>
+
+</div>    
+<div class='right' style='float:right;width:60%'>
+  <pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14
+</code></pre>
+
+</div>
+  </div>
+</section>
+<section class="slide modal" id="slide-17">
   <div>
     <h2>Plot the residuals</h2>
     <pre><code class="r">qqnorm(resid(fit)) # a quantile normal plot 
 qqline(resid(fit))
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15"></p>
+<p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"></p>
 
   </div>
 </section>
-<section class="slide modal" id="slide-17">
+<section class="slide modal" id="slide-18">
   <div>
     <h2>Check statistical assumptions</h2>
     <pre><code class="r">## plot regression diagnostics
@@ -436,11 +472,11 @@ par(mfrow=c(2,2))
 plot(fit)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"></p>
+<p><img src="assets/fig/unnamed-chunk-17-1.png" alt="plot of chunk unnamed-chunk-17"></p>
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-18">
+<section class="slide compact scode" id="slide-19">
   <div>
     <h2>Check statistical assumptions</h2>
       
@@ -454,12 +490,12 @@ plot(fit)
 
 </div>    
 <div class='right' style='float:right;width:50%'>
-  <p><img src="assets/fig/unnamed-chunk-17-1.png" alt="plot of chunk unnamed-chunk-17"></p>
+  <p><img src="assets/fig/unnamed-chunk-18-1.png" alt="plot of chunk unnamed-chunk-18"></p>
 
 </div>
   </div>
 </section>
-<section class="slide compact scode" id="slide-19">
+<section class="slide compact scode" id="slide-20">
   <div>
     <h2>Check statistical assumptions</h2>
       
@@ -472,12 +508,12 @@ plot(fit)
 
 </div>    
 <div class='right' style='float:right;width:50%'>
-  <p><img src="assets/fig/unnamed-chunk-18-1.png" alt="plot of chunk unnamed-chunk-18"></p>
+  <p><img src="assets/fig/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19"></p>
 
 </div>
   </div>
 </section>
-<section class="slide compact scode" id="slide-20">
+<section class="slide compact scode" id="slide-21">
   <div>
     <h2>Check statistical assumptions</h2>
       
@@ -497,12 +533,12 @@ plot(fit)
 
 </div>    
 <div class='right' style='float:right;width:50%'>
-  <p><img src="assets/fig/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19"></p>
+  <p><img src="assets/fig/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20"></p>
 
 </div>
   </div>
 </section>
-<section class="slide compact scode" id="slide-21">
+<section class="slide compact scode" id="slide-22">
   <div>
     <h2>Check statistical assumptions</h2>
       
@@ -515,7 +551,7 @@ plot(fit)
 
 </div>    
 <div class='right' style='float:right;width:50%'>
-  <p><img src="assets/fig/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20"></p>
+  <p><img src="assets/fig/unnamed-chunk-21-1.png" alt="plot of chunk unnamed-chunk-21"></p>
 
 </div>
   </div>
@@ -540,7 +576,7 @@ head(states)
 
   </div>
 </section>
-<section class="slide modal" id="slide-23">
+<section class="slide modal" id="slide-24">
   <div>
     <h2>Examining data</h2>
     <pre><code class="r">cor(states)
@@ -556,7 +592,7 @@ head(states)
 
   </div>
 </section>
-<section class="slide modal" id="slide-24">
+<section class="slide modal" id="slide-25">
   <div>
     <h2>Examining data</h2>
     <pre><code class="r">## examining bivariate relationships using &#39;scatterplotMatrix&#39; in the &#39;car&#39; package
@@ -564,11 +600,11 @@ scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
                   main=&quot;Scatter Plot Matrix&quot;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-23-1.png" alt="plot of chunk unnamed-chunk-23"></p>
+<p><img src="assets/fig/unnamed-chunk-24-1.png" alt="plot of chunk unnamed-chunk-24"></p>
 
   </div>
 </section>
-<section class="slide modal" id="slide-25">
+<section class="slide modal" id="slide-26">
   <div>
     <h2>Multiple linear regression</h2>
     <pre><code class="r">fit = lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
@@ -601,7 +637,7 @@ summary(fit)
 
   </div>
 </section>
-<section class="slide compact scode-nowrap" id="slide-26">
+<section class="slide compact scode-nowrap" id="slide-27">
   <div>
     <h2>What does the result mean?</h2>
       
@@ -640,7 +676,7 @@ summary(fit)
 </div>
   </div>
 </section>
-<section class="slide compact scode-nowrap" id="slide-27">
+<section class="slide compact scode-nowrap" id="slide-28">
   <div>
     <h2>What does the result mean?</h2>
       
@@ -679,7 +715,7 @@ summary(fit)
 </div>
   </div>
 </section>
-<section class="slide compact" id="slide-28">
+<section class="slide compact" id="slide-29">
   <div>
     <h2>Variable selection</h2>
     <p><strong>Stepwise selection</strong>: variables are added to or deleted from a model one at a time.</p>
@@ -691,7 +727,7 @@ summary(fit)
 
   </div>
 </section>
-<section class="slide scode" id="slide-29">
+<section class="slide scode" id="slide-30">
   <div>
     <h2>Variable selection</h2>
     <pre><code class="r">## backward stepwise selection
@@ -740,7 +776,7 @@ stepAIC(fit, direction=&quot;backward&quot;)
 
   </div>
 </section>
-<section class="slide sscode" id="slide-30">
+<section class="slide sscode" id="slide-31">
   <div>
     <h2>Variable selection</h2>
     <pre><code>## Start:  AIC=97.75
@@ -782,7 +818,7 @@ stepAIC(fit, direction=&quot;backward&quot;)
 
   </div>
 </section>
-<section class="slide compact" id="slide-31">
+<section class="slide compact" id="slide-32">
   <div>
     <h2>Variable selection</h2>
     <p>You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
@@ -791,7 +827,7 @@ Although stepwise selection may find a good model, there&#39;s no guarantee that
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-32">
+<section class="slide compact scode" id="slide-33">
   <div>
     <h2>Model performance</h2>
     <pre><code class="r">## compute R-squared for the woman data
@@ -822,7 +858,7 @@ summary(fit)
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-33">
+<section class="slide compact scode" id="slide-34">
   <div>
     <h2>Model performance</h2>
     <pre><code class="r">## compute R-squared for the woman data
@@ -850,7 +886,7 @@ r2
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-34">
+<section class="slide compact scode" id="slide-35">
   <div>
     <h2>Model performance</h2>
     <pre><code class="r">## leave-one-out cross validation
@@ -880,7 +916,7 @@ rmse ## root mean square error (out-of-sample)
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-35">
+<section class="slide compact scode" id="slide-36">
   <div>
     <h2>Polynomial regression</h2>
     <pre><code class="r">fit2 = lm(weight ~ height + I(height^2), data=women)
@@ -910,7 +946,7 @@ summary(fit2)
 
   </div>
 </section>
-<section class="slide compact scode" id="slide-36">
+<section class="slide compact scode" id="slide-37">
   <div>
     <h2>Polynomial regression</h2>
     <pre><code class="r">plot(women$height,women$weight,
@@ -919,11 +955,11 @@ summary(fit2)
 lines(women$height,fitted(fit2))
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-33-1.png" alt="plot of chunk unnamed-chunk-33"></p>
+<p><img src="assets/fig/unnamed-chunk-34-1.png" alt="plot of chunk unnamed-chunk-34"></p>
 
   </div>
 </section>
-<section class="slide compact sscode" id="slide-37">
+<section class="slide compact sscode" id="slide-38">
   <div>
     <h2>Polynomial regression</h2>
       
@@ -957,7 +993,7 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 </div>
   </div>
 </section>
-<section class="slide modal" id="slide-38">
+<section class="slide modal" id="slide-39">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## create testing data (sine wave)
@@ -968,11 +1004,11 @@ df = data.frame(X = x, Y = y)
 ggplot(df, aes(x = X, y = Y)) + geom_point()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-35-1.png" alt="plot of chunk unnamed-chunk-35"></p>
+<p><img src="assets/fig/unnamed-chunk-36-1.png" alt="plot of chunk unnamed-chunk-36"></p>
 
   </div>
 </section>
-<section class="slide scode" id="slide-39">
+<section class="slide scode" id="slide-40">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## fit with linear regression
@@ -1001,7 +1037,7 @@ summary(lm(Y ~ X, data = df)) # explain 60% of the variance
 
   </div>
 </section>
-<section class="slide scode" id="slide-40">
+<section class="slide scode" id="slide-41">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
@@ -1009,11 +1045,11 @@ summary(lm(Y ~ X, data = df)) # explain 60% of the variance
   geom_smooth(method = &#39;lm&#39;, se = FALSE)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-37-1.png" alt="plot of chunk unnamed-chunk-37"></p>
+<p><img src="assets/fig/unnamed-chunk-38-1.png" alt="plot of chunk unnamed-chunk-38"></p>
 
   </div>
 </section>
-<section class="slide scode" id="slide-41">
+<section class="slide scode" id="slide-42">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## add new features
@@ -1046,7 +1082,7 @@ summary(lm(Y ~ X + X2 + X3, data = df)) # R2 from 60% to 97%, by adding two more
 
   </div>
 </section>
-<section class="slide scode" id="slide-42">
+<section class="slide scode" id="slide-43">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code class="r">## add more features
@@ -1099,7 +1135,7 @@ summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13
 
   </div>
 </section>
-<section class="slide sscode compact" id="slide-43">
+<section class="slide sscode compact" id="slide-44">
   <div>
     <h2>Non-linear Data</h2>
     <pre><code>## 
