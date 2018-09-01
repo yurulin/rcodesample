@@ -18,6 +18,7 @@ slidify("class01.Rmd")
 slidify("class02.Rmd")
 slidify("rlab01.Rmd")
 slidify("rlab02.Rmd")
+slidify("rexp01.Rmd")
 
 ## Step 4: Publish Deck
 publish(user = "yurulin", repo = "rcodesample", host = 'github')

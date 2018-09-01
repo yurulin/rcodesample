@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Statistical Analysis for Experimentation</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Statistical Analysis for Experimentation">
+	<meta name="author" content="">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>Statistical Analysis for Experimentation</h1>
+	</header>
+  <section class="slide " id="toc">
+  <div>
+    <h2>Statistical Analysis for Experimentation</h2>
+    <ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#ref">References</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide cc" id="what">
+  <div>
+    <h2>What statistical test should I use?</h2>
+    <table><thead>
+<tr>
+<th>Use</th>
+<th align="center">Interval/Ratio (Normality assumed)</th>
+<th align="center">Interval/Ratio (Normality not assumed), Ordinal</th>
+<th align="center">Dichotomy (Binomial)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Compare two groups (unpaired)</td>
+<td align="center"><a href="#ttest">t test</a></td>
+<td align="center">Mann-Whitney test</td>
+<td align="center">Fisher&#39;s test</td>
+</tr>
+<tr>
+<td>Compare two groups (paired)</td>
+<td align="center">Paired t test</td>
+<td align="center">Wilcoxon test</td>
+<td align="center">McNemar&#39;s test</td>
+</tr>
+<tr>
+<td>Compare 3+ groups (unmatched)</td>
+<td align="center">ANOVA</td>
+<td align="center">Kruskal-Wallis test</td>
+<td align="center">Chi-square test</td>
+</tr>
+<tr>
+<td>Compare 3+ groups (matched)</td>
+<td align="center">Repeated-measures ANOVA</td>
+<td align="center">Friedman test</td>
+<td align="center">Cochran&#39;s Q test</td>
+</tr>
+</tbody></table>
+
+  </div>
+</section>
+<section class="slide cc" id="what">
+  <div>
+    <h2>What statistical analysis should I use?</h2>
+    <table><thead>
+<tr>
+<th>Use</th>
+<th align="center">Interval/Ratio (Normality assumed)</th>
+<th align="center">Interval/Ratio (Normality not assumed), Ordinal</th>
+<th align="center">Dichotomy (Binomial)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Find relationship between two variables</td>
+<td align="center">Pearson correlation</td>
+<td align="center">Spearman correlation</td>
+<td align="center">Cramer&#39;s V</td>
+</tr>
+<tr>
+<td>Predict a value with one independent variable</td>
+<td align="center">Linear/Non-linear regression</td>
+<td align="center">Non-parametric regression</td>
+<td align="center">Logistic regression</td>
+</tr>
+<tr>
+<td>Predict a value with 2+ independent variable</td>
+<td align="center">Multiple linear/non-linear regression</td>
+<td align="center"></td>
+<td align="center">Multiple logistic regression</td>
+</tr>
+</tbody></table>
+
+  </div>
+</section>
+<section class="slide " id="ttest">
+  <div>
+    <h2>t test</h2>
+    <ul>
+<li>How to report?</li>
+</ul>
+
+<p>&quot;With a <code>Welch&#39;s t test</code>, we found a <code>significant</code> effect between settings (<code>t(15) = 2.20</code>, <code>p &lt; 0.05</code>, <code>Cohen&#39;s d=0.98</code>) with Setting 2 outperforming Setting 1.&quot;</p>
+
+<ul>
+<li>effect size: Cohen&#39;s d, or Pearson&#39;s r</li>
+<li>t test with unequal variances (Welch&#39;s t test)</li>
+<li>significance &amp; p value</li>
+<li>df &amp; t value</li>
+<li><a href="http://yatani.jp/teaching/doku.php?id=hcistats:ttest">details</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide " id="ref">
+  <div>
+    <h2>References</h2>
+    <ul>
+<li><a href="http://yatani.jp/teaching/doku.php?id=hcistats:start">Statistical Methods for HCI Research</a></li>
+</ul>
+
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>

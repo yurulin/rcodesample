@@ -8,3 +8,13 @@ nutshell.audioscrobbler
 nutshell
 car
 MASS
+factoextra
+cluster
+RColorBrewer
+survival
+Formula
+Hmisc
+corrplot
+zoo
+xts
+PerformanceAnalytics

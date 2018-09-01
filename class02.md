@@ -25,6 +25,13 @@ knit        : slidify::knit2slides
 
 --- #simple-regression .modal 
 
+## Install R packages (using command)
+
+```r
+## this tutorial uses example data from the following package
+install.packages('nutshell') 
+```
+
 ## Simple Regression
 
 The examples are taken from [R in Action](http://www.manning.com/kabacoff/)
@@ -86,7 +93,7 @@ summary(women)
 plot(women$height, women$weight)
 ```
 
-![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-4](assets/fig/unnamed-chunk-4-1.png)
 
 --- .modal
 
@@ -99,7 +106,7 @@ theme_set(theme_bw()) ## set default theme with a white background
 ggplot(data=women, aes(x=height,y=weight)) + geom_point() 
 ```
 
-![plot of chunk unnamed-chunk-4](assets/fig/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.png)
 
 --- .modal
 
@@ -113,7 +120,7 @@ ggplot(women, aes(x = height, y = weight)) + geom_point() +
               se=FALSE) # (by default includes 95% confidence region)  
 ```
 
-![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-6](assets/fig/unnamed-chunk-6-1.png)
 
 --- .scode
 
@@ -327,7 +334,7 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 plot(density(resid(fit)))
 ```
 
-![plot of chunk unnamed-chunk-12](assets/fig/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-13](assets/fig/unnamed-chunk-13-1.png)
 
 
 --- &twocolvar w1:40% w2:60% .compact .scode
@@ -371,7 +378,7 @@ qqnorm(resid(fit)) # a quantile normal plot
 qqline(resid(fit))
 ```
 
-![plot of chunk unnamed-chunk-14](assets/fig/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-15](assets/fig/unnamed-chunk-15-1.png)
 
 --- .modal
 
@@ -384,7 +391,7 @@ par(mfrow=c(2,2))
 plot(fit)
 ```
 
-![plot of chunk unnamed-chunk-15](assets/fig/unnamed-chunk-15-1.png)
+![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -395,7 +402,7 @@ plot(fit)
    * The **Normal Q-Q plot** (upper right) is a probability plot of the standardized residuals against the values that would be expected under normality. If you've met the normality assumption, the points on this graph should fall on the straight 45-degree line. If they don't, you've clearly violated the normality assumption.
 
 *** =right
-![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-17](assets/fig/unnamed-chunk-17-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -405,7 +412,7 @@ plot(fit)
    * You have to use your understanding of how the data were collected. There's no a priori reason to believe that one woman's weight influences another woman's weight. If you found out that the data were sampled from families, you may have to adjust your assumption of independence.
 
 *** =right
-![plot of chunk unnamed-chunk-17](assets/fig/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -419,7 +426,7 @@ plot(fit)
    * If you've met the constant variance assumption, the points in the **Scale-Location** graph (bottom left) should be a random band around a horizontal line. You seem to meet this assumption.
 
 *** =right
-![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
 
 --- &twocolvar w1:50% w2:50% .compact .scode
 
@@ -429,7 +436,7 @@ plot(fit)
    * If you've met the constant variance assumption, the points in the **Scale-Location** graph (bottom left) should be a random band around a horizontal line. You seem to meet this assumption.
 
 *** =right
-![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png)
 
 --- #multiple-linear-regression .modal
 
@@ -479,7 +486,7 @@ scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
                   main="Scatter Plot Matrix")
 ```
 
-![plot of chunk unnamed-chunk-22](assets/fig/unnamed-chunk-22-1.png)
+![plot of chunk unnamed-chunk-23](assets/fig/unnamed-chunk-23-1.png)
 
 --- .modal
 
@@ -835,7 +842,7 @@ plot(women$height,women$weight,
 lines(women$height,fitted(fit2))
 ```
 
-![plot of chunk unnamed-chunk-32](assets/fig/unnamed-chunk-32-1.png)
+![plot of chunk unnamed-chunk-33](assets/fig/unnamed-chunk-33-1.png)
 
 
 --- &twocolvar w1:48% w2:50% .compact .sscode
@@ -883,7 +890,7 @@ df = data.frame(X = x, Y = y)
 ggplot(df, aes(x = X, y = Y)) + geom_point()
 ```
 
-![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-35](assets/fig/unnamed-chunk-35-1.png)
 
 --- .scode 
 
@@ -925,7 +932,7 @@ ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
   geom_smooth(method = 'lm', se = FALSE)
 ```
 
-![plot of chunk unnamed-chunk-36](assets/fig/unnamed-chunk-36-1.png)
+![plot of chunk unnamed-chunk-37](assets/fig/unnamed-chunk-37-1.png)
 
 --- .scode 
 

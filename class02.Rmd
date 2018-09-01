@@ -25,6 +25,12 @@ knit        : slidify::knit2slides
 
 --- #simple-regression .modal 
 
+## Install R packages (using command)
+```{r eval=FALSE}
+## this tutorial uses example data from the following package
+install.packages('nutshell') 
+```
+
 ## Simple Regression
 
 The examples are taken from [R in Action](http://www.manning.com/kabacoff/)
