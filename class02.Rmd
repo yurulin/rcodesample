@@ -94,7 +94,7 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### What does the result mean?  
 
@@ -112,7 +112,7 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### Understand the summary
 
@@ -129,7 +129,7 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### Understand the summary
 
@@ -146,7 +146,7 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### Understand the summary
 
@@ -163,7 +163,7 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### Understand the summary
 
@@ -180,7 +180,7 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### Understand the summary
 
@@ -197,7 +197,7 @@ fit = lm(weight ~ height, data=women)
 summary(fit)
 ```
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### Understand the summary
 
@@ -225,7 +225,7 @@ plot(density(resid(fit)))
 ```
 
 
---- &twocolvar w1:40% w2:60% .compact .scode
+--- &twocolvar w1:40% w2:60% .compact .scode-nowrap
 
 ### Understand the summary
 
@@ -419,6 +419,24 @@ stepAIC(fit, direction="backward")
 You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
 Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
 Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
+
+--- &twocolvar w1:60% w2:40% .compact .scode-nowrap
+
+## Variable selection
+
+*** =left
+```{r, echo=FALSE}
+## backward stepwise selection
+library(MASS)
+fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
+          data=states)
+stepAIC(fit, direction="backward")
+```
+
+*** =right
+* You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
+* Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
+* Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
 
 
 --- .compact .scode
