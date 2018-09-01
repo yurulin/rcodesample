@@ -1318,7 +1318,9 @@ ggplot(df0 , aes(x = X, y = Y)) +
 <section class="slide sscode-nowrap compact" id="cross-validation">
   <div>
     <h2>Cross-validation</h2>
-    <pre><code class="r">## split our data into a training set and test set
+      
+<div class='left' style='float:left;width:70%'>
+<pre><code class="r">## split our data into a training set and test set
 n &lt;- length(x)
 indices &lt;- sort(sample(1:n, round (0.5 * n)))
 training.x &lt;- x[indices]
@@ -1353,13 +1355,10 @@ ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
 
 <p><img src="assets/fig/unnamed-chunk-48-1.png" alt="plot of chunk unnamed-chunk-48"></p>
 
-<p><img src="assets/fig/unnamed-chunk-49-1.png" alt="plot of chunk unnamed-chunk-49"></p>
-  
-<div class='left' style='float:left;width:70%'>
-
 </div>    
 <div class='right' style='float:right;width:30%'>
-  
+  <p><img src="assets/fig/unnamed-chunk-49-1.png" alt="plot of chunk unnamed-chunk-49"></p>
+
 </div>
   </div>
 </section>

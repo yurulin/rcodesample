@@ -648,6 +648,7 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 --- &twocolvar w1:70% w2:30% #cross-validation .sscode-nowrap .compact
 ## Cross-validation
 
+*** =left
 ```{r, hide=TRUE}
 ## split our data into a training set and test set
 n <- length(x)
@@ -682,6 +683,7 @@ ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
   geom_line()
 ```
 
+*** =right
 ```{r, echo=FALSE,fig.height=3, fig.width=4}
 ## plot the performance of the polynomial regression models for all the degrees
 ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +

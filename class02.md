@@ -1243,6 +1243,7 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 --- &twocolvar w1:70% w2:30% #cross-validation .sscode-nowrap .compact
 ## Cross-validation
 
+*** =left
 
 ```r
 ## split our data into a training set and test set
@@ -1280,6 +1281,7 @@ ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
 
 ![plot of chunk unnamed-chunk-48](assets/fig/unnamed-chunk-48-1.png)
 
+*** =right
 ![plot of chunk unnamed-chunk-49](assets/fig/unnamed-chunk-49-1.png)
 
 --- #regularization .sscode-nowrap .compact
