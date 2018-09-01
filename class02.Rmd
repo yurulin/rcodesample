@@ -704,10 +704,11 @@ x <- matrix(x) ## input of glmnet has to be in matrix form
 glmnet(poly(x, degree = 2), y)
 ```
 
---- .sscode-nowrap .compact
+--- &twocolvar w1:70% w2:30% .sscode-nowrap .compact
 ## Regularization
 
-```{r, fig.height=4, fig.width=4}
+*** =left
+```{r, fig.show="hide"}
 ## get an entire set of possible regularizations (from the strongest to the weakest).
 ## Df: how many nonzero coefficients in the model;
 ## %Dev: the R2 for this model; 
@@ -741,11 +742,21 @@ ggplot(performance , aes(x = Lambda , y = RMSE)) +
   geom_line()
 ```
 
+*** =right
+```{r, echo=FALSE,fig.height=4, fig.width=4}
+## plot to see the model performance w.r.t. the range of lambdas
+ggplot(performance , aes(x = Lambda , y = RMSE)) +
+  geom_point() +
+  geom_line()
+```
+
 --- .sscode-nowrap .compact
 ## Regularization
 
 ```{r, fig.height=4, fig.width=4}
 ## we get the best possible performance with Lambda near 0.05; select that value and train our model
+## using only 3 nonzero coefficients instead of 10
+
 best.lambda <- with(performance , Lambda[which(RMSE == min(RMSE))])
 glmnet.fit <- with(df, glmnet(poly(X, degree = 10), Y))
 ## use coef to examine the structure of our regularized model

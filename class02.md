@@ -1362,9 +1362,10 @@ glmnet(poly(x, degree = 2), y)
 ## [59,]  2 0.5947 0.002428
 ```
 
---- .sscode-nowrap .compact
+--- &twocolvar w1:70% w2:30% .sscode-nowrap .compact
 ## Regularization
 
+*** =left
 
 ```r
 ## get an entire set of possible regularizations (from the strongest to the weakest).
@@ -1400,7 +1401,8 @@ ggplot(performance , aes(x = Lambda , y = RMSE)) +
   geom_line()
 ```
 
-![plot of chunk unnamed-chunk-51](assets/fig/unnamed-chunk-51-1.png)
+*** =right
+![plot of chunk unnamed-chunk-52](assets/fig/unnamed-chunk-52-1.png)
 
 --- .sscode-nowrap .compact
 ## Regularization
@@ -1408,6 +1410,8 @@ ggplot(performance , aes(x = Lambda , y = RMSE)) +
 
 ```r
 ## we get the best possible performance with Lambda near 0.05; select that value and train our model
+## using only 3 nonzero coefficients instead of 10
+
 best.lambda <- with(performance , Lambda[which(RMSE == min(RMSE))])
 glmnet.fit <- with(df, glmnet(poly(X, degree = 10), Y))
 ## use coef to examine the structure of our regularized model

@@ -1441,7 +1441,9 @@ glmnet(poly(x, degree = 2), y)
 <section class="slide sscode-nowrap compact" id="slide-52">
   <div>
     <h2>Regularization</h2>
-    <pre><code class="r">## get an entire set of possible regularizations (from the strongest to the weakest).
+      
+<div class='left' style='float:left;width:70%'>
+<pre><code class="r">## get an entire set of possible regularizations (from the strongest to the weakest).
 ## Df: how many nonzero coefficients in the model;
 ## %Dev: the R2 for this model; 
 ## Lambda: controls how complex the model is (a.k.a. hyperparameter)
@@ -1474,14 +1476,19 @@ ggplot(performance , aes(x = Lambda , y = RMSE)) +
   geom_line()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-51-1.png" alt="plot of chunk unnamed-chunk-51"></p>
+</div>    
+<div class='right' style='float:right;width:30%'>
+  <p><img src="assets/fig/unnamed-chunk-52-1.png" alt="plot of chunk unnamed-chunk-52"></p>
 
+</div>
   </div>
 </section>
 <section class="slide sscode-nowrap compact" id="slide-53">
   <div>
     <h2>Regularization</h2>
     <pre><code class="r">## we get the best possible performance with Lambda near 0.05; select that value and train our model
+## using only 3 nonzero coefficients instead of 10
+
 best.lambda &lt;- with(performance , Lambda[which(RMSE == min(RMSE))])
 glmnet.fit &lt;- with(df, glmnet(poly(X, degree = 10), Y))
 ## use coef to examine the structure of our regularized model
