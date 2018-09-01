@@ -262,7 +262,7 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 
 
---- &twocolvar w1:60% w2:40% .compact .scode
+--- &twocolvar w1:60% w2:50% .compact .scode
 
 ### Understand the summary
 
