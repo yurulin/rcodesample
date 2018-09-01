@@ -12,6 +12,7 @@ knit        : slidify::knit2slides
 --- #toc
 
 ## Class02
+* [Set up](#set-up)
 * [Simple Regression](#simple-regression)
 * [Multiple linear regression](#multiple-linear-regression)
 * [Variable selection](#variable-selection)
@@ -23,14 +24,16 @@ knit        : slidify::knit2slides
 * Local Polynomial Regression
 * LASSO
 
---- #simple-regression .modal 
+--- #set-up .modal 
 
-## Install R packages (using command)
+## Install R packages
 
 ```r
-## this tutorial uses example data from the following package
+## this tutorial uses example data from the 'nutshell' package
 install.packages('nutshell') 
 ```
+
+--- #simple-regression .modal 
 
 ## Simple Regression
 
