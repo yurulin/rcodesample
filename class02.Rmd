@@ -423,6 +423,11 @@ Although stepwise selection may find a good model, there's no guarantee that it 
 ## Variable selection
 
 *** =left
+* You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
+* Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
+* Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
+
+*** =right
 ```{r, echo=FALSE}
 ## backward stepwise selection
 library(MASS)
@@ -430,12 +435,6 @@ fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
           data=states)
 stepAIC(fit, direction="backward")
 ```
-
-*** =right
-* You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
-* Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
-* Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
-
 
 --- .compact .scode
 

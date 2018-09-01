@@ -771,6 +771,11 @@ Although stepwise selection may find a good model, there's no guarantee that it 
 ## Variable selection
 
 *** =left
+* You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
+* Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
+* Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
+
+*** =right
 
 ```
 ## Start:  AIC=97.75
@@ -810,12 +815,6 @@ Although stepwise selection may find a good model, there's no guarantee that it 
 ## (Intercept)   Population   Illiteracy  
 ##   1.6515497    0.0002242    4.0807366
 ```
-
-*** =right
-* You start with all four predictors in the model. For each step, the AIC column provides the model AIC resulting from the deletion of the variable listed in that row.
-* Models with smaller AIC values (indicating adequate fit with fewer parameters) are preferred.
-* Although stepwise selection may find a good model, there's no guarantee that it will find the best model because not every possible model is evaluated. (Alternative: all subsets method. See library `leaps`.)
-
 
 --- .compact .scode
 

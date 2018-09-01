@@ -161,6 +161,16 @@ pre code {
     padding-top: -20px ;
     padding-bottom: -20px ;	
   }   
+
+  .sscode-nowrap pre code {
+    font-size: 14px;
+    line-height: 1em;	
+    
+    margin-top: -20px ;
+    margin-bottom: -20px ;
+    padding-top: -20px ;
+    padding-bottom: -20px ;	
+  }    
   
   .ssscode pre code {
     font-size: 12px;
@@ -177,3 +187,13 @@ pre code {
     padding-top: -20px ;
     padding-bottom: -20px ;	
   }     
+  
+  .ssscode-nowrap pre code {
+    font-size: 12px;
+    line-height: .9em;	
+    
+    margin-top: -20px ;
+    margin-bottom: -20px ;
+    padding-top: -20px ;
+    padding-bottom: -20px ;	
+  }       
