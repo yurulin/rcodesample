@@ -649,7 +649,7 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 ## Cross-validation
 
 *** =left
-```{r, include=FALSE}
+```{r, fig.show = 'hide'}
 ## split our data into a training set and test set
 n <- length(x)
 indices <- sort(sample(1:n, round (0.5 * n)))

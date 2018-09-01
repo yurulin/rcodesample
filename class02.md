@@ -1245,6 +1245,39 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 
 *** =left
 
+```r
+## split our data into a training set and test set
+n <- length(x)
+indices <- sort(sample(1:n, round (0.5 * n)))
+training.x <- x[indices]
+training.y <- y[indices]
+test.x <- x[-indices]
+test.y <- y[-indices]
+training.df <- data.frame(X = training.x, Y = training.y)
+test.df <- data.frame(X = test.x, Y = test.y)
+## use RMSE to measure the performance
+rmse <- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over a set of polynomial degrees (from 1 to 12)
+performance <- data.frame()
+for (d in 1:12) {
+  poly.fit <- lm(Y ~ poly(X, degree = d), data = training.df)
+  performance <- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = 'Training ',
+                                  RMSE = rmse(training.y, predict(poly.fit))))
+  performance <- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = 'Test ',
+                                  RMSE = rmse(test.y, predict(poly.fit ,
+                                                              newdata = test.df))))
+}
+## plot the performance of the polynomial regression models for all the degrees
+ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
+  geom_point() +
+  geom_line()
+```
 
 *** =right
 ![plot of chunk unnamed-chunk-49](assets/fig/unnamed-chunk-49-1.png)
