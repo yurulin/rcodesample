@@ -809,6 +809,7 @@ for (k in 1:length(alpha)) {
   g[k,]<-gcv(NOx~lp(E,nn=alpha[k]),data=ethanol)
 }
 head(g) 
+plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
 ```
 
 

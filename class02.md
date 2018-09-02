@@ -1507,6 +1507,12 @@ head(g)
 ## [6,] -3.408908 13.96789 12.63493 0.1094681
 ```
 
+```r
+plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
+```
+
+![plot of chunk unnamed-chunk-57](assets/fig/unnamed-chunk-57-1.png)
+
 
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
