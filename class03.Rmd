@@ -27,7 +27,7 @@ knit        : slidify::knit2slides
 --- #two-class .scode-nowrap .compact 
 
 ## Split data into two classes
-```{r, fig.height=5, fig.width=7}
+```{r, fig.height=4.5, fig.width=8}
 library(ggplot2) ## use ggplot for plotting
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/'
 data.file = file.path(data.url , '01_heights_weights_genders.csv')
@@ -48,8 +48,7 @@ heights.weights [1:3,]
 
 --- #logistic-regression .model
 ## Logistic Regression
-Example 1: Death penelty data
------------------------------
+### Example 1: Death penelty data
    * objective: to identify whether the death penalty more likely if the victim is white, or the crime is more aggravating
    * response variable: getting death panelty or not
    * explanatory variables: severity of the crime, race of victim (black: 0; white: 1), etc
@@ -87,11 +86,10 @@ exp(m1$coef[2])
 exp(m1$coef[3])
 ```
 
---- &twocolvar w1:70% w2:30% .sscode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Logistic Regression
 
-*** =left
-```{r, fig.show="hide", dependson=c(-1)}
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## plotting probability of getting death penalty as a function of aggravation
 ## separately for black (in black) and white (in red) victim
 n.dots = 501 ## number of dots in the curves (the nubmer is set to make the curves smooth)
@@ -105,12 +103,6 @@ for (i in 1:n.dots) {
   is.white = 1
   y.white[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
 }
-plot(y.black~x.ag,type="l",col="black",ylab="Prob[Death]",xlab="Aggravation",ylim=c(0,1),main="red line for white victim; black line for black victim")
-points(y.white~x.ag,type="l",col="red")
-```
-
-*** =right
-```{r, echo=FALSE,fig.height=4, fig.width=4}
 plot(y.black~x.ag,type="l",col="black",ylab="Prob[Death]",xlab="Aggravation",ylim=c(0,1),main="red line for white victim; black line for black victim")
 points(y.white~x.ag,type="l",col="red")
 ```
@@ -130,6 +122,10 @@ dpenother
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
 m1=glm(Death~VRace+Agg,family=binomial,weights=Freq,data=dpenother)
 m1
+```
+--- .scode-nowrap .compact 
+## Logistic Regression
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
 summary(m1)
 exp(m1$coef[2])
 exp(m1$coef[3])
