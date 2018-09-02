@@ -1456,13 +1456,6 @@ ethanol [1:3,]
 ## 3 1.498 12 1.108
 ```
 
-```r
-fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)
-plot(fit)
-```
-
-![plot of chunk unnamed-chunk-54](assets/fig/unnamed-chunk-54-1.png)
-
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
@@ -1481,20 +1474,14 @@ abline(fitreg)
 
 
 ```r
+library(locfit)
 ## local polynomial regression of NOx on the equivalence ratio
 ## fit with a 50% nearest neighbor bandwidth.
 fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)
-```
-
-```
-## Error in locfit(NOx ~ lp(E, nn = 0.5), data = ethanol): could not find function "locfit"
-```
-
-```r
 plot(fit)
 ```
 
-![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-1.png)![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-2.png)![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-3.png)![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-4.png)
+![plot of chunk unnamed-chunk-56](assets/fig/unnamed-chunk-56-1.png)
 
 --- .scode-nowrap .compact
 ## Local Polynomial Regression

@@ -1531,12 +1531,6 @@ ethanol [1:3,]
 ## 3 1.498 12 1.108
 </code></pre>
 
-<pre><code class="r">fit &lt;- locfit(NOx~lp(E,nn=0.5),data=ethanol)
-plot(fit)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-54-1.png" alt="plot of chunk unnamed-chunk-54"></p>
-
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-55">
@@ -1555,18 +1549,14 @@ abline(fitreg)
 <section class="slide scode-nowrap compact" id="slide-56">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <pre><code class="r">## local polynomial regression of NOx on the equivalence ratio
+    <pre><code class="r">library(locfit)
+## local polynomial regression of NOx on the equivalence ratio
 ## fit with a 50% nearest neighbor bandwidth.
 fit &lt;- locfit(NOx~lp(E,nn=0.5),data=ethanol)
+plot(fit)
 </code></pre>
 
-<pre><code>## Error in locfit(NOx ~ lp(E, nn = 0.5), data = ethanol): could not find function &quot;locfit&quot;
-</code></pre>
-
-<pre><code class="r">plot(fit)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-56-1.png" alt="plot of chunk unnamed-chunk-56"><img src="assets/fig/unnamed-chunk-56-2.png" alt="plot of chunk unnamed-chunk-56"><img src="assets/fig/unnamed-chunk-56-3.png" alt="plot of chunk unnamed-chunk-56"><img src="assets/fig/unnamed-chunk-56-4.png" alt="plot of chunk unnamed-chunk-56"></p>
+<p><img src="assets/fig/unnamed-chunk-56-1.png" alt="plot of chunk unnamed-chunk-56"></p>
 
   </div>
 </section>
