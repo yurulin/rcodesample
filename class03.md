@@ -60,7 +60,10 @@ heights.weights [1:3,]
 
 --- #logistic-regression .model
 ## Logistic Regression
-### Example 1: Death penelty data
+
+Example 1: Death penelty data
+-----------------------------
+
    * objective: to identify whether the death penalty more likely if the victim is white, or the crime is more aggravating
    * response variable: getting death panelty or not
    * explanatory variables: severity of the crime, race of victim (black: 0; white: 1), etc
@@ -182,7 +185,7 @@ for (i in 1:n.dots) {
   is.white = 1
   y.white[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
 }
-plot(y.black~x.ag,type="l",col="black",ylab="Prob[Death]",xlab="Aggravation",ylim=c(0,1),main="red line for white victim; black line for black victim")
+plot(y.black~x.ag,type="l",col="black",ylab="Prob[Death]",xlab="Aggravation",ylim=c(0,1),main="red: white victim; black: black victim")
 points(y.white~x.ag,type="l",col="red")
 ```
 
@@ -245,6 +248,7 @@ m1
 ## Null Deviance:	    321.9 
 ## Residual Deviance: 113.5 	AIC: 119.5
 ```
+
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
