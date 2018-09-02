@@ -1618,6 +1618,79 @@ f1; plot(f1)
 
   </div>
 </section>
+<section class="slide scode-nowrap compact" id="lasso">
+  <div>
+    <h2>LASSO</h2>
+    <pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+prostate &lt;- read.csv(sprintf (&quot;%s/prostate.csv&quot;,data.url))
+prostate [1:3,]
+</code></pre>
+
+<pre><code class="r">m1=lm(lcavol~.,data=prostate)
+summary(m1)
+</code></pre>
+
+<pre><code class="r">## the model.matrix statement defines the model to be fitted
+x &lt;- model.matrix(lcavol~age+lbph+lcp+gleason+lpsa ,data=prostate)
+</code></pre>
+
+<pre><code>## Error in terms.formula(object, data = data): object &#39;prostate&#39; not found
+</code></pre>
+
+<pre><code class="r">x=x[,-1] # stripping off the column of 1s as LASSO includes the intercept automatically
+
+library(lars)
+</code></pre>
+
+<pre><code>## Error in library(lars): there is no package called &#39;lars&#39;
+</code></pre>
+
+<pre><code class="r">## lasso on all data
+lasso &lt;- lars(x=x,y=prostate$lcavol ,trace=TRUE)
+</code></pre>
+
+<pre><code>## Error in lars(x = x, y = prostate$lcavol, trace = TRUE): could not find function &quot;lars&quot;
+</code></pre>
+
+<pre><code class="r">## trace of lasso (standardized) coefficients for varying penalty
+plot(lasso)
+lasso
+coef(lasso ,s=c(.25,.50,0.75,1.0),mode=&quot;fraction&quot;)
+</code></pre>
+
+<pre><code class="r">## cross -validation using 10 folds
+cv.lars(x=x,y=prostate$lcavol ,K=10)
+</code></pre>
+
+<pre><code class="r">## another way to evaluate lasso&#39;s out-of-sample prediction performance
+MSElasso25=dim(10)
+MSElasso50=dim(10)
+MSElasso75=dim(10)
+MSElasso100=dim(10)
+set.seed(1)
+for(i in 1:10){
+  train &lt;- sample(1:nrow(prostate),80)
+  lasso &lt;- lars(x=x[train ,],y=prostate$lcavol[train])
+  MSElasso25[i]=
+    mean((predict(lasso ,x[-train ,],s=.25,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+  MSElasso50[i]=
+    mean((predict(lasso ,x[-train ,],s=.50,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+  MSElasso75[i]=
+    mean((predict(lasso ,x[-train ,],s=.75,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+  MSElasso100[i]=
+    mean((predict(lasso ,x[-train ,],s=1.00,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+}
+mean(MSElasso25)
+mean(MSElasso50)
+mean(MSElasso75)
+mean(MSElasso100)
+boxplot(MSElasso25 ,MSElasso50 ,MSElasso75 ,MSElasso100 ,
+        ylab=&quot;MSE&quot;, sub=&quot;LASSO model&quot;,
+        xlab=&quot;s=0.25 s=0.50 s=0.75 s=1.0(LS)&quot;)
+</code></pre>
+
+  </div>
+</section>
   <div class="progress">
     <div></div>
   </div>

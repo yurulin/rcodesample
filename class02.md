@@ -1546,3 +1546,88 @@ f1; plot(f1)
 
 ![plot of chunk unnamed-chunk-59](assets/fig/unnamed-chunk-59-1.png)
 
+--- #lasso .scode-nowrap .compact
+
+## LASSO
+
+```r
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+prostate <- read.csv(sprintf ("%s/prostate.csv",data.url))
+prostate [1:3,]
+```
+
+```r
+m1=lm(lcavol~.,data=prostate)
+summary(m1)
+```
+
+
+
+```r
+## the model.matrix statement defines the model to be fitted
+x <- model.matrix(lcavol~age+lbph+lcp+gleason+lpsa ,data=prostate)
+```
+
+```
+## Error in terms.formula(object, data = data): object 'prostate' not found
+```
+
+```r
+x=x[,-1] # stripping off the column of 1s as LASSO includes the intercept automatically
+
+library(lars)
+```
+
+```
+## Error in library(lars): there is no package called 'lars'
+```
+
+```r
+## lasso on all data
+lasso <- lars(x=x,y=prostate$lcavol ,trace=TRUE)
+```
+
+```
+## Error in lars(x = x, y = prostate$lcavol, trace = TRUE): could not find function "lars"
+```
+
+
+```r
+## trace of lasso (standardized) coefficients for varying penalty
+plot(lasso)
+lasso
+coef(lasso ,s=c(.25,.50,0.75,1.0),mode="fraction")
+```
+
+```r
+## cross -validation using 10 folds
+cv.lars(x=x,y=prostate$lcavol ,K=10)
+```
+
+```r
+## another way to evaluate lasso's out-of-sample prediction performance
+MSElasso25=dim(10)
+MSElasso50=dim(10)
+MSElasso75=dim(10)
+MSElasso100=dim(10)
+set.seed(1)
+for(i in 1:10){
+  train <- sample(1:nrow(prostate),80)
+  lasso <- lars(x=x[train ,],y=prostate$lcavol[train])
+  MSElasso25[i]=
+    mean((predict(lasso ,x[-train ,],s=.25,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+  MSElasso50[i]=
+    mean((predict(lasso ,x[-train ,],s=.50,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+  MSElasso75[i]=
+    mean((predict(lasso ,x[-train ,],s=.75,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+  MSElasso100[i]=
+    mean((predict(lasso ,x[-train ,],s=1.00,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+}
+mean(MSElasso25)
+mean(MSElasso50)
+mean(MSElasso75)
+mean(MSElasso100)
+boxplot(MSElasso25 ,MSElasso50 ,MSElasso75 ,MSElasso100 ,
+        ylab="MSE", sub="LASSO model",
+        xlab="s=0.25 s=0.50 s=0.75 s=1.0(LS)")
+```
