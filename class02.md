@@ -1494,24 +1494,17 @@ g=matrix(nrow=n1,ncol=4)
 for (k in 1:length(alpha)) {
   g[k,]<-gcv(NOx~lp(E,nn=alpha[k]),data=ethanol)
 }
-```
-
-```
-## Error in gcv(NOx ~ lp(E, nn = alpha[k]), data = ethanol): could not find function "gcv"
-```
-
-```r
 head(g) 
 ```
 
 ```
-##      [,1] [,2] [,3] [,4]
-## [1,]   NA   NA   NA   NA
-## [2,]   NA   NA   NA   NA
-## [3,]   NA   NA   NA   NA
-## [4,]   NA   NA   NA   NA
-## [5,]   NA   NA   NA   NA
-## [6,]   NA   NA   NA   NA
+##           [,1]     [,2]     [,3]      [,4]
+## [1,] -3.220084 18.81266 16.42649 0.1183932
+## [2,] -3.249601 17.61614 15.43623 0.1154507
+## [3,] -3.319650 16.77004 14.75204 0.1151542
+## [4,] -3.336464 15.44404 13.88921 0.1115457
+## [5,] -3.373011 14.52391 13.11543 0.1099609
+## [6,] -3.408908 13.96789 12.63493 0.1094681
 ```
 
 
@@ -1523,26 +1516,6 @@ head(g)
 plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
 ```
 
-```
-## Warning in min(x): no non-missing arguments to min; returning Inf
-```
-
-```
-## Warning in max(x): no non-missing arguments to max; returning -Inf
-```
-
-```
-## Warning in min(x): no non-missing arguments to min; returning Inf
-```
-
-```
-## Warning in max(x): no non-missing arguments to max; returning -Inf
-```
-
-```
-## Error in plot.window(...): need finite 'xlim' values
-```
-
 ![plot of chunk unnamed-chunk-58](assets/fig/unnamed-chunk-58-1.png)
 
 
@@ -1552,21 +1525,18 @@ plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
 
 ```r
 f1=locfit(NOx~lp(E,nn=0.30),data=ethanol)
-```
-
-```
-## Error in locfit(NOx ~ lp(E, nn = 0.3), data = ethanol): could not find function "locfit"
-```
-
-```r
 f1; plot(f1)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'f1' not found
+## Call:
+## locfit(formula = NOx ~ lp(E, nn = 0.3), data = ethanol)
+## 
+## Number of observations:          88 
+## Family:  Gaussian 
+## Fitted Degrees of freedom:       10.517 
+## Residual scale:                  0.306
 ```
 
-```
-## Error in plot(f1): object 'f1' not found
-```
+![plot of chunk unnamed-chunk-59](assets/fig/unnamed-chunk-59-1.png)
 

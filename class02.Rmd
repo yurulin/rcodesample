@@ -800,7 +800,7 @@ plot(fit)
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
-```{r, fig.height=4, fig.width=4}
+```{r, fig.height=4, fig.width=4, autodep=TRUE}
 ## cross-validation
 alpha <-seq(0.20,1,by=0.01)
 n1=length(alpha)
@@ -815,7 +815,7 @@ head(g)
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
-```{r, fig.height=4, fig.width=4}
+```{r, fig.height=4, fig.width=4, autodep=TRUE}
 plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
 ```
 
@@ -823,7 +823,7 @@ plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
-```{r, fig.height=4, fig.width=4}
+```{r, fig.height=4, fig.width=4, autodep=TRUE}
 f1=locfit(NOx~lp(E,nn=0.30),data=ethanol)
 f1; plot(f1)
 ```
