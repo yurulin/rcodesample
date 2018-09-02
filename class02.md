@@ -1542,7 +1542,6 @@ f1; plot(f1)
 ![plot of chunk unnamed-chunk-59](assets/fig/unnamed-chunk-59-1.png)
 
 --- #lasso .scode-nowrap .compact
-
 ## LASSO
 
 
@@ -1560,7 +1559,7 @@ prostate [1:3,]
 ```
 
 --- .scode-nowrap .compact
-
+## LASSO
 
 ```r
 m1=lm(lcavol~.,data=prostate)
@@ -1593,7 +1592,7 @@ summary(m1)
 ```
 
 --- .scode-nowrap .compact
-
+## LASSO
 
 ```r
 ## the model.matrix statement defines the model to be fitted
@@ -1617,7 +1616,7 @@ lasso <- lars(x=x,y=prostate$lcavol ,trace=TRUE)
 ```
 
 --- .scode-nowrap .compact
-
+## LASSO
 
 ```r
 ## trace of lasso (standardized) coefficients for varying penalty
@@ -1654,17 +1653,47 @@ coef(lasso ,s=c(.25,.50,0.75,1.0),mode="fraction")
 ```
 
 --- .scode-nowrap .compact
+## LASSO
 
+```r
+lasso
+```
+
+```
+## 
+## Call:
+## lars(x = x, y = prostate$lcavol, trace = TRUE)
+## R-squared: 0.664 
+## Sequence of LASSO moves:
+##      lpsa lcp age gleason lbph
+## Var     5   3   1       4    2
+## Step    1   2   3       4    5
+```
+
+```r
+coef(lasso ,s=c(.25,.50,0.75,1.0),mode="fraction")
+```
+
+```
+##              age         lbph        lcp    gleason      lpsa
+## [1,] 0.000000000  0.000000000 0.06519506 0.00000000 0.2128290
+## [2,] 0.000000000  0.000000000 0.18564339 0.00000000 0.3587292
+## [3,] 0.005369985 -0.001402051 0.28821232 0.01136331 0.4827810
+## [4,] 0.019023772 -0.089182565 0.29727207 0.05239529 0.5395488
+```
+
+--- .scode-nowrap .compact
+## LASSO
 
 ```r
 ## cross -validation using 10 folds
 cv.lars(x=x,y=prostate$lcavol ,K=10)
 ```
 
-![plot of chunk unnamed-chunk-64](assets/fig/unnamed-chunk-64-1.png)
+![plot of chunk unnamed-chunk-65](assets/fig/unnamed-chunk-65-1.png)
 
---- .scode-nowrap .compact
-
+--- .sscode-nowrap .compact
+## LASSO
 
 ```r
 ## another way to evaluate lasso's out-of-sample prediction performance
@@ -1716,10 +1745,13 @@ mean(MSElasso100)
 ## [1] 0.5352386
 ```
 
+--- .sscode-nowrap .compact
+## LASSO
+
 ```r
 boxplot(MSElasso25 ,MSElasso50 ,MSElasso75 ,MSElasso100 ,
         ylab="MSE", sub="LASSO model",
         xlab="s=0.25 s=0.50 s=0.75 s=1.0(LS)")
 ```
 
-![plot of chunk unnamed-chunk-65](assets/fig/unnamed-chunk-65-1.png)
+![plot of chunk unnamed-chunk-67](assets/fig/unnamed-chunk-67-1.png)
