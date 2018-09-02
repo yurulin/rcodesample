@@ -88,7 +88,7 @@ exp(m1$coef[2])
 exp(m1$coef[3])
 ```
 
---- .sscode-nowrap .compact
+--- .ssscode-nowrap .compact
 ## Logistic Regression
 
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
@@ -126,7 +126,7 @@ m1=glm(Death~VRace+Agg,family=binomial,weights=Freq,data=dpenother)
 m1
 ```
 
---- .sscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Logistic Regression
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
 summary(m1)

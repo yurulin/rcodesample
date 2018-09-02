@@ -166,7 +166,7 @@ exp(m1$coef[3])
 ## 4.663011
 ```
 
---- .sscode-nowrap .compact
+--- .ssscode-nowrap .compact
 ## Logistic Regression
 
 
@@ -248,7 +248,7 @@ m1
 ## Residual Deviance: 113.5 	AIC: 119.5
 ```
 
---- .sscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Logistic Regression
 
 ```r
