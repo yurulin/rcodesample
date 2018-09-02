@@ -384,7 +384,7 @@ fit = lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
 summary(fit)
 ```
 
---- .compact
+--- #variable-selection .compact
 
 ## Variable selection
 **Stepwise selection**: variables are added to or deleted from a model one at a time.
@@ -421,7 +421,7 @@ fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
 stepAIC(fit, direction="backward")
 ```
 
---- .compact .scode
+--- #model-performance .compact .scode
 
 ## Model performance
 ```{r}
@@ -765,7 +765,7 @@ glmnet.fit <- with(df, glmnet(poly(X, degree = 10), Y))
 coef(glmnet.fit , s = best.lambda)
 ```
 
---- .scode-nowrap .compact
+--- #local-poly .scode-nowrap .compact
 ## Local Polynomial Regression
 
 ```{r,autodep=TRUE}

@@ -660,7 +660,7 @@ summary(fit)
 ## F-statistic: 14.73 on 4 and 45 DF,  p-value: 9.133e-08
 ```
 
---- .compact
+--- #variable-selection .compact
 
 ## Variable selection
 **Stepwise selection**: variables are added to or deleted from a model one at a time.
@@ -769,7 +769,7 @@ stepAIC(fit, direction="backward")
 ##   1.6515497    0.0002242    4.0807366
 ```
 
---- .compact .scode
+--- #model-performance .compact .scode
 
 ## Model performance
 
@@ -1436,7 +1436,7 @@ coef(glmnet.fit , s = best.lambda)
 ## 10           .
 ```
 
---- .scode-nowrap .compact
+--- #local-poly .scode-nowrap .compact
 ## Local Polynomial Regression
 
 
