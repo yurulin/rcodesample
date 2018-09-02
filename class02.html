@@ -1696,29 +1696,6 @@ plot(lasso)
 
 <p><img src="assets/fig/unnamed-chunk-63-1.png" alt="plot of chunk unnamed-chunk-63"></p>
 
-<pre><code class="r">lasso
-</code></pre>
-
-<pre><code>## 
-## Call:
-## lars(x = x, y = prostate$lcavol, trace = TRUE)
-## R-squared: 0.664 
-## Sequence of LASSO moves:
-##      lpsa lcp age gleason lbph
-## Var     5   3   1       4    2
-## Step    1   2   3       4    5
-</code></pre>
-
-<pre><code class="r">coef(lasso ,s=c(.25,.50,0.75,1.0),mode=&quot;fraction&quot;)
-</code></pre>
-
-<pre><code>##              age         lbph        lcp    gleason      lpsa
-## [1,] 0.000000000  0.000000000 0.06519506 0.00000000 0.2128290
-## [2,] 0.000000000  0.000000000 0.18564339 0.00000000 0.3587292
-## [3,] 0.005369985 -0.001402051 0.28821232 0.01136331 0.4827810
-## [4,] 0.019023772 -0.089182565 0.29727207 0.05239529 0.5395488
-</code></pre>
-
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-64">
