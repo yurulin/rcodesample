@@ -31,6 +31,7 @@ knit        : slidify::knit2slides
 ## this tutorial uses the following packages
 install.packages('nutshell') 
 install.packages('locfit')
+install.packages('lars')
 ```
 
 --- #simple-regression .modal 
@@ -809,14 +810,13 @@ for (k in 1:length(alpha)) {
   g[k,]<-gcv(NOx~lp(E,nn=alpha[k]),data=ethanol)
 }
 head(g) 
-plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
 ```
 
 
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
-```{r, fig.height=4, fig.width=4, autodep=TRUE}
+```{r, fig.height=4, fig.width=4, autodep=TRUE, dependson=c(-1)}
 plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
 ```
 
@@ -833,19 +833,14 @@ f1; plot(f1)
 
 ## LASSO
 
-```r
+```{r, warning=FALSE}
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
 prostate <- read.csv(sprintf ("%s/prostate.csv",data.url))
 prostate [1:3,]
-```
 
-```r
 m1=lm(lcavol~.,data=prostate)
 summary(m1)
-```
 
-
-```{r, warning=FALSE}
 ## the model.matrix statement defines the model to be fitted
 x <- model.matrix(lcavol~age+lbph+lcp+gleason+lpsa ,data=prostate)
 x=x[,-1] # stripping off the column of 1s as LASSO includes the intercept automatically

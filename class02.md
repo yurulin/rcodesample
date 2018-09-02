@@ -32,6 +32,7 @@ knit        : slidify::knit2slides
 ## this tutorial uses the following packages
 install.packages('nutshell') 
 install.packages('locfit')
+install.packages('lars')
 ```
 
 --- #simple-regression .modal 
@@ -1507,12 +1508,6 @@ head(g)
 ## [6,] -3.408908 13.96789 12.63493 0.1094681
 ```
 
-```r
-plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
-```
-
-![plot of chunk unnamed-chunk-57](assets/fig/unnamed-chunk-57-1.png)
-
 
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
@@ -1550,10 +1545,18 @@ f1; plot(f1)
 
 ## LASSO
 
+
 ```r
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
 prostate <- read.csv(sprintf ("%s/prostate.csv",data.url))
 prostate [1:3,]
+```
+
+```
+##       lcavol age      lbph       lcp gleason       lpsa
+## 1 -0.5798185  50 -1.386294 -1.386294       6 -0.4307829
+## 2 -0.9942523  58 -1.386294 -1.386294       6 -0.1625189
+## 3 -0.5108256  74 -1.386294 -1.386294       7 -0.1625189
 ```
 
 ```r
@@ -1561,25 +1564,41 @@ m1=lm(lcavol~.,data=prostate)
 summary(m1)
 ```
 
-
+```
+## 
+## Call:
+## lm(formula = lcavol ~ ., data = prostate)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.88964 -0.52719 -0.07263  0.57834  1.98728 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -1.49371    0.94261  -1.585   0.1165    
+## age          0.01902    0.01063   1.789   0.0769 .  
+## lbph        -0.08918    0.05376  -1.659   0.1006    
+## lcp          0.29727    0.06762   4.396 2.98e-05 ***
+## gleason      0.05240    0.11965   0.438   0.6625    
+## lpsa         0.53955    0.07648   7.054 3.30e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.7015 on 91 degrees of freedom
+## Multiple R-squared:  0.6642,	Adjusted R-squared:  0.6457 
+## F-statistic:    36 on 5 and 91 DF,  p-value: < 2.2e-16
+```
 
 ```r
 ## the model.matrix statement defines the model to be fitted
 x <- model.matrix(lcavol~age+lbph+lcp+gleason+lpsa ,data=prostate)
-```
-
-```
-## Error in terms.formula(object, data = data): object 'prostate' not found
-```
-
-```r
 x=x[,-1] # stripping off the column of 1s as LASSO includes the intercept automatically
 
 library(lars)
 ```
 
 ```
-## Error in library(lars): there is no package called 'lars'
+## Loaded lars 1.2
 ```
 
 ```r
@@ -1588,7 +1607,14 @@ lasso <- lars(x=x,y=prostate$lcavol ,trace=TRUE)
 ```
 
 ```
-## Error in lars(x = x, y = prostate$lcavol, trace = TRUE): could not find function "lars"
+## LASSO sequence
+## Computing X'X .....
+## LARS Step 1 :	 Variable 5 	added
+## LARS Step 2 :	 Variable 3 	added
+## LARS Step 3 :	 Variable 1 	added
+## LARS Step 4 :	 Variable 4 	added
+## LARS Step 5 :	 Variable 2 	added
+## Computing residuals, RSS etc .....
 ```
 
 

@@ -22,3 +22,4 @@ Matrix
 foreach
 glmnet
 locfit
+lars
