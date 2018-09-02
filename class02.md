@@ -1456,6 +1456,13 @@ ethanol [1:3,]
 ## 3 1.498 12 1.108
 ```
 
+```r
+fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)
+plot(fit)
+```
+
+![plot of chunk unnamed-chunk-54](assets/fig/unnamed-chunk-54-1.png)
+
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 

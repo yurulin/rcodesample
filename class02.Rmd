@@ -775,6 +775,9 @@ data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
 ethanol <- read.csv(sprintf ("%s/ethanol.csv",data.url))
 colnames(ethanol) <- c('NOx','C','E')
 ethanol [1:3,]
+fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)
+plot(fit)
+
 ```
 
 --- .scode-nowrap .compact
