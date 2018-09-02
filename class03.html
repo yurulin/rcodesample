@@ -56,7 +56,7 @@
 
   </div>
 </section>
-<section class="slide compact" id="slide-3">
+<section class="slide scode-nowrap compact" id="two-class">
   <div>
     <h2>Split data into two classes</h2>
     <pre><code class="r">library(ggplot2) ## use ggplot for plotting
@@ -72,7 +72,7 @@ ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
 
   </div>
 </section>
-<section class="slide compact" id="slide-4">
+<section class="slide scode-nowrap compact" id="slide-4">
   <div>
     <h2>Split data into two classes</h2>
     <pre><code class="r">heights.weights = transform(heights.weights , Male = ifelse(Gender == &#39;Male&#39;, 1, 0))

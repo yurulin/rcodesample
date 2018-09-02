@@ -24,10 +24,10 @@ knit        : slidify::knit2slides
 ## this tutorial uses the following packages
 ```
 
---- .compact 
+--- #two-class .scode-nowrap .compact 
 
 ## Split data into two classes
-```{r, fig.height=4, fig.width=4}
+```{r, fig.height=5, fig.width=5}
 library(ggplot2) ## use ggplot for plotting
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/'
 data.file = file.path(data.url , '01_heights_weights_genders.csv')
@@ -37,7 +37,7 @@ ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
   geom_point()
 ```
 
---- .compact 
+--- .scode-nowrap .compact 
 
 ## Split data into two classes
 

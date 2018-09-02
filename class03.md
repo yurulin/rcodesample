@@ -25,7 +25,7 @@ knit        : slidify::knit2slides
 ## this tutorial uses the following packages
 ```
 
---- .compact 
+--- #two-class .scode-nowrap .compact 
 
 ## Split data into two classes
 
@@ -41,7 +41,7 @@ ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
 
 ![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png)
 
---- .compact 
+--- .scode-nowrap .compact 
 
 ## Split data into two classes
 
