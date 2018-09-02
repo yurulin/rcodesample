@@ -27,7 +27,7 @@ knit        : slidify::knit2slides
 --- #two-class .scode-nowrap .compact 
 
 ## Split data into two classes
-```{r, fig.height=4.5, fig.width=8}
+```{r, fig.height=4, fig.width=7}
 library(ggplot2) ## use ggplot for plotting
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/'
 data.file = file.path(data.url , '01_heights_weights_genders.csv')
@@ -38,7 +38,6 @@ ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
 ```
 
 --- .scode-nowrap .compact 
-
 ## Split data into two classes
 
 ```{r, fig.height=4, fig.width=4, dependson=c(-1)}
@@ -127,7 +126,7 @@ m1=glm(Death~VRace+Agg,family=binomial,weights=Freq,data=dpenother)
 m1
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
 summary(m1)

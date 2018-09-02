@@ -42,7 +42,6 @@ ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
 ![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png)
 
 --- .scode-nowrap .compact 
-
 ## Split data into two classes
 
 
@@ -249,7 +248,7 @@ m1
 ## Residual Deviance: 113.5 	AIC: 119.5
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
 ```r
