@@ -348,7 +348,7 @@ scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
                   main="Scatter Plot Matrix")
 ```
 
---- .modal
+--- .scode .compact
 
 ## Multiple linear regression
 ```{r}

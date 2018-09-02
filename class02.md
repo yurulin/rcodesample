@@ -556,7 +556,7 @@ scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
 
 ![plot of chunk unnamed-chunk-25](assets/fig/unnamed-chunk-25-1.png)
 
---- .modal
+--- .scode .compact
 
 ## Multiple linear regression
 
