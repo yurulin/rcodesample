@@ -35,7 +35,7 @@ install.packages('locfit')
 install.packages('lars')
 ```
 
---- #simple-regression .modal 
+--- #simple-regression .scode .compact
 
 ## Simple Regression
 
