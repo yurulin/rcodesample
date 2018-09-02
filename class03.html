@@ -87,6 +87,242 @@ heights.weights [1:3,]
 
   </div>
 </section>
+<section class="slide model" id="logistic-regression">
+  <div>
+    <h2>Logistic Regression</h2>
+    <h2>Example 1: Death penelty data</h2>
+
+<ul>
+<li>objective: to identify whether the death penalty more likely if the victim is white, or the crime is more aggravating</li>
+<li>response variable: getting death panelty or not</li>
+<li>explanatory variables: severity of the crime, race of victim (black: 0; white: 1), etc</li>
+</ul>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-6">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">## analyzing individual observations
+data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+dpen = read.csv(sprintf(&quot;%s/DeathPenalty.csv&quot;,data.url))
+dpen[1:4,]
+</code></pre>
+
+<pre><code>##   Agg VRace Death
+## 1   1     1     1
+## 2   1     1     1
+## 3   1     1     0
+## 4   1     1     0
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-7">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">m1=glm(Death~VRace+Agg,family=binomial(link=&#39;logit&#39;),data=dpen)
+m1
+</code></pre>
+
+<pre><code>## 
+## Call:  glm(formula = Death ~ VRace + Agg, family = binomial(link = &quot;logit&quot;), 
+##     data = dpen)
+## 
+## Coefficients:
+## (Intercept)        VRace          Agg  
+##      -6.676        1.811        1.540  
+## 
+## Degrees of Freedom: 361 Total (i.e. Null);  359 Residual
+## Null Deviance:       321.9 
+## Residual Deviance: 113.5     AIC: 119.5
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-8">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">summary(m1)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Death ~ VRace + Agg, family = binomial(link = &quot;logit&quot;), 
+##     data = dpen)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.7526  -0.2658  -0.1083  -0.1083   3.2069  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -6.6760     0.7574  -8.814  &lt; 2e-16 ***
+## VRace         1.8106     0.5361   3.377 0.000732 ***
+## Agg           1.5397     0.1867   8.246  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 321.88  on 361  degrees of freedom
+## Residual deviance: 113.48  on 359  degrees of freedom
+## AIC: 119.48
+## 
+## Number of Fisher Scoring iterations: 7
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-9">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">## calculating logits
+exp(m1$coef[2])
+</code></pre>
+
+<pre><code>##  VRace 
+## 6.1144
+</code></pre>
+
+<pre><code class="r">exp(m1$coef[3])
+</code></pre>
+
+<pre><code>##      Agg 
+## 4.663011
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-10">
+  <div>
+    <h2>Logistic Regression</h2>
+      
+<div class='left' style='float:left;width:70%'>
+<pre><code class="r">## plotting probability of getting death penalty as a function of aggravation
+## separately for black (in black) and white (in red) victim
+n.dots = 501 ## number of dots in the curves (the nubmer is set to make the curves smooth)
+x.ag=dim(n.dots) ## x-value is the aggravating level (severity of the crime)
+y.black=dim(n.dots) ## y-value for the black victim curve
+y.white=dim(n.dots) ## y-value for the white victim curve
+for (i in 1:n.dots) {
+  x.ag[i]=(99+i)/100
+  is.white = 0
+  y.black[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
+  is.white = 1
+  y.white[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
+}
+plot(y.black~x.ag,type=&quot;l&quot;,col=&quot;black&quot;,ylab=&quot;Prob[Death]&quot;,xlab=&quot;Aggravation&quot;,ylim=c(0,1),main=&quot;red line for white victim; black line for black victim&quot;)
+points(y.white~x.ag,type=&quot;l&quot;,col=&quot;red&quot;)
+</code></pre>
+
+</div>    
+<div class='right' style='float:right;width:30%'>
+  <p><img src="assets/fig/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9"></p>
+
+</div>
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-11">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">## another format for logistic regression:
+## summarized data
+dpenother &lt;- read.csv(sprintf(&quot;%s/DeathPenaltyOther.csv&quot;,data.url))
+dpenother
+</code></pre>
+
+<pre><code>##    Agg VicRace VRace Death Freq
+## 1    1   White     1     1    2
+## 2    1   White     1     0   60
+## 3    1   Black     0     1    1
+## 4    1   Black     0     0  181
+## 5    2   White     1     1    2
+## 6    2   White     1     0   15
+## 7    2   Black     0     1    1
+## 8    2   Black     0     0   21
+## 9    3   White     1     1    6
+## 10   3   White     1     0    7
+## 11   3   Black     0     1    2
+## 12   3   Black     0     0    9
+## 13   4   White     1     1    9
+## 14   4   White     1     0    3
+## 15   4   Black     0     1    2
+## 16   4   Black     0     0    4
+## 17   5   White     1     1    9
+## 18   5   Black     0     1    4
+## 19   5   Black     0     0    3
+## 20   6   White     1     1   17
+## 21   6   Black     0     1    4
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-12">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">m1=glm(Death~VRace+Agg,family=binomial,weights=Freq,data=dpenother)
+m1
+</code></pre>
+
+<pre><code>## 
+## Call:  glm(formula = Death ~ VRace + Agg, family = binomial, data = dpenother, 
+##     weights = Freq)
+## 
+## Coefficients:
+## (Intercept)        VRace          Agg  
+##      -6.676        1.811        1.540  
+## 
+## Degrees of Freedom: 20 Total (i.e. Null);  18 Residual
+## Null Deviance:       321.9 
+## Residual Deviance: 113.5     AIC: 119.5
+</code></pre>
+
+<pre><code class="r">summary(m1)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Death ~ VRace + Agg, family = binomial, data = dpenother, 
+##     weights = Freq)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.0355  -1.9341   0.7711   2.6921   3.6666  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -6.6760     0.7574  -8.814  &lt; 2e-16 ***
+## VRace         1.8106     0.5361   3.377 0.000732 ***
+## Agg           1.5397     0.1867   8.246  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 321.88  on 20  degrees of freedom
+## Residual deviance: 113.48  on 18  degrees of freedom
+## AIC: 119.48
+## 
+## Number of Fisher Scoring iterations: 5
+</code></pre>
+
+<pre><code class="r">exp(m1$coef[2])
+</code></pre>
+
+<pre><code>##  VRace 
+## 6.1144
+</code></pre>
+
+<pre><code class="r">exp(m1$coef[3])
+</code></pre>
+
+<pre><code>##      Agg 
+## 4.663011
+</code></pre>
+
+  </div>
+</section>
   <div class="progress">
     <div></div>
   </div>
