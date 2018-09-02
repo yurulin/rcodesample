@@ -767,7 +767,7 @@ coef(glmnet.fit , s = best.lambda)
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
-```{r}
+```{r,autodep=TRUE}
 library(locfit)
 
 ## first we read in the data
@@ -790,8 +790,7 @@ abline(fitreg)
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
-```{r, fig.height=4, fig.width=4}
-library(locfit)
+```{r, fig.height=4, fig.width=4, autodep=TRUE}
 ## local polynomial regression of NOx on the equivalence ratio
 ## fit with a 50% nearest neighbor bandwidth.
 fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)

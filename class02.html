@@ -1549,8 +1549,7 @@ abline(fitreg)
 <section class="slide scode-nowrap compact" id="slide-56">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <pre><code class="r">library(locfit)
-## local polynomial regression of NOx on the equivalence ratio
+    <pre><code class="r">## local polynomial regression of NOx on the equivalence ratio
 ## fit with a 50% nearest neighbor bandwidth.
 fit &lt;- locfit(NOx~lp(E,nn=0.5),data=ethanol)
 plot(fit)

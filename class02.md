@@ -1474,7 +1474,6 @@ abline(fitreg)
 
 
 ```r
-library(locfit)
 ## local polynomial regression of NOx on the equivalence ratio
 ## fit with a 50% nearest neighbor bandwidth.
 fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)
