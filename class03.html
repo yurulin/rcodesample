@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Class03</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Class03">
+	<meta name="author" content="">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>Class03</h1>
+	</header>
+  <section class="slide " id="toc">
+  <div>
+    <h2>Class03</h2>
+    <ul>
+<li><a href="#set-up">Set up</a></li>
+<li><a href="#two-class">Split data into two classes</a></li>
+<li><a href="#logistic-regression">Logistic Regression</a></li>
+<li><a href="#knn">kNN</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide modal" id="set-up">
+  <div>
+    <h2>Install R packages</h2>
+    <pre><code class="r">## this tutorial uses the following packages
+</code></pre>
+
+  </div>
+</section>
+<section class="slide compact" id="slide-3">
+  <div>
+    <h2>Split data into two classes</h2>
+    <pre><code class="r">library(ggplot2) ## use ggplot for plotting
+data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/&#39;
+data.file = file.path(data.url , &#39;01_heights_weights_genders.csv&#39;)
+heights.weights &lt;- read.csv(data.file , header = TRUE , sep = &#39;,&#39;)
+# visualized their gender as the color of each point
+ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
+  geom_point()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
+
+  </div>
+</section>
+<section class="slide compact" id="slide-4">
+  <div>
+    <h2>Split data into two classes</h2>
+    <pre><code class="r">heights.weights = transform(heights.weights , Male = ifelse(Gender == &#39;Male&#39;, 1, 0))
+heights.weights [1:3,]
+</code></pre>
+
+<pre><code>##   Gender   Height   Weight Male
+## 1   Male 73.84702 241.8936    1
+## 2   Male 68.78190 162.3105    1
+## 3   Male 74.11011 212.7409    1
+</code></pre>
+
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {
+	      inlineMath: [['$','$'], ['\\(','\\)']],
+	      processEscapes: true
+	    }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script> -->
+	<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>

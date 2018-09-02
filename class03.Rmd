@@ -1,0 +1,47 @@
+---
+title       : Class03
+subtitle    : binary classification
+author      : 
+job         : 
+framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- #toc
+
+## Class03
+* [Set up](#set-up)
+* [Split data into two classes](#two-class)
+* [Logistic Regression](#logistic-regression)
+* [kNN](#knn)
+
+--- #set-up .modal 
+
+## Install R packages
+```{r eval=FALSE}
+## this tutorial uses the following packages
+```
+
+--- .compact 
+
+## Split data into two classes
+```{r, fig.height=4, fig.width=4}
+library(ggplot2) ## use ggplot for plotting
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/'
+data.file = file.path(data.url , '01_heights_weights_genders.csv')
+heights.weights <- read.csv(data.file , header = TRUE , sep = ',')
+# visualized their gender as the color of each point
+ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
+  geom_point()
+```
+
+--- .compact 
+
+## Split data into two classes
+
+```{r, fig.height=4, fig.width=4, dependson=c(-1)}
+heights.weights = transform(heights.weights , Male = ifelse(Gender == 'Male', 1, 0))
+heights.weights [1:3,]
+```
