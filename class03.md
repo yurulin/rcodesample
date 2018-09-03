@@ -300,3 +300,279 @@ exp(m1$coef[3])
 ## 4.663011
 ```
 
+
+--- .model
+## Logistic Regression
+
+Example: Delayed Flights
+-----------------------------
+   * response variable: whether or not a flight has been delayed by more than 15 min (coded as 0 for no delay, and 1 for delay)
+   * explanatory variables: different arrival airports, different departure airports, eight carriers, different hours of departure (6am to 10 pm), weather conditions (0 = good/1 = bad), day of week (1 for Sunday and Monday; and 0 for all other days)
+   * objective: to identify flights that are likely to be delayed (a binary classification problem)
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```r
+library(car) ## needed to recode variables
+set.seed(1) ## reset random seed for reproducibility
+
+## read and print the data
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+del <- read.csv(sprintf("%s/FlightDelays.csv",data.url))
+del[1:3,]
+```
+
+```
+##   schedtime carrier deptime dest distance     date flightnumber origin
+## 1      1455      OH    1455  JFK      184 1/1/2004         5935    BWI
+## 2      1640      DH    1640  JFK      213 1/1/2004         6155    DCA
+## 3      1245      DH    1245  LGA      229 1/1/2004         7208    IAD
+##   weather dayweek daymonth tailnu  delay
+## 1       0       4        1 N940CA ontime
+## 2       0       4        1 N405FJ ontime
+## 3       0       4        1 N695BR ontime
+```
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Convert data into desirable format: record and clean variables
+
+
+```r
+## define hours of departure
+del$sched=factor(floor(del$schedtime/100))
+del$delay=recode(del$delay,"'delayed'=1;else=0")
+del$delay=as.numeric(levels(del$delay)[del$delay])
+table(del$delay)
+```
+
+```
+## 
+##    0    1 
+## 1773  428
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```r
+## Delay: 1=Monday; 2=Tuesday; 3=Wednesday; 4=Thursday; 5=Friday; 6=Saturday; 7=Sunday
+## 7=Sunday and 1=Monday coded as 1
+del$dayweek=recode(del$dayweek,"c(1,7)=1;else=0")
+table(del$dayweek)
+```
+
+```
+## 
+##    0    1 
+## 1640  561
+```
+
+```r
+## omit unused variables
+del=del[,c(-1,-3,-5,-6,-7,-11,-12)]
+del[1:3,]
+```
+
+```
+##   carrier dest origin weather dayweek delay sched
+## 1      OH  JFK    BWI       0       0     0    14
+## 2      DH  JFK    DCA       0       0     0    16
+## 3      DH  LGA    IAD       0       0     0    12
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```r
+## estimation of the logistic regression model
+## explanatory variables: carrier, destination, origin, weather, day of week 
+## (weekday/weekend), scheduled hour of departure
+## create design matrix; indicators for categorical variables (factors)
+Xdel = model.matrix(delay~.,data=del)[,-1] 
+Xdel[1:3,]
+```
+
+```
+##   carrierDH carrierDL carrierMQ carrierOH carrierRU carrierUA carrierUS
+## 1         0         0         0         1         0         0         0
+## 2         1         0         0         0         0         0         0
+## 3         1         0         0         0         0         0         0
+##   destJFK destLGA originDCA originIAD weather dayweek sched7 sched8 sched9
+## 1       1       0         0         0       0       0      0      0      0
+## 2       1       0         1         0       0       0      0      0      0
+## 3       0       1         0         1       0       0      0      0      0
+##   sched10 sched11 sched12 sched13 sched14 sched15 sched16 sched17 sched18
+## 1       0       0       0       0       1       0       0       0       0
+## 2       0       0       0       0       0       0       1       0       0
+## 3       0       0       1       0       0       0       0       0       0
+##   sched19 sched20 sched21
+## 1       0       0       0
+## 2       0       0       0
+## 3       0       0       0
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Split the data into 60% training and 40% testing
+
+
+```r
+n.total=length(del$delay)
+n.total
+```
+
+```
+## [1] 2201
+```
+
+```r
+n.train=floor(n.total*(0.6))
+n.train
+```
+
+```
+## [1] 1320
+```
+
+```r
+n.test=n.total-n.train
+n.test
+```
+
+```
+## [1] 881
+```
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+train=sample(1:n.total,n.train) ## (randomly) sample indices for training set
+
+xtrain = Xdel[train,]
+xtest = Xdel[-train,]
+ytrain = del$delay[train]
+ytest = del$delay[-train]
+m1 = glm(delay~.,family=binomial,data=data.frame(delay=ytrain,xtrain))
+summary(m1)
+```
+
+```
+## 
+## Call:
+## glm(formula = delay ~ ., family = binomial, data = data.frame(delay = ytrain, 
+##     xtrain))
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.3065  -0.6850  -0.5193  -0.2764   2.6671  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  -0.506462   0.674045  -0.751 0.452426    
+## carrierDH    -1.109683   0.587743  -1.888 0.059020 .  
+## carrierDL    -1.687451   0.521459  -3.236 0.001212 ** 
+## carrierMQ    -0.510547   0.496381  -1.029 0.303697    
+## carrierOH    -2.262073   0.908804  -2.489 0.012808 *  
+## carrierRU    -0.838344   0.424301  -1.976 0.048175 *  
+## carrierUA    -1.602981   0.955408  -1.678 0.093387 .  
+## carrierUS    -1.941613   0.529565  -3.666 0.000246 ***
+## destJFK      -0.005843   0.317887  -0.018 0.985336    
+## destLGA       0.171454   0.327708   0.523 0.600841    
+## originDCA    -0.800683   0.413647  -1.936 0.052908 .  
+## originIAD    -0.319476   0.401076  -0.797 0.425714    
+## weather      17.881818 500.451538   0.036 0.971497    
+## dayweek       0.669711   0.161234   4.154 3.27e-05 ***
+## sched7       -0.168093   0.515374  -0.326 0.744305    
+## sched8        0.338228   0.487051   0.694 0.487406    
+## sched9       -0.450550   0.602829  -0.747 0.454826    
+## sched10      -0.382502   0.601444  -0.636 0.524794    
+## sched11      -0.578642   0.828878  -0.698 0.485113    
+## sched12       0.614203   0.467384   1.314 0.188803    
+## sched13      -0.232381   0.504607  -0.461 0.645143    
+## sched14       0.973601   0.430169   2.263 0.023617 *  
+## sched15       0.778466   0.454437   1.713 0.086706 .  
+## sched16       0.528690   0.452783   1.168 0.242951    
+## sched17       0.605440   0.422702   1.432 0.152056    
+## sched18       0.169869   0.587675   0.289 0.772541    
+## sched19       0.682830   0.500860   1.363 0.172783    
+## sched20       0.922454   0.680325   1.356 0.175131    
+## sched21       0.883470   0.441079   2.003 0.045180 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1312.7  on 1319  degrees of freedom
+## Residual deviance: 1134.9  on 1291  degrees of freedom
+## AIC: 1192.9
+## 
+## Number of Fisher Scoring iterations: 15
+```
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## prediction: predicted default probabilities for cases in test set
+ptest = predict(m1,newdata=data.frame(xtest),type="response")
+##  the default predictions are of log-odds (probabilities on logit scale) and type = "response" gives the predicted probabilities
+data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
+```
+
+```
+##    ytest     ptest
+## 1      0 0.1417566
+## 5      0 0.1046429
+## 6      0 0.1675298
+## 9      0 0.2081648
+## 10     0 0.2576931
+## 12     0 0.1164139
+## 15     0 0.1359269
+## 17     0 0.1300306
+## 21     0 0.1094095
+## 22     0 0.1325476
+```
+
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## measuring errors: coding as 1 if probability 0.5 or larger
+btest=floor(ptest+0.5)  ## use floor function to clamp the value to 0 or 1
+conf.matrix = table(ytest,btest)
+conf.matrix
+```
+
+```
+##      btest
+## ytest   0   1
+##     0 712   2
+##     1 153  14
+```
+
+```r
+error=(conf.matrix[1,2]+conf.matrix[2,1])/n.test
+error
+```
+
+```
+## [1] 0.1759364
+```
+
+
+

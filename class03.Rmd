@@ -134,3 +134,122 @@ exp(m1$coef[2])
 exp(m1$coef[3])
 ```
 
+
+--- .model
+## Logistic Regression
+
+Example: Delayed Flights
+-----------------------------
+   * response variable: whether or not a flight has been delayed by more than 15 min (coded as 0 for no delay, and 1 for delay)
+   * explanatory variables: different arrival airports, different departure airports, eight carriers, different hours of departure (6am to 10 pm), weather conditions (0 = good/1 = bad), day of week (1 for Sunday and Monday; and 0 for all other days)
+   * objective: to identify flights that are likely to be delayed (a binary classification problem)
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+```{r}
+library(car) ## needed to recode variables
+set.seed(1) ## reset random seed for reproducibility
+
+## read and print the data
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+del <- read.csv(sprintf("%s/FlightDelays.csv",data.url))
+del[1:3,]
+```
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Convert data into desirable format: record and clean variables
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## define hours of departure
+del$sched=factor(floor(del$schedtime/100))
+del$delay=recode(del$delay,"'delayed'=1;else=0")
+del$delay=as.numeric(levels(del$delay)[del$delay])
+table(del$delay)
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## Delay: 1=Monday; 2=Tuesday; 3=Wednesday; 4=Thursday; 5=Friday; 6=Saturday; 7=Sunday
+## 7=Sunday and 1=Monday coded as 1
+del$dayweek=recode(del$dayweek,"c(1,7)=1;else=0")
+table(del$dayweek)
+
+## omit unused variables
+del=del[,c(-1,-3,-5,-6,-7,-11,-12)]
+del[1:3,]
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## estimation of the logistic regression model
+## explanatory variables: carrier, destination, origin, weather, day of week 
+## (weekday/weekend), scheduled hour of departure
+## create design matrix; indicators for categorical variables (factors)
+Xdel = model.matrix(delay~.,data=del)[,-1] 
+Xdel[1:3,]
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Split the data into 60% training and 40% testing
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+n.total=length(del$delay)
+n.total
+n.train=floor(n.total*(0.6))
+n.train
+n.test=n.total-n.train
+n.test
+```
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+train=sample(1:n.total,n.train) ## (randomly) sample indices for training set
+
+xtrain = Xdel[train,]
+xtest = Xdel[-train,]
+ytrain = del$delay[train]
+ytest = del$delay[-train]
+m1 = glm(delay~.,family=binomial,data=data.frame(delay=ytrain,xtrain))
+summary(m1)
+```
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## prediction: predicted default probabilities for cases in test set
+ptest = predict(m1,newdata=data.frame(xtest),type="response")
+##  the default predictions are of log-odds (probabilities on logit scale) and type = "response" gives the predicted probabilities
+data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
+```
+
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## measuring errors: coding as 1 if probability 0.5 or larger
+btest=floor(ptest+0.5)  ## use floor function to clamp the value to 0 or 1
+conf.matrix = table(ytest,btest)
+conf.matrix
+
+error=(conf.matrix[1,2]+conf.matrix[2,1])/n.test
+error
+```
+
+
+
