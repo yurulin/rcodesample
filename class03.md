@@ -924,3 +924,167 @@ plot(perf)
 ```
 
 ![plot of chunk unnamed-chunk-29](assets/fig/unnamed-chunk-29-1.png)
+
+--- .scode-nowrap .compact 
+## kNN
+
+Example: Forensic Glass
+-----------------------------
+
+data set of 214 glass shards of six possible glass types
+objective: to determine why types of glass based on characteristics including the refractive index (RI) and the percentages of Na, Mg, Al, Si, K, Ca, Ba, and Fe
+6 groups of glass shards:
+  
+   * WinF: float glass window
+   * WinNF: nonfloat window
+   * Veh: vehicle window
+   * Con: container (bottles)
+   * Tabl: tableware
+   * Head: vehicle headlamp
+   
+
+```r
+suppressMessages( library(textir) ) ## help standardize the data
+```
+
+```
+## Error in library(textir): there is no package called 'textir'
+```
+
+```r
+suppressMessages( library(MASS) )   ## a library of example datasets
+
+data(fgl)     ## loads the data into R; see help(fgl)
+fgl[1:3,]
+```
+
+```
+##      RI    Na   Mg   Al    Si    K   Ca Ba Fe type
+## 1  3.01 13.64 4.49 1.10 71.78 0.06 8.75  0  0 WinF
+## 2 -0.39 13.89 3.60 1.36 72.73 0.48 7.83  0  0 WinF
+## 3 -1.82 13.53 3.55 1.54 72.99 0.39 7.78  0  0 WinF
+```
+
+--- .scode-nowrap .compact 
+## kNN
+
+
+```r
+## use nt=200 training cases to find the nearest neighbors for 
+## the remaining 14 cases. These 14 cases become the evaluation 
+## (test, hold-out) cases
+
+n=length(fgl$type)
+nt=200
+set.seed(1) ## to make the calculations reproducible in repeated runs
+train <- sample(1:n,nt)
+
+## Standardization of the data is preferable, especially if 
+## units of the features are quite different
+## could do this from scratch by calculating the mean and 
+## standard deviation of each feature, and use those to 
+## standardize.
+## Even simpler, use the normalize function in the R-package textir; 
+## it converts data frame columns to mean-zero sd-one
+
+x <- normalize(fgl[,c(4,1)]) ## you can also use scale()
+```
+
+```
+## Error in normalize(fgl[, c(4, 1)]): could not find function "normalize"
+```
+
+```r
+x <- normalize(fgl[,c(1:9)]) ## using all nine dimensions (RI plus 8 chemical concentrations)
+```
+
+```
+## Error in normalize(fgl[, c(1:9)]): could not find function "normalize"
+```
+
+```r
+x[1:3,]
+```
+
+```
+##   age      lbph       lcp gleason       lpsa
+## 1  50 -1.386294 -1.386294       6 -0.4307829
+## 2  58 -1.386294 -1.386294       6 -0.1625189
+## 3  74 -1.386294 -1.386294       7 -0.1625189
+```
+
+
+--- .scode-nowrap .compact 
+## kNN
+
+
+```r
+library(class)  
+nearest1 <- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=1)
+```
+
+```
+## Error in x[train, ]: subscript out of bounds
+```
+
+```r
+nearest5 <- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=5)
+```
+
+```
+## Error in x[train, ]: subscript out of bounds
+```
+
+```r
+data.frame(fgl$type[-train],nearest1,nearest5)
+```
+
+```
+## Error in data.frame(fgl$type[-train], nearest1, nearest5): object 'nearest1' not found
+```
+
+
+
+--- .scode-nowrap .compact 
+## kNN
+
+
+```r
+## calculate the proportion of correct classifications on this one 
+## training set
+
+pcorrn1=100*sum(fgl$type[-train]==nearest1)/(n-nt)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'nearest1' not found
+```
+
+```r
+pcorrn5=100*sum(fgl$type[-train]==nearest5)/(n-nt)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'nearest5' not found
+```
+
+```r
+pcorrn1
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pcorrn1' not found
+```
+
+```r
+pcorrn5
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pcorrn5' not found
+```
+
+```r
+## Note: Different runs may give you slightly different results as ties 
+## are broken at random
+```
