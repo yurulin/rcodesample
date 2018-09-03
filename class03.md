@@ -521,18 +521,264 @@ summary(m1)
 ## Logistic Regression
 
 
+```
+## 
+## Call:
+## glm(formula = delay ~ ., family = binomial, data = data.frame(delay = ytrain, 
+##     xtrain))
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.2216  -0.6772  -0.5281  -0.3531   2.6610  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(>|z|)   
+## (Intercept)  -0.90788    0.66551  -1.364  0.17251   
+## carrierDH    -0.88899    0.58988  -1.507  0.13179   
+## carrierDL    -1.27041    0.51493  -2.467  0.01362 * 
+## carrierMQ    -0.27574    0.49695  -0.555  0.57899   
+## carrierOH    -1.70665    0.90758  -1.880  0.06005 . 
+## carrierRU    -0.55706    0.42580  -1.308  0.19078   
+## carrierUA    -0.87858    0.95414  -0.921  0.35715   
+## carrierUS    -1.50848    0.52662  -2.864  0.00418 **
+## destJFK       0.07171    0.31884   0.225  0.82206   
+## destLGA       0.13013    0.33339   0.390  0.69629   
+## originDCA    -0.49878    0.42828  -1.165  0.24417   
+## originIAD    -0.07251    0.42327  -0.171  0.86399   
+## weather      17.94673  518.83956   0.035  0.97241   
+## dayweek       0.52898    0.16440   3.218  0.00129 **
+## sched7        0.06378    0.46386   0.137  0.89064   
+## sched8       -0.01011    0.45996  -0.022  0.98247   
+## sched9       -0.58942    0.61810  -0.954  0.34029   
+## sched10      -0.16001    0.54645  -0.293  0.76965   
+## sched11       0.09688    0.63912   0.152  0.87951   
+## sched12       0.23978    0.44425   0.540  0.58938   
+## sched13      -0.72601    0.52616  -1.380  0.16764   
+## sched14       0.73609    0.39598   1.859  0.06304 . 
+## sched15       0.64755    0.42912   1.509  0.13130   
+## sched16       0.44173    0.40755   1.084  0.27843   
+## sched17       0.63126    0.37948   1.663  0.09621 . 
+## sched18       0.19315    0.53792   0.359  0.71955   
+## sched19       0.98114    0.43985   2.231  0.02571 * 
+## sched20       0.35194    0.64191   0.548  0.58351   
+## sched21       0.75079    0.40888   1.836  0.06632 . 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1304.3  on 1319  degrees of freedom
+## Residual deviance: 1154.1  on 1291  degrees of freedom
+## AIC: 1212.1
+## 
+## Number of Fisher Scoring iterations: 15
+```
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## prediction: predicted default probabilities for cases in test set
+ptest = predict(m1,newdata=data.frame(xtest),type="response")
+## the default predictions are of log-odds (probabilities on logit scale); 
+## type = "response" gives the predicted probabilities
+data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
+```
+
+```
+##    ytest      ptest
+## 4      0 0.24824663
+## 5      0 0.13019171
+## 6      0 0.14090627
+## 8      0 0.20489958
+## 11     0 0.27121717
+## 13     0 0.04163173
+## 18     0 0.27624832
+## 22     0 0.09293735
+## 24     0 0.28808073
+## 27     0 0.03310419
+```
 
 
 
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## measuring errors: coding as 1 if probability 0.5 or larger
+btest=floor(ptest+0.5)  ## use floor function to clamp the value to 0 or 1
+conf.matrix = table(ytest,btest)
+conf.matrix
+```
+
+```
+##      btest
+## ytest   0   1
+##     0 710   1
+##     1 156  14
+```
+
+```r
+error=(conf.matrix[1,2]+conf.matrix[2,1])/n.test
+error
+```
+
+```
+## [1] 0.1782066
+```
 
 
 
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Example: the delayed flights (Lift chart)
+-----------------------------
+
+
+```r
+## order cases in test set according to their success prob
+## actual outcome shown next to it
+df=cbind(ptest,ytest)
+df[1:20,]
+```
+
+```
+##         ptest ytest
+## 4  0.24824663     0
+## 5  0.13019171     0
+## 6  0.14090627     0
+## 8  0.20489958     0
+## 11 0.27121717     0
+## 13 0.04163173     0
+## 18 0.27624832     0
+## 22 0.09293735     0
+## 24 0.28808073     0
+## 27 0.03310419     0
+## 28 0.06367758     0
+## 29 0.02900021     0
+## 31 0.10398187     0
+## 34 0.30286929     0
+## 40 0.22476385     0
+## 42 0.24627333     0
+## 44 0.36440209     0
+## 48 0.29113111     0
+## 51 0.14103333     0
+## 55 0.24824663     0
+```
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+rank.df=as.data.frame(df[order(ptest,decreasing=TRUE),])
+colnames(rank.df) = c('predicted','actual')
+rank.df[1:20,]
+```
+
+```
+##      predicted actual
+## 1828 1.0000000      1
+## 1857 1.0000000      1
+## 1908 1.0000000      1
+## 1865 1.0000000      1
+## 1829 1.0000000      1
+## 1252 1.0000000      1
+## 1914 1.0000000      1
+## 1911 0.9999999      1
+## 1815 0.9999999      1
+## 1823 0.9999999      1
+## 1868 0.9999999      1
+## 1832 0.9999999      1
+## 744  0.5258407      0
+## 1257 0.5258407      1
+## 1851 0.5258407      1
+## 223  0.4931691      1
+## 837  0.4931691      0
+## 1336 0.4931691      1
+## 1861 0.4931691      1
+## 194  0.4894635      1
+```
 
 
 
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## overall success (delay) prob in the evaluation data set
+baserate=mean(ytest)
+baserate
+```
+
+```
+## [1] 0.1929625
+```
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## calculating the lift
+## cumulative 1's sorted by predicted values
+## cumulative 1's using the average success prob from evaluation set
+ax=dim(n.test)
+ay.base=dim(n.test)
+ay.pred=dim(n.test)
+ax[1]=1
+ay.base[1]=baserate
+ay.pred[1]=rank.df$actual[1]
+for (i in 2:n.test) {
+  ax[i]=i
+  ay.base[i]=baserate*i ## uniformly increase with rate xbar
+  ay.pred[i]=ay.pred[i-1]+rank.df$actual[i]
+}
+
+df=cbind(rank.df,ay.pred,ay.base)
+df[1:20,]
+```
+
+```
+##      predicted actual ay.pred   ay.base
+## 1828 1.0000000      1       1 0.1929625
+## 1857 1.0000000      1       2 0.3859251
+## 1908 1.0000000      1       3 0.5788876
+## 1865 1.0000000      1       4 0.7718502
+## 1829 1.0000000      1       5 0.9648127
+## 1252 1.0000000      1       6 1.1577753
+## 1914 1.0000000      1       7 1.3507378
+## 1911 0.9999999      1       8 1.5437003
+## 1815 0.9999999      1       9 1.7366629
+## 1823 0.9999999      1      10 1.9296254
+## 1868 0.9999999      1      11 2.1225880
+## 1832 0.9999999      1      12 2.3155505
+## 744  0.5258407      0      12 2.5085131
+## 1257 0.5258407      1      13 2.7014756
+## 1851 0.5258407      1      14 2.8944381
+## 223  0.4931691      1      15 3.0874007
+## 837  0.4931691      0      15 3.2803632
+## 1336 0.4931691      1      16 3.4733258
+## 1861 0.4931691      1      17 3.6662883
+## 194  0.4894635      1      18 3.8592509
+```
 
 
 
+--- .scode-nowrap .compact 
+## Logistic Regression
 
 
+```r
+plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",main="Lift: Cum successes sorted by pred val/success prob")
+points(ax,ay.base,type="l")
+```
+
+![plot of chunk unnamed-chunk-25](assets/fig/unnamed-chunk-25-1.png)
 

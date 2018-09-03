@@ -226,7 +226,7 @@ summary(m1)
 --- .ssscode-nowrap .compact 
 ## Logistic Regression
 
-```{r, dependson=c(-1), fig.height=4, fig.width=4, echo=False}
+```{r, dependson=c(-1), fig.height=4, fig.width=4, echo=FALSE}
 train=sample(1:n.total,n.train) ## (randomly) sample indices for training set
 
 xtrain = Xdel[train,]
