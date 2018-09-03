@@ -252,3 +252,71 @@ error
 
 
 
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Example: the delayed flights (Lift chart)
+-----------------------------
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## order cases in test set according to their success prob
+## actual outcome shown next to it
+df=cbind(ptest,ytest)
+df[1:20,]
+```
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+rank.df=as.data.frame(df[order(ptest,decreasing=TRUE),])
+colnames(rank.df) = c('predicted','actual')
+rank.df[1:20,]
+```
+
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## overall success (delay) prob in the evaluation data set
+baserate=mean(ytest)
+baserate
+```
+
+
+--- .sscode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## calculating the lift
+## cumulative 1's sorted by predicted values
+## cumulative 1's using the average success prob from evaluation set
+ax=dim(n.test)
+ay.base=dim(n.test)
+ay.pred=dim(n.test)
+ax[1]=1
+ay.base[1]=baserate
+ay.pred[1]=rank.df$actual[1]
+for (i in 2:n.test) {
+  ax[i]=i
+  ay.base[i]=baserate*i ## uniformly increase with rate xbar
+  ay.pred[i]=ay.pred[i-1]+rank.df$actual[i]
+}
+
+df=cbind(rank.df,ay.pred,ay.base)
+df[1:20,]
+```
+
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",main="Lift: Cum successes sorted by pred val/success prob")
+points(ax,ay.base,type="l")
+```
+
