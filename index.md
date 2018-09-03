@@ -14,6 +14,7 @@ knit        : slidify::knit2slides
 ## R Tutorials
 * [class01: Introduction](class01.html)
 * [class02: Regression](class02.html)
+* [class03: Binary classification](class03.html)
 * [R Lab: Part I](rlab01.html)
 * [R Lab: Part II](rlab02.html)
 
