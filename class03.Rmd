@@ -22,6 +22,7 @@ knit        : slidify::knit2slides
 ## Install R packages
 ```{r eval=FALSE}
 ## this tutorial uses the following packages
+install.packages('textir')
 ```
 
 --- #two-class .scode-nowrap .compact 
