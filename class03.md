@@ -303,9 +303,8 @@ exp(m1$coef[3])
 
 --- .model
 ## Logistic Regression
+### Example: Delayed Flights
 
-Example: Delayed Flights
------------------------------
    * response variable: whether or not a flight has been delayed by more than 15 min (coded as 0 for no delay, and 1 for delay)
    * explanatory variables: different arrival airports, different departure airports, eight carriers, different hours of departure (6am to 10 pm), weather conditions (0 = good/1 = bad), day of week (1 for Sunday and Monday; and 0 for all other days)
    * objective: to identify flights that are likely to be delayed (a binary classification problem)
