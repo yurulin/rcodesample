@@ -935,12 +935,15 @@ data set of 214 glass shards of six possible glass types
 objective: to determine why types of glass based on characteristics including the refractive index (RI) and the percentages of Na, Mg, Al, Si, K, Ca, Ba, and Fe
 6 groups of glass shards:
   
-   WinF: float glass window
-   WinNF: nonfloat window
-   Veh: vehicle window
-   Con: container (bottles)
-   Tabl: tableware
-   Head: vehicle headlamp
+   - WinF: float glass window
+   - WinNF: nonfloat window
+   - Veh: vehicle window
+   - Con: container (bottles)
+   - Tabl: tableware
+   - Head: vehicle headlamp
+
+--- .scode-nowrap .compact 
+## kNN
    
 
 ```r
