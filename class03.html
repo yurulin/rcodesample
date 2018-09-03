@@ -938,13 +938,8 @@ objective: to determine why types of glass based on characteristics including th
 <section class="slide scode-nowrap compact" id="slide-34">
   <div>
     <h2>kNN</h2>
-    <pre><code class="r">suppressMessages( library(textir) ) ## help standardize the data
-</code></pre>
-
-<pre><code>## Error in library(textir): there is no package called &#39;textir&#39;
-</code></pre>
-
-<pre><code class="r">suppressMessages( library(MASS) )   ## a library of example datasets
+    <pre><code class="r">library(textir) ## help standardize the data
+library(MASS)   ## a library of example datasets
 
 data(fgl)     ## loads the data into R; see help(fgl)
 fgl[1:3,]

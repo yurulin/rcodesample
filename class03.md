@@ -952,15 +952,8 @@ objective: to determine why types of glass based on characteristics including th
    
 
 ```r
-suppressMessages( library(textir) ) ## help standardize the data
-```
-
-```
-## Error in library(textir): there is no package called 'textir'
-```
-
-```r
-suppressMessages( library(MASS) )   ## a library of example datasets
+library(textir) ## help standardize the data
+library(MASS)   ## a library of example datasets
 
 data(fgl)     ## loads the data into R; see help(fgl)
 fgl[1:3,]
