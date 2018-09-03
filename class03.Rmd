@@ -265,7 +265,7 @@ error
 
 
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
 Example: the delayed flights (Lift chart)
@@ -290,20 +290,14 @@ rank.df[1:20,]
 
 
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## overall success (delay) prob in the evaluation data set
 baserate=mean(ytest)
 baserate
-```
 
-
---- .sscode-nowrap .compact 
-## Logistic Regression
-
-```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## calculating the lift
 ## cumulative 1's sorted by predicted values
 ## cumulative 1's using the average success prob from evaluation set
@@ -328,8 +322,73 @@ df[1:20,]
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
-```{r, dependson=c(-1), fig.height=4, fig.width=4}
-plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",main="Lift: Cum successes sorted by pred val/success prob")
+```{r, dependson=c(-1), fig.height=4, fig.width=4,fig.align='center'}
+plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",
+main="Lift: Cum successes sorted by pred val/success prob")
 points(ax,ay.base,type="l")
 ```
 
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Example: the delayed flights (ROC)
+-----------------------------
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## we use probability cutoff 1/2
+## coding as 1 if probability 1/2 or larger
+cut=1/2
+gg1=floor(ptest+(1-cut))
+conf.matrix=table(ytest,btest)
+conf.matrix
+
+truepos <- ytest==1 & ptest>=cut 
+trueneg <- ytest==0 & ptest<cut
+# Sensitivity (predict default when it does happen)
+sum(truepos)/sum(ytest==1) 
+
+# Specificity (predict no default when it does not happen)
+sum(trueneg)/sum(ytest==0) 
+```
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE}
+## using the ROCR package to graph the ROC curves 
+## input is a data frame consisting of two columns
+## predictions in first column and actual outcomes in the second 
+
+## ROC for hold-out period
+data=data.frame(predictions=ptest,labels=ytest)
+data[1:10,]
+```
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE}
+## pred: function to create prediction objects
+pred <- prediction(data$predictions,data$labels)
+str(pred)
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE}
+## perf: creates the input to be plotted
+## sensitivity (TPR) and one minus specificity (FPR)
+perf <- performance(pred, "sens", "fpr")
+str(perf)
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE}
+plot(perf)
+```

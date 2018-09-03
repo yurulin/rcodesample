@@ -642,7 +642,7 @@ error
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-24">
+<section class="slide sscode-nowrap compact" id="slide-24">
   <div>
     <h2>Logistic Regression</h2>
     <h2>Example: the delayed flights (Lift chart)</h2>
@@ -711,7 +711,7 @@ rank.df[1:20,]
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-26">
+<section class="slide sscode-nowrap compact" id="slide-26">
   <div>
     <h2>Logistic Regression</h2>
     <pre><code class="r">## overall success (delay) prob in the evaluation data set
@@ -722,12 +722,7 @@ baserate
 <pre><code>## [1] 0.1929625
 </code></pre>
 
-  </div>
-</section>
-<section class="slide sscode-nowrap compact" id="slide-27">
-  <div>
-    <h2>Logistic Regression</h2>
-    <pre><code class="r">## calculating the lift
+<pre><code class="r">## calculating the lift
 ## cumulative 1&#39;s sorted by predicted values
 ## cumulative 1&#39;s using the average success prob from evaluation set
 ax=dim(n.test)
@@ -771,14 +766,128 @@ df[1:20,]
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-28">
+<section class="slide scode-nowrap compact" id="slide-27">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">plot(ax,ay.pred,xlab=&quot;number of cases&quot;,ylab=&quot;number of successes&quot;,main=&quot;Lift: Cum successes sorted by pred val/success prob&quot;)
+    <pre><code class="r">plot(ax,ay.pred,xlab=&quot;number of cases&quot;,ylab=&quot;number of successes&quot;,
+main=&quot;Lift: Cum successes sorted by pred val/success prob&quot;)
 points(ax,ay.base,type=&quot;l&quot;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-25-1.png" alt="plot of chunk unnamed-chunk-25"></p>
+<p><img src="assets/fig/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" /></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-28">
+  <div>
+    <h2>Logistic Regression</h2>
+    <h2>Example: the delayed flights (ROC)</h2>
+
+<pre><code class="r">## we use probability cutoff 1/2
+## coding as 1 if probability 1/2 or larger
+cut=1/2
+gg1=floor(ptest+(1-cut))
+conf.matrix=table(ytest,btest)
+conf.matrix
+</code></pre>
+
+<pre><code>##      btest
+## ytest   0   1
+##     0 710   1
+##     1 156  14
+</code></pre>
+
+<pre><code class="r">truepos &lt;- ytest==1 &amp; ptest&gt;=cut 
+trueneg &lt;- ytest==0 &amp; ptest&lt;cut
+# Sensitivity (predict default when it does happen)
+sum(truepos)/sum(ytest==1) 
+</code></pre>
+
+<pre><code>## [1] 0.08235294
+</code></pre>
+
+<pre><code class="r"># Specificity (predict no default when it does not happen)
+sum(trueneg)/sum(ytest==0) 
+</code></pre>
+
+<pre><code>## [1] 0.9985935
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-29">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">## using the ROCR package to graph the ROC curves 
+## input is a data frame consisting of two columns
+## predictions in first column and actual outcomes in the second 
+
+## ROC for hold-out period
+data=data.frame(predictions=ptest,labels=ytest)
+data[1:10,]
+</code></pre>
+
+<pre><code>##    predictions labels
+## 4   0.24824663      0
+## 5   0.13019171      0
+## 6   0.14090627      0
+## 8   0.20489958      0
+## 11  0.27121717      0
+## 13  0.04163173      0
+## 18  0.27624832      0
+## 22  0.09293735      0
+## 24  0.28808073      0
+## 27  0.03310419      0
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-30">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">## pred: function to create prediction objects
+pred &lt;- prediction(data$predictions,data$labels)
+</code></pre>
+
+<pre><code>## Error in prediction(data$predictions, data$labels): could not find function &quot;prediction&quot;
+</code></pre>
+
+<pre><code class="r">str(pred)
+</code></pre>
+
+<pre><code>##  Named num 160
+##  - attr(*, &quot;names&quot;)= chr &quot;15&quot;
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-31">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">## perf: creates the input to be plotted
+## sensitivity (TPR) and one minus specificity (FPR)
+perf &lt;- performance(pred, &quot;sens&quot;, &quot;fpr&quot;)
+</code></pre>
+
+<pre><code>## Error in performance(pred, &quot;sens&quot;, &quot;fpr&quot;): could not find function &quot;performance&quot;
+</code></pre>
+
+<pre><code class="r">str(perf)
+</code></pre>
+
+<pre><code>## Error in str(perf): object &#39;perf&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-32">
+  <div>
+    <h2>Logistic Regression</h2>
+    <pre><code class="r">plot(perf)
+</code></pre>
+
+<pre><code>## Error in plot(perf): object &#39;perf&#39; not found
+</code></pre>
 
   </div>
 </section>

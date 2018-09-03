@@ -631,7 +631,7 @@ error
 
 
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
 Example: the delayed flights (Lift chart)
@@ -706,7 +706,7 @@ rank.df[1:20,]
 
 
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
 
@@ -719,11 +719,6 @@ baserate
 ```
 ## [1] 0.1929625
 ```
-
-
---- .sscode-nowrap .compact 
-## Logistic Regression
-
 
 ```r
 ## calculating the lift
@@ -776,9 +771,139 @@ df[1:20,]
 
 
 ```r
-plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",main="Lift: Cum successes sorted by pred val/success prob")
+plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",
+main="Lift: Cum successes sorted by pred val/success prob")
 points(ax,ay.base,type="l")
 ```
 
-![plot of chunk unnamed-chunk-25](assets/fig/unnamed-chunk-25-1.png)
+<img src="assets/fig/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" />
 
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+Example: the delayed flights (ROC)
+-----------------------------
+
+
+```r
+## we use probability cutoff 1/2
+## coding as 1 if probability 1/2 or larger
+cut=1/2
+gg1=floor(ptest+(1-cut))
+conf.matrix=table(ytest,btest)
+conf.matrix
+```
+
+```
+##      btest
+## ytest   0   1
+##     0 710   1
+##     1 156  14
+```
+
+```r
+truepos <- ytest==1 & ptest>=cut 
+trueneg <- ytest==0 & ptest<cut
+# Sensitivity (predict default when it does happen)
+sum(truepos)/sum(ytest==1) 
+```
+
+```
+## [1] 0.08235294
+```
+
+```r
+# Specificity (predict no default when it does not happen)
+sum(trueneg)/sum(ytest==0) 
+```
+
+```
+## [1] 0.9985935
+```
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## using the ROCR package to graph the ROC curves 
+## input is a data frame consisting of two columns
+## predictions in first column and actual outcomes in the second 
+
+## ROC for hold-out period
+data=data.frame(predictions=ptest,labels=ytest)
+data[1:10,]
+```
+
+```
+##    predictions labels
+## 4   0.24824663      0
+## 5   0.13019171      0
+## 6   0.14090627      0
+## 8   0.20489958      0
+## 11  0.27121717      0
+## 13  0.04163173      0
+## 18  0.27624832      0
+## 22  0.09293735      0
+## 24  0.28808073      0
+## 27  0.03310419      0
+```
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## pred: function to create prediction objects
+pred <- prediction(data$predictions,data$labels)
+```
+
+```
+## Error in prediction(data$predictions, data$labels): could not find function "prediction"
+```
+
+```r
+str(pred)
+```
+
+```
+##  Named num 160
+##  - attr(*, "names")= chr "15"
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+## perf: creates the input to be plotted
+## sensitivity (TPR) and one minus specificity (FPR)
+perf <- performance(pred, "sens", "fpr")
+```
+
+```
+## Error in performance(pred, "sens", "fpr"): could not find function "performance"
+```
+
+```r
+str(perf)
+```
+
+```
+## Error in str(perf): object 'perf' not found
+```
+
+
+--- .scode-nowrap .compact 
+## Logistic Regression
+
+
+```r
+plot(perf)
+```
+
+```
+## Error in plot(perf): object 'perf' not found
+```
