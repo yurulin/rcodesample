@@ -321,7 +321,7 @@ df[1:20,]
 
 ```{r, dependson=c(-1), fig.height=4, fig.width=4,fig.align='center'}
 plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",
-main="Lift: Cum successes sorted by pred val/success prob")
+main="Lift: Cum successes sorted by\n pred val/success prob")
 points(ax,ay.base,type="l")
 ```
 

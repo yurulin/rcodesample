@@ -770,7 +770,7 @@ df[1:20,]
   <div>
     <h2>Logistic Regression</h2>
     <pre><code class="r">plot(ax,ay.pred,xlab=&quot;number of cases&quot;,ylab=&quot;number of successes&quot;,
-main=&quot;Lift: Cum successes sorted by pred val/success prob&quot;)
+main=&quot;Lift: Cum successes sorted by\n pred val/success prob&quot;)
 points(ax,ay.base,type=&quot;l&quot;)
 </code></pre>
 
@@ -855,8 +855,7 @@ pred &lt;- prediction(data$predictions,data$labels)
 <pre><code class="r">str(pred)
 </code></pre>
 
-<pre><code>##  Named num 160
-##  - attr(*, &quot;names&quot;)= chr &quot;15&quot;
+<pre><code>## Error in str(pred): cannot open file &#39;/home/yuru/connect/yurugit/mydeck-DM-slides/.cache/unnamed-chunk-27_d08bb6dcfab1303b5a45548dd50ac627.rdb&#39;: No such file or directory
 </code></pre>
 
   </div>

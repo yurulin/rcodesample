@@ -769,7 +769,7 @@ df[1:20,]
 
 ```r
 plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",
-main="Lift: Cum successes sorted by pred val/success prob")
+main="Lift: Cum successes sorted by\n pred val/success prob")
 points(ax,ay.base,type="l")
 ```
 
@@ -864,8 +864,7 @@ str(pred)
 ```
 
 ```
-##  Named num 160
-##  - attr(*, "names")= chr "15"
+## Error in str(pred): cannot open file '/home/yuru/connect/yurugit/mydeck-DM-slides/.cache/unnamed-chunk-27_d08bb6dcfab1303b5a45548dd50ac627.rdb': No such file or directory
 ```
 
 
