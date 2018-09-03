@@ -60,7 +60,9 @@ install.packages(&#39;textir&#39;)
 <section class="slide scode-nowrap compact" id="two-class">
   <div>
     <h2>Split data into two classes</h2>
-    <pre><code class="r">library(ggplot2) ## use ggplot for plotting
+    <p>The examples are taken from <a href="http://www.wiley.com/WileyCDA/WileyTitle/productCd-111844714X.html">Data Mining and Business Analytics with R</a> and <a href="http://shop.oreilly.com/product/0636920018483.do">Machine Learning for Hackers</a>.</p>
+
+<pre><code class="r">library(ggplot2) ## use ggplot for plotting
 data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/&#39;
 data.file = file.path(data.url , &#39;01_heights_weights_genders.csv&#39;)
 heights.weights &lt;- read.csv(data.file , header = TRUE , sep = &#39;,&#39;)

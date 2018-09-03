@@ -28,7 +28,11 @@ install.packages('textir')
 --- #two-class .scode-nowrap .compact 
 
 ## Split data into two classes
-```{r, fig.height=4, fig.width=7}
+
+The examples are taken from [Data Mining and Business Analytics with R](http://www.wiley.com/WileyCDA/WileyTitle/productCd-111844714X.html) and [Machine Learning for Hackers](http://shop.oreilly.com/product/0636920018483.do).
+
+
+```{r, fig.height=4, fig.width=6}
 library(ggplot2) ## use ggplot for plotting
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/'
 data.file = file.path(data.url , '01_heights_weights_genders.csv')

@@ -30,6 +30,10 @@ install.packages('textir')
 
 ## Split data into two classes
 
+The examples are taken from [Data Mining and Business Analytics with R](http://www.wiley.com/WileyCDA/WileyTitle/productCd-111844714X.html) and [Machine Learning for Hackers](http://shop.oreilly.com/product/0636920018483.do).
+
+
+
 ```r
 library(ggplot2) ## use ggplot for plotting
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/'
