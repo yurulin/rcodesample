@@ -830,30 +830,7 @@ sum(trueneg)/sum(ytest==0)
 ```r
 ## using the ROCR package to graph the ROC curves 
 library(ROCR)
-```
 
-```
-## Loading required package: gplots
-```
-
-```
-## 
-## Attaching package: 'gplots'
-```
-
-```
-## The following object is masked from 'package:PerformanceAnalytics':
-## 
-##     textplot
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     lowess
-```
-
-```r
 ## input is a data frame consisting of two columns
 ## predictions in first column and actual outcomes in the second 
 

@@ -356,7 +356,7 @@ sum(trueneg)/sum(ytest==0)
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
-```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE}
+```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE, message=FALSE}
 ## using the ROCR package to graph the ROC curves 
 library(ROCR)
 
