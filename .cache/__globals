@@ -3,3 +3,4 @@ unnamed-chunk-56	fit	locfit	NOx	lp	E	ethanol	plot
 unnamed-chunk-57	alpha	seq	n1	length	g	matrix	k	gcv	NOx	lp	E	ethanol	head
 unnamed-chunk-58	plot	g
 unnamed-chunk-59	f1	locfit	NOx	lp	E	ethanol	plot
+unnamed-chunk-31	n	length	fgl	type	nt	set.seed	train	sample	x	normalize	c

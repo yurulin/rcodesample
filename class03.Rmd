@@ -432,7 +432,7 @@ fgl[1:3,]
 --- .scode-nowrap .compact 
 ## kNN
 
-```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE}
+```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE, autodep=TRUE}
 ## use nt=200 training cases to find the nearest neighbors for 
 ## the remaining 14 cases. These 14 cases become the evaluation 
 ## (test, hold-out) cases
