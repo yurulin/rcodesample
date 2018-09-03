@@ -337,9 +337,7 @@ del[1:3,]
 
 --- .scode-nowrap .compact 
 ## Logistic Regression
-
-Convert data into desirable format: record and clean variables
-
+* Convert data into desirable format: record and clean variables
 
 
 ```r
@@ -421,9 +419,7 @@ Xdel[1:3,]
 
 --- .scode-nowrap .compact 
 ## Logistic Regression
-
-Split the data into 60% training and 40% testing
-
+* Split the data into 60% training and 40% testing
 
 
 ```r
@@ -453,7 +449,7 @@ n.test
 ## [1] 881
 ```
 
---- .sscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Logistic Regression
 
 
@@ -529,7 +525,8 @@ summary(m1)
 ```r
 ## prediction: predicted default probabilities for cases in test set
 ptest = predict(m1,newdata=data.frame(xtest),type="response")
-##  the default predictions are of log-odds (probabilities on logit scale) and type = "response" gives the predicted probabilities
+## the default predictions are of log-odds (probabilities on logit scale); 
+## type = "response" gives the predicted probabilities
 data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
 ```
 
@@ -549,7 +546,7 @@ data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
 
 
 
---- .sscode-nowrap .compact 
+--- .scode-nowrap .compact 
 ## Logistic Regression
 
 
