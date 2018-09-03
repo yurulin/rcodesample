@@ -23,3 +23,5 @@ foreach
 glmnet
 locfit
 lars
+gplots
+ROCR

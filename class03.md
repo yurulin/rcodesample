@@ -60,7 +60,8 @@ heights.weights [1:3,]
 --- #logistic-regression .model
 ## Logistic Regression
 
-**Example 1: Death penelty data**
+Example 1: Death penelty data
+-----------------------------
 
    * objective: to identify whether the death penalty more likely if the victim is white, or the crime is more aggravating
    * response variable: getting death panelty or not
@@ -302,7 +303,9 @@ exp(m1$coef[3])
 
 --- .model
 ## Logistic Regression
-**Example: Delayed Flights**
+
+Example: Delayed Flights
+------------------------
 
    * response variable: whether or not a flight has been delayed by more than 15 min (coded as 0 for no delay, and 1 for delay)
    * explanatory variables: different arrival airports, different departure airports, eight carriers, different hours of departure (6am to 10 pm), weather conditions (0 = good/1 = bad), day of week (1 for Sunday and Monday; and 0 for all other days)
@@ -632,7 +635,8 @@ error
 --- .sscode-nowrap .compact 
 ## Logistic Regression
 
-**Example: the delayed flights (Lift chart)**
+Example: the delayed flights (Lift chart)
+-----------------------------------------
 
 
 ```r
@@ -776,10 +780,11 @@ points(ax,ay.base,type="l")
 <img src="assets/fig/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" />
 
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
-**Example: the delayed flights (ROC)**
+Example: the delayed flights (ROC)
+----------------------------------
 
 
 ```r
@@ -824,6 +829,31 @@ sum(trueneg)/sum(ytest==0)
 
 ```r
 ## using the ROCR package to graph the ROC curves 
+library(ROCR)
+```
+
+```
+## Loading required package: gplots
+```
+
+```
+## 
+## Attaching package: 'gplots'
+```
+
+```
+## The following object is masked from 'package:PerformanceAnalytics':
+## 
+##     textplot
+```
+
+```
+## The following object is masked from 'package:stats':
+## 
+##     lowess
+```
+
+```r
 ## input is a data frame consisting of two columns
 ## predictions in first column and actual outcomes in the second 
 
@@ -853,18 +883,33 @@ data[1:10,]
 ```r
 ## pred: function to create prediction objects
 pred <- prediction(data$predictions,data$labels)
-```
-
-```
-## Error in prediction(data$predictions, data$labels): could not find function "prediction"
-```
-
-```r
 str(pred)
 ```
 
 ```
-## Error in str(pred): cannot open file '/home/yuru/connect/yurugit/mydeck-DM-slides/.cache/unnamed-chunk-27_d08bb6dcfab1303b5a45548dd50ac627.rdb': No such file or directory
+## Formal class 'prediction' [package "ROCR"] with 11 slots
+##   ..@ predictions:List of 1
+##   .. ..$ : num [1:881] 0.248 0.13 0.141 0.205 0.271 ...
+##   ..@ labels     :List of 1
+##   .. ..$ : Ord.factor w/ 2 levels "0"<"1": 1 1 1 1 1 1 1 1 1 1 ...
+##   ..@ cutoffs    :List of 1
+##   .. ..$ : num [1:191] Inf 1 1 1 1 ...
+##   ..@ fp         :List of 1
+##   .. ..$ : num [1:191] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..@ tp         :List of 1
+##   .. ..$ : num [1:191] 0 1 2 3 4 5 6 7 8 9 ...
+##   ..@ tn         :List of 1
+##   .. ..$ : num [1:191] 711 711 711 711 711 711 711 711 711 711 ...
+##   ..@ fn         :List of 1
+##   .. ..$ : num [1:191] 170 169 168 167 166 165 164 163 162 161 ...
+##   ..@ n.pos      :List of 1
+##   .. ..$ : int 170
+##   ..@ n.neg      :List of 1
+##   .. ..$ : int 711
+##   ..@ n.pos.pred :List of 1
+##   .. ..$ : num [1:191] 0 1 2 3 4 5 6 7 8 9 ...
+##   ..@ n.neg.pred :List of 1
+##   .. ..$ : num [1:191] 881 880 879 878 877 876 875 874 873 872 ...
 ```
 
 
@@ -876,18 +921,20 @@ str(pred)
 ## perf: creates the input to be plotted
 ## sensitivity (TPR) and one minus specificity (FPR)
 perf <- performance(pred, "sens", "fpr")
-```
-
-```
-## Error in performance(pred, "sens", "fpr"): could not find function "performance"
-```
-
-```r
 str(perf)
 ```
 
 ```
-## Error in str(perf): object 'perf' not found
+## Formal class 'performance' [package "ROCR"] with 6 slots
+##   ..@ x.name      : chr "False positive rate"
+##   ..@ y.name      : chr "Sensitivity"
+##   ..@ alpha.name  : chr "Cutoff"
+##   ..@ x.values    :List of 1
+##   .. ..$ : num [1:191] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..@ y.values    :List of 1
+##   .. ..$ : num [1:191] 0 0.00588 0.01176 0.01765 0.02353 ...
+##   ..@ alpha.values:List of 1
+##   .. ..$ : num [1:191] Inf 1 1 1 1 ...
 ```
 
 
@@ -899,6 +946,4 @@ str(perf)
 plot(perf)
 ```
 
-```
-## Error in plot(perf): object 'perf' not found
-```
+![plot of chunk unnamed-chunk-29](assets/fig/unnamed-chunk-29-1.png)
