@@ -60,7 +60,7 @@ heights.weights [1:3,]
 --- #logistic-regression .model
 ## Logistic Regression
 
-** Example 1: Death penelty data **
+**Example 1: Death penelty data**
 
    * objective: to identify whether the death penalty more likely if the victim is white, or the crime is more aggravating
    * response variable: getting death panelty or not
@@ -302,7 +302,7 @@ exp(m1$coef[3])
 
 --- .model
 ## Logistic Regression
-** Example: Delayed Flights **
+**Example: Delayed Flights**
 
    * response variable: whether or not a flight has been delayed by more than 15 min (coded as 0 for no delay, and 1 for delay)
    * explanatory variables: different arrival airports, different departure airports, eight carriers, different hours of departure (6am to 10 pm), weather conditions (0 = good/1 = bad), day of week (1 for Sunday and Monday; and 0 for all other days)
@@ -572,7 +572,7 @@ summary(m1)
 ## Number of Fisher Scoring iterations: 15
 ```
 
---- .sscode-nowrap .compact 
+--- .scode-nowrap .compact 
 ## Logistic Regression
 
 
@@ -632,7 +632,7 @@ error
 --- .sscode-nowrap .compact 
 ## Logistic Regression
 
-** Example: the delayed flights (Lift chart) **
+**Example: the delayed flights (Lift chart)**
 
 
 ```r
@@ -779,7 +779,7 @@ points(ax,ay.base,type="l")
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
-** Example: the delayed flights (ROC) **
+**Example: the delayed flights (ROC)**
 
 
 ```r
