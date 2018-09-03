@@ -925,7 +925,7 @@ plot(perf)
 
 ![plot of chunk unnamed-chunk-29](assets/fig/unnamed-chunk-29-1.png)
 
---- .scode-nowrap .compact 
+--- #knn .scode-nowrap .compact 
 ## kNN
 
 Example: Forensic Glass
