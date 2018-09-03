@@ -449,7 +449,7 @@ n.test
 ## [1] 881
 ```
 
---- .ssscode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
 
@@ -517,212 +517,22 @@ summary(m1)
 ## Number of Fisher Scoring iterations: 15
 ```
 
-
---- .sscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Logistic Regression
 
 
-```r
-## prediction: predicted default probabilities for cases in test set
-ptest = predict(m1,newdata=data.frame(xtest),type="response")
-## the default predictions are of log-odds (probabilities on logit scale); 
-## type = "response" gives the predicted probabilities
-data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
-```
-
-```
-##    ytest     ptest
-## 1      0 0.1417566
-## 5      0 0.1046429
-## 6      0 0.1675298
-## 9      0 0.2081648
-## 10     0 0.2576931
-## 12     0 0.1164139
-## 15     0 0.1359269
-## 17     0 0.1300306
-## 21     0 0.1094095
-## 22     0 0.1325476
-```
 
 
 
---- .scode-nowrap .compact 
-## Logistic Regression
-
-
-```r
-## measuring errors: coding as 1 if probability 0.5 or larger
-btest=floor(ptest+0.5)  ## use floor function to clamp the value to 0 or 1
-conf.matrix = table(ytest,btest)
-conf.matrix
-```
-
-```
-##      btest
-## ytest   0   1
-##     0 712   2
-##     1 153  14
-```
-
-```r
-error=(conf.matrix[1,2]+conf.matrix[2,1])/n.test
-error
-```
-
-```
-## [1] 0.1759364
-```
 
 
 
---- .scode-nowrap .compact 
-## Logistic Regression
-
-Example: the delayed flights (Lift chart)
------------------------------
-
-
-```r
-## order cases in test set according to their success prob
-## actual outcome shown next to it
-df=cbind(ptest,ytest)
-df[1:20,]
-```
-
-```
-##         ptest ytest
-## 1  0.14175664     0
-## 5  0.10464292     0
-## 6  0.16752983     0
-## 9  0.20816476     0
-## 10 0.25769309     0
-## 12 0.11641389     0
-## 15 0.13592687     0
-## 17 0.13003065     0
-## 21 0.10940950     0
-## 22 0.13254763     0
-## 23 0.33790686     0
-## 25 0.27619653     0
-## 27 0.02853003     0
-## 32 0.10030564     0
-## 33 0.40824999     0
-## 34 0.32314288     0
-## 35 0.15093230     0
-## 38 0.33143447     0
-## 40 0.20912947     0
-## 43 0.25753086     0
-```
-
-
---- .sscode-nowrap .compact 
-## Logistic Regression
-
-
-```r
-rank.df=as.data.frame(df[order(ptest,decreasing=TRUE),])
-colnames(rank.df) = c('predicted','actual')
-rank.df[1:20,]
-```
-
-```
-##      predicted actual
-## 1908 1.0000000      1
-## 1850 1.0000000      1
-## 1829 1.0000000      1
-## 1877 1.0000000      1
-## 1893 0.9999999      1
-## 1868 0.9999999      1
-## 1834 0.9999999      1
-## 2102 0.9999999      1
-## 1911 0.9999999      1
-## 1823 0.9999999      1
-## 1916 0.9999999      1
-## 209  0.5740773      1
-## 820  0.5740773      1
-## 1254 0.5740773      1
-## 1325 0.5740773      0
-## 1849 0.5740773      0
-## 288  0.4920023      1
-## 821  0.4825933      0
-## 1785 0.4728407      0
-## 167  0.4698229      1
-```
 
 
 
---- .scode-nowrap .compact 
-## Logistic Regression
-
-
-```r
-## overall success (delay) prob in the evaluation data set
-baserate=mean(ytest)
-baserate
-```
-
-```
-## [1] 0.1895573
-```
-
-
---- .sscode-nowrap .compact 
-## Logistic Regression
-
-
-```r
-## calculating the lift
-## cumulative 1's sorted by predicted values
-## cumulative 1's using the average success prob from evaluation set
-ax=dim(n.test)
-ay.base=dim(n.test)
-ay.pred=dim(n.test)
-ax[1]=1
-ay.base[1]=baserate
-ay.pred[1]=rank.df$actual[1]
-for (i in 2:n.test) {
-  ax[i]=i
-  ay.base[i]=baserate*i ## uniformly increase with rate xbar
-  ay.pred[i]=ay.pred[i-1]+rank.df$actual[i]
-}
-
-df=cbind(rank.df,ay.pred,ay.base)
-df[1:20,]
-```
-
-```
-##      predicted actual ay.pred   ay.base
-## 1908 1.0000000      1       1 0.1895573
-## 1850 1.0000000      1       2 0.3791146
-## 1829 1.0000000      1       3 0.5686720
-## 1877 1.0000000      1       4 0.7582293
-## 1893 0.9999999      1       5 0.9477866
-## 1868 0.9999999      1       6 1.1373439
-## 1834 0.9999999      1       7 1.3269012
-## 2102 0.9999999      1       8 1.5164586
-## 1911 0.9999999      1       9 1.7060159
-## 1823 0.9999999      1      10 1.8955732
-## 1916 0.9999999      1      11 2.0851305
-## 209  0.5740773      1      12 2.2746879
-## 820  0.5740773      1      13 2.4642452
-## 1254 0.5740773      1      14 2.6538025
-## 1325 0.5740773      0      14 2.8433598
-## 1849 0.5740773      0      14 3.0329171
-## 288  0.4920023      1      15 3.2224745
-## 821  0.4825933      0      15 3.4120318
-## 1785 0.4728407      0      15 3.6015891
-## 167  0.4698229      1      16 3.7911464
-```
 
 
 
---- .scode-nowrap .compact 
-## Logistic Regression
 
 
-```r
-plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",main="Lift: Cum successes sorted by pred val/success prob")
-points(ax,ay.base,type="l")
-```
-
-![plot of chunk unnamed-chunk-24](assets/fig/unnamed-chunk-24-1.png)
 

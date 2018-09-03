@@ -209,7 +209,7 @@ n.test=n.total-n.train
 n.test
 ```
 
---- .ssscode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Logistic Regression
 
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
@@ -223,6 +223,19 @@ m1 = glm(delay~.,family=binomial,data=data.frame(delay=ytrain,xtrain))
 summary(m1)
 ```
 
+--- .ssscode-nowrap .compact 
+## Logistic Regression
+
+```{r, dependson=c(-1), fig.height=4, fig.width=4, echo=False}
+train=sample(1:n.total,n.train) ## (randomly) sample indices for training set
+
+xtrain = Xdel[train,]
+xtest = Xdel[-train,]
+ytrain = del$delay[train]
+ytest = del$delay[-train]
+m1 = glm(delay~.,family=binomial,data=data.frame(delay=ytrain,xtrain))
+summary(m1)
+```
 
 --- .sscode-nowrap .compact 
 ## Logistic Regression
