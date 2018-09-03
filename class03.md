@@ -23,7 +23,6 @@ knit        : slidify::knit2slides
 
 ```r
 ## this tutorial uses the following packages
-install.packages('textir')
 ```
 
 --- #two-class .scode-nowrap .compact 
@@ -952,7 +951,6 @@ objective: to determine why types of glass based on characteristics including th
    
 
 ```r
-library(textir) ## help standardize the data
 library(MASS)   ## a library of example datasets
 
 data(fgl)     ## loads the data into R; see help(fgl)
@@ -985,33 +983,20 @@ train <- sample(1:n,nt)
 ## could do this from scratch by calculating the mean and 
 ## standard deviation of each feature, and use those to 
 ## standardize.
-## Even simpler, use the normalize function in the R-package textir; 
-## it converts data frame columns to mean-zero sd-one
-
-x <- normalize(fgl[,c(4,1)]) ## you can also use scale()
-```
-
-```
-## Error in normalize(fgl[, c(4, 1)]): could not find function "normalize"
-```
-
-```r
-x <- normalize(fgl[,c(1:9)]) ## using all nine dimensions (RI plus 8 chemical concentrations)
-```
-
-```
-## Error in normalize(fgl[, c(1:9)]): could not find function "normalize"
-```
-
-```r
+x <- scale(fgl[,c(4,1)]) 
+x <- scale(fgl[,c(1:9)]) ## using all nine dimensions (RI plus 8 chemical concentrations)
 x[1:3,]
 ```
 
 ```
-##   age      lbph       lcp gleason       lpsa
-## 1  50 -1.386294 -1.386294       6 -0.4307829
-## 2  58 -1.386294 -1.386294       6 -0.1625189
-## 3  74 -1.386294 -1.386294       7 -0.1625189
+##           RI        Na        Mg         Al         Si           K
+## 1  0.8708258 0.2842867 1.2517037 -0.6908222 -1.1244456 -0.67013422
+## 2 -0.2487502 0.5904328 0.6346799 -0.1700615  0.1020797 -0.02615193
+## 3 -0.7196308 0.1495824 0.6000157  0.1904651  0.4377603 -0.16414813
+##           Ca         Ba         Fe
+## 1 -0.1454254 -0.3520514 -0.5850791
+## 2 -0.7918771 -0.3520514 -0.5850791
+## 3 -0.8270103 -0.3520514 -0.5850791
 ```
 
 
@@ -1022,26 +1007,26 @@ x[1:3,]
 ```r
 library(class)  
 nearest1 <- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=1)
-```
-
-```
-## Error in x[train, ]: subscript out of bounds
-```
-
-```r
 nearest5 <- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=5)
-```
-
-```
-## Error in x[train, ]: subscript out of bounds
-```
-
-```r
 data.frame(fgl$type[-train],nearest1,nearest5)
 ```
 
 ```
-## Error in data.frame(fgl$type[-train], nearest1, nearest5): object 'nearest1' not found
+##    fgl.type..train. nearest1 nearest5
+## 1              WinF     WinF     WinF
+## 2              WinF      Veh     WinF
+## 3              WinF     WinF     WinF
+## 4              WinF    WinNF    WinNF
+## 5              WinF     WinF      Veh
+## 6              WinF     WinF     WinF
+## 7              WinF     WinF     WinF
+## 8             WinNF    WinNF    WinNF
+## 9             WinNF    WinNF    WinNF
+## 10            WinNF      Veh    WinNF
+## 11            WinNF    WinNF    WinNF
+## 12            WinNF     WinF    WinNF
+## 13              Con      Con      Con
+## 14             Tabl     Tabl     Tabl
 ```
 
 
@@ -1055,26 +1040,12 @@ data.frame(fgl$type[-train],nearest1,nearest5)
 ## training set
 
 pcorrn1=100*sum(fgl$type[-train]==nearest1)/(n-nt)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'nearest1' not found
-```
-
-```r
 pcorrn5=100*sum(fgl$type[-train]==nearest5)/(n-nt)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'nearest5' not found
-```
-
-```r
 pcorrn1
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pcorrn1' not found
+## [1] 71.42857
 ```
 
 ```r
@@ -1082,7 +1053,7 @@ pcorrn5
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pcorrn5' not found
+## [1] 85.71429
 ```
 
 ```r

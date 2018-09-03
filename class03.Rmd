@@ -22,7 +22,6 @@ knit        : slidify::knit2slides
 ## Install R packages
 ```{r eval=FALSE}
 ## this tutorial uses the following packages
-install.packages('textir')
 ```
 
 --- #two-class .scode-nowrap .compact 
@@ -422,7 +421,6 @@ objective: to determine why types of glass based on characteristics including th
 ## kNN
    
 ```{r, dependson=c(-1), fig.height=4, fig.width=4, warning=FALSE}
-library(textir) ## help standardize the data
 library(MASS)   ## a library of example datasets
 
 data(fgl)     ## loads the data into R; see help(fgl)
@@ -447,11 +445,8 @@ train <- sample(1:n,nt)
 ## could do this from scratch by calculating the mean and 
 ## standard deviation of each feature, and use those to 
 ## standardize.
-## Even simpler, use the normalize function in the R-package textir; 
-## it converts data frame columns to mean-zero sd-one
-
-x <- normalize(fgl[,c(4,1)]) ## you can also use scale()
-x <- normalize(fgl[,c(1:9)]) ## using all nine dimensions (RI plus 8 chemical concentrations)
+x <- scale(fgl[,c(4,1)]) 
+x <- scale(fgl[,c(1:9)]) ## using all nine dimensions (RI plus 8 chemical concentrations)
 x[1:3,]
 ```
 
