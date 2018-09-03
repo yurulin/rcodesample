@@ -341,6 +341,7 @@ del[1:3,]
 Convert data into desirable format: record and clean variables
 
 
+
 ```r
 ## define hours of departure
 del$sched=factor(floor(del$schedtime/100))
@@ -422,6 +423,7 @@ Xdel[1:3,]
 ## Logistic Regression
 
 Split the data into 60% training and 40% testing
+
 
 
 ```r
