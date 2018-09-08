@@ -65,7 +65,7 @@ heights.weights [1:3,]
 ## 3   Male 74.11011 212.7409    1
 ```
 
---- #logistic-regression ##ex1 .model
+--- #logistic-regression  .model
 ## Logistic Regression
 
 Example: Death penelty data
@@ -75,7 +75,7 @@ Example: Death penelty data
    * response variable: getting death panelty or not
    * explanatory variables: severity of the crime, race of victim (black: 0; white: 1), etc
 
---- .scode-nowrap .compact 
+--- .scode-nowrap .compact ##ex1
 ## Logistic Regression
 
 ```r
