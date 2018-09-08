@@ -74,7 +74,7 @@ hist(response)
 
 ![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.png)
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Naive Bayesian
 
 ```r
@@ -125,7 +125,7 @@ tdel
 ## 0.8022727 0.1977273
 ```
 
---- .scode-nowrap .compact
+--- .ssscode-nowrap .compact
 ## Naive Bayesian
 
 ```r
@@ -299,7 +299,7 @@ tdw1
 ## 0.17241379
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Naive Bayesian
 
 ```r
@@ -314,6 +314,9 @@ hist(gg)
 ```
 
 ![plot of chunk unnamed-chunk-6](assets/fig/unnamed-chunk-6-1.png)
+
+--- .sscode-nowrap .compact
+## Naive Bayesian
 
 ```r
 ## coding as 1 if probability 0.5 or larger

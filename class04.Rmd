@@ -58,7 +58,7 @@ response=as.numeric(levels(del$delay)[del$delay])
 hist(response)
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Naive Bayesian
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## determining test and evaluation data sets
@@ -81,7 +81,7 @@ tdel=tdel/sum(tdel)
 tdel
 ```
 
---- .scode-nowrap .compact
+--- .ssscode-nowrap .compact
 ## Naive Bayesian
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## scheduled time
@@ -133,7 +133,7 @@ tdw1=tdw1/sum(tdw1)
 tdw1
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Naive Bayesian
 ```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## creating test data set
@@ -144,7 +144,11 @@ p0=ts0[tt[,1]]*tc0[tt[,2]]*td0[tt[,3]]*to0[tt[,4]]*tw0[tt[,5]+1]*tdw0[tt[,6]]
 p1=ts1[tt[,1]]*tc1[tt[,2]]*td1[tt[,3]]*to1[tt[,4]]*tw1[tt[,5]+1]*tdw1[tt[,6]]
 gg=(p1*tdel[2])/(p1*tdel[2]+p0*tdel[1])
 hist(gg)
+```
 
+--- .sscode-nowrap .compact
+## Naive Bayesian
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## coding as 1 if probability 0.5 or larger
 gg1=floor(gg+0.5)
 ttt=table(response[-train],gg1)

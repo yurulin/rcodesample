@@ -17,6 +17,7 @@ slidify("index.Rmd")
 slidify("class01.Rmd")
 slidify("class02.Rmd")
 slidify("class03.Rmd")
+
 slidify("class04.Rmd")
 slidify("rlab01.Rmd")
 slidify("rlab02.Rmd")

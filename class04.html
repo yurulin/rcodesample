@@ -108,7 +108,7 @@ hist(response)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-6">
+<section class="slide sscode-nowrap compact" id="slide-6">
   <div>
     <h2>Naive Bayesian</h2>
     <pre><code class="r">## determining test and evaluation data sets
@@ -153,7 +153,7 @@ tdel
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-7">
+<section class="slide ssscode-nowrap compact" id="slide-7">
   <div>
     <h2>Naive Bayesian</h2>
     <pre><code class="r">## scheduled time
@@ -305,7 +305,7 @@ tdw1
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-8">
+<section class="slide sscode-nowrap compact" id="slide-8">
   <div>
     <h2>Naive Bayesian</h2>
     <pre><code class="r">## creating test data set
@@ -320,7 +320,12 @@ hist(gg)
 
 <p><img src="assets/fig/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"></p>
 
-<pre><code class="r">## coding as 1 if probability 0.5 or larger
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-9">
+  <div>
+    <h2>Naive Bayesian</h2>
+    <pre><code class="r">## coding as 1 if probability 0.5 or larger
 gg1=floor(gg+0.5)
 ttt=table(response[-train],gg1)
 ttt
