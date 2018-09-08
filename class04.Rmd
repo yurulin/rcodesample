@@ -22,7 +22,7 @@ toc_depth   : 2
 ## Install R packages
 ```{r eval=FALSE}
 ## this tutorial uses the following packages
-install.packages('trees')
+install.packages('tree')
 ```
 
 --- #nb .modal 

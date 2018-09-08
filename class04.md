@@ -23,7 +23,7 @@ toc_depth   : 2
 
 ```r
 ## this tutorial uses the following packages
-install.packages('trees')
+install.packages('tree')
 ```
 
 --- #nb .modal 
