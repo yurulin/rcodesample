@@ -157,3 +157,211 @@ ttt
 error=(ttt[1,2]+ttt[2,1])/n2
 error
 ```
+
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+Example: Fisher Iris
+-----------------------------
+
+```{r}
+library(MASS) 
+library(tree)
+## read in the iris data
+iris[1:3,]
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+iristree <- tree(Species~.,data=iris)
+iristree  
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(iristree)
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(iristree,col=8)
+text(iristree,digits=2)
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+summary(iristree)
+```
+
+
+--- .scode-nowrap .compact
+## Decision Trees
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+# splitting on 7 and 12 lead to identical results, and these nodes and the
+# trees below them can be snipped off
+irissnip=snip.tree(iristree,nodes=c(7,12))
+irissnip
+```
+
+
+--- .scode-nowrap .compact
+## Decision Trees
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(irissnip)
+text(irissnip)
+```
+
+--- ##ex .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+prostate <- read.csv(sprintf("%s/prostate.csv",data.url))
+prostate[1:3,]
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+library(tree)
+## Construct the tree
+## You can further control the tree:
+## mincut -- The minimum number of observations to include in either child node;
+## mindev -- The within-node deviance must be at least this times that of the root node for the node to be split.
+
+pstree <- tree(lcavol ~., data=prostate, mindev=0.1, mincut=1)
+pstree <- tree(lcavol ~., data=prostate, mincut=1)
+pstree
+```
+
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(pstree, col=8)
+text(pstree, digits=2)
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+# vary the panelty term k in pruning
+pstcut <- prune.tree(pstree,k=1.7)
+plot(pstcut)
+```
+
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut <- prune.tree(pstree,k=2.05)
+plot(pstcut)
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut
+```
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut <- prune.tree(pstree,k=3)
+plot(pstcut)
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut <- prune.tree(pstree)
+pstcut
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(pstcut)
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut <- prune.tree(pstree,best=3)
+pstcut
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(pstcut)
+```
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## Use cross-validation to prune the tree
+set.seed(2)
+cvpst <- cv.tree(pstree, K=10)
+cvpst$size
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+cvpst$dev
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(cvpst, pch=21, bg=8, type="p", cex=1.5, ylim=c(65,100))
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+pstcut <- prune.tree(pstree, best=3)
+pstcut
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+plot(pstcut, col=8)
+text(pstcut)
+```
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
+## Plot what we end up with
+plot(prostate[,c("lcp","lpsa")],cex=0.2*exp(prostate$lcavol))
+abline(v=.261624, col=4, lwd=2)
+lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
+```

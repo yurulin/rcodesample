@@ -346,6 +346,418 @@ error
 
   </div>
 </section>
+<section class="slide scode-nowrap compact" id="slide-10">
+  <div>
+    <h2>Decision Trees</h2>
+    <h2>Example: Fisher Iris</h2>
+
+<pre><code class="r">library(MASS) 
+library(tree)
+</code></pre>
+
+<pre><code>## Error in library(tree): there is no package called &#39;tree&#39;
+</code></pre>
+
+<pre><code class="r">## read in the iris data
+iris[1:3,]
+</code></pre>
+
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-11">
+  <div>
+    <h2>Decision Trees</h2>
+    <pre><code class="r">iristree &lt;- tree(Species~.,data=iris)
+</code></pre>
+
+<pre><code>## Error in tree(Species ~ ., data = iris): could not find function &quot;tree&quot;
+</code></pre>
+
+<pre><code class="r">iristree  
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;iristree&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-12">
+  <div>
+    <h2>Decision Trees</h2>
+    <pre><code class="r">plot(iristree)
+</code></pre>
+
+<pre><code>## Error in plot(iristree): object &#39;iristree&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-13">
+  <div>
+    <h2>Decision Trees</h2>
+    <pre><code class="r">plot(iristree,col=8)
+</code></pre>
+
+<pre><code>## Error in plot(iristree, col = 8): object &#39;iristree&#39; not found
+</code></pre>
+
+<pre><code class="r">text(iristree,digits=2)
+</code></pre>
+
+<pre><code>## Error in text(iristree, digits = 2): object &#39;iristree&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-14">
+  <div>
+    <h2>Decision Trees</h2>
+    <pre><code class="r">summary(iristree)
+</code></pre>
+
+<pre><code>## Error in summary(iristree): object &#39;iristree&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-15">
+  <div>
+    <h2>Decision Trees</h2>
+    <pre><code class="r"># splitting on 7 and 12 lead to identical results, and these nodes and the
+# trees below them can be snipped off
+irissnip=snip.tree(iristree,nodes=c(7,12))
+</code></pre>
+
+<pre><code>## Error in snip.tree(iristree, nodes = c(7, 12)): could not find function &quot;snip.tree&quot;
+</code></pre>
+
+<pre><code class="r">irissnip
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;irissnip&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-16">
+  <div>
+    <h2>Decision Trees</h2>
+    <pre><code class="r">plot(irissnip)
+</code></pre>
+
+<pre><code>## Error in plot(irissnip): object &#39;irissnip&#39; not found
+</code></pre>
+
+<pre><code class="r">text(irissnip)
+</code></pre>
+
+<pre><code>## Error in text(irissnip): object &#39;irissnip&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="#ex">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+prostate &lt;- read.csv(sprintf(&quot;%s/prostate.csv&quot;,data.url))
+prostate[1:3,]
+</code></pre>
+
+<pre><code>##       lcavol age      lbph       lcp gleason       lpsa
+## 1 -0.5798185  50 -1.386294 -1.386294       6 -0.4307829
+## 2 -0.9942523  58 -1.386294 -1.386294       6 -0.1625189
+## 3 -0.5108256  74 -1.386294 -1.386294       7 -0.1625189
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-18">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">library(tree)
+</code></pre>
+
+<pre><code>## Error in library(tree): there is no package called &#39;tree&#39;
+</code></pre>
+
+<pre><code class="r">## Construct the tree
+## You can further control the tree:
+## mincut -- The minimum number of observations to include in either child node;
+## mindev -- The within-node deviance must be at least this times that of the root node for the node to be split.
+
+pstree &lt;- tree(lcavol ~., data=prostate, mindev=0.1, mincut=1)
+</code></pre>
+
+<pre><code>## Error in tree(lcavol ~ ., data = prostate, mindev = 0.1, mincut = 1): could not find function &quot;tree&quot;
+</code></pre>
+
+<pre><code class="r">pstree &lt;- tree(lcavol ~., data=prostate, mincut=1)
+</code></pre>
+
+<pre><code>## Error in tree(lcavol ~ ., data = prostate, mincut = 1): could not find function &quot;tree&quot;
+</code></pre>
+
+<pre><code class="r">pstree
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;pstree&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-19">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">plot(pstree, col=8)
+</code></pre>
+
+<pre><code>## Error in plot(pstree, col = 8): object &#39;pstree&#39; not found
+</code></pre>
+
+<pre><code class="r">text(pstree, digits=2)
+</code></pre>
+
+<pre><code>## Error in text(pstree, digits = 2): object &#39;pstree&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-20">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r"># vary the panelty term k in pruning
+pstcut &lt;- prune.tree(pstree,k=1.7)
+</code></pre>
+
+<pre><code>## Error in prune.tree(pstree, k = 1.7): could not find function &quot;prune.tree&quot;
+</code></pre>
+
+<pre><code class="r">plot(pstcut)
+</code></pre>
+
+<pre><code>## Error in plot(pstcut): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-21">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-22">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut &lt;- prune.tree(pstree,k=2.05)
+</code></pre>
+
+<pre><code>## Error in prune.tree(pstree, k = 2.05): could not find function &quot;prune.tree&quot;
+</code></pre>
+
+<pre><code class="r">plot(pstcut)
+</code></pre>
+
+<pre><code>## Error in plot(pstcut): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-23">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-24">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut &lt;- prune.tree(pstree,k=3)
+</code></pre>
+
+<pre><code>## Error in prune.tree(pstree, k = 3): could not find function &quot;prune.tree&quot;
+</code></pre>
+
+<pre><code class="r">plot(pstcut)
+</code></pre>
+
+<pre><code>## Error in plot(pstcut): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-25">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-26">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut &lt;- prune.tree(pstree)
+</code></pre>
+
+<pre><code>## Error in prune.tree(pstree): could not find function &quot;prune.tree&quot;
+</code></pre>
+
+<pre><code class="r">pstcut
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-27">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">plot(pstcut)
+</code></pre>
+
+<pre><code>## Error in plot(pstcut): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-28">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut &lt;- prune.tree(pstree,best=3)
+</code></pre>
+
+<pre><code>## Error in prune.tree(pstree, best = 3): could not find function &quot;prune.tree&quot;
+</code></pre>
+
+<pre><code class="r">pstcut
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-29">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">plot(pstcut)
+</code></pre>
+
+<pre><code>## Error in plot(pstcut): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-30">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">## Use cross-validation to prune the tree
+set.seed(2)
+cvpst &lt;- cv.tree(pstree, K=10)
+</code></pre>
+
+<pre><code>## Error in cv.tree(pstree, K = 10): could not find function &quot;cv.tree&quot;
+</code></pre>
+
+<pre><code class="r">cvpst$size
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;cvpst&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-31">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">cvpst$dev
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;cvpst&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-32">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">plot(cvpst, pch=21, bg=8, type=&quot;p&quot;, cex=1.5, ylim=c(65,100))
+</code></pre>
+
+<pre><code>## Error in plot(cvpst, pch = 21, bg = 8, type = &quot;p&quot;, cex = 1.5, ylim = c(65, : object &#39;cvpst&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-33">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">pstcut &lt;- prune.tree(pstree, best=3)
+</code></pre>
+
+<pre><code>## Error in prune.tree(pstree, best = 3): could not find function &quot;prune.tree&quot;
+</code></pre>
+
+<pre><code class="r">pstcut
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-34">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">plot(pstcut, col=8)
+</code></pre>
+
+<pre><code>## Error in plot(pstcut, col = 8): object &#39;pstcut&#39; not found
+</code></pre>
+
+<pre><code class="r">text(pstcut)
+</code></pre>
+
+<pre><code>## Error in text(pstcut): object &#39;pstcut&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-35">
+  <div>
+    <h2>Example: Prostate cancer</h2>
+    <pre><code class="r">## Plot what we end up with
+plot(prostate[,c(&quot;lcp&quot;,&quot;lpsa&quot;)],cex=0.2*exp(prostate$lcavol))
+abline(v=.261624, col=4, lwd=2)
+lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-33-1.png" alt="plot of chunk unnamed-chunk-33"></p>
+
+  </div>
+</section>
   <div class="progress">
     <div></div>
   </div>

@@ -340,3 +340,464 @@ error
 ```
 ## [1] 0.1952327
 ```
+
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+Example: Fisher Iris
+-----------------------------
+
+
+```r
+library(MASS) 
+library(tree)
+```
+
+```
+## Error in library(tree): there is no package called 'tree'
+```
+
+```r
+## read in the iris data
+iris[1:3,]
+```
+
+```
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+```r
+iristree <- tree(Species~.,data=iris)
+```
+
+```
+## Error in tree(Species ~ ., data = iris): could not find function "tree"
+```
+
+```r
+iristree  
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'iristree' not found
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+```r
+plot(iristree)
+```
+
+```
+## Error in plot(iristree): object 'iristree' not found
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+```r
+plot(iristree,col=8)
+```
+
+```
+## Error in plot(iristree, col = 8): object 'iristree' not found
+```
+
+```r
+text(iristree,digits=2)
+```
+
+```
+## Error in text(iristree, digits = 2): object 'iristree' not found
+```
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+```r
+summary(iristree)
+```
+
+```
+## Error in summary(iristree): object 'iristree' not found
+```
+
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+```r
+# splitting on 7 and 12 lead to identical results, and these nodes and the
+# trees below them can be snipped off
+irissnip=snip.tree(iristree,nodes=c(7,12))
+```
+
+```
+## Error in snip.tree(iristree, nodes = c(7, 12)): could not find function "snip.tree"
+```
+
+```r
+irissnip
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'irissnip' not found
+```
+
+
+--- .scode-nowrap .compact
+## Decision Trees
+
+```r
+plot(irissnip)
+```
+
+```
+## Error in plot(irissnip): object 'irissnip' not found
+```
+
+```r
+text(irissnip)
+```
+
+```
+## Error in text(irissnip): object 'irissnip' not found
+```
+
+--- ##ex .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+prostate <- read.csv(sprintf("%s/prostate.csv",data.url))
+prostate[1:3,]
+```
+
+```
+##       lcavol age      lbph       lcp gleason       lpsa
+## 1 -0.5798185  50 -1.386294 -1.386294       6 -0.4307829
+## 2 -0.9942523  58 -1.386294 -1.386294       6 -0.1625189
+## 3 -0.5108256  74 -1.386294 -1.386294       7 -0.1625189
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+library(tree)
+```
+
+```
+## Error in library(tree): there is no package called 'tree'
+```
+
+```r
+## Construct the tree
+## You can further control the tree:
+## mincut -- The minimum number of observations to include in either child node;
+## mindev -- The within-node deviance must be at least this times that of the root node for the node to be split.
+
+pstree <- tree(lcavol ~., data=prostate, mindev=0.1, mincut=1)
+```
+
+```
+## Error in tree(lcavol ~ ., data = prostate, mindev = 0.1, mincut = 1): could not find function "tree"
+```
+
+```r
+pstree <- tree(lcavol ~., data=prostate, mincut=1)
+```
+
+```
+## Error in tree(lcavol ~ ., data = prostate, mincut = 1): could not find function "tree"
+```
+
+```r
+pstree
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pstree' not found
+```
+
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+plot(pstree, col=8)
+```
+
+```
+## Error in plot(pstree, col = 8): object 'pstree' not found
+```
+
+```r
+text(pstree, digits=2)
+```
+
+```
+## Error in text(pstree, digits = 2): object 'pstree' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+# vary the panelty term k in pruning
+pstcut <- prune.tree(pstree,k=1.7)
+```
+
+```
+## Error in prune.tree(pstree, k = 1.7): could not find function "prune.tree"
+```
+
+```r
+plot(pstcut)
+```
+
+```
+## Error in plot(pstcut): object 'pstcut' not found
+```
+
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pstcut' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree,k=2.05)
+```
+
+```
+## Error in prune.tree(pstree, k = 2.05): could not find function "prune.tree"
+```
+
+```r
+plot(pstcut)
+```
+
+```
+## Error in plot(pstcut): object 'pstcut' not found
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pstcut' not found
+```
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree,k=3)
+```
+
+```
+## Error in prune.tree(pstree, k = 3): could not find function "prune.tree"
+```
+
+```r
+plot(pstcut)
+```
+
+```
+## Error in plot(pstcut): object 'pstcut' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pstcut' not found
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree)
+```
+
+```
+## Error in prune.tree(pstree): could not find function "prune.tree"
+```
+
+```r
+pstcut
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pstcut' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+plot(pstcut)
+```
+
+```
+## Error in plot(pstcut): object 'pstcut' not found
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree,best=3)
+```
+
+```
+## Error in prune.tree(pstree, best = 3): could not find function "prune.tree"
+```
+
+```r
+pstcut
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pstcut' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+plot(pstcut)
+```
+
+```
+## Error in plot(pstcut): object 'pstcut' not found
+```
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+## Use cross-validation to prune the tree
+set.seed(2)
+cvpst <- cv.tree(pstree, K=10)
+```
+
+```
+## Error in cv.tree(pstree, K = 10): could not find function "cv.tree"
+```
+
+```r
+cvpst$size
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'cvpst' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+cvpst$dev
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'cvpst' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+plot(cvpst, pch=21, bg=8, type="p", cex=1.5, ylim=c(65,100))
+```
+
+```
+## Error in plot(cvpst, pch = 21, bg = 8, type = "p", cex = 1.5, ylim = c(65, : object 'cvpst' not found
+```
+
+--- .sscode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree, best=3)
+```
+
+```
+## Error in prune.tree(pstree, best = 3): could not find function "prune.tree"
+```
+
+```r
+pstcut
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'pstcut' not found
+```
+
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+plot(pstcut, col=8)
+```
+
+```
+## Error in plot(pstcut, col = 8): object 'pstcut' not found
+```
+
+```r
+text(pstcut)
+```
+
+```
+## Error in text(pstcut): object 'pstcut' not found
+```
+
+--- .scode-nowrap .compact
+## Example: Prostate cancer
+
+```r
+## Plot what we end up with
+plot(prostate[,c("lcp","lpsa")],cex=0.2*exp(prostate$lcavol))
+abline(v=.261624, col=4, lwd=2)
+lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
+```
+
+![plot of chunk unnamed-chunk-33](assets/fig/unnamed-chunk-33-1.png)
