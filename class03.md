@@ -9,12 +9,16 @@ hitheme     : tomorrow      #
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
+toc         : true
+toc_depth   : 2
 --- #toc
 
 ## Class03
 * [Set up](#set-up)
 * [Split data into two classes](#two-class)
 * [Logistic Regression](#logistic-regression)
+* [Example: Death penelty data](##ex1)
+* [Example: Delayed flights](##ex2)
 * [kNN](#knn)
 
 --- #set-up .modal 
@@ -61,10 +65,10 @@ heights.weights [1:3,]
 ## 3   Male 74.11011 212.7409    1
 ```
 
---- #logistic-regression .model
+--- #logistic-regression ##ex1 .model
 ## Logistic Regression
 
-Example 1: Death penelty data
+Example: Death penelty data
 -----------------------------
 
    * objective: to identify whether the death penalty more likely if the victim is white, or the crime is more aggravating
@@ -305,7 +309,7 @@ exp(m1$coef[3])
 ```
 
 
---- .model
+--- .model ##ex2
 ## Logistic Regression
 
 Example: Delayed Flights
@@ -636,10 +640,10 @@ error
 
 
 
---- .sscode-nowrap .compact 
+--- .sscode-nowrap .compact
 ## Logistic Regression
 
-Example: the delayed flights (Lift chart)
+Example: Delayed flights (Lift chart)
 -----------------------------------------
 
 
@@ -787,7 +791,7 @@ points(ax,ay.base,type="l")
 --- .sscode-nowrap .compact 
 ## Logistic Regression
 
-Example: the delayed flights (ROC)
+Example: Delayed flights (ROC)
 ----------------------------------
 
 
