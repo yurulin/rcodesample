@@ -29,6 +29,7 @@ toc_depth   : 2
 
 The examples are taken from [Data Mining and Business Analytics with R](http://www.wiley.com/WileyCDA/WileyTitle/productCd-111844714X.html) and [Machine Learning for Hackers](http://shop.oreilly.com/product/0636920018483.do).
 
+
 Example: Delayed Flights
 -----------------------------
    * response variable: whether or not a flight has been delayed by more than 15 min (coded as 0 for no delay, and 1 for delay)
@@ -37,7 +38,7 @@ Example: Delayed Flights
 
 --- .scode-nowrap .compact
 ## Naive Bayesian
-```r
+```{r}
 set.seed(1)
 library(car)  #used to recode a variable
 
