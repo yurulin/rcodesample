@@ -22,6 +22,7 @@ toc_depth   : 2
 ## Install R packages
 ```{r eval=FALSE}
 ## this tutorial uses the following packages
+install.packages('trees')
 ```
 
 --- #nb .modal 
@@ -98,6 +99,11 @@ tc0
 tc1=table(tttrain1[,2])
 tc1=tc1/sum(tc1)
 tc1
+```
+
+--- .ssscode-nowrap .compact
+## Naive Bayesian
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## scheduled destination
 td0=table(tttrain0[,3])
 td0=td0/sum(td0)
@@ -112,6 +118,11 @@ to0
 to1=table(tttrain1[,4])
 to1=to1/sum(to1)
 to1
+```
+
+--- .ssscode-nowrap .compact
+## Naive Bayesian
+```{r, dependson=c(-1), fig.height=4, fig.width=4}
 ## weather
 tw0=table(tttrain0[,5])
 tw0=tw0/sum(tw0)

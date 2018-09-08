@@ -23,6 +23,7 @@ toc_depth   : 2
 
 ```r
 ## this tutorial uses the following packages
+install.packages('trees')
 ```
 
 --- #nb .modal 
@@ -190,6 +191,9 @@ tc1
 ## 0.01532567 0.07662835
 ```
 
+--- .ssscode-nowrap .compact
+## Naive Bayesian
+
 ```r
 ## scheduled destination
 td0=table(tttrain0[,3])
@@ -239,6 +243,9 @@ to1
 ##          1          2          3 
 ## 0.09578544 0.49042146 0.41379310
 ```
+
+--- .ssscode-nowrap .compact
+## Naive Bayesian
 
 ```r
 ## weather
@@ -313,7 +320,7 @@ gg=(p1*tdel[2])/(p1*tdel[2]+p0*tdel[1])
 hist(gg)
 ```
 
-![plot of chunk unnamed-chunk-6](assets/fig/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-8](assets/fig/unnamed-chunk-8-1.png)
 
 --- .sscode-nowrap .compact
 ## Naive Bayesian
@@ -800,4 +807,4 @@ abline(v=.261624, col=4, lwd=2)
 lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
 ```
 
-![plot of chunk unnamed-chunk-33](assets/fig/unnamed-chunk-33-1.png)
+![plot of chunk unnamed-chunk-35](assets/fig/unnamed-chunk-35-1.png)
