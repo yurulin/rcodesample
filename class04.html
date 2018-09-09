@@ -498,7 +498,6 @@ prostate[1:3,]
 ## You can further control the tree:
 ## mincut -- The minimum number of observations to include in either child node;
 ## mindev -- The within-node deviance must be at least this times that of the root node for the node to be split.
-
 pstree &lt;- tree(lcavol ~., data=prostate, mindev=0.1, mincut=1)
 pstree &lt;- tree(lcavol ~., data=prostate, mincut=1)
 pstree
@@ -745,12 +744,7 @@ cvpst$size
 <pre><code>##  [1] 12 11  8  7  6  5  4  3  2  1
 </code></pre>
 
-  </div>
-</section>
-<section class="slide scode-nowrap compact" id="slide-33">
-  <div>
-    <h2>Example: Prostate cancer</h2>
-    <pre><code class="r">cvpst$dev
+<pre><code class="r">cvpst$dev
 </code></pre>
 
 <pre><code>##  [1]  73.22055  70.18426  70.79439  70.24455  65.40004  65.30020  65.30020
@@ -759,17 +753,17 @@ cvpst$size
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-34">
+<section class="slide scode-nowrap compact" id="slide-33">
   <div>
     <h2>Example: Prostate cancer</h2>
     <pre><code class="r">plot(cvpst, pch=21, bg=8, type=&quot;p&quot;, cex=1.5, ylim=c(65,100))
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-32-1.png" alt="plot of chunk unnamed-chunk-32"></p>
+<p><img src="assets/fig/unnamed-chunk-31-1.png" alt="plot of chunk unnamed-chunk-31"></p>
 
   </div>
 </section>
-<section class="slide sscode-nowrap compact" id="slide-35">
+<section class="slide sscode-nowrap compact" id="slide-34">
   <div>
     <h2>Example: Prostate cancer</h2>
     <pre><code class="r">pstcut &lt;- prune.tree(pstree, best=3)
@@ -788,18 +782,18 @@ pstcut
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-36">
+<section class="slide scode-nowrap compact" id="slide-35">
   <div>
     <h2>Example: Prostate cancer</h2>
     <pre><code class="r">plot(pstcut, col=8)
 text(pstcut)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-34-1.png" alt="plot of chunk unnamed-chunk-34"></p>
+<p><img src="assets/fig/unnamed-chunk-33-1.png" alt="plot of chunk unnamed-chunk-33"></p>
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-37">
+<section class="slide scode-nowrap compact" id="slide-36">
   <div>
     <h2>Example: Prostate cancer</h2>
     <pre><code class="r">## Plot what we end up with
@@ -808,7 +802,7 @@ abline(v=.261624, col=4, lwd=2)
 lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-35-1.png" alt="plot of chunk unnamed-chunk-35"></p>
+<p><img src="assets/fig/unnamed-chunk-34-1.png" alt="plot of chunk unnamed-chunk-34"></p>
 
   </div>
 </section>

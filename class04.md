@@ -494,7 +494,6 @@ library(tree)
 ## You can further control the tree:
 ## mincut -- The minimum number of observations to include in either child node;
 ## mindev -- The within-node deviance must be at least this times that of the root node for the node to be split.
-
 pstree <- tree(lcavol ~., data=prostate, mindev=0.1, mincut=1)
 pstree <- tree(lcavol ~., data=prostate, mincut=1)
 pstree
@@ -744,10 +743,6 @@ cvpst$size
 ##  [1] 12 11  8  7  6  5  4  3  2  1
 ```
 
-
---- .scode-nowrap .compact
-## Example: Prostate cancer
-
 ```r
 cvpst$dev
 ```
@@ -765,7 +760,7 @@ cvpst$dev
 plot(cvpst, pch=21, bg=8, type="p", cex=1.5, ylim=c(65,100))
 ```
 
-![plot of chunk unnamed-chunk-32](assets/fig/unnamed-chunk-32-1.png)
+![plot of chunk unnamed-chunk-31](assets/fig/unnamed-chunk-31-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
@@ -795,7 +790,7 @@ plot(pstcut, col=8)
 text(pstcut)
 ```
 
-![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-33](assets/fig/unnamed-chunk-33-1.png)
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
@@ -807,4 +802,4 @@ abline(v=.261624, col=4, lwd=2)
 lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
 ```
 
-![plot of chunk unnamed-chunk-35](assets/fig/unnamed-chunk-35-1.png)
+![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
