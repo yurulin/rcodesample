@@ -13,6 +13,8 @@ toc         : true
 toc_depth   : 2
 
 --- #toc
+## Class04
+
 * [Set up](#set-up)
 * [Naive Bayesian](#nb)
 * [Decision Trees](#tree)
@@ -170,13 +172,13 @@ error
 ```
 
 
---- .scode-nowrap .compact
+--- #tree .scode-nowrap .compact
 ## Decision Trees
 
 Example: Fisher Iris
 -----------------------------
 
-```{r}
+```{r, autodep=TRUE}
 library(MASS) 
 library(tree)
 ## read in the iris data

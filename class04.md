@@ -13,6 +13,8 @@ toc         : true
 toc_depth   : 2
 
 --- #toc
+## Class04
+
 * [Set up](#set-up)
 * [Naive Bayesian](#nb)
 * [Decision Trees](#tree)
@@ -349,7 +351,7 @@ error
 ```
 
 
---- .scode-nowrap .compact
+--- #tree .scode-nowrap .compact
 ## Decision Trees
 
 Example: Fisher Iris
@@ -359,13 +361,6 @@ Example: Fisher Iris
 ```r
 library(MASS) 
 library(tree)
-```
-
-```
-## Error in library(tree): there is no package called 'tree'
-```
-
-```r
 ## read in the iris data
 iris[1:3,]
 ```
@@ -382,18 +377,24 @@ iris[1:3,]
 
 ```r
 iristree <- tree(Species~.,data=iris)
-```
-
-```
-## Error in tree(Species ~ ., data = iris): could not find function "tree"
-```
-
-```r
 iristree  
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'iristree' not found
+## node), split, n, deviance, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 150 329.600 setosa ( 0.33333 0.33333 0.33333 )  
+##    2) Petal.Length < 2.45 50   0.000 setosa ( 1.00000 0.00000 0.00000 ) *
+##    3) Petal.Length > 2.45 100 138.600 versicolor ( 0.00000 0.50000 0.50000 )  
+##      6) Petal.Width < 1.75 54  33.320 versicolor ( 0.00000 0.90741 0.09259 )  
+##       12) Petal.Length < 4.95 48   9.721 versicolor ( 0.00000 0.97917 0.02083 )  
+##         24) Sepal.Length < 5.15 5   5.004 versicolor ( 0.00000 0.80000 0.20000 ) *
+##         25) Sepal.Length > 5.15 43   0.000 versicolor ( 0.00000 1.00000 0.00000 ) *
+##       13) Petal.Length > 4.95 6   7.638 virginica ( 0.00000 0.33333 0.66667 ) *
+##      7) Petal.Width > 1.75 46   9.635 virginica ( 0.00000 0.02174 0.97826 )  
+##       14) Petal.Length < 4.95 6   5.407 virginica ( 0.00000 0.16667 0.83333 ) *
+##       15) Petal.Length > 4.95 40   0.000 virginica ( 0.00000 0.00000 1.00000 ) *
 ```
 
 --- .scode-nowrap .compact
@@ -403,28 +404,17 @@ iristree
 plot(iristree)
 ```
 
-```
-## Error in plot(iristree): object 'iristree' not found
-```
+![plot of chunk unnamed-chunk-12](assets/fig/unnamed-chunk-12-1.png)
 
 --- .scode-nowrap .compact
 ## Decision Trees
 
 ```r
 plot(iristree,col=8)
-```
-
-```
-## Error in plot(iristree, col = 8): object 'iristree' not found
-```
-
-```r
 text(iristree,digits=2)
 ```
 
-```
-## Error in text(iristree, digits = 2): object 'iristree' not found
-```
+![plot of chunk unnamed-chunk-13](assets/fig/unnamed-chunk-13-1.png)
 
 --- .scode-nowrap .compact
 ## Decision Trees
@@ -434,7 +424,14 @@ summary(iristree)
 ```
 
 ```
-## Error in summary(iristree): object 'iristree' not found
+## 
+## Classification tree:
+## tree(formula = Species ~ ., data = iris)
+## Variables actually used in tree construction:
+## [1] "Petal.Length" "Petal.Width"  "Sepal.Length"
+## Number of terminal nodes:  6 
+## Residual mean deviance:  0.1253 = 18.05 / 144 
+## Misclassification error rate: 0.02667 = 4 / 150
 ```
 
 
@@ -445,18 +442,20 @@ summary(iristree)
 # splitting on 7 and 12 lead to identical results, and these nodes and the
 # trees below them can be snipped off
 irissnip=snip.tree(iristree,nodes=c(7,12))
-```
-
-```
-## Error in snip.tree(iristree, nodes = c(7, 12)): could not find function "snip.tree"
-```
-
-```r
 irissnip
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'irissnip' not found
+## node), split, n, deviance, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 150 329.600 setosa ( 0.33333 0.33333 0.33333 )  
+##    2) Petal.Length < 2.45 50   0.000 setosa ( 1.00000 0.00000 0.00000 ) *
+##    3) Petal.Length > 2.45 100 138.600 versicolor ( 0.00000 0.50000 0.50000 )  
+##      6) Petal.Width < 1.75 54  33.320 versicolor ( 0.00000 0.90741 0.09259 )  
+##       12) Petal.Length < 4.95 48   9.721 versicolor ( 0.00000 0.97917 0.02083 ) *
+##       13) Petal.Length > 4.95 6   7.638 virginica ( 0.00000 0.33333 0.66667 ) *
+##      7) Petal.Width > 1.75 46   9.635 virginica ( 0.00000 0.02174 0.97826 ) *
 ```
 
 
@@ -465,19 +464,10 @@ irissnip
 
 ```r
 plot(irissnip)
-```
-
-```
-## Error in plot(irissnip): object 'irissnip' not found
-```
-
-```r
 text(irissnip)
 ```
 
-```
-## Error in text(irissnip): object 'irissnip' not found
-```
+![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
 
 --- ##ex .scode-nowrap .compact
 ## Example: Prostate cancer
@@ -500,39 +490,43 @@ prostate[1:3,]
 
 ```r
 library(tree)
-```
-
-```
-## Error in library(tree): there is no package called 'tree'
-```
-
-```r
 ## Construct the tree
 ## You can further control the tree:
 ## mincut -- The minimum number of observations to include in either child node;
 ## mindev -- The within-node deviance must be at least this times that of the root node for the node to be split.
 
 pstree <- tree(lcavol ~., data=prostate, mindev=0.1, mincut=1)
-```
-
-```
-## Error in tree(lcavol ~ ., data = prostate, mindev = 0.1, mincut = 1): could not find function "tree"
-```
-
-```r
 pstree <- tree(lcavol ~., data=prostate, mincut=1)
-```
-
-```
-## Error in tree(lcavol ~ ., data = prostate, mincut = 1): could not find function "tree"
-```
-
-```r
 pstree
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pstree' not found
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##   1) root 97 133.4000  1.35000  
+##     2) lcp < 0.261624 63  64.1100  0.79250  
+##       4) lpsa < 2.30257 35  24.7200  0.27870  
+##         8) lpsa < 0.104522 4   0.3311 -0.82220 *
+##         9) lpsa > 0.104522 31  18.9200  0.42070  
+##          18) age < 52 3   0.1195 -0.79620 *
+##          19) age > 52 28  13.8800  0.55110  
+##            38) lbph < 1.09012 18   6.3190  0.73790  
+##              76) age < 65.5 14   4.0670  0.55550  
+##               152) lcp < -0.698172 11   2.1200  0.37820 *
+##               153) lcp > -0.698172 3   0.3329  1.20600 *
+##              77) age > 65.5 4   0.1552  1.37600 *
+##            39) lbph > 1.09012 10   5.8010  0.21490  
+##              78) lpsa < 1.96623 7   2.8370 -0.08817 *
+##              79) lpsa > 1.96623 3   0.8212  0.92200 *
+##       5) lpsa > 2.30257 28  18.6000  1.43500  
+##        10) lpsa < 3.24598 23  11.6100  1.23300 *
+##        11) lpsa > 3.24598 5   1.7560  2.36200 *
+##     3) lcp > 0.261624 34  13.3900  2.38300  
+##       6) lcp < 2.13963 25   6.6620  2.14700  
+##        12) age < 62.5 7   0.7253  1.68600 *
+##        13) age > 62.5 18   3.8700  2.32600 *
+##       7) lcp > 2.13963 9   1.4750  3.03800 *
 ```
 
 
@@ -542,19 +536,10 @@ pstree
 
 ```r
 plot(pstree, col=8)
-```
-
-```
-## Error in plot(pstree, col = 8): object 'pstree' not found
-```
-
-```r
 text(pstree, digits=2)
 ```
 
-```
-## Error in text(pstree, digits = 2): object 'pstree' not found
-```
+![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
 
 
 --- .scode-nowrap .compact
@@ -563,19 +548,10 @@ text(pstree, digits=2)
 ```r
 # vary the panelty term k in pruning
 pstcut <- prune.tree(pstree,k=1.7)
-```
-
-```
-## Error in prune.tree(pstree, k = 1.7): could not find function "prune.tree"
-```
-
-```r
 plot(pstcut)
 ```
 
-```
-## Error in plot(pstcut): object 'pstcut' not found
-```
+![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png)
 
 
 --- .sscode-nowrap .compact
@@ -586,7 +562,30 @@ pstcut
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pstcut' not found
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##  1) root 97 133.4000  1.35000  
+##    2) lcp < 0.261624 63  64.1100  0.79250  
+##      4) lpsa < 2.30257 35  24.7200  0.27870  
+##        8) lpsa < 0.104522 4   0.3311 -0.82220 *
+##        9) lpsa > 0.104522 31  18.9200  0.42070  
+##         18) age < 52 3   0.1195 -0.79620 *
+##         19) age > 52 28  13.8800  0.55110  
+##           38) lbph < 1.09012 18   6.3190  0.73790  
+##             76) age < 65.5 14   4.0670  0.55550 *
+##             77) age > 65.5 4   0.1552  1.37600 *
+##           39) lbph > 1.09012 10   5.8010  0.21490  
+##             78) lpsa < 1.96623 7   2.8370 -0.08817 *
+##             79) lpsa > 1.96623 3   0.8212  0.92200 *
+##      5) lpsa > 2.30257 28  18.6000  1.43500  
+##       10) lpsa < 3.24598 23  11.6100  1.23300 *
+##       11) lpsa > 3.24598 5   1.7560  2.36200 *
+##    3) lcp > 0.261624 34  13.3900  2.38300  
+##      6) lcp < 2.13963 25   6.6620  2.14700  
+##       12) age < 62.5 7   0.7253  1.68600 *
+##       13) age > 62.5 18   3.8700  2.32600 *
+##      7) lcp > 2.13963 9   1.4750  3.03800 *
 ```
 
 
@@ -595,19 +594,10 @@ pstcut
 
 ```r
 pstcut <- prune.tree(pstree,k=2.05)
-```
-
-```
-## Error in prune.tree(pstree, k = 2.05): could not find function "prune.tree"
-```
-
-```r
 plot(pstcut)
 ```
 
-```
-## Error in plot(pstcut): object 'pstcut' not found
-```
+![plot of chunk unnamed-chunk-22](assets/fig/unnamed-chunk-22-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
@@ -617,7 +607,24 @@ pstcut
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pstcut' not found
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##  1) root 97 133.4000  1.3500  
+##    2) lcp < 0.261624 63  64.1100  0.7925  
+##      4) lpsa < 2.30257 35  24.7200  0.2787  
+##        8) lpsa < 0.104522 4   0.3311 -0.8222 *
+##        9) lpsa > 0.104522 31  18.9200  0.4207  
+##         18) age < 52 3   0.1195 -0.7962 *
+##         19) age > 52 28  13.8800  0.5511 *
+##      5) lpsa > 2.30257 28  18.6000  1.4350  
+##       10) lpsa < 3.24598 23  11.6100  1.2330 *
+##       11) lpsa > 3.24598 5   1.7560  2.3620 *
+##    3) lcp > 0.261624 34  13.3900  2.3830  
+##      6) lcp < 2.13963 25   6.6620  2.1470  
+##       12) age < 62.5 7   0.7253  1.6860 *
+##       13) age > 62.5 18   3.8700  2.3260 *
+##      7) lcp > 2.13963 9   1.4750  3.0380 *
 ```
 
 --- .scode-nowrap .compact
@@ -625,19 +632,10 @@ pstcut
 
 ```r
 pstcut <- prune.tree(pstree,k=3)
-```
-
-```
-## Error in prune.tree(pstree, k = 3): could not find function "prune.tree"
-```
-
-```r
 plot(pstcut)
 ```
 
-```
-## Error in plot(pstcut): object 'pstcut' not found
-```
+![plot of chunk unnamed-chunk-24](assets/fig/unnamed-chunk-24-1.png)
 
 
 --- .scode-nowrap .compact
@@ -648,7 +646,22 @@ pstcut
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pstcut' not found
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+##  1) root 97 133.4000  1.3500  
+##    2) lcp < 0.261624 63  64.1100  0.7925  
+##      4) lpsa < 2.30257 35  24.7200  0.2787  
+##        8) lpsa < 0.104522 4   0.3311 -0.8222 *
+##        9) lpsa > 0.104522 31  18.9200  0.4207  
+##         18) age < 52 3   0.1195 -0.7962 *
+##         19) age > 52 28  13.8800  0.5511 *
+##      5) lpsa > 2.30257 28  18.6000  1.4350  
+##       10) lpsa < 3.24598 23  11.6100  1.2330 *
+##       11) lpsa > 3.24598 5   1.7560  2.3620 *
+##    3) lcp > 0.261624 34  13.3900  2.3830  
+##      6) lcp < 2.13963 25   6.6620  2.1470 *
+##      7) lcp > 2.13963 9   1.4750  3.0380 *
 ```
 
 --- .sscode-nowrap .compact
@@ -656,18 +669,26 @@ pstcut
 
 ```r
 pstcut <- prune.tree(pstree)
-```
-
-```
-## Error in prune.tree(pstree): could not find function "prune.tree"
-```
-
-```r
 pstcut
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pstcut' not found
+## $size
+##  [1] 12 11  8  7  6  5  4  3  2  1
+## 
+## $dev
+##  [1]  26.15491  27.76888  33.76664  35.83388  40.75225  45.98251  51.23381
+##  [8]  56.70719  77.50140 133.35903
+## 
+## $k
+##  [1]      -Inf  1.613972  1.999253  2.067239  4.918373  5.230262  5.251294
+##  [8]  5.473378 20.794213 55.857635
+## 
+## $method
+## [1] "deviance"
+## 
+## attr(,"class")
+## [1] "prune"         "tree.sequence"
 ```
 
 
@@ -678,27 +699,25 @@ pstcut
 plot(pstcut)
 ```
 
-```
-## Error in plot(pstcut): object 'pstcut' not found
-```
+![plot of chunk unnamed-chunk-27](assets/fig/unnamed-chunk-27-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
 
 ```r
 pstcut <- prune.tree(pstree,best=3)
-```
-
-```
-## Error in prune.tree(pstree, best = 3): could not find function "prune.tree"
-```
-
-```r
 pstcut
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pstcut' not found
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+## 1) root 97 133.40 1.3500  
+##   2) lcp < 0.261624 63  64.11 0.7925  
+##     4) lpsa < 2.30257 35  24.72 0.2787 *
+##     5) lpsa > 2.30257 28  18.60 1.4350 *
+##   3) lcp > 0.261624 34  13.39 2.3830 *
 ```
 
 
@@ -709,9 +728,7 @@ pstcut
 plot(pstcut)
 ```
 
-```
-## Error in plot(pstcut): object 'pstcut' not found
-```
+![plot of chunk unnamed-chunk-29](assets/fig/unnamed-chunk-29-1.png)
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
@@ -720,18 +737,11 @@ plot(pstcut)
 ## Use cross-validation to prune the tree
 set.seed(2)
 cvpst <- cv.tree(pstree, K=10)
-```
-
-```
-## Error in cv.tree(pstree, K = 10): could not find function "cv.tree"
-```
-
-```r
 cvpst$size
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'cvpst' not found
+##  [1] 12 11  8  7  6  5  4  3  2  1
 ```
 
 
@@ -743,7 +753,8 @@ cvpst$dev
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'cvpst' not found
+##  [1]  73.22055  70.18426  70.79439  70.24455  65.40004  65.30020  65.30020
+##  [8]  64.93791  90.18312 134.09981
 ```
 
 
@@ -754,27 +765,25 @@ cvpst$dev
 plot(cvpst, pch=21, bg=8, type="p", cex=1.5, ylim=c(65,100))
 ```
 
-```
-## Error in plot(cvpst, pch = 21, bg = 8, type = "p", cex = 1.5, ylim = c(65, : object 'cvpst' not found
-```
+![plot of chunk unnamed-chunk-32](assets/fig/unnamed-chunk-32-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
 
 ```r
 pstcut <- prune.tree(pstree, best=3)
-```
-
-```
-## Error in prune.tree(pstree, best = 3): could not find function "prune.tree"
-```
-
-```r
 pstcut
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'pstcut' not found
+## node), split, n, deviance, yval
+##       * denotes terminal node
+## 
+## 1) root 97 133.40 1.3500  
+##   2) lcp < 0.261624 63  64.11 0.7925  
+##     4) lpsa < 2.30257 35  24.72 0.2787 *
+##     5) lpsa > 2.30257 28  18.60 1.4350 *
+##   3) lcp > 0.261624 34  13.39 2.3830 *
 ```
 
 
@@ -783,19 +792,10 @@ pstcut
 
 ```r
 plot(pstcut, col=8)
-```
-
-```
-## Error in plot(pstcut, col = 8): object 'pstcut' not found
-```
-
-```r
 text(pstcut)
 ```
 
-```
-## Error in text(pstcut): object 'pstcut' not found
-```
+![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
