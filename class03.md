@@ -1,7 +1,7 @@
 ---
 title       : Class03
 subtitle    : binary classification
-author      : 
+author      : Yu-Ru Lin
 job         : 
 framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
