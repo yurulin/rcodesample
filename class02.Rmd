@@ -1,7 +1,7 @@
 ---
 title       : Class02
 subtitle    : regression examples
-author      : 
+author      : Yu-Ru Lin
 job         : 
 framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
@@ -9,6 +9,7 @@ hitheme     : tomorrow      #
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
+
 --- #toc
 
 ## Class02
@@ -27,7 +28,7 @@ knit        : slidify::knit2slides
 --- #set-up .modal 
 
 ## Install R packages
-```{r eval=FALSE}
+```{r, eval=FALSE}
 ## this tutorial uses the following packages
 install.packages('nutshell') 
 install.packages('locfit')

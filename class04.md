@@ -12,6 +12,8 @@ knit        : slidify::knit2slides
 toc         : true
 toc_depth   : 2
 
+
+
 --- #toc
 ## Class04
 
@@ -27,7 +29,6 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 install.packages('tree')
 ```
-
 --- #nb .modal 
 ## Naive Bayesian
 
@@ -75,7 +76,7 @@ response=as.numeric(levels(del$delay)[del$delay])
 hist(response)
 ```
 
-![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png)
 
 --- .sscode-nowrap .compact
 ## Naive Bayesian
@@ -322,7 +323,7 @@ gg=(p1*tdel[2])/(p1*tdel[2]+p0*tdel[1])
 hist(gg)
 ```
 
-![plot of chunk unnamed-chunk-8](assets/fig/unnamed-chunk-8-1.png)
+![plot of chunk unnamed-chunk-7](assets/fig/unnamed-chunk-7-1.png)
 
 --- .sscode-nowrap .compact
 ## Naive Bayesian
@@ -404,7 +405,7 @@ iristree
 plot(iristree)
 ```
 
-![plot of chunk unnamed-chunk-12](assets/fig/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-11](assets/fig/unnamed-chunk-11-1.png)
 
 --- .scode-nowrap .compact
 ## Decision Trees
@@ -414,7 +415,7 @@ plot(iristree,col=8)
 text(iristree,digits=2)
 ```
 
-![plot of chunk unnamed-chunk-13](assets/fig/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-12](assets/fig/unnamed-chunk-12-1.png)
 
 --- .scode-nowrap .compact
 ## Decision Trees
@@ -467,7 +468,7 @@ plot(irissnip)
 text(irissnip)
 ```
 
-![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-15](assets/fig/unnamed-chunk-15-1.png)
 
 --- ##ex .scode-nowrap .compact
 ## Example: Prostate cancer
@@ -538,7 +539,7 @@ plot(pstree, col=8)
 text(pstree, digits=2)
 ```
 
-![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-18](assets/fig/unnamed-chunk-18-1.png)
 
 
 --- .scode-nowrap .compact
@@ -550,7 +551,7 @@ pstcut <- prune.tree(pstree,k=1.7)
 plot(pstcut)
 ```
 
-![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png)
+![plot of chunk unnamed-chunk-19](assets/fig/unnamed-chunk-19-1.png)
 
 
 --- .sscode-nowrap .compact
@@ -596,7 +597,7 @@ pstcut <- prune.tree(pstree,k=2.05)
 plot(pstcut)
 ```
 
-![plot of chunk unnamed-chunk-22](assets/fig/unnamed-chunk-22-1.png)
+![plot of chunk unnamed-chunk-21](assets/fig/unnamed-chunk-21-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
@@ -634,7 +635,7 @@ pstcut <- prune.tree(pstree,k=3)
 plot(pstcut)
 ```
 
-![plot of chunk unnamed-chunk-24](assets/fig/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-23](assets/fig/unnamed-chunk-23-1.png)
 
 
 --- .scode-nowrap .compact
@@ -698,7 +699,7 @@ pstcut
 plot(pstcut)
 ```
 
-![plot of chunk unnamed-chunk-27](assets/fig/unnamed-chunk-27-1.png)
+![plot of chunk unnamed-chunk-26](assets/fig/unnamed-chunk-26-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
@@ -727,7 +728,7 @@ pstcut
 plot(pstcut)
 ```
 
-![plot of chunk unnamed-chunk-29](assets/fig/unnamed-chunk-29-1.png)
+![plot of chunk unnamed-chunk-28](assets/fig/unnamed-chunk-28-1.png)
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
@@ -760,7 +761,7 @@ cvpst$dev
 plot(cvpst, pch=21, bg=8, type="p", cex=1.5, ylim=c(65,100))
 ```
 
-![plot of chunk unnamed-chunk-31](assets/fig/unnamed-chunk-31-1.png)
+![plot of chunk unnamed-chunk-30](assets/fig/unnamed-chunk-30-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
@@ -790,7 +791,7 @@ plot(pstcut, col=8)
 text(pstcut)
 ```
 
-![plot of chunk unnamed-chunk-33](assets/fig/unnamed-chunk-33-1.png)
+![plot of chunk unnamed-chunk-32](assets/fig/unnamed-chunk-32-1.png)
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
@@ -802,4 +803,4 @@ abline(v=.261624, col=4, lwd=2)
 lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
 ```
 
-![plot of chunk unnamed-chunk-34](assets/fig/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-33](assets/fig/unnamed-chunk-33-1.png)

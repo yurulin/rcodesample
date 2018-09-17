@@ -1,7 +1,17 @@
 unnamed-chunk-54	library	locfit	data.url	ethanol	read.csv	sprintf	colnames	c
 unnamed-chunk-56	fit	locfit	NOx	lp	E	ethanol	plot
-unnamed-chunk-57	alpha	seq	n1	length	g	matrix	k	gcv	NOx	lp	E	ethanol	head
-unnamed-chunk-58	plot	g
-unnamed-chunk-59	f1	locfit	NOx	lp	E	ethanol	plot
+unnamed-chunk-57	fit	locfit	NOx	lp	E	ethanol	plot
+unnamed-chunk-58	alpha	seq	n1	length	g	matrix	k	gcv	NOx	lp	E	ethanol	head
+unnamed-chunk-59	plot	g
 unnamed-chunk-31	n	length	fgl	type	nt	set.seed	train	sample	x	scale	c
 unnamed-chunk-10	library	MASS	tree	iris
+unnamed-chunk-9	library	MASS	tree	iris
+unnamed-chunk-55	library	locfit	data.url	ethanol	read.csv	sprintf	colnames	c
+unnamed-chunk-60	f1	locfit	NOx	lp	E	ethanol	plot
+class02-chunk-55	library	locfit	data.url	ethanol	read.csv	sprintf	colnames	c
+class02-chunk-57	alpha	seq	n1	length	g	matrix	k	gcv	NOx	lp	E	ethanol	head
+class02-chunk-58	plot	g
+class02-chunk-59	f1	locfit	NOx	lp	E	ethanol	plot
+class02-chunk-60	f1	locfit	NOx	lp	E	ethanol	plot
+class02-chunk-54	library	locfit	data.url	ethanol	read.csv	sprintf	colnames	c
+class02-chunk-56	fit	locfit	NOx	lp	E	ethanol	plot

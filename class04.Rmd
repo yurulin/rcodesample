@@ -12,6 +12,12 @@ knit        : slidify::knit2slides
 toc         : true
 toc_depth   : 2
 
+```{r setup, include=FALSE}
+knitr::opts_knit$set(unnamed.chunk.label = "class04-chunk")
+#knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+library(knitr)
+```
+
 --- #toc
 ## Class04
 
@@ -22,11 +28,10 @@ toc_depth   : 2
 --- #set-up .modal 
 
 ## Install R packages
-```{r eval=FALSE}
+```{r, eval=FALSE}
 ## this tutorial uses the following packages
 install.packages('tree')
 ```
-
 --- #nb .modal 
 ## Naive Bayesian
 
@@ -194,13 +199,13 @@ iristree
 
 --- .scode-nowrap .compact
 ## Decision Trees
-```{r, dependson=c(-1), fig.height=5, fig.width=4}
+```{r, dependson=c(-1), fig.height=5, fig.width=5}
 plot(iristree)
 ```
 
 --- .scode-nowrap .compact
 ## Decision Trees
-```{r, dependson=c(-1), fig.height=5, fig.width=4}
+```{r, dependson=c(-1), fig.height=5, fig.width=5}
 plot(iristree,col=8)
 text(iristree,digits=2)
 ```
@@ -224,7 +229,7 @@ irissnip
 
 --- .scode-nowrap .compact
 ## Decision Trees
-```{r, dependson=c(-1), fig.height=4, fig.width=4}
+```{r, dependson=c(-1), fig.height=4, fig.width=5}
 plot(irissnip)
 text(irissnip)
 ```
@@ -254,7 +259,7 @@ pstree
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
-```{r, dependson=c(-1), fig.height=5, fig.width=4}
+```{r, dependson=c(-1), fig.height=5, fig.width=6}
 plot(pstree, col=8)
 text(pstree, digits=2)
 ```
