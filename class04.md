@@ -27,7 +27,8 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 install.packages('tree')
 ```
---- #nb .modal 
+
+--- .modal #nb
 ## Naive Bayesian
 
 The examples are taken from [Data Mining and Business Analytics with R](http://www.wiley.com/WileyCDA/WileyTitle/productCd-111844714X.html) and [Machine Learning for Hackers](http://shop.oreilly.com/product/0636920018483.do).
