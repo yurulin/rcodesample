@@ -58,7 +58,12 @@
 <section class="slide modal" id="set-up">
   <div>
     <h2>Install R packages</h2>
-    
+    <pre><code class="r">## this tutorial uses the following packages
+install.packages(&#39;nutshell&#39;) 
+install.packages(&#39;locfit&#39;)
+install.packages(&#39;lars&#39;)
+</code></pre>
+
   </div>
 </section>
 <section class="slide scode compact" id="simple-regression">
@@ -66,6 +71,11 @@
     <h2>Simple Regression</h2>
     <p>The examples are taken from <a href="http://www.manning.com/kabacoff/">R in Action</a>
 \[\hat{y}=\alpha +\beta x\]</p>
+
+<pre><code class="r">## we&#39;ll use an exmaple dataset &#39;women&#39; in the &#39;car&#39; package
+library(car) ## load the package
+women
+</code></pre>
 
 <pre><code>##    height weight
 ## 1      58    115
@@ -90,7 +100,11 @@
 <section class="slide modal" id="slide-4">
   <div>
     <h2>Simple Regression</h2>
-    <pre><code>##      height         weight     
+    <pre><code class="r">## data summary
+summary(women)
+</code></pre>
+
+<pre><code>##      height         weight     
 ##  Min.   :58.0   Min.   :115.0  
 ##  1st Qu.:61.5   1st Qu.:124.5  
 ##  Median :65.0   Median :135.0  
@@ -104,28 +118,48 @@
 <section class="slide modal" id="slide-5">
   <div>
     <h2>Simple Regression</h2>
-    <p><img src="assets/fig/class02-chunk-4-1.png" alt="plot of chunk class02-chunk-4"></p>
+    <pre><code class="r">## plot the data
+plot(women$height, women$weight)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-4-1.png" alt="plot of chunk class02-chunk-4"></p>
 
   </div>
 </section>
 <section class="slide modal" id="slide-6">
   <div>
     <h2>Simple Regression</h2>
-    <p><img src="assets/fig/class02-chunk-5-1.png" alt="plot of chunk class02-chunk-5"></p>
+    <pre><code class="r">library(ggplot2) ## load the plotting package
+theme_set(theme_bw()) ## set default theme with a white background
+ggplot(data=women, aes(x=height,y=weight)) + geom_point() 
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-5-1.png" alt="plot of chunk class02-chunk-5"></p>
 
   </div>
 </section>
 <section class="slide modal" id="slide-7">
   <div>
     <h2>Simple Regression</h2>
-    <p><img src="assets/fig/class02-chunk-6-1.png" alt="plot of chunk class02-chunk-6"></p>
+    <pre><code class="r">## plot with regression line
+ggplot(women, aes(x = height, y = weight)) + geom_point() + 
+  geom_smooth(method=lm, # add linear regression line
+              se=FALSE) # (by default includes 95% confidence region)  
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-6-1.png" alt="plot of chunk class02-chunk-6"></p>
 
   </div>
 </section>
 <section class="slide scode" id="slide-8">
   <div>
     <h2>Simple Regression</h2>
-    <pre><code>## 
+    <pre><code class="r">## perform linear regression
+fit = lm(weight ~ height, data=women)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = weight ~ height, data = women)
 ## 
@@ -409,7 +443,11 @@
 <section class="slide modal" id="slide-16">
   <div>
     <h2>Plot the residuals</h2>
-    <p><img src="assets/fig/class02-chunk-15-1.png" alt="plot of chunk class02-chunk-15"></p>
+    <pre><code class="r">## plot the residuals and check if the residuals appear to be approximately normal
+plot(density(resid(fit)))
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-15-1.png" alt="plot of chunk class02-chunk-15"></p>
 
   </div>
 </section>
@@ -453,14 +491,23 @@
 <section class="slide modal" id="slide-18">
   <div>
     <h2>Plot the residuals</h2>
-    <p><img src="assets/fig/class02-chunk-17-1.png" alt="plot of chunk class02-chunk-17"></p>
+    <pre><code class="r">qqnorm(resid(fit)) # a quantile normal plot 
+qqline(resid(fit))
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-17-1.png" alt="plot of chunk class02-chunk-17"></p>
 
   </div>
 </section>
 <section class="slide modal" id="slide-19">
   <div>
     <h2>Check statistical assumptions</h2>
-    <p><img src="assets/fig/class02-chunk-18-1.png" alt="plot of chunk class02-chunk-18"></p>
+    <pre><code class="r">## plot regression diagnostics
+par(mfrow=c(2,2))
+plot(fit)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-18-1.png" alt="plot of chunk class02-chunk-18"></p>
 
   </div>
 </section>
@@ -542,7 +589,13 @@
 <section class="slide modal" id="multiple-linear-regression">
   <div>
     <h2>Multiple linear regression</h2>
-    <pre><code>##            Murder Population Illiteracy Income Frost
+    <pre><code class="r">## we&#39;ll use the state.x77 dataset in the base package
+states = as.data.frame(state.x77[,c(&quot;Murder&quot;, &quot;Population&quot;,
+                                     &quot;Illiteracy&quot;, &quot;Income&quot;, &quot;Frost&quot;)])
+head(states)
+</code></pre>
+
+<pre><code>##            Murder Population Illiteracy Income Frost
 ## Alabama      15.1       3615        2.1   3624    20
 ## Alaska       11.3        365        1.5   6315   152
 ## Arizona       7.8       2212        1.8   4530    15
@@ -556,7 +609,10 @@
 <section class="slide modal compact scode" id="slide-25">
   <div>
     <h2>Examining data</h2>
-    <pre><code>##                Murder Population Illiteracy     Income      Frost
+    <pre><code class="r">cor(states)
+</code></pre>
+
+<pre><code>##                Murder Population Illiteracy     Income      Frost
 ## Murder      1.0000000  0.3436428  0.7029752 -0.2300776 -0.5388834
 ## Population  0.3436428  1.0000000  0.1076224  0.2082276 -0.3321525
 ## Illiteracy  0.7029752  0.1076224  1.0000000 -0.4370752 -0.6719470
@@ -569,14 +625,23 @@
 <section class="slide modal" id="slide-26">
   <div>
     <h2>Examining data</h2>
-    <p><img src="assets/fig/class02-chunk-25-1.png" alt="plot of chunk class02-chunk-25"></p>
+    <pre><code class="r">## examining bivariate relationships using &#39;scatterplotMatrix&#39; in the &#39;car&#39; package
+scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
+                  main=&quot;Scatter Plot Matrix&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-25-1.png" alt="plot of chunk class02-chunk-25"></p>
 
   </div>
 </section>
 <section class="slide scode compact" id="slide-27">
   <div>
     <h2>Multiple linear regression</h2>
-    <pre><code>## 
+    <pre><code class="r">fit = lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = Murder ~ Population + Illiteracy + Income + Frost, 
 ##     data = states)
@@ -695,7 +760,14 @@
 <section class="slide scode" id="slide-31">
   <div>
     <h2>Variable selection</h2>
-    <pre><code>## Start:  AIC=97.75
+    <pre><code class="r">## backward stepwise selection
+library(MASS)
+fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
+          data=states)
+stepAIC(fit, direction=&quot;backward&quot;)
+</code></pre>
+
+<pre><code>## Start:  AIC=97.75
 ## Murder ~ Population + Illiteracy + Income + Frost
 ## 
 ##              Df Sum of Sq    RSS     AIC
@@ -790,7 +862,13 @@
 <section class="slide compact scode" id="model-performance">
   <div>
     <h2>Model performance</h2>
-    <pre><code>## 
+    <pre><code class="r">## compute R-squared for the woman data
+y = women$weight; x = women$height
+fit = lm(y~x)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = y ~ x)
 ## 
@@ -815,10 +893,24 @@
 <section class="slide compact scode" id="slide-34">
   <div>
     <h2>Model performance</h2>
-    <pre><code>## [1] 1.419703
+    <pre><code class="r">## compute R-squared for the woman data
+mean.mse = mean((rep(mean(y),length(y)) - y)^2)
+model.mse = mean(residuals(fit)^2)
+rmse = sqrt(model.mse)
+rmse ## root mean square error
+</code></pre>
+
+<pre><code>## [1] 1.419703
+</code></pre>
+
+<pre><code class="r">r2 = 1 - (model.mse / mean.mse)
+r2
 </code></pre>
 
 <pre><code>## [1] 0.9910098
+</code></pre>
+
+<pre><code class="r">cor(y, fit$fitted.values)^2
 </code></pre>
 
 <pre><code>## [1] 0.9910098
@@ -829,7 +921,26 @@
 <section class="slide compact scode" id="slide-35">
   <div>
     <h2>Model performance</h2>
-    <pre><code>## [1] 0.1148222
+    <pre><code class="r">## leave-one-out cross validation
+n = length(women$weight)
+error = dim(n)
+for (k in 1:n) {
+  train1 = c(1:n)
+  train = train1[train1!=k] ## pick elements that are different from k
+  m2 = lm(weight ~ height, data=women[train ,])
+  pred = predict(m2, newdat=women[-train ,])
+  obs = women$weight[-train]
+  error[k] = obs-pred
+}
+me=mean(error)
+me ## mean error
+</code></pre>
+
+<pre><code>## [1] 0.1148222
+</code></pre>
+
+<pre><code class="r">rmse=sqrt(mean(error^2))
+rmse ## root mean square error (out-of-sample)
 </code></pre>
 
 <pre><code>## [1] 1.743782
@@ -840,7 +951,11 @@
 <section class="slide compact scode" id="polynomial-regression">
   <div>
     <h2>Polynomial regression</h2>
-    <pre><code>## 
+    <pre><code class="r">fit2 = lm(weight ~ height + I(height^2), data=women)
+summary(fit2)
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = weight ~ height + I(height^2), data = women)
 ## 
@@ -866,7 +981,13 @@
 <section class="slide compact scode" id="slide-37">
   <div>
     <h2>Polynomial regression</h2>
-    <p><img src="assets/fig/class02-chunk-35-1.png" alt="plot of chunk class02-chunk-35"></p>
+    <pre><code class="r">plot(women$height,women$weight,
+     xlab=&quot;Height (in inches)&quot;,
+     ylab=&quot;Weight (in lbs)&quot;)
+lines(women$height,fitted(fit2))
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-35-1.png" alt="plot of chunk class02-chunk-35"></p>
 
   </div>
 </section>
@@ -907,14 +1028,26 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide modal" id="non-linear">
   <div>
     <h2>Non-linear Data</h2>
-    <p><img src="assets/fig/class02-chunk-37-1.png" alt="plot of chunk class02-chunk-37"></p>
+    <pre><code class="r">## create testing data (sine wave)
+set.seed(1)
+x = seq(0, 1, by = 0.01)
+y = sin(2 * pi * x) + rnorm(length(x), 0, 0.1)
+df = data.frame(X = x, Y = y)
+ggplot(df, aes(x = X, y = Y)) + geom_point()
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-37-1.png" alt="plot of chunk class02-chunk-37"></p>
 
   </div>
 </section>
 <section class="slide scode" id="slide-40">
   <div>
     <h2>Non-linear Data</h2>
-    <pre><code>## 
+    <pre><code class="r">## fit with linear regression
+summary(lm(Y ~ X, data = df)) # explain 60% of the variance
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = Y ~ X, data = df)
 ## 
@@ -939,14 +1072,25 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode" id="slide-41">
   <div>
     <h2>Non-linear Data</h2>
-    <p><img src="assets/fig/class02-chunk-39-1.png" alt="plot of chunk class02-chunk-39"></p>
+    <pre><code class="r">ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
+  geom_point() +
+  geom_smooth(method = &#39;lm&#39;, se = FALSE)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-39-1.png" alt="plot of chunk class02-chunk-39"></p>
 
   </div>
 </section>
 <section class="slide scode" id="slide-42">
   <div>
     <h2>Non-linear Data</h2>
-    <pre><code>## 
+    <pre><code class="r">## add new features
+df &lt;- transform(df, X2 = X ^ 2)
+df &lt;- transform(df, X3 = X ^ 3)
+summary(lm(Y ~ X + X2 + X3, data = df)) # R2 from 60% to 97%, by adding two more inputs
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = Y ~ X + X2 + X3, data = df)
 ## 
@@ -973,7 +1117,23 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide sscode-nowrap compact" id="slide-43">
   <div>
     <h2>Non-linear Data</h2>
-    <pre><code>## 
+    <pre><code class="r">## add more features
+df &lt;- transform(df, X4 = X ^ 4)
+df &lt;- transform(df, X5 = X ^ 5)
+df &lt;- transform(df, X6 = X ^ 6)
+df &lt;- transform(df, X7 = X ^ 7)
+df &lt;- transform(df, X8 = X ^ 8)
+df &lt;- transform(df, X9 = X ^ 9)
+df &lt;- transform(df, X10 = X ^ 10)
+df &lt;- transform(df, X11 = X ^ 11)
+df &lt;- transform(df, X12 = X ^ 12)
+df &lt;- transform(df, X13 = X ^ 13)
+df &lt;- transform(df, X14 = X ^ 14)
+df &lt;- transform(df, X15 = X ^ 15)
+summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13 + X14 , data = df))
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + 
 ##     X10 + X11 + X12 + X13 + X14, data = df)
@@ -1057,7 +1217,13 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide sscode-nowrap compact" id="slide-45">
   <div>
     <h2>Non-linear Data</h2>
-    <pre><code>## 
+    <pre><code class="r">## use &#39;poly&#39; function
+## similar to X + X^2 + X^3 + ... + X^14, but with orthogonal columns
+
+summary(lm(Y ~ poly(X, degree = 14), data = df))
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = Y ~ poly(X, degree = 14), data = df)
 ## 
@@ -1095,28 +1261,57 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide sscode-nowrap compact" id="slide-46">
   <div>
     <h2>Plot Non-linear Data</h2>
-    <p><img src="assets/fig/class02-chunk-44-1.png" alt="plot of chunk class02-chunk-44"></p>
+    <pre><code class="r">## restore testing data
+x &lt;- seq(0, 1, by = 0.01)
+y &lt;- sin(2 * pi * x) + rnorm(length(x), 0, 0.1)
+df0 &lt;- data.frame(X = x, Y = y)
+## using poly with degrees of 1, 3, 5, and 25
+poly.fit &lt;- lm(Y ~ poly(X, degree = 1), data = df)
+df &lt;- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-44-1.png" alt="plot of chunk class02-chunk-44"></p>
 
   </div>
 </section>
 <section class="slide sscode-nowrap compact" id="slide-47">
   <div>
     <h2>Plot Non-linear Data (degree=3)</h2>
-    <p><img src="assets/fig/class02-chunk-45-1.png" alt="plot of chunk class02-chunk-45"></p>
+    <pre><code class="r">poly.fit &lt;- lm(Y ~ poly(X, degree = 3), data = df)
+df &lt;- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-45-1.png" alt="plot of chunk class02-chunk-45"></p>
 
   </div>
 </section>
 <section class="slide sscode-nowrap compact" id="slide-48">
   <div>
     <h2>Plot Non-linear Data (degree=5)</h2>
-    <p><img src="assets/fig/class02-chunk-46-1.png" alt="plot of chunk class02-chunk-46"></p>
+    <pre><code class="r">poly.fit &lt;- lm(Y ~ poly(X, degree = 5), data = df)
+df &lt;- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-46-1.png" alt="plot of chunk class02-chunk-46"></p>
 
   </div>
 </section>
 <section class="slide sscode-nowrap compact" id="slide-49">
   <div>
     <h2>Plot Non-linear Data (degree=25)</h2>
-    <p><img src="assets/fig/class02-chunk-47-1.png" alt="plot of chunk class02-chunk-47"></p>
+    <pre><code class="r">poly.fit &lt;- lm(Y ~ poly(X, degree = 25), data = df)
+df &lt;- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-47-1.png" alt="plot of chunk class02-chunk-47"></p>
 
 <p>model become too complex (too many parameters) and exaggerate minor fluctuations (noise) in the data</p>
 
@@ -1127,6 +1322,38 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
     <h2>Cross-validation</h2>
       
 <div class='left' style='float:left;width:70%'>
+<pre><code class="r">## split our data into a training set and test set
+n &lt;- length(x)
+indices &lt;- sort(sample(1:n, round (0.5 * n)))
+training.x &lt;- x[indices]
+training.y &lt;- y[indices]
+test.x &lt;- x[-indices]
+test.y &lt;- y[-indices]
+training.df &lt;- data.frame(X = training.x, Y = training.y)
+test.df &lt;- data.frame(X = test.x, Y = test.y)
+## use RMSE to measure the performance
+rmse &lt;- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over a set of polynomial degrees (from 1 to 12)
+performance &lt;- data.frame()
+for (d in 1:12) {
+  poly.fit &lt;- lm(Y ~ poly(X, degree = d), data = training.df)
+  performance &lt;- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = &#39;Training &#39;,
+                                  RMSE = rmse(training.y, predict(poly.fit))))
+  performance &lt;- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = &#39;Test &#39;,
+                                  RMSE = rmse(test.y, predict(poly.fit ,
+                                                              newdata = test.df))))
+}
+## plot the performance of the polynomial regression models for all the degrees
+ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
+  geom_point() +
+  geom_line()
+</code></pre>
 
 </div>    
 <div class='right' style='float:right;width:30%'>
@@ -1138,7 +1365,15 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide sscode-nowrap compact" id="regularization">
   <div>
     <h2>Regularization</h2>
-    <pre><code>## 
+    <pre><code class="r">lm.fit &lt;- lm(y ~ x)
+l2.model.complexity &lt;- sum(coef(lm.fit) ^ 2) # L2 norm (sum of squaring values)
+l1.model.complexity &lt;- sum(abs(coef(lm.fit))) # L1 norm (sum of absolute values)
+library(&#39;glmnet&#39;)
+x &lt;- matrix(x) ## input of glmnet has to be in matrix form
+glmnet(poly(x, degree = 2), y)
+</code></pre>
+
+<pre><code>## 
 ## Call:  glmnet(x = poly(x, degree = 2), y = y) 
 ## 
 ##       Df   %Dev   Lambda
@@ -1210,6 +1445,38 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
     <h2>Regularization</h2>
       
 <div class='left' style='float:left;width:70%'>
+<pre><code class="r">## get an entire set of possible regularizations (from the strongest to the weakest).
+## Df: how many nonzero coefficients in the model;
+## %Dev: the R2 for this model; 
+## Lambda: controls how complex the model is (a.k.a. hyperparameter)
+
+## split it into a training set and a test set
+n &lt;- length(x)
+indices &lt;- sort(sample(1:n, round (0.5 * n)))
+training.x &lt;- x[indices]
+training.y &lt;- y[indices]
+test.x &lt;- x[-indices]
+test.y &lt;- y[-indices]
+df &lt;- data.frame(X = x, Y = y)
+training.df &lt;- data.frame(X = training.x, Y = training.y)
+test.df &lt;- data.frame(X = test.x, Y = test.y)
+rmse &lt;- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over values of Lambda
+glmnet.fit &lt;- with(training.df, glmnet(poly(X, degree = 10), Y))
+lambdas &lt;- glmnet.fit$lambda ## regularization parameter (sequence)
+performance &lt;- data.frame()
+for (lambda in lambdas) {
+  performance &lt;- rbind(performance ,
+                       data.frame(Lambda = lambda ,
+                                  RMSE = rmse(test.y, with(test.df, predict(glmnet.fit , poly(X, degree = 10), s = lambda)))))
+}
+## plot to see the model performance w.r.t. the range of lambdas
+ggplot(performance , aes(x = Lambda , y = RMSE)) +
+  geom_point() +
+  geom_line()
+</code></pre>
 
 </div>    
 <div class='right' style='float:right;width:30%'>
@@ -1221,7 +1488,16 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide sscode-nowrap compact" id="slide-53">
   <div>
     <h2>Regularization</h2>
-    <pre><code>## 11 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+    <pre><code class="r">## we get the best possible performance with Lambda near 0.05; select that value and train our model
+## using only 3 nonzero coefficients instead of 10
+
+best.lambda &lt;- with(performance , Lambda[which(RMSE == min(RMSE))])
+glmnet.fit &lt;- with(df, glmnet(poly(X, degree = 10), Y))
+## use coef to examine the structure of our regularized model
+coef(glmnet.fit , s = best.lambda)
+</code></pre>
+
+<pre><code>## 11 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
 ##                        1
 ## (Intercept) -0.001051649
 ## 1           -4.969723232
@@ -1241,7 +1517,16 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="local-poly">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <pre><code>##     NOx  C     E
+    <pre><code class="r">library(locfit)
+
+## first we read in the data
+data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+ethanol &lt;- read.csv(sprintf (&quot;%s/ethanol.csv&quot;,data.url))
+colnames(ethanol) &lt;- c(&#39;NOx&#39;,&#39;C&#39;,&#39;E&#39;)
+ethanol [1:3,]
+</code></pre>
+
+<pre><code>##     NOx  C     E
 ## 1 3.741 12 0.907
 ## 2 2.295 12 0.761
 ## 3 1.498 12 1.108
@@ -1252,21 +1537,43 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="slide-55">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <p><img src="assets/fig/class02-chunk-55-1.png" alt="plot of chunk class02-chunk-55"></p>
+    <pre><code class="r">## standard regression of NOx on the equivalence ratio dosen&#39;t work
+fitreg=lm(NOx~E,data=ethanol)
+plot(NOx~E,data=ethanol)
+abline(fitreg)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-55-1.png" alt="plot of chunk class02-chunk-55"></p>
 
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-56">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <p><img src="assets/fig/class02-chunk-56-1.png" alt="plot of chunk class02-chunk-56"></p>
+    <pre><code class="r">## local polynomial regression of NOx on the equivalence ratio
+## fit with a 50% nearest neighbor bandwidth.
+fit &lt;- locfit(NOx~lp(E,nn=0.5),data=ethanol)
+plot(fit)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-56-1.png" alt="plot of chunk class02-chunk-56"></p>
 
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-57">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <pre><code>##           [,1]     [,2]     [,3]      [,4]
+    <pre><code class="r">## cross-validation
+alpha &lt;-seq(0.20,1,by=0.01)
+n1=length(alpha)
+g=matrix(nrow=n1,ncol=4)
+for (k in 1:length(alpha)) {
+  g[k,]&lt;-gcv(NOx~lp(E,nn=alpha[k]),data=ethanol)
+}
+head(g) 
+</code></pre>
+
+<pre><code>##           [,1]     [,2]     [,3]      [,4]
 ## [1,] -3.220084 18.81266 16.42649 0.1183932
 ## [2,] -3.249601 17.61614 15.43623 0.1154507
 ## [3,] -3.319650 16.77004 14.75204 0.1151542
@@ -1280,14 +1587,21 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="slide-58">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <p><img src="assets/fig/class02-chunk-58-1.png" alt="plot of chunk class02-chunk-58"></p>
+    <pre><code class="r">plot(g[,4]~g[,3],ylab=&quot;GCV&quot;,xlab=&quot;degrees of freedom&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-58-1.png" alt="plot of chunk class02-chunk-58"></p>
 
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-59">
   <div>
     <h2>Local Polynomial Regression</h2>
-    <pre><code>## Call:
+    <pre><code class="r">f1=locfit(NOx~lp(E,nn=0.30),data=ethanol)
+f1; plot(f1)
+</code></pre>
+
+<pre><code>## Call:
 ## locfit(formula = NOx ~ lp(E, nn = 0.3), data = ethanol)
 ## 
 ## Number of observations:          88 
@@ -1303,7 +1617,12 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="lasso">
   <div>
     <h2>LASSO</h2>
-    <pre><code>##       lcavol age      lbph       lcp gleason       lpsa
+    <pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+prostate &lt;- read.csv(sprintf (&quot;%s/prostate.csv&quot;,data.url))
+prostate [1:3,]
+</code></pre>
+
+<pre><code>##       lcavol age      lbph       lcp gleason       lpsa
 ## 1 -0.5798185  50 -1.386294 -1.386294       6 -0.4307829
 ## 2 -0.9942523  58 -1.386294 -1.386294       6 -0.1625189
 ## 3 -0.5108256  74 -1.386294 -1.386294       7 -0.1625189
@@ -1314,7 +1633,11 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="slide-61">
   <div>
     <h2>LASSO</h2>
-    <pre><code>## 
+    <pre><code class="r">m1=lm(lcavol~.,data=prostate)
+summary(m1)
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lm(formula = lcavol ~ ., data = prostate)
 ## 
@@ -1343,7 +1666,16 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="slide-62">
   <div>
     <h2>LASSO</h2>
-    <pre><code>## LASSO sequence
+    <pre><code class="r">## the model.matrix statement defines the model to be fitted
+x &lt;- model.matrix(lcavol~age+lbph+lcp+gleason+lpsa ,data=prostate)
+x=x[,-1] # stripping off the column of 1s as LASSO includes the intercept automatically
+
+library(lars)
+## lasso on all data
+lasso &lt;- lars(x=x,y=prostate$lcavol ,trace=TRUE)
+</code></pre>
+
+<pre><code>## LASSO sequence
 ## Computing X&#39;X .....
 ## LARS Step 1 :     Variable 5     added
 ## LARS Step 2 :     Variable 3     added
@@ -1358,14 +1690,21 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="slide-63">
   <div>
     <h2>LASSO</h2>
-    <p><img src="assets/fig/class02-chunk-63-1.png" alt="plot of chunk class02-chunk-63"></p>
+    <pre><code class="r">## trace of lasso (standardized) coefficients for varying penalty
+plot(lasso)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-63-1.png" alt="plot of chunk class02-chunk-63"></p>
 
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-64">
   <div>
     <h2>LASSO</h2>
-    <pre><code>## 
+    <pre><code class="r">lasso
+</code></pre>
+
+<pre><code>## 
 ## Call:
 ## lars(x = x, y = prostate$lcavol, trace = TRUE)
 ## R-squared: 0.664 
@@ -1373,6 +1712,9 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 ##      lpsa lcp age gleason lbph
 ## Var     5   3   1       4    2
 ## Step    1   2   3       4    5
+</code></pre>
+
+<pre><code class="r">coef(lasso ,s=c(.25,.50,0.75,1.0),mode=&quot;fraction&quot;)
 </code></pre>
 
 <pre><code>##              age         lbph        lcp    gleason      lpsa
@@ -1387,20 +1729,54 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide scode-nowrap compact" id="slide-65">
   <div>
     <h2>LASSO</h2>
-    <p><img src="assets/fig/class02-chunk-65-1.png" alt="plot of chunk class02-chunk-65"></p>
+    <pre><code class="r">## cross -validation using 10 folds
+cv.lars(x=x,y=prostate$lcavol ,K=10)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-65-1.png" alt="plot of chunk class02-chunk-65"></p>
 
   </div>
 </section>
 <section class="slide sscode-nowrap compact" id="slide-66">
   <div>
     <h2>LASSO</h2>
-    <pre><code>## [1] 1.021938
+    <pre><code class="r">## another way to evaluate lasso&#39;s out-of-sample prediction performance
+MSElasso25=dim(10)
+MSElasso50=dim(10)
+MSElasso75=dim(10)
+MSElasso100=dim(10)
+set.seed(1)
+for(i in 1:10){
+  train &lt;- sample(1:nrow(prostate),80)
+  lasso &lt;- lars(x=x[train ,],y=prostate$lcavol[train])
+  MSElasso25[i]=
+    mean((predict(lasso ,x[-train ,],s=.25,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+  MSElasso50[i]=
+    mean((predict(lasso ,x[-train ,],s=.50,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+  MSElasso75[i]=
+    mean((predict(lasso ,x[-train ,],s=.75,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+  MSElasso100[i]=
+    mean((predict(lasso ,x[-train ,],s=1.00,mode=&quot;fraction&quot;)$fit -prostate$lcavol[-train ])^2)
+}
+mean(MSElasso25)
+</code></pre>
+
+<pre><code>## [1] 1.021938
+</code></pre>
+
+<pre><code class="r">mean(MSElasso50)
 </code></pre>
 
 <pre><code>## [1] 0.6723226
 </code></pre>
 
+<pre><code class="r">mean(MSElasso75)
+</code></pre>
+
 <pre><code>## [1] 0.5410033
+</code></pre>
+
+<pre><code class="r">mean(MSElasso100)
 </code></pre>
 
 <pre><code>## [1] 0.5352386
@@ -1411,7 +1787,12 @@ Both regression coefficients are significant at the p &lt; 0.0001 level. The amo
 <section class="slide sscode-nowrap compact" id="slide-67">
   <div>
     <h2>LASSO</h2>
-    <p><img src="assets/fig/class02-chunk-67-1.png" alt="plot of chunk class02-chunk-67"></p>
+    <pre><code class="r">boxplot(MSElasso25 ,MSElasso50 ,MSElasso75 ,MSElasso100 ,
+        ylab=&quot;MSE&quot;, sub=&quot;LASSO model&quot;,
+        xlab=&quot;s=0.25 s=0.50 s=0.75 s=1.0(LS)&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class02-chunk-67-1.png" alt="plot of chunk class02-chunk-67"></p>
 
   </div>
 </section>

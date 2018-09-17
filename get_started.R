@@ -12,7 +12,7 @@ author("mydeck-DM-slides")
 # add mystyle.css to mydeck-DM-slides/assets/css
 library(slidify)
 opts_knit$set(unnamed.chunk.label='class04-chunk')
-opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+opts_chunk$set(echo=TRUE, message=TRUE, warning=FALSE)
 
 ## Step 3: Generate Deck
 slidify("index.Rmd")

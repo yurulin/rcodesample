@@ -29,6 +29,12 @@ knit        : slidify::knit2slides
 
 ## Install R packages
 
+```r
+## this tutorial uses the following packages
+install.packages('nutshell') 
+install.packages('locfit')
+install.packages('lars')
+```
 
 --- #simple-regression .scode .compact
 
@@ -37,6 +43,12 @@ knit        : slidify::knit2slides
 The examples are taken from [R in Action](http://www.manning.com/kabacoff/)
 $$\hat{y}=\alpha +\beta x$$
 
+
+```r
+## we'll use an exmaple dataset 'women' in the 'car' package
+library(car) ## load the package
+women
+```
 
 ```
 ##    height weight
@@ -62,6 +74,11 @@ $$\hat{y}=\alpha +\beta x$$
 ## Simple Regression
 
 
+```r
+## data summary
+summary(women)
+```
+
 ```
 ##      height         weight     
 ##  Min.   :58.0   Min.   :115.0  
@@ -76,11 +93,24 @@ $$\hat{y}=\alpha +\beta x$$
 
 ## Simple Regression
 
+
+```r
+## plot the data
+plot(women$height, women$weight)
+```
+
 ![plot of chunk class02-chunk-4](assets/fig/class02-chunk-4-1.png)
 
 --- .modal
 
 ## Simple Regression
+
+
+```r
+library(ggplot2) ## load the plotting package
+theme_set(theme_bw()) ## set default theme with a white background
+ggplot(data=women, aes(x=height,y=weight)) + geom_point() 
+```
 
 ![plot of chunk class02-chunk-5](assets/fig/class02-chunk-5-1.png)
 
@@ -88,12 +118,26 @@ $$\hat{y}=\alpha +\beta x$$
 
 ## Simple Regression
 
+
+```r
+## plot with regression line
+ggplot(women, aes(x = height, y = weight)) + geom_point() + 
+  geom_smooth(method=lm, # add linear regression line
+              se=FALSE) # (by default includes 95% confidence region)  
+```
+
 ![plot of chunk class02-chunk-6](assets/fig/class02-chunk-6-1.png)
 
 --- .scode
 
 ## Simple Regression
 
+
+```r
+## perform linear regression
+fit = lm(weight ~ height, data=women)
+summary(fit)
+```
 
 ```
 ## 
@@ -353,6 +397,12 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Plot the residuals
 
+
+```r
+## plot the residuals and check if the residuals appear to be approximately normal
+plot(density(resid(fit)))
+```
+
 ![plot of chunk class02-chunk-15](assets/fig/class02-chunk-15-1.png)
 
 
@@ -393,11 +443,24 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Plot the residuals
 
+
+```r
+qqnorm(resid(fit)) # a quantile normal plot 
+qqline(resid(fit))
+```
+
 ![plot of chunk class02-chunk-17](assets/fig/class02-chunk-17-1.png)
 
 --- .modal
 
 ## Check statistical assumptions
+
+
+```r
+## plot regression diagnostics
+par(mfrow=c(2,2))
+plot(fit)
+```
 
 ![plot of chunk class02-chunk-18](assets/fig/class02-chunk-18-1.png)
 
@@ -448,6 +511,13 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Multiple linear regression
 
+```r
+## we'll use the state.x77 dataset in the base package
+states = as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
+head(states)
+```
+
 ```
 ##            Murder Population Illiteracy Income Frost
 ## Alabama      15.1       3615        2.1   3624    20
@@ -462,6 +532,10 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Examining data 
 
+```r
+cor(states)
+```
+
 ```
 ##                Murder Population Illiteracy     Income      Frost
 ## Murder      1.0000000  0.3436428  0.7029752 -0.2300776 -0.5388834
@@ -474,11 +548,23 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 --- .modal
 
 ## Examining data 
+
+```r
+## examining bivariate relationships using 'scatterplotMatrix' in the 'car' package
+scatterplotMatrix(states, spread=FALSE, lty.smooth=2,
+                  main="Scatter Plot Matrix")
+```
+
 ![plot of chunk class02-chunk-25](assets/fig/class02-chunk-25-1.png)
 
 --- .scode .compact
 
 ## Multiple linear regression
+
+```r
+fit = lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+summary(fit)
+```
 
 ```
 ## 
@@ -586,6 +672,14 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Variable selection
 
+```r
+## backward stepwise selection
+library(MASS)
+fit1 = lm(Murder ~ Population + Illiteracy + Income + Frost,
+          data=states)
+stepAIC(fit, direction="backward")
+```
+
 ```
 ## Start:  AIC=97.75
 ## Murder ~ Population + Illiteracy + Income + Frost
@@ -680,6 +774,13 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Model performance
 
+```r
+## compute R-squared for the woman data
+y = women$weight; x = women$height
+fit = lm(y~x)
+summary(fit)
+```
+
 ```
 ## 
 ## Call:
@@ -705,12 +806,29 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Model performance
 
+```r
+## compute R-squared for the woman data
+mean.mse = mean((rep(mean(y),length(y)) - y)^2)
+model.mse = mean(residuals(fit)^2)
+rmse = sqrt(model.mse)
+rmse ## root mean square error
+```
+
 ```
 ## [1] 1.419703
 ```
 
+```r
+r2 = 1 - (model.mse / mean.mse)
+r2
+```
+
 ```
 ## [1] 0.9910098
+```
+
+```r
+cor(y, fit$fitted.values)^2
 ```
 
 ```
@@ -721,8 +839,29 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 
 ## Model performance
 
+```r
+## leave-one-out cross validation
+n = length(women$weight)
+error = dim(n)
+for (k in 1:n) {
+  train1 = c(1:n)
+  train = train1[train1!=k] ## pick elements that are different from k
+  m2 = lm(weight ~ height, data=women[train ,])
+  pred = predict(m2, newdat=women[-train ,])
+  obs = women$weight[-train]
+  error[k] = obs-pred
+}
+me=mean(error)
+me ## mean error
+```
+
 ```
 ## [1] 0.1148222
+```
+
+```r
+rmse=sqrt(mean(error^2))
+rmse ## root mean square error (out-of-sample)
 ```
 
 ```
@@ -733,6 +872,11 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 --- #polynomial-regression .compact .scode
 
 ## Polynomial regression
+
+```r
+fit2 = lm(weight ~ height + I(height^2), data=women)
+summary(fit2)
+```
 
 ```
 ## 
@@ -759,6 +903,14 @@ $$ \hat{weight}=-87.52+3.45\times height $$
 --- .compact .scode
 
 ## Polynomial regression
+
+```r
+plot(women$height,women$weight,
+     xlab="Height (in inches)",
+     ylab="Weight (in lbs)")
+lines(women$height,fitted(fit2))
+```
+
 ![plot of chunk class02-chunk-35](assets/fig/class02-chunk-35-1.png)
 
 
@@ -797,11 +949,26 @@ Both regression coefficients are significant at the p < 0.0001 level. The amount
 --- #non-linear .modal 
 
 ## Non-linear Data
+
+```r
+## create testing data (sine wave)
+set.seed(1)
+x = seq(0, 1, by = 0.01)
+y = sin(2 * pi * x) + rnorm(length(x), 0, 0.1)
+df = data.frame(X = x, Y = y)
+ggplot(df, aes(x = X, y = Y)) + geom_point()
+```
+
 ![plot of chunk class02-chunk-37](assets/fig/class02-chunk-37-1.png)
 
 --- .scode 
 
 ## Non-linear Data
+
+```r
+## fit with linear regression
+summary(lm(Y ~ X, data = df)) # explain 60% of the variance
+```
 
 ```
 ## 
@@ -827,11 +994,25 @@ Both regression coefficients are significant at the p < 0.0001 level. The amount
 --- .scode
 
 ## Non-linear Data
+
+```r
+ggplot(data.frame(X = x, Y = y), aes(x = X, y = Y)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE)
+```
+
 ![plot of chunk class02-chunk-39](assets/fig/class02-chunk-39-1.png)
 
 --- .scode 
 
 ## Non-linear Data
+
+```r
+## add new features
+df <- transform(df, X2 = X ^ 2)
+df <- transform(df, X3 = X ^ 3)
+summary(lm(Y ~ X + X2 + X3, data = df)) # R2 from 60% to 97%, by adding two more inputs
+```
 
 ```
 ## 
@@ -859,6 +1040,23 @@ Both regression coefficients are significant at the p < 0.0001 level. The amount
 --- .sscode-nowrap .compact
 
 ## Non-linear Data
+
+```r
+## add more features
+df <- transform(df, X4 = X ^ 4)
+df <- transform(df, X5 = X ^ 5)
+df <- transform(df, X6 = X ^ 6)
+df <- transform(df, X7 = X ^ 7)
+df <- transform(df, X8 = X ^ 8)
+df <- transform(df, X9 = X ^ 9)
+df <- transform(df, X10 = X ^ 10)
+df <- transform(df, X11 = X ^ 11)
+df <- transform(df, X12 = X ^ 12)
+df <- transform(df, X13 = X ^ 13)
+df <- transform(df, X14 = X ^ 14)
+df <- transform(df, X15 = X ^ 15)
+summary(lm(Y ~ X + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12 + X13 + X14 , data = df))
+```
 
 ```
 ## 
@@ -941,6 +1139,13 @@ Both regression coefficients are significant at the p < 0.0001 level. The amount
 ## Non-linear Data
 
 
+```r
+## use 'poly' function
+## similar to X + X^2 + X^3 + ... + X^14, but with orthogonal columns
+
+summary(lm(Y ~ poly(X, degree = 14), data = df))
+```
+
 ```
 ## 
 ## Call:
@@ -979,11 +1184,32 @@ Both regression coefficients are significant at the p < 0.0001 level. The amount
 
 ## Plot Non-linear Data
 
+
+```r
+## restore testing data
+x <- seq(0, 1, by = 0.01)
+y <- sin(2 * pi * x) + rnorm(length(x), 0, 0.1)
+df0 <- data.frame(X = x, Y = y)
+## using poly with degrees of 1, 3, 5, and 25
+poly.fit <- lm(Y ~ poly(X, degree = 1), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
+
 ![plot of chunk class02-chunk-44](assets/fig/class02-chunk-44-1.png)
 
 --- .sscode-nowrap .compact
 
 ## Plot Non-linear Data (degree=3)
+
+
+```r
+poly.fit <- lm(Y ~ poly(X, degree = 3), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
 
 ![plot of chunk class02-chunk-45](assets/fig/class02-chunk-45-1.png)
 
@@ -991,11 +1217,27 @@ Both regression coefficients are significant at the p < 0.0001 level. The amount
 
 ## Plot Non-linear Data (degree=5)
 
+
+```r
+poly.fit <- lm(Y ~ poly(X, degree = 5), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
+
 ![plot of chunk class02-chunk-46](assets/fig/class02-chunk-46-1.png)
 
 --- .sscode-nowrap .compact
 
 ## Plot Non-linear Data (degree=25)
+
+
+```r
+poly.fit <- lm(Y ~ poly(X, degree = 25), data = df)
+df <- transform(df, PredictedY = predict(poly.fit))
+ggplot(df0 , aes(x = X, y = Y)) +
+  geom_point() + geom_line(data=df, aes(x = X, y = PredictedY))
+```
 
 ![plot of chunk class02-chunk-47](assets/fig/class02-chunk-47-1.png)
 
@@ -1006,6 +1248,39 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 
 *** =left
 
+```r
+## split our data into a training set and test set
+n <- length(x)
+indices <- sort(sample(1:n, round (0.5 * n)))
+training.x <- x[indices]
+training.y <- y[indices]
+test.x <- x[-indices]
+test.y <- y[-indices]
+training.df <- data.frame(X = training.x, Y = training.y)
+test.df <- data.frame(X = test.x, Y = test.y)
+## use RMSE to measure the performance
+rmse <- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over a set of polynomial degrees (from 1 to 12)
+performance <- data.frame()
+for (d in 1:12) {
+  poly.fit <- lm(Y ~ poly(X, degree = d), data = training.df)
+  performance <- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = 'Training ',
+                                  RMSE = rmse(training.y, predict(poly.fit))))
+  performance <- rbind(performance ,
+                       data.frame(Degree = d,
+                                  Data = 'Test ',
+                                  RMSE = rmse(test.y, predict(poly.fit ,
+                                                              newdata = test.df))))
+}
+## plot the performance of the polynomial regression models for all the degrees
+ggplot(performance , aes(x = Degree , y = RMSE , linetype = Data)) +
+  geom_point() +
+  geom_line()
+```
 
 *** =right
 ![plot of chunk class02-chunk-49](assets/fig/class02-chunk-49-1.png)
@@ -1014,6 +1289,15 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 ## Regularization
 
 
+
+```r
+lm.fit <- lm(y ~ x)
+l2.model.complexity <- sum(coef(lm.fit) ^ 2) # L2 norm (sum of squaring values)
+l1.model.complexity <- sum(abs(coef(lm.fit))) # L1 norm (sum of absolute values)
+library('glmnet')
+x <- matrix(x) ## input of glmnet has to be in matrix form
+glmnet(poly(x, degree = 2), y)
+```
 
 ```
 ## 
@@ -1086,6 +1370,39 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 
 *** =left
 
+```r
+## get an entire set of possible regularizations (from the strongest to the weakest).
+## Df: how many nonzero coefficients in the model;
+## %Dev: the R2 for this model; 
+## Lambda: controls how complex the model is (a.k.a. hyperparameter)
+
+## split it into a training set and a test set
+n <- length(x)
+indices <- sort(sample(1:n, round (0.5 * n)))
+training.x <- x[indices]
+training.y <- y[indices]
+test.x <- x[-indices]
+test.y <- y[-indices]
+df <- data.frame(X = x, Y = y)
+training.df <- data.frame(X = training.x, Y = training.y)
+test.df <- data.frame(X = test.x, Y = test.y)
+rmse <- function(y, h) {
+  return(sqrt(mean((y - h) ^ 2)))
+}
+## loop over values of Lambda
+glmnet.fit <- with(training.df, glmnet(poly(X, degree = 10), Y))
+lambdas <- glmnet.fit$lambda ## regularization parameter (sequence)
+performance <- data.frame()
+for (lambda in lambdas) {
+  performance <- rbind(performance ,
+                       data.frame(Lambda = lambda ,
+                                  RMSE = rmse(test.y, with(test.df, predict(glmnet.fit , poly(X, degree = 10), s = lambda)))))
+}
+## plot to see the model performance w.r.t. the range of lambdas
+ggplot(performance , aes(x = Lambda , y = RMSE)) +
+  geom_point() +
+  geom_line()
+```
 
 *** =right
 ![plot of chunk class02-chunk-52](assets/fig/class02-chunk-52-1.png)
@@ -1093,6 +1410,16 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 --- .sscode-nowrap .compact
 ## Regularization
 
+
+```r
+## we get the best possible performance with Lambda near 0.05; select that value and train our model
+## using only 3 nonzero coefficients instead of 10
+
+best.lambda <- with(performance , Lambda[which(RMSE == min(RMSE))])
+glmnet.fit <- with(df, glmnet(poly(X, degree = 10), Y))
+## use coef to examine the structure of our regularized model
+coef(glmnet.fit , s = best.lambda)
+```
 
 ```
 ## 11 x 1 sparse Matrix of class "dgCMatrix"
@@ -1114,6 +1441,16 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 ## Local Polynomial Regression
 
 
+```r
+library(locfit)
+
+## first we read in the data
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+ethanol <- read.csv(sprintf ("%s/ethanol.csv",data.url))
+colnames(ethanol) <- c('NOx','C','E')
+ethanol [1:3,]
+```
+
 ```
 ##     NOx  C     E
 ## 1 3.741 12 0.907
@@ -1124,16 +1461,43 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
+
+```r
+## standard regression of NOx on the equivalence ratio dosen't work
+fitreg=lm(NOx~E,data=ethanol)
+plot(NOx~E,data=ethanol)
+abline(fitreg)
+```
+
 ![plot of chunk class02-chunk-55](assets/fig/class02-chunk-55-1.png)
 
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
+
+
+```r
+## local polynomial regression of NOx on the equivalence ratio
+## fit with a 50% nearest neighbor bandwidth.
+fit <- locfit(NOx~lp(E,nn=0.5),data=ethanol)
+plot(fit)
+```
 
 ![plot of chunk class02-chunk-56](assets/fig/class02-chunk-56-1.png)
 
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
+
+```r
+## cross-validation
+alpha <-seq(0.20,1,by=0.01)
+n1=length(alpha)
+g=matrix(nrow=n1,ncol=4)
+for (k in 1:length(alpha)) {
+  g[k,]<-gcv(NOx~lp(E,nn=alpha[k]),data=ethanol)
+}
+head(g) 
+```
 
 ```
 ##           [,1]     [,2]     [,3]      [,4]
@@ -1149,12 +1513,22 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
+
+```r
+plot(g[,4]~g[,3],ylab="GCV",xlab="degrees of freedom")
+```
+
 ![plot of chunk class02-chunk-58](assets/fig/class02-chunk-58-1.png)
 
 
 --- .scode-nowrap .compact
 ## Local Polynomial Regression
 
+
+```r
+f1=locfit(NOx~lp(E,nn=0.30),data=ethanol)
+f1; plot(f1)
+```
 
 ```
 ## Call:
@@ -1172,6 +1546,12 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 ## LASSO
 
 
+```r
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+prostate <- read.csv(sprintf ("%s/prostate.csv",data.url))
+prostate [1:3,]
+```
+
 ```
 ##       lcavol age      lbph       lcp gleason       lpsa
 ## 1 -0.5798185  50 -1.386294 -1.386294       6 -0.4307829
@@ -1181,6 +1561,11 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 
 --- .scode-nowrap .compact
 ## LASSO
+
+```r
+m1=lm(lcavol~.,data=prostate)
+summary(m1)
+```
 
 ```
 ## 
@@ -1210,6 +1595,16 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 --- .scode-nowrap .compact
 ## LASSO
 
+```r
+## the model.matrix statement defines the model to be fitted
+x <- model.matrix(lcavol~age+lbph+lcp+gleason+lpsa ,data=prostate)
+x=x[,-1] # stripping off the column of 1s as LASSO includes the intercept automatically
+
+library(lars)
+## lasso on all data
+lasso <- lars(x=x,y=prostate$lcavol ,trace=TRUE)
+```
+
 ```
 ## LASSO sequence
 ## Computing X'X .....
@@ -1223,10 +1618,20 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 
 --- .scode-nowrap .compact
 ## LASSO
+
+```r
+## trace of lasso (standardized) coefficients for varying penalty
+plot(lasso)
+```
+
 ![plot of chunk class02-chunk-63](assets/fig/class02-chunk-63-1.png)
 
 --- .scode-nowrap .compact
 ## LASSO
+
+```r
+lasso
+```
 
 ```
 ## 
@@ -1239,6 +1644,10 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 ## Step    1   2   3       4    5
 ```
 
+```r
+coef(lasso ,s=c(.25,.50,0.75,1.0),mode="fraction")
+```
+
 ```
 ##              age         lbph        lcp    gleason      lpsa
 ## [1,] 0.000000000  0.000000000 0.06519506 0.00000000 0.2128290
@@ -1249,21 +1658,61 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 
 --- .scode-nowrap .compact
 ## LASSO
+
+```r
+## cross -validation using 10 folds
+cv.lars(x=x,y=prostate$lcavol ,K=10)
+```
+
 ![plot of chunk class02-chunk-65](assets/fig/class02-chunk-65-1.png)
 
 --- .sscode-nowrap .compact
 ## LASSO
 
+```r
+## another way to evaluate lasso's out-of-sample prediction performance
+MSElasso25=dim(10)
+MSElasso50=dim(10)
+MSElasso75=dim(10)
+MSElasso100=dim(10)
+set.seed(1)
+for(i in 1:10){
+  train <- sample(1:nrow(prostate),80)
+  lasso <- lars(x=x[train ,],y=prostate$lcavol[train])
+  MSElasso25[i]=
+    mean((predict(lasso ,x[-train ,],s=.25,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+  MSElasso50[i]=
+    mean((predict(lasso ,x[-train ,],s=.50,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+  MSElasso75[i]=
+    mean((predict(lasso ,x[-train ,],s=.75,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+  MSElasso100[i]=
+    mean((predict(lasso ,x[-train ,],s=1.00,mode="fraction")$fit -prostate$lcavol[-train ])^2)
+}
+mean(MSElasso25)
+```
+
 ```
 ## [1] 1.021938
+```
+
+```r
+mean(MSElasso50)
 ```
 
 ```
 ## [1] 0.6723226
 ```
 
+```r
+mean(MSElasso75)
+```
+
 ```
 ## [1] 0.5410033
+```
+
+```r
+mean(MSElasso100)
 ```
 
 ```
@@ -1272,4 +1721,11 @@ model become too complex (too many parameters) and exaggerate minor fluctuations
 
 --- .sscode-nowrap .compact
 ## LASSO
+
+```r
+boxplot(MSElasso25 ,MSElasso50 ,MSElasso75 ,MSElasso100 ,
+        ylab="MSE", sub="LASSO model",
+        xlab="s=0.25 s=0.50 s=0.75 s=1.0(LS)")
+```
+
 ![plot of chunk class02-chunk-67](assets/fig/class02-chunk-67-1.png)
