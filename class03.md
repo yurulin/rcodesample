@@ -25,6 +25,9 @@ toc_depth   : 2
 
 ## Install R packages
 
+```r
+## this tutorial uses the following packages
+```
 
 --- #two-class .scode-nowrap .compact 
 
@@ -33,11 +36,27 @@ toc_depth   : 2
 The examples are taken from [Data Mining and Business Analytics with R](http://www.wiley.com/WileyCDA/WileyTitle/productCd-111844714X.html) and [Machine Learning for Hackers](http://shop.oreilly.com/product/0636920018483.do).
 
 
+
+```r
+library(ggplot2) ## use ggplot for plotting
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/'
+data.file = file.path(data.url , '01_heights_weights_genders.csv')
+heights.weights <- read.csv(data.file , header = TRUE , sep = ',')
+# visualized their gender as the color of each point
+ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
+  geom_point()
+```
+
 ![plot of chunk class03-chunk-2](assets/fig/class03-chunk-2-1.png)
 
 --- .scode-nowrap .compact 
 ## Split data into two classes
 
+
+```r
+heights.weights = transform(heights.weights , Male = ifelse(Gender == 'Male', 1, 0))
+heights.weights [1:3,]
+```
 
 ```
 ##   Gender   Height   Weight Male
@@ -59,6 +78,13 @@ Example: Death penelty data
 --- .scode-nowrap .compact ##ex1
 ## Logistic Regression
 
+```r
+## analyzing individual observations
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+dpen = read.csv(sprintf("%s/DeathPenalty.csv",data.url))
+dpen[1:4,]
+```
+
 ```
 ##   Agg VRace Death
 ## 1   1     1     1
@@ -70,6 +96,11 @@ Example: Death penelty data
 
 --- .scode-nowrap .compact 
 ## Logistic Regression
+
+```r
+m1=glm(Death~VRace+Agg,family=binomial(link='logit'),data=dpen)
+m1
+```
 
 ```
 ## 
@@ -88,6 +119,10 @@ Example: Death penelty data
 
 --- .scode-nowrap .compact 
 ## Logistic Regression
+
+```r
+summary(m1)
+```
 
 ```
 ## 
@@ -120,9 +155,18 @@ Example: Death penelty data
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
+```r
+## calculating logits
+exp(m1$coef[2])
+```
+
 ```
 ##  VRace 
 ## 6.1144
+```
+
+```r
+exp(m1$coef[3])
 ```
 
 ```
@@ -133,10 +177,36 @@ Example: Death penelty data
 --- .ssscode-nowrap .compact
 ## Logistic Regression
 
+
+```r
+## plotting probability of getting death penalty as a function of aggravation
+## separately for black (in black) and white (in red) victim
+n.dots = 501 ## number of dots in the curves (the nubmer is set to make the curves smooth)
+x.ag=dim(n.dots) ## x-value is the aggravating level (severity of the crime)
+y.black=dim(n.dots) ## y-value for the black victim curve
+y.white=dim(n.dots) ## y-value for the white victim curve
+for (i in 1:n.dots) {
+  x.ag[i]=(99+i)/100
+  is.white = 0
+  y.black[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
+  is.white = 1
+  y.white[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
+}
+plot(y.black~x.ag,type="l",col="black",ylab="Prob[Death]",xlab="Aggravation",ylim=c(0,1),main="red: white victim; black: black victim")
+points(y.white~x.ag,type="l",col="red")
+```
+
 ![plot of chunk class03-chunk-8](assets/fig/class03-chunk-8-1.png)
 
 --- .scode-nowrap .compact 
 ## Logistic Regression
+
+```r
+## another format for logistic regression:
+## summarized data
+dpenother <- read.csv(sprintf("%s/DeathPenaltyOther.csv",data.url))
+dpenother
+```
 
 ```
 ##    Agg VicRace VRace Death Freq
@@ -167,6 +237,11 @@ Example: Death penelty data
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
+```r
+m1=glm(Death~VRace+Agg,family=binomial,weights=Freq,data=dpenother)
+m1
+```
+
 ```
 ## 
 ## Call:  glm(formula = Death ~ VRace + Agg, family = binomial, data = dpenother, 
@@ -183,6 +258,10 @@ Example: Death penelty data
 
 --- .ssscode-nowrap .compact 
 ## Logistic Regression
+
+```r
+summary(m1)
+```
 
 ```
 ## 
@@ -211,9 +290,17 @@ Example: Death penelty data
 ## Number of Fisher Scoring iterations: 5
 ```
 
+```r
+exp(m1$coef[2])
+```
+
 ```
 ##  VRace 
 ## 6.1144
+```
+
+```r
+exp(m1$coef[3])
 ```
 
 ```
@@ -236,6 +323,16 @@ Example: Delayed Flights
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
+```r
+library(car) ## needed to recode variables
+set.seed(1) ## reset random seed for reproducibility
+
+## read and print the data
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+del <- read.csv(sprintf("%s/FlightDelays.csv",data.url))
+del[1:3,]
+```
+
 ```
 ##   schedtime carrier deptime dest distance     date flightnumber origin
 ## 1      1455      OH    1455  JFK      184 1/1/2004         5935    BWI
@@ -252,6 +349,14 @@ Example: Delayed Flights
 * Convert data into desirable format: record and clean variables
 
 
+```r
+## define hours of departure
+del$sched=factor(floor(del$schedtime/100))
+del$delay=recode(del$delay,"'delayed'=1;else=0")
+del$delay=as.numeric(levels(del$delay)[del$delay])
+table(del$delay)
+```
+
 ```
 ## 
 ##    0    1 
@@ -262,10 +367,23 @@ Example: Delayed Flights
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
+```r
+## Delay: 1=Monday; 2=Tuesday; 3=Wednesday; 4=Thursday; 5=Friday; 6=Saturday; 7=Sunday
+## 7=Sunday and 1=Monday coded as 1
+del$dayweek=recode(del$dayweek,"c(1,7)=1;else=0")
+table(del$dayweek)
+```
+
 ```
 ## 
 ##    0    1 
 ## 1640  561
+```
+
+```r
+## omit unused variables
+del=del[,c(-1,-3,-5,-6,-7,-11,-12)]
+del[1:3,]
 ```
 
 ```
@@ -278,6 +396,15 @@ Example: Delayed Flights
 
 --- .scode-nowrap .compact 
 ## Logistic Regression
+
+```r
+## estimation of the logistic regression model
+## explanatory variables: carrier, destination, origin, weather, day of week 
+## (weekday/weekend), scheduled hour of departure
+## create design matrix; indicators for categorical variables (factors)
+Xdel = model.matrix(delay~.,data=del)[,-1] 
+Xdel[1:3,]
+```
 
 ```
 ##   carrierDH carrierDL carrierMQ carrierOH carrierRU carrierUA carrierUS
@@ -304,12 +431,27 @@ Example: Delayed Flights
 * Split the data into 60% training and 40% testing
 
 
+```r
+n.total=length(del$delay)
+n.total
+```
+
 ```
 ## [1] 2201
 ```
 
+```r
+n.train=floor(n.total*(0.6))
+n.train
+```
+
 ```
 ## [1] 1320
+```
+
+```r
+n.test=n.total-n.train
+n.test
 ```
 
 ```
@@ -319,6 +461,17 @@ Example: Delayed Flights
 --- .sscode-nowrap .compact 
 ## Logistic Regression
 
+
+```r
+train=sample(1:n.total,n.train) ## (randomly) sample indices for training set
+
+xtrain = Xdel[train,]
+xtest = Xdel[-train,]
+ytrain = del$delay[train]
+ytest = del$delay[-train]
+m1 = glm(delay~.,family=binomial,data=data.frame(delay=ytrain,xtrain))
+summary(m1)
+```
 
 ```
 ## 
@@ -434,6 +587,14 @@ Example: Delayed Flights
 ## Logistic Regression
 
 
+```r
+## prediction: predicted default probabilities for cases in test set
+ptest = predict(m1,newdata=data.frame(xtest),type="response")
+## the default predictions are of log-odds (probabilities on logit scale); 
+## type = "response" gives the predicted probabilities
+data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
+```
+
 ```
 ##    ytest      ptest
 ## 4      0 0.24824663
@@ -454,11 +615,23 @@ Example: Delayed Flights
 ## Logistic Regression
 
 
+```r
+## measuring errors: coding as 1 if probability 0.5 or larger
+btest=floor(ptest+0.5)  ## use floor function to clamp the value to 0 or 1
+conf.matrix = table(ytest,btest)
+conf.matrix
+```
+
 ```
 ##      btest
 ## ytest   0   1
 ##     0 710   1
 ##     1 156  14
+```
+
+```r
+error=(conf.matrix[1,2]+conf.matrix[2,1])/n.test
+error
 ```
 
 ```
@@ -473,6 +646,13 @@ Example: Delayed Flights
 Example: Delayed flights (Lift chart)
 -----------------------------------------
 
+
+```r
+## order cases in test set according to their success prob
+## actual outcome shown next to it
+df=cbind(ptest,ytest)
+df[1:20,]
+```
 
 ```
 ##         ptest ytest
@@ -502,6 +682,12 @@ Example: Delayed flights (Lift chart)
 --- .sscode-nowrap .compact 
 ## Logistic Regression
 
+
+```r
+rank.df=as.data.frame(df[order(ptest,decreasing=TRUE),])
+colnames(rank.df) = c('predicted','actual')
+rank.df[1:20,]
+```
 
 ```
 ##      predicted actual
@@ -533,8 +719,34 @@ Example: Delayed flights (Lift chart)
 ## Logistic Regression
 
 
+```r
+## overall success (delay) prob in the evaluation data set
+baserate=mean(ytest)
+baserate
+```
+
 ```
 ## [1] 0.1929625
+```
+
+```r
+## calculating the lift
+## cumulative 1's sorted by predicted values
+## cumulative 1's using the average success prob from evaluation set
+ax=dim(n.test)
+ay.base=dim(n.test)
+ay.pred=dim(n.test)
+ax[1]=1
+ay.base[1]=baserate
+ay.pred[1]=rank.df$actual[1]
+for (i in 2:n.test) {
+  ax[i]=i
+  ay.base[i]=baserate*i ## uniformly increase with rate xbar
+  ay.pred[i]=ay.pred[i-1]+rank.df$actual[i]
+}
+
+df=cbind(rank.df,ay.pred,ay.base)
+df[1:20,]
 ```
 
 ```
@@ -566,6 +778,13 @@ Example: Delayed flights (Lift chart)
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
+
+```r
+plot(ax,ay.pred,xlab="number of cases",ylab="number of successes",
+main="Lift: Cum successes sorted by\n pred val/success prob")
+points(ax,ay.base,type="l")
+```
+
 <img src="assets/fig/class03-chunk-24-1.png" title="plot of chunk class03-chunk-24" alt="plot of chunk class03-chunk-24" style="display: block; margin: auto;" />
 
 
@@ -576,6 +795,15 @@ Example: Delayed flights (ROC)
 ----------------------------------
 
 
+```r
+## we use probability cutoff 1/2
+## coding as 1 if probability 1/2 or larger
+cut=1/2
+gg1=floor(ptest+(1-cut))
+conf.matrix=table(ytest,btest)
+conf.matrix
+```
+
 ```
 ##      btest
 ## ytest   0   1
@@ -583,8 +811,20 @@ Example: Delayed flights (ROC)
 ##     1 156  14
 ```
 
+```r
+truepos <- ytest==1 & ptest>=cut 
+trueneg <- ytest==0 & ptest<cut
+# Sensitivity (predict default when it does happen)
+sum(truepos)/sum(ytest==1) 
+```
+
 ```
 ## [1] 0.08235294
+```
+
+```r
+# Specificity (predict no default when it does not happen)
+sum(trueneg)/sum(ytest==0) 
 ```
 
 ```
@@ -594,6 +834,18 @@ Example: Delayed flights (ROC)
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
+
+```r
+## using the ROCR package to graph the ROC curves 
+library(ROCR)
+
+## input is a data frame consisting of two columns
+## predictions in first column and actual outcomes in the second 
+
+## ROC for hold-out period
+data=data.frame(predictions=ptest,labels=ytest)
+data[1:10,]
+```
 
 ```
 ##    predictions labels
@@ -612,6 +864,12 @@ Example: Delayed flights (ROC)
 --- .scode-nowrap .compact 
 ## Logistic Regression
 
+
+```r
+## pred: function to create prediction objects
+pred <- prediction(data$predictions,data$labels)
+str(pred)
+```
 
 ```
 ## Formal class 'prediction' [package "ROCR"] with 11 slots
@@ -644,6 +902,13 @@ Example: Delayed flights (ROC)
 ## Logistic Regression
 
 
+```r
+## perf: creates the input to be plotted
+## sensitivity (TPR) and one minus specificity (FPR)
+perf <- performance(pred, "sens", "fpr")
+str(perf)
+```
+
 ```
 ## Formal class 'performance' [package "ROCR"] with 6 slots
 ##   ..@ x.name      : chr "False positive rate"
@@ -660,6 +925,11 @@ Example: Delayed flights (ROC)
 
 --- .scode-nowrap .compact 
 ## Logistic Regression
+
+
+```r
+plot(perf)
+```
 
 ![plot of chunk class03-chunk-29](assets/fig/class03-chunk-29-1.png)
 
@@ -684,6 +954,13 @@ objective: to determine why types of glass based on characteristics including th
 ## kNN
    
 
+```r
+library(MASS)   ## a library of example datasets
+
+data(fgl)     ## loads the data into R; see help(fgl)
+fgl[1:3,]
+```
+
 ```
 ##      RI    Na   Mg   Al    Si    K   Ca Ba Fe type
 ## 1  3.01 13.64 4.49 1.10 71.78 0.06 8.75  0  0 WinF
@@ -694,6 +971,26 @@ objective: to determine why types of glass based on characteristics including th
 --- .scode-nowrap .compact 
 ## kNN
 
+
+```r
+## use nt=200 training cases to find the nearest neighbors for 
+## the remaining 14 cases. These 14 cases become the evaluation 
+## (test, hold-out) cases
+
+n=length(fgl$type)
+nt=200
+set.seed(1) ## to make the calculations reproducible in repeated runs
+train <- sample(1:n,nt)
+
+## Standardization of the data is preferable, especially if 
+## units of the features are quite different
+## could do this from scratch by calculating the mean and 
+## standard deviation of each feature, and use those to 
+## standardize.
+x <- scale(fgl[,c(4,1)]) 
+x <- scale(fgl[,c(1:9)]) ## using all nine dimensions (RI plus 8 chemical concentrations)
+x[1:3,]
+```
 
 ```
 ##           RI        Na        Mg         Al         Si           K
@@ -710,6 +1007,13 @@ objective: to determine why types of glass based on characteristics including th
 --- .scode-nowrap .compact 
 ## kNN
 
+
+```r
+library(class)  
+nearest1 <- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=1)
+nearest5 <- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=5)
+data.frame(fgl$type[-train],nearest1,nearest5)
+```
 
 ```
 ##    fgl.type..train. nearest1 nearest5
@@ -735,10 +1039,28 @@ objective: to determine why types of glass based on characteristics including th
 ## kNN
 
 
+```r
+## calculate the proportion of correct classifications on this one 
+## training set
+
+pcorrn1=100*sum(fgl$type[-train]==nearest1)/(n-nt)
+pcorrn5=100*sum(fgl$type[-train]==nearest5)/(n-nt)
+pcorrn1
+```
+
 ```
 ## [1] 71.42857
 ```
 
+```r
+pcorrn5
+```
+
 ```
 ## [1] 85.71429
+```
+
+```r
+## Note: Different runs may give you slightly different results as ties 
+## are broken at random
 ```
