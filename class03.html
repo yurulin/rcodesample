@@ -53,9 +53,7 @@
 <section class="slide modal" id="set-up">
   <div>
     <h2>Install R packages</h2>
-    <pre><code class="r">## this tutorial uses the following packages
-</code></pre>
-
+    
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="two-class">
@@ -63,27 +61,14 @@
     <h2>Split data into two classes</h2>
     <p>The examples are taken from <a href="http://www.wiley.com/WileyCDA/WileyTitle/productCd-111844714X.html">Data Mining and Business Analytics with R</a> and <a href="http://shop.oreilly.com/product/0636920018483.do">Machine Learning for Hackers</a>.</p>
 
-<pre><code class="r">library(ggplot2) ## use ggplot for plotting
-data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/ml_hackers/&#39;
-data.file = file.path(data.url , &#39;01_heights_weights_genders.csv&#39;)
-heights.weights &lt;- read.csv(data.file , header = TRUE , sep = &#39;,&#39;)
-# visualized their gender as the color of each point
-ggplot(heights.weights, aes(x = Weight , y = Height , color = Gender)) +
-  geom_point()
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
+<p><img src="assets/fig/class03-chunk-2-1.png" alt="plot of chunk class03-chunk-2"></p>
 
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-4">
   <div>
     <h2>Split data into two classes</h2>
-    <pre><code class="r">heights.weights = transform(heights.weights , Male = ifelse(Gender == &#39;Male&#39;, 1, 0))
-heights.weights [1:3,]
-</code></pre>
-
-<pre><code>##   Gender   Height   Weight Male
+    <pre><code>##   Gender   Height   Weight Male
 ## 1   Male 73.84702 241.8936    1
 ## 2   Male 68.78190 162.3105    1
 ## 3   Male 74.11011 212.7409    1
@@ -107,13 +92,7 @@ heights.weights [1:3,]
 <section class="slide scode-nowrap compact" id="#ex1">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## analyzing individual observations
-data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
-dpen = read.csv(sprintf(&quot;%s/DeathPenalty.csv&quot;,data.url))
-dpen[1:4,]
-</code></pre>
-
-<pre><code>##   Agg VRace Death
+    <pre><code>##   Agg VRace Death
 ## 1   1     1     1
 ## 2   1     1     1
 ## 3   1     1     0
@@ -125,11 +104,7 @@ dpen[1:4,]
 <section class="slide scode-nowrap compact" id="slide-7">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">m1=glm(Death~VRace+Agg,family=binomial(link=&#39;logit&#39;),data=dpen)
-m1
-</code></pre>
-
-<pre><code>## 
+    <pre><code>## 
 ## Call:  glm(formula = Death ~ VRace + Agg, family = binomial(link = &quot;logit&quot;), 
 ##     data = dpen)
 ## 
@@ -147,10 +122,7 @@ m1
 <section class="slide scode-nowrap compact" id="slide-8">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">summary(m1)
-</code></pre>
-
-<pre><code>## 
+    <pre><code>## 
 ## Call:
 ## glm(formula = Death ~ VRace + Agg, family = binomial(link = &quot;logit&quot;), 
 ##     data = dpen)
@@ -181,15 +153,8 @@ m1
 <section class="slide scode-nowrap compact" id="slide-9">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## calculating logits
-exp(m1$coef[2])
-</code></pre>
-
-<pre><code>##  VRace 
+    <pre><code>##  VRace 
 ## 6.1144
-</code></pre>
-
-<pre><code class="r">exp(m1$coef[3])
 </code></pre>
 
 <pre><code>##      Agg 
@@ -201,37 +166,14 @@ exp(m1$coef[2])
 <section class="slide ssscode-nowrap compact" id="slide-10">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## plotting probability of getting death penalty as a function of aggravation
-## separately for black (in black) and white (in red) victim
-n.dots = 501 ## number of dots in the curves (the nubmer is set to make the curves smooth)
-x.ag=dim(n.dots) ## x-value is the aggravating level (severity of the crime)
-y.black=dim(n.dots) ## y-value for the black victim curve
-y.white=dim(n.dots) ## y-value for the white victim curve
-for (i in 1:n.dots) {
-  x.ag[i]=(99+i)/100
-  is.white = 0
-  y.black[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
-  is.white = 1
-  y.white[i]=exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i])/(1+exp(m1$coef[1]+m1$coef[2]*is.white+m1$coef[3]*x.ag[i]))
-}
-plot(y.black~x.ag,type=&quot;l&quot;,col=&quot;black&quot;,ylab=&quot;Prob[Death]&quot;,xlab=&quot;Aggravation&quot;,ylim=c(0,1),main=&quot;red: white victim; black: black victim&quot;)
-points(y.white~x.ag,type=&quot;l&quot;,col=&quot;red&quot;)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8"></p>
+    <p><img src="assets/fig/class03-chunk-8-1.png" alt="plot of chunk class03-chunk-8"></p>
 
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-11">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## another format for logistic regression:
-## summarized data
-dpenother &lt;- read.csv(sprintf(&quot;%s/DeathPenaltyOther.csv&quot;,data.url))
-dpenother
-</code></pre>
-
-<pre><code>##    Agg VicRace VRace Death Freq
+    <pre><code>##    Agg VicRace VRace Death Freq
 ## 1    1   White     1     1    2
 ## 2    1   White     1     0   60
 ## 3    1   Black     0     1    1
@@ -260,11 +202,7 @@ dpenother
 <section class="slide scode-nowrap compact" id="slide-12">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">m1=glm(Death~VRace+Agg,family=binomial,weights=Freq,data=dpenother)
-m1
-</code></pre>
-
-<pre><code>## 
+    <pre><code>## 
 ## Call:  glm(formula = Death ~ VRace + Agg, family = binomial, data = dpenother, 
 ##     weights = Freq)
 ## 
@@ -282,10 +220,7 @@ m1
 <section class="slide ssscode-nowrap compact" id="slide-13">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">summary(m1)
-</code></pre>
-
-<pre><code>## 
+    <pre><code>## 
 ## Call:
 ## glm(formula = Death ~ VRace + Agg, family = binomial, data = dpenother, 
 ##     weights = Freq)
@@ -311,14 +246,8 @@ m1
 ## Number of Fisher Scoring iterations: 5
 </code></pre>
 
-<pre><code class="r">exp(m1$coef[2])
-</code></pre>
-
 <pre><code>##  VRace 
 ## 6.1144
-</code></pre>
-
-<pre><code class="r">exp(m1$coef[3])
 </code></pre>
 
 <pre><code>##      Agg 
@@ -343,16 +272,7 @@ m1
 <section class="slide scode-nowrap compact" id="slide-15">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">library(car) ## needed to recode variables
-set.seed(1) ## reset random seed for reproducibility
-
-## read and print the data
-data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
-del &lt;- read.csv(sprintf(&quot;%s/FlightDelays.csv&quot;,data.url))
-del[1:3,]
-</code></pre>
-
-<pre><code>##   schedtime carrier deptime dest distance     date flightnumber origin
+    <pre><code>##   schedtime carrier deptime dest distance     date flightnumber origin
 ## 1      1455      OH    1455  JFK      184 1/1/2004         5935    BWI
 ## 2      1640      DH    1640  JFK      213 1/1/2004         6155    DCA
 ## 3      1245      DH    1245  LGA      229 1/1/2004         7208    IAD
@@ -371,13 +291,6 @@ del[1:3,]
 <li>Convert data into desirable format: record and clean variables</li>
 </ul>
 
-<pre><code class="r">## define hours of departure
-del$sched=factor(floor(del$schedtime/100))
-del$delay=recode(del$delay,&quot;&#39;delayed&#39;=1;else=0&quot;)
-del$delay=as.numeric(levels(del$delay)[del$delay])
-table(del$delay)
-</code></pre>
-
 <pre><code>## 
 ##    0    1 
 ## 1773  428
@@ -388,20 +301,9 @@ table(del$delay)
 <section class="slide scode-nowrap compact" id="slide-17">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## Delay: 1=Monday; 2=Tuesday; 3=Wednesday; 4=Thursday; 5=Friday; 6=Saturday; 7=Sunday
-## 7=Sunday and 1=Monday coded as 1
-del$dayweek=recode(del$dayweek,&quot;c(1,7)=1;else=0&quot;)
-table(del$dayweek)
-</code></pre>
-
-<pre><code>## 
+    <pre><code>## 
 ##    0    1 
 ## 1640  561
-</code></pre>
-
-<pre><code class="r">## omit unused variables
-del=del[,c(-1,-3,-5,-6,-7,-11,-12)]
-del[1:3,]
 </code></pre>
 
 <pre><code>##   carrier dest origin weather dayweek delay sched
@@ -415,15 +317,7 @@ del[1:3,]
 <section class="slide scode-nowrap compact" id="slide-18">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## estimation of the logistic regression model
-## explanatory variables: carrier, destination, origin, weather, day of week 
-## (weekday/weekend), scheduled hour of departure
-## create design matrix; indicators for categorical variables (factors)
-Xdel = model.matrix(delay~.,data=del)[,-1] 
-Xdel[1:3,]
-</code></pre>
-
-<pre><code>##   carrierDH carrierDL carrierMQ carrierOH carrierRU carrierUA carrierUS
+    <pre><code>##   carrierDH carrierDL carrierMQ carrierOH carrierRU carrierUA carrierUS
 ## 1         0         0         0         1         0         0         0
 ## 2         1         0         0         0         0         0         0
 ## 3         1         0         0         0         0         0         0
@@ -450,22 +344,10 @@ Xdel[1:3,]
 <li>Split the data into 60% training and 40% testing</li>
 </ul>
 
-<pre><code class="r">n.total=length(del$delay)
-n.total
-</code></pre>
-
 <pre><code>## [1] 2201
 </code></pre>
 
-<pre><code class="r">n.train=floor(n.total*(0.6))
-n.train
-</code></pre>
-
 <pre><code>## [1] 1320
-</code></pre>
-
-<pre><code class="r">n.test=n.total-n.train
-n.test
 </code></pre>
 
 <pre><code>## [1] 881
@@ -476,17 +358,7 @@ n.test
 <section class="slide sscode-nowrap compact" id="slide-20">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">train=sample(1:n.total,n.train) ## (randomly) sample indices for training set
-
-xtrain = Xdel[train,]
-xtest = Xdel[-train,]
-ytrain = del$delay[train]
-ytest = del$delay[-train]
-m1 = glm(delay~.,family=binomial,data=data.frame(delay=ytrain,xtrain))
-summary(m1)
-</code></pre>
-
-<pre><code>## 
+    <pre><code>## 
 ## Call:
 ## glm(formula = delay ~ ., family = binomial, data = data.frame(delay = ytrain, 
 ##     xtrain))
@@ -600,14 +472,7 @@ summary(m1)
 <section class="slide scode-nowrap compact" id="slide-22">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## prediction: predicted default probabilities for cases in test set
-ptest = predict(m1,newdata=data.frame(xtest),type=&quot;response&quot;)
-## the default predictions are of log-odds (probabilities on logit scale); 
-## type = &quot;response&quot; gives the predicted probabilities
-data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
-</code></pre>
-
-<pre><code>##    ytest      ptest
+    <pre><code>##    ytest      ptest
 ## 4      0 0.24824663
 ## 5      0 0.13019171
 ## 6      0 0.14090627
@@ -625,20 +490,10 @@ data.frame(ytest,ptest)[1:10,] ## look at the actual value vs. predicted value
 <section class="slide scode-nowrap compact" id="slide-23">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## measuring errors: coding as 1 if probability 0.5 or larger
-btest=floor(ptest+0.5)  ## use floor function to clamp the value to 0 or 1
-conf.matrix = table(ytest,btest)
-conf.matrix
-</code></pre>
-
-<pre><code>##      btest
+    <pre><code>##      btest
 ## ytest   0   1
 ##     0 710   1
 ##     1 156  14
-</code></pre>
-
-<pre><code class="r">error=(conf.matrix[1,2]+conf.matrix[2,1])/n.test
-error
 </code></pre>
 
 <pre><code>## [1] 0.1782066
@@ -650,12 +505,6 @@ error
   <div>
     <h2>Logistic Regression</h2>
     <h2>Example: Delayed flights (Lift chart)</h2>
-
-<pre><code class="r">## order cases in test set according to their success prob
-## actual outcome shown next to it
-df=cbind(ptest,ytest)
-df[1:20,]
-</code></pre>
 
 <pre><code>##         ptest ytest
 ## 4  0.24824663     0
@@ -685,12 +534,7 @@ df[1:20,]
 <section class="slide sscode-nowrap compact" id="slide-25">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">rank.df=as.data.frame(df[order(ptest,decreasing=TRUE),])
-colnames(rank.df) = c(&#39;predicted&#39;,&#39;actual&#39;)
-rank.df[1:20,]
-</code></pre>
-
-<pre><code>##      predicted actual
+    <pre><code>##      predicted actual
 ## 1828 1.0000000      1
 ## 1857 1.0000000      1
 ## 1908 1.0000000      1
@@ -718,31 +562,7 @@ rank.df[1:20,]
 <section class="slide sscode-nowrap compact" id="slide-26">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## overall success (delay) prob in the evaluation data set
-baserate=mean(ytest)
-baserate
-</code></pre>
-
-<pre><code>## [1] 0.1929625
-</code></pre>
-
-<pre><code class="r">## calculating the lift
-## cumulative 1&#39;s sorted by predicted values
-## cumulative 1&#39;s using the average success prob from evaluation set
-ax=dim(n.test)
-ay.base=dim(n.test)
-ay.pred=dim(n.test)
-ax[1]=1
-ay.base[1]=baserate
-ay.pred[1]=rank.df$actual[1]
-for (i in 2:n.test) {
-  ax[i]=i
-  ay.base[i]=baserate*i ## uniformly increase with rate xbar
-  ay.pred[i]=ay.pred[i-1]+rank.df$actual[i]
-}
-
-df=cbind(rank.df,ay.pred,ay.base)
-df[1:20,]
+    <pre><code>## [1] 0.1929625
 </code></pre>
 
 <pre><code>##      predicted actual ay.pred   ay.base
@@ -773,12 +593,7 @@ df[1:20,]
 <section class="slide scode-nowrap compact" id="slide-27">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">plot(ax,ay.pred,xlab=&quot;number of cases&quot;,ylab=&quot;number of successes&quot;,
-main=&quot;Lift: Cum successes sorted by\n pred val/success prob&quot;)
-points(ax,ay.base,type=&quot;l&quot;)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" /></p>
+    <p><img src="assets/fig/class03-chunk-24-1.png" title="plot of chunk class03-chunk-24" alt="plot of chunk class03-chunk-24" style="display: block; margin: auto;" /></p>
 
   </div>
 </section>
@@ -787,31 +602,13 @@ points(ax,ay.base,type=&quot;l&quot;)
     <h2>Logistic Regression</h2>
     <h2>Example: Delayed flights (ROC)</h2>
 
-<pre><code class="r">## we use probability cutoff 1/2
-## coding as 1 if probability 1/2 or larger
-cut=1/2
-gg1=floor(ptest+(1-cut))
-conf.matrix=table(ytest,btest)
-conf.matrix
-</code></pre>
-
 <pre><code>##      btest
 ## ytest   0   1
 ##     0 710   1
 ##     1 156  14
 </code></pre>
 
-<pre><code class="r">truepos &lt;- ytest==1 &amp; ptest&gt;=cut 
-trueneg &lt;- ytest==0 &amp; ptest&lt;cut
-# Sensitivity (predict default when it does happen)
-sum(truepos)/sum(ytest==1) 
-</code></pre>
-
 <pre><code>## [1] 0.08235294
-</code></pre>
-
-<pre><code class="r"># Specificity (predict no default when it does not happen)
-sum(trueneg)/sum(ytest==0) 
 </code></pre>
 
 <pre><code>## [1] 0.9985935
@@ -822,18 +619,7 @@ sum(trueneg)/sum(ytest==0)
 <section class="slide scode-nowrap compact" id="slide-29">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## using the ROCR package to graph the ROC curves 
-library(ROCR)
-
-## input is a data frame consisting of two columns
-## predictions in first column and actual outcomes in the second 
-
-## ROC for hold-out period
-data=data.frame(predictions=ptest,labels=ytest)
-data[1:10,]
-</code></pre>
-
-<pre><code>##    predictions labels
+    <pre><code>##    predictions labels
 ## 4   0.24824663      0
 ## 5   0.13019171      0
 ## 6   0.14090627      0
@@ -851,12 +637,7 @@ data[1:10,]
 <section class="slide scode-nowrap compact" id="slide-30">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## pred: function to create prediction objects
-pred &lt;- prediction(data$predictions,data$labels)
-str(pred)
-</code></pre>
-
-<pre><code>## Formal class &#39;prediction&#39; [package &quot;ROCR&quot;] with 11 slots
+    <pre><code>## Formal class &#39;prediction&#39; [package &quot;ROCR&quot;] with 11 slots
 ##   ..@ predictions:List of 1
 ##   .. ..$ : num [1:881] 0.248 0.13 0.141 0.205 0.271 ...
 ##   ..@ labels     :List of 1
@@ -886,13 +667,7 @@ str(pred)
 <section class="slide scode-nowrap compact" id="slide-31">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">## perf: creates the input to be plotted
-## sensitivity (TPR) and one minus specificity (FPR)
-perf &lt;- performance(pred, &quot;sens&quot;, &quot;fpr&quot;)
-str(perf)
-</code></pre>
-
-<pre><code>## Formal class &#39;performance&#39; [package &quot;ROCR&quot;] with 6 slots
+    <pre><code>## Formal class &#39;performance&#39; [package &quot;ROCR&quot;] with 6 slots
 ##   ..@ x.name      : chr &quot;False positive rate&quot;
 ##   ..@ y.name      : chr &quot;Sensitivity&quot;
 ##   ..@ alpha.name  : chr &quot;Cutoff&quot;
@@ -909,10 +684,7 @@ str(perf)
 <section class="slide scode-nowrap compact" id="slide-32">
   <div>
     <h2>Logistic Regression</h2>
-    <pre><code class="r">plot(perf)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-29-1.png" alt="plot of chunk unnamed-chunk-29"></p>
+    <p><img src="assets/fig/class03-chunk-29-1.png" alt="plot of chunk class03-chunk-29"></p>
 
   </div>
 </section>
@@ -939,13 +711,7 @@ objective: to determine why types of glass based on characteristics including th
 <section class="slide scode-nowrap compact" id="slide-34">
   <div>
     <h2>kNN</h2>
-    <pre><code class="r">library(MASS)   ## a library of example datasets
-
-data(fgl)     ## loads the data into R; see help(fgl)
-fgl[1:3,]
-</code></pre>
-
-<pre><code>##      RI    Na   Mg   Al    Si    K   Ca Ba Fe type
+    <pre><code>##      RI    Na   Mg   Al    Si    K   Ca Ba Fe type
 ## 1  3.01 13.64 4.49 1.10 71.78 0.06 8.75  0  0 WinF
 ## 2 -0.39 13.89 3.60 1.36 72.73 0.48 7.83  0  0 WinF
 ## 3 -1.82 13.53 3.55 1.54 72.99 0.39 7.78  0  0 WinF
@@ -956,26 +722,7 @@ fgl[1:3,]
 <section class="slide scode-nowrap compact" id="slide-35">
   <div>
     <h2>kNN</h2>
-    <pre><code class="r">## use nt=200 training cases to find the nearest neighbors for 
-## the remaining 14 cases. These 14 cases become the evaluation 
-## (test, hold-out) cases
-
-n=length(fgl$type)
-nt=200
-set.seed(1) ## to make the calculations reproducible in repeated runs
-train &lt;- sample(1:n,nt)
-
-## Standardization of the data is preferable, especially if 
-## units of the features are quite different
-## could do this from scratch by calculating the mean and 
-## standard deviation of each feature, and use those to 
-## standardize.
-x &lt;- scale(fgl[,c(4,1)]) 
-x &lt;- scale(fgl[,c(1:9)]) ## using all nine dimensions (RI plus 8 chemical concentrations)
-x[1:3,]
-</code></pre>
-
-<pre><code>##           RI        Na        Mg         Al         Si           K
+    <pre><code>##           RI        Na        Mg         Al         Si           K
 ## 1  0.8708258 0.2842867 1.2517037 -0.6908222 -1.1244456 -0.67013422
 ## 2 -0.2487502 0.5904328 0.6346799 -0.1700615  0.1020797 -0.02615193
 ## 3 -0.7196308 0.1495824 0.6000157  0.1904651  0.4377603 -0.16414813
@@ -990,13 +737,7 @@ x[1:3,]
 <section class="slide scode-nowrap compact" id="slide-36">
   <div>
     <h2>kNN</h2>
-    <pre><code class="r">library(class)  
-nearest1 &lt;- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=1)
-nearest5 &lt;- knn(train=x[train,],test=x[-train,],cl=fgl$type[train],k=5)
-data.frame(fgl$type[-train],nearest1,nearest5)
-</code></pre>
-
-<pre><code>##    fgl.type..train. nearest1 nearest5
+    <pre><code>##    fgl.type..train. nearest1 nearest5
 ## 1              WinF     WinF     WinF
 ## 2              WinF      Veh     WinF
 ## 3              WinF     WinF     WinF
@@ -1018,25 +759,10 @@ data.frame(fgl$type[-train],nearest1,nearest5)
 <section class="slide scode-nowrap compact" id="slide-37">
   <div>
     <h2>kNN</h2>
-    <pre><code class="r">## calculate the proportion of correct classifications on this one 
-## training set
-
-pcorrn1=100*sum(fgl$type[-train]==nearest1)/(n-nt)
-pcorrn5=100*sum(fgl$type[-train]==nearest5)/(n-nt)
-pcorrn1
-</code></pre>
-
-<pre><code>## [1] 71.42857
-</code></pre>
-
-<pre><code class="r">pcorrn5
+    <pre><code>## [1] 71.42857
 </code></pre>
 
 <pre><code>## [1] 85.71429
-</code></pre>
-
-<pre><code class="r">## Note: Different runs may give you slightly different results as ties 
-## are broken at random
 </code></pre>
 
   </div>

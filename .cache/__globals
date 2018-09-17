@@ -15,3 +15,4 @@ class02-chunk-59	f1	locfit	NOx	lp	E	ethanol	plot
 class02-chunk-60	f1	locfit	NOx	lp	E	ethanol	plot
 class02-chunk-54	library	locfit	data.url	ethanol	read.csv	sprintf	colnames	c
 class02-chunk-56	fit	locfit	NOx	lp	E	ethanol	plot
+class03-chunk-31	n	length	fgl	type	nt	set.seed	train	sample	x	scale	c
