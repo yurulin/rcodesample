@@ -23,6 +23,10 @@ toc_depth   : 2
 
 ## Install R packages
 
+```r
+## this tutorial uses the following packages
+install.packages('tree')
+```
 --- #nb .modal 
 ## Naive Bayesian
 
@@ -38,6 +42,16 @@ Example: Delayed Flights
 --- .scode-nowrap .compact
 ## Naive Bayesian
 
+```r
+set.seed(1)
+library(car)  #used to recode a variable
+
+## reading the data
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+delay = read.csv(sprintf("%s/FlightDelays.csv",data.url))
+delay[1:3,]
+```
+
 ```
 ##   schedtime carrier deptime dest distance     date flightnumber origin
 ## 1      1455      OH    1455  JFK      184 1/1/2004         5935    BWI
@@ -51,21 +65,60 @@ Example: Delayed Flights
 
 --- .scode-nowrap .compact
 ## Naive Bayesian
+
+```r
+del=data.frame(delay)
+del$schedf=factor(floor(del$schedtime/100))
+del$delay=recode(del$delay,"'delayed'=1;else=0")
+response=as.numeric(levels(del$delay)[del$delay])
+hist(response)
+```
+
 ![plot of chunk class04-chunk-3](assets/fig/class04-chunk-3-1.png)
 
 --- .sscode-nowrap .compact
 ## Naive Bayesian
 
+```r
+## determining test and evaluation data sets
+n=length(del$dayweek)
+n
+```
+
 ```
 ## [1] 2201
+```
+
+```r
+n1=floor(n*(0.6)) ## 60% for training
+n1 # num of training cases
 ```
 
 ```
 ## [1] 1320
 ```
 
+```r
+n2=n-n1
+n2 # num of testing cases
+```
+
 ```
 ## [1] 881
+```
+
+```r
+train=sample(1:n,n1)
+
+## determining marginal probabilities
+tttt=cbind(del$schedf[train],del$carrier[train],del$dest[train],del$origin[train],del$weather[train],del$dayweek[train],response[train])
+tttrain0=tttt[tttt[,7]<0.5,]
+tttrain1=tttt[tttt[,7]>0.5,]
+
+## prior probabilities
+tdel=table(response[train])
+tdel=tdel/sum(tdel)
+tdel
 ```
 
 ```
@@ -77,6 +130,13 @@ Example: Delayed Flights
 --- .ssscode-nowrap .compact
 ## Naive Bayesian
 
+```r
+## scheduled time
+ts0=table(tttrain0[,1])
+ts0=ts0/sum(ts0)
+ts0
+```
+
 ```
 ## 
 ##          1          2          3          4          5          6 
@@ -85,6 +145,12 @@ Example: Delayed Flights
 ## 0.06421152 0.07743154 0.09537299 0.06326723 0.07743154 0.10198300 
 ##         13         14         15         16 
 ## 0.04249292 0.04627007 0.02171860 0.06515581
+```
+
+```r
+ts1=table(tttrain1[,1])
+ts1=ts1/sum(ts1)
+ts1
 ```
 
 ```
@@ -97,12 +163,25 @@ Example: Delayed Flights
 ## 0.026819923 0.065134100 0.015325670 0.099616858
 ```
 
+```r
+## scheduled carrier
+tc0=table(tttrain0[,2])
+tc0=tc0/sum(tc0)
+tc0
+```
+
 ```
 ## 
 ##          1          2          3          4          5          6 
 ## 0.04060434 0.22757318 0.18508026 0.12181303 0.01510859 0.18035883 
 ##          7          8 
 ## 0.01510859 0.21435316
+```
+
+```r
+tc1=table(tttrain1[,2])
+tc1=tc1/sum(tc1)
+tc1
 ```
 
 ```
@@ -116,10 +195,23 @@ Example: Delayed Flights
 --- .ssscode-nowrap .compact
 ## Naive Bayesian
 
+```r
+## scheduled destination
+td0=table(tttrain0[,3])
+td0=td0/sum(td0)
+td0
+```
+
 ```
 ## 
 ##         1         2         3 
 ## 0.2861190 0.1690274 0.5448536
+```
+
+```r
+td1=table(tttrain1[,3])
+td1=td1/sum(td1)
+td1
 ```
 
 ```
@@ -128,10 +220,23 @@ Example: Delayed Flights
 ## 0.3869732 0.2107280 0.4022989
 ```
 
+```r
+## scheduled origin  
+to0=table(tttrain0[,4])
+to0=to0/sum(to0)
+to0
+```
+
 ```
 ## 
 ##          1          2          3 
 ## 0.06421152 0.65250236 0.28328612
+```
+
+```r
+to1=table(tttrain1[,4])
+to1=to1/sum(to1)
+to1
 ```
 
 ```
@@ -143,10 +248,23 @@ Example: Delayed Flights
 --- .ssscode-nowrap .compact
 ## Naive Bayesian
 
+```r
+## weather
+tw0=table(tttrain0[,5])
+tw0=tw0/sum(tw0)
+tw0
+```
+
 ```
 ## 
 ## 0 
 ## 1
+```
+
+```r
+tw1=table(tttrain1[,5])
+tw1=tw1/sum(tw1)
+tw1
 ```
 
 ```
@@ -155,12 +273,30 @@ Example: Delayed Flights
 ## 0.91954023 0.08045977
 ```
 
+```r
+## bandaid as no observation in a cell
+tw0=tw1
+tw0[1]=1
+tw0[2]=0
+
+## scheduled day of week
+tdw0=table(tttrain0[,6])
+tdw0=tdw0/sum(tdw0)
+tdw0
+```
+
 ```
 ## 
 ##          1          2          3          4          5          6 
 ## 0.12747875 0.13692162 0.15391879 0.17847025 0.17563739 0.12842304 
 ##          7 
 ## 0.09915014
+```
+
+```r
+tdw1=table(tttrain1[,6])
+tdw1=tdw1/sum(tdw1)
+tdw1
 ```
 
 ```
@@ -173,16 +309,40 @@ Example: Delayed Flights
 
 --- .sscode-nowrap .compact
 ## Naive Bayesian
+
+```r
+## creating test data set
+tt=cbind(del$schedf[-train],del$carrier[-train],del$dest[-train],del$origin[-train],del$weather[-train],del$dayweek[-train],response[-train])
+
+## creating predictions, stored in gg
+p0=ts0[tt[,1]]*tc0[tt[,2]]*td0[tt[,3]]*to0[tt[,4]]*tw0[tt[,5]+1]*tdw0[tt[,6]]
+p1=ts1[tt[,1]]*tc1[tt[,2]]*td1[tt[,3]]*to1[tt[,4]]*tw1[tt[,5]+1]*tdw1[tt[,6]]
+gg=(p1*tdel[2])/(p1*tdel[2]+p0*tdel[1])
+hist(gg)
+```
+
 ![plot of chunk class04-chunk-8](assets/fig/class04-chunk-8-1.png)
 
 --- .sscode-nowrap .compact
 ## Naive Bayesian
+
+```r
+## coding as 1 if probability 0.5 or larger
+gg1=floor(gg+0.5)
+ttt=table(response[-train],gg1)
+ttt
+```
 
 ```
 ##    gg1
 ##       0   1
 ##   0 679  35
 ##   1 137  30
+```
+
+```r
+error=(ttt[1,2]+ttt[2,1])/n2
+error
 ```
 
 ```
@@ -197,6 +357,13 @@ Example: Fisher Iris
 -----------------------------
 
 
+```r
+library(MASS) 
+library(tree)
+## read in the iris data
+iris[1:3,]
+```
+
 ```
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
@@ -206,6 +373,11 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Decision Trees
+
+```r
+iristree <- tree(Species~.,data=iris)
+iristree  
+```
 
 ```
 ## node), split, n, deviance, yval, (yprob)
@@ -226,14 +398,29 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Decision Trees
+
+```r
+plot(iristree)
+```
+
 ![plot of chunk class04-chunk-12](assets/fig/class04-chunk-12-1.png)
 
 --- .scode-nowrap .compact
 ## Decision Trees
+
+```r
+plot(iristree,col=8)
+text(iristree,digits=2)
+```
+
 ![plot of chunk class04-chunk-13](assets/fig/class04-chunk-13-1.png)
 
 --- .scode-nowrap .compact
 ## Decision Trees
+
+```r
+summary(iristree)
+```
 
 ```
 ## 
@@ -249,6 +436,13 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Decision Trees
+
+```r
+# splitting on 7 and 12 lead to identical results, and these nodes and the
+# trees below them can be snipped off
+irissnip=snip.tree(iristree,nodes=c(7,12))
+irissnip
+```
 
 ```
 ## node), split, n, deviance, yval, (yprob)
@@ -266,10 +460,22 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Decision Trees
+
+```r
+plot(irissnip)
+text(irissnip)
+```
+
 ![plot of chunk class04-chunk-16](assets/fig/class04-chunk-16-1.png)
 
 --- ##ex .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+prostate <- read.csv(sprintf("%s/prostate.csv",data.url))
+prostate[1:3,]
+```
 
 ```
 ##       lcavol age      lbph       lcp gleason       lpsa
@@ -280,6 +486,17 @@ Example: Fisher Iris
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+library(tree)
+## Construct the tree
+## You can further control the tree:
+## mincut -- The minimum number of observations to include in either child node;
+## mindev -- The within-node deviance must be at least this times that of the root node for the node to be split.
+pstree <- tree(lcavol ~., data=prostate, mindev=0.1, mincut=1)
+pstree <- tree(lcavol ~., data=prostate, mincut=1)
+pstree
+```
 
 ```
 ## node), split, n, deviance, yval
@@ -314,16 +531,33 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+plot(pstree, col=8)
+text(pstree, digits=2)
+```
+
 ![plot of chunk class04-chunk-19](assets/fig/class04-chunk-19-1.png)
 
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+# vary the panelty term k in pruning
+pstcut <- prune.tree(pstree,k=1.7)
+plot(pstcut)
+```
+
 ![plot of chunk class04-chunk-20](assets/fig/class04-chunk-20-1.png)
 
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+pstcut
+```
 
 ```
 ## node), split, n, deviance, yval
@@ -355,10 +589,20 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree,k=2.05)
+plot(pstcut)
+```
+
 ![plot of chunk class04-chunk-22](assets/fig/class04-chunk-22-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+pstcut
+```
 
 ```
 ## node), split, n, deviance, yval
@@ -383,11 +627,21 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree,k=3)
+plot(pstcut)
+```
+
 ![plot of chunk class04-chunk-24](assets/fig/class04-chunk-24-1.png)
 
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+pstcut
+```
 
 ```
 ## node), split, n, deviance, yval
@@ -411,6 +665,11 @@ Example: Fisher Iris
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
 
+```r
+pstcut <- prune.tree(pstree)
+pstcut
+```
+
 ```
 ## $size
 ##  [1] 12 11  8  7  6  5  4  3  2  1
@@ -433,10 +692,20 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+plot(pstcut)
+```
+
 ![plot of chunk class04-chunk-27](assets/fig/class04-chunk-27-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree,best=3)
+pstcut
+```
 
 ```
 ## node), split, n, deviance, yval
@@ -452,13 +721,29 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+plot(pstcut)
+```
+
 ![plot of chunk class04-chunk-29](assets/fig/class04-chunk-29-1.png)
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
 
+```r
+## Use cross-validation to prune the tree
+set.seed(2)
+cvpst <- cv.tree(pstree, K=10)
+cvpst$size
+```
+
 ```
 ##  [1] 12 11  8  7  6  5  4  3  2  1
+```
+
+```r
+cvpst$dev
 ```
 
 ```
@@ -469,10 +754,20 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+plot(cvpst, pch=21, bg=8, type="p", cex=1.5, ylim=c(65,100))
+```
+
 ![plot of chunk class04-chunk-31](assets/fig/class04-chunk-31-1.png)
 
 --- .sscode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+pstcut <- prune.tree(pstree, best=3)
+pstcut
+```
 
 ```
 ## node), split, n, deviance, yval
@@ -488,8 +783,22 @@ Example: Fisher Iris
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+plot(pstcut, col=8)
+text(pstcut)
+```
+
 ![plot of chunk class04-chunk-33](assets/fig/class04-chunk-33-1.png)
 
 --- .scode-nowrap .compact
 ## Example: Prostate cancer
+
+```r
+## Plot what we end up with
+plot(prostate[,c("lcp","lpsa")],cex=0.2*exp(prostate$lcavol))
+abline(v=.261624, col=4, lwd=2)
+lines(x=c(-2,.261624), y=c(2.30257,2.30257), col=4, lwd=2)  
+```
+
 ![plot of chunk class04-chunk-34](assets/fig/class04-chunk-34-1.png)

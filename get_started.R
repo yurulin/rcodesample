@@ -11,7 +11,7 @@ author("mydeck-DM-slides")
 ## Step 2: Edit Deck
 # add mystyle.css to mydeck-DM-slides/assets/css
 library(slidify)
-opts_knit$set(unnamed.chunk.label='class03-chunk')
+opts_knit$set(unnamed.chunk.label='class04-chunk')
 opts_chunk$set(echo=TRUE, message=TRUE, warning=FALSE)
 
 ## Step 3: Generate Deck
