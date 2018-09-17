@@ -12,12 +12,6 @@ knit        : slidify::knit2slides
 toc         : true
 toc_depth   : 2
 
-```{r setup, include=FALSE}
-knitr::opts_knit$set(unnamed.chunk.label = "class04-chunk")
-#knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
-library(knitr)
-```
-
 --- #toc
 ## Class04
 
