@@ -1,0 +1,623 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>hw3 sample</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="hw3 sample">
+	<meta name="author" content="Yu-Ru Lin">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>hw3 sample</h1>
+	</header>
+  <section class="slide modal" id="set-up">
+  <div>
+    <h2>Install R packages</h2>
+    <pre><code class="r">## this tutorial uses the following packages
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-2">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">library(MASS) # for the example dataset 
+library(plyr) # for recoding data
+library(ROCR) # for plotting roc
+library(e1071) # for NB and SVM
+library(rpart) # for decision tree
+library(ada) # for adaboost
+
+set.seed(12345) # set the seed so you can get exactly the same results whenever you run the code
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-3">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">do.classification &lt;- function(train.set, test.set, 
+                              cl.name, verbose=F) {
+  ## note: to plot ROC later, we want the raw probabilities,
+  ## not binary decisions
+  switch(cl.name, 
+         knn = { # here we test k=3; you should evaluate different k&#39;s
+           prob = knn(train.set[,-1], test.set[,-1], cl=train.set[,1], k = 3, prob=T)
+           prob = attr(prob,&quot;prob&quot;)
+           #print(cbind(prob,as.character(test.set$y)))
+           prob
+         },
+         lr = { # logistic regression
+           model = glm(y~., family=binomial, data=train.set)
+           if (verbose) {
+             print(summary(model))             
+           }
+           prob = predict(model, newdata=test.set, type=&quot;response&quot;) 
+           #print(cbind(prob,as.character(test.set$y)))
+           prob
+         },
+         nb = {
+           model = naiveBayes(y~., data=train.set)
+           prob = predict(model, newdata=test.set, type=&quot;raw&quot;) 
+           #print(cbind(prob,as.character(test.set$y)))
+           prob = prob[,2]/rowSums(prob) # renormalize the prob.
+           prob
+         },
+         dtree = {
+           model = rpart(y~., data=train.set)
+           if (verbose) {
+             print(summary(model)) # detailed summary of splits
+             printcp(model) # print the cross-validation results
+             plotcp(model) # visualize the cross-validation results
+             ## plot the tree
+             plot(model, uniform=TRUE, main=&quot;Classification Tree&quot;)
+             text(model, use.n=TRUE, all=TRUE, cex=.8)
+           }           
+           prob = predict(model, newdata=test.set)
+
+           if (0) { # here we use the default tree, 
+             ## you should evaluate different size of tree
+             ## prune the tree 
+             pfit&lt;- prune(model, cp=model$cptable[which.min(model$cptable[,&quot;xerror&quot;]),&quot;CP&quot;])
+             prob = predict(pfit, newdata=test.set)
+             ## plot the pruned tree 
+             plot(pfit, uniform=TRUE,main=&quot;Pruned Classification Tree&quot;)
+             text(pfit, use.n=TRUE, all=TRUE, cex=.8)             
+           }
+           #print(cbind(prob,as.character(test.set$y)))
+           prob = prob[,2]/rowSums(prob) # renormalize the prob.
+           prob
+         },
+         svm = {
+           model = svm(y~., data=train.set, probability=T)
+           if (0) { # fine-tune the model with different kernel and parameters
+             ## evaluate the range of gamma parameter between 0.000001 and 0.1
+             ## and cost parameter from 0.1 until 10
+             tuned &lt;- tune.svm(y~., data = train.set, 
+                               kernel=&quot;radial&quot;, 
+                               gamma = 10^(-6:-1), cost = 10^(-1:1))
+             #print(summary(tuned))
+             gamma = tuned[[&#39;best.parameters&#39;]]$gamma
+             cost = tuned[[&#39;best.parameters&#39;]]$cost
+             model = svm(y~., data = train.set, probability=T, 
+                         kernel=&quot;radial&quot;, gamma=gamma, cost=cost)                        
+           }
+           prob = predict(model, newdata=test.set, probability=T)
+           prob = attr(prob,&quot;probabilities&quot;)
+           #print(cbind(prob,as.character(test.set$y)))
+           #print(dim(prob))
+           prob = prob[,which(colnames(prob)==1)]/rowSums(prob)
+           prob
+         },
+         ada = {
+           model = ada(y~., data = train.set)
+           prob = predict(model, newdata=test.set, type=&#39;probs&#39;)
+           #print(cbind(prob,as.character(test.set$y)))
+           prob = prob[,2]/rowSums(prob)
+           prob
+         }
+  ) 
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-4">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">pre.test &lt;- function(dataset, cl.name, r=0.6, prob.cutoff=0.5) {
+  ## Let&#39;s use 60% random sample as training and remaining as testing
+  ## by default use 0.5 as cut-off
+  n.obs &lt;- nrow(dataset) # no. of observations in dataset
+  n.train = floor(n.obs*r)
+  train.idx = sample(1:n.obs,n.train)
+  train.idx
+  train.set = dataset[train.idx,]
+  test.set = dataset[-train.idx,]
+  cat(&#39;pre-test&#39;,cl.name,&#39;:&#39;,
+      &#39;#training:&#39;,nrow(train.set),
+      &#39;#testing&#39;,nrow(test.set),&#39;\n&#39;)
+  prob = do.classification(train.set, test.set, cl.name)
+  # prob is an array of probabilities for cases being positive
+
+  ## get confusion matrix
+  predicted = as.numeric(prob &gt; prob.cutoff)
+  actual = test.set$y
+  confusion.matrix = table(actual,factor(predicted,levels=c(0,1)))
+  error = (confusion.matrix[1,2]+confusion.matrix[2,1]) / nrow(test.set)  
+  cat(&#39;error rate:&#39;,error,&#39;\n&#39;)
+  # you may compute other measures based on confusion.matrix
+  # @see handout03 p.30-
+
+  ## plot ROC
+  result = data.frame(prob,actual)
+  pred = prediction(result$prob,result$actual)
+  perf = performance(pred, &quot;tpr&quot;,&quot;fpr&quot;)
+  plot(perf)    
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-5">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">k.fold.cv &lt;- function(dataset, cl.name, k.fold=10, prob.cutoff=0.5) {
+  ## default: 10-fold CV, cut-off 0.5 
+  n.obs &lt;- nrow(dataset) # no. of observations 
+  s = sample(n.obs)
+  errors = dim(k.fold)
+  probs = NULL
+  actuals = NULL
+  for (k in 1:k.fold) {
+    test.idx = which(s %% k.fold == (k-1) ) # use modular operator
+    train.set = dataset[-test.idx,]
+    test.set = dataset[test.idx,]
+    cat(k.fold,&#39;-fold CV run&#39;,k,cl.name,&#39;:&#39;,
+        &#39;#training:&#39;,nrow(train.set),
+        &#39;#testing&#39;,nrow(test.set),&#39;\n&#39;)
+    prob = do.classification(train.set, test.set, cl.name)
+    predicted = as.numeric(prob &gt; prob.cutoff)
+    actual = test.set$y
+    confusion.matrix = table(actual,factor(predicted,levels=c(0,1)))
+    confusion.matrix
+    error = (confusion.matrix[1,2]+confusion.matrix[2,1]) / nrow(test.set)  
+    errors[k] = error
+    cat(&#39;\t\terror=&#39;,error,&#39;\n&#39;)
+    probs = c(probs,prob)
+    actuals = c(actuals,actual)
+    ## you may compute other measures and store them in arrays
+  }
+  avg.error = mean(errors)
+  cat(k.fold,&#39;-fold CV results:&#39;,&#39;avg error=&#39;,avg.error,&#39;\n&#39;)
+
+  ## plot ROC
+  result = data.frame(probs,actuals)
+  pred = prediction(result$probs,result$actuals)
+  perf = performance(pred, &quot;tpr&quot;,&quot;fpr&quot;)
+  plot(perf)  
+
+  ## get other measures by using &#39;performance&#39;
+  get.measure &lt;- function(pred, measure.name=&#39;auc&#39;) {
+    perf = performance(pred,measure.name)
+    m &lt;- unlist(slot(perf, &quot;y.values&quot;))
+    m
+  }
+  err = mean(get.measure(pred, &#39;err&#39;))
+  precision = mean(get.measure(pred, &#39;prec&#39;),na.rm=T)
+  recall = mean(get.measure(pred, &#39;rec&#39;),na.rm=T)
+  fscore = mean(get.measure(pred, &#39;f&#39;),na.rm=T)
+  cat(&#39;error=&#39;,err,&#39;precision=&#39;,precision,&#39;recall=&#39;,recall,&#39;f-score&#39;,fscore,&#39;\n&#39;)
+  auc = get.measure(pred, &#39;auc&#39;)
+  cat(&#39;auc=&#39;,auc,&#39;\n&#39;)
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-6">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">my.classifier &lt;- function(dataset, cl.name=&#39;knn&#39;, do.cv=F) {
+  n.obs &lt;- nrow(dataset) # no. of observations in dataset
+  n.cols &lt;- ncol(dataset) # no. of predictors
+  cat(&#39;my dataset:&#39;,
+      n.obs,&#39;observations&#39;,
+      n.cols-1,&#39;predictors&#39;,&#39;\n&#39;)
+  print(dataset[1:3,])
+  cat(&#39;label (y) distribution:&#39;)
+  print(table(dataset$y))
+
+  pre.test(dataset, cl.name)
+  if (do.cv) k.fold.cv(dataset, cl.name)
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-7">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">load.data.example &lt;- function() {
+  ## this is an example for loading the cats data
+  ## you will modify this code to load your own data
+  data(cats)
+  print(cats[1:3,])
+  ## you may do any recoding of your data
+  ## here I recode the class labels into 0/1 
+  ## so later I can retrieve 
+  ## response.var = dataset[,1]; predictors = dataset[,-1]
+  y = mapvalues(cats$Sex, from=c(&#39;F&#39;,&#39;M&#39;), to=c(0,1))
+  cats = cbind(y=y,cats)
+  cats$Sex = NULL # remove the original labels  
+  return(cats)
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-8">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">load.data.task &lt;- function() {
+  data.url = &#39;http://www.yurulin.com/class/spring2015_datamining/data&#39;
+  dataset &lt;- read.csv(sprintf(&quot;%s/statlog.csv&quot;,data.url))
+  ## do some preprocessing here
+  ## ...
+  dataset
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-9">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">### main ###
+dataset = load.data.example()
+</code></pre>
+
+<pre><code>##   Sex Bwt Hwt
+## 1   F   2 7.0
+## 2   F   2 7.4
+## 3   F   2 9.5
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-10">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">dataset[1:3,]
+</code></pre>
+
+<pre><code>##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-11">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">## cl.name can take &#39;lr&#39;,&#39;knn&#39;,&#39;nb&#39;,&#39;dtree&#39;,&#39;svm&#39;,&#39;ada&#39;
+my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=F)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test svm : #training: 86 #testing 58 
+## error rate: 0.2413793
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-11-1.png" alt="plot of chunk hw3-chunk-11"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-12">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">my.classifier(dataset, cl.name=&#39;lr&#39;,do.cv=F)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test lr : #training: 86 #testing 58 
+## error rate: 0.2413793
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-12-1.png" alt="plot of chunk hw3-chunk-12"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-13">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">my.classifier(dataset, cl.name=&#39;knn&#39;,do.cv=F)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test knn : #training: 86 #testing 58 
+## error rate: 0.3793103
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-13-1.png" alt="plot of chunk hw3-chunk-13"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-14">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">my.classifier(dataset, cl.name=&#39;nb&#39;,do.cv=F)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test nb : #training: 86 #testing 58 
+## error rate: 0.2241379
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-14-1.png" alt="plot of chunk hw3-chunk-14"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-15">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">my.classifier(dataset, cl.name=&#39;ada&#39;,do.cv=F)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test ada : #training: 86 #testing 58 
+## error rate: 0.2413793
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-15-1.png" alt="plot of chunk hw3-chunk-15"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-16">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">## run k-fold cross-validation by setting do.cv=T 
+my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=T)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test svm : #training: 86 #testing 58 
+## error rate: 0.2241379
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-16-1.png" alt="plot of chunk hw3-chunk-16"></p>
+
+<pre><code>## 10 -fold CV run 1 svm : #training: 130 #testing 14 
+##      error= 0.2142857 
+## 10 -fold CV run 2 svm : #training: 129 #testing 15 
+##      error= 0.3333333 
+## 10 -fold CV run 3 svm : #training: 129 #testing 15 
+##      error= 0.2 
+## 10 -fold CV run 4 svm : #training: 129 #testing 15 
+##      error= 0.2 
+## 10 -fold CV run 5 svm : #training: 129 #testing 15 
+##      error= 0.1333333 
+## 10 -fold CV run 6 svm : #training: 130 #testing 14 
+##      error= 0.2142857 
+## 10 -fold CV run 7 svm : #training: 130 #testing 14 
+##      error= 0.07142857 
+## 10 -fold CV run 8 svm : #training: 130 #testing 14 
+##      error= 0.2857143 
+## 10 -fold CV run 9 svm : #training: 130 #testing 14 
+##      error= 0.07142857 
+## 10 -fold CV run 10 svm : #training: 130 #testing 14 
+##      error= 0.5 
+## 10 -fold CV results: avg error= 0.222381
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-16-2.png" alt="plot of chunk hw3-chunk-16"></p>
+
+<pre><code>## error= 0.3912852 precision= 0.7805924 recall= 0.5771018 f-score 0.612505 
+## auc= 0.7569642
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-17">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">my.classifier(dataset, cl.name=&#39;ada&#39;,do.cv=T)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test ada : #training: 86 #testing 58 
+## error rate: 0.2241379
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-17-1.png" alt="plot of chunk hw3-chunk-17"></p>
+
+<pre><code>## 10 -fold CV run 1 ada : #training: 130 #testing 14 
+##      error= 0.1428571 
+## 10 -fold CV run 2 ada : #training: 129 #testing 15 
+##      error= 0.2666667 
+## 10 -fold CV run 3 ada : #training: 129 #testing 15 
+##      error= 0.06666667 
+## 10 -fold CV run 4 ada : #training: 129 #testing 15 
+##      error= 0.2 
+## 10 -fold CV run 5 ada : #training: 129 #testing 15 
+##      error= 0.2666667 
+## 10 -fold CV run 6 ada : #training: 130 #testing 14 
+##      error= 0.4285714 
+## 10 -fold CV run 7 ada : #training: 130 #testing 14 
+##      error= 0.3571429 
+## 10 -fold CV run 8 ada : #training: 130 #testing 14 
+##      error= 0.2142857 
+## 10 -fold CV run 9 ada : #training: 130 #testing 14 
+##      error= 0.1428571 
+## 10 -fold CV run 10 ada : #training: 130 #testing 14 
+##      error= 0.2857143 
+## 10 -fold CV results: avg error= 0.2371429
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-17-2.png" alt="plot of chunk hw3-chunk-17"></p>
+
+<pre><code>## error= 0.3223684 precision= 0.8579653 recall= 0.6779707 f-score 0.7121553 
+## auc= 0.8296776
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-18">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">my.classifier(dataset, cl.name=&#39;nb&#39;,do.cv=T)
+</code></pre>
+
+<pre><code>## my dataset: 144 observations 2 predictors 
+##   y Bwt Hwt
+## 1 0   2 7.0
+## 2 0   2 7.4
+## 3 0   2 9.5
+## label (y) distribution:
+##  0  1 
+## 47 97 
+## pre-test nb : #training: 86 #testing 58 
+## error rate: 0.2413793
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-18-1.png" alt="plot of chunk hw3-chunk-18"></p>
+
+<pre><code>## 10 -fold CV run 1 nb : #training: 130 #testing 14 
+##      error= 0.1428571 
+## 10 -fold CV run 2 nb : #training: 129 #testing 15 
+##      error= 0.4666667 
+## 10 -fold CV run 3 nb : #training: 129 #testing 15 
+##      error= 0.2666667 
+## 10 -fold CV run 4 nb : #training: 129 #testing 15 
+##      error= 0.2 
+## 10 -fold CV run 5 nb : #training: 129 #testing 15 
+##      error= 0.3333333 
+## 10 -fold CV run 6 nb : #training: 130 #testing 14 
+##      error= 0.2857143 
+## 10 -fold CV run 7 nb : #training: 130 #testing 14 
+##      error= 0.3571429 
+## 10 -fold CV run 8 nb : #training: 130 #testing 14 
+##      error= 0.2857143 
+## 10 -fold CV run 9 nb : #training: 130 #testing 14 
+##      error= 0.1428571 
+## 10 -fold CV run 10 nb : #training: 130 #testing 14 
+##      error= 0 
+## 10 -fold CV results: avg error= 0.2480952
+</code></pre>
+
+<p><img src="assets/fig/hw3-chunk-18-2.png" alt="plot of chunk hw3-chunk-18"></p>
+
+<pre><code>## error= 0.3663928 precision= 0.870686 recall= 0.5983011 f-score 0.6429794 
+## auc= 0.8075236
+</code></pre>
+
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {
+	      inlineMath: [['$','$'], ['\\(','\\)']],
+	      processEscapes: true
+	    }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script> -->
+	<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>
