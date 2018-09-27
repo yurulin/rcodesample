@@ -138,7 +138,14 @@ tab &lt;- table(pred = prediction, true = testset[,1])
 
 ## tune hyperparameters using a grid search over the supplied parameter ranges
 tuned &lt;- tune.svm(Sex~., data = trainset, gamma = 10^(-6:-1), cost = 10^(1:2))
-summary(tuned)
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-7">
+  <div>
+    <h2>SVM</h2>
+    <pre><code class="r">summary(tuned)
 </code></pre>
 
 <pre><code>## 
@@ -202,14 +209,14 @@ summary(pred)
 
   </div>
 </section>
-<section class="slide modal" id="slide-8">
+<section class="slide modal" id="slide-9">
   <div>
     <h2>AdaBoost</h2>
     <pre><code class="r">## plot of variables ordered by the variable importance measure (based on improvement)
 varplot(pred)
 </code></pre>
 
-<p><img src="assets/fig/class05-chunk-7-1.png" alt="plot of chunk class05-chunk-7"></p>
+<p><img src="assets/fig/class05-chunk-8-1.png" alt="plot of chunk class05-chunk-8"></p>
 
   </div>
 </section>

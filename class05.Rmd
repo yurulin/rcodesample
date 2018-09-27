@@ -66,8 +66,14 @@ tab <- table(pred = prediction, true = testset[,1])
 
 ## tune hyperparameters using a grid search over the supplied parameter ranges
 tuned <- tune.svm(Sex~., data = trainset, gamma = 10^(-6:-1), cost = 10^(1:2))
+```
+
+--- .sscode-nowrap .compact
+## SVM
+```{r, dependson=c(-1)}
 summary(tuned)
 ```
+
 
 --- .scode-nowrap .compact #ada
 ## AdaBoost

@@ -111,6 +111,12 @@ tab <- table(pred = prediction, true = testset[,1])
 
 ## tune hyperparameters using a grid search over the supplied parameter ranges
 tuned <- tune.svm(Sex~., data = trainset, gamma = 10^(-6:-1), cost = 10^(1:2))
+```
+
+--- .sscode-nowrap .compact
+## SVM
+
+```r
 summary(tuned)
 ```
 
@@ -141,6 +147,7 @@ summary(tuned)
 ## 11 1e-02  100 0.2266667 0.12430327
 ## 12 1e-01  100 0.1955556 0.09927031
 ```
+
 
 --- .scode-nowrap .compact #ada
 ## AdaBoost
@@ -182,4 +189,4 @@ summary(pred)
 varplot(pred)
 ```
 
-![plot of chunk class05-chunk-7](assets/fig/class05-chunk-7-1.png)
+![plot of chunk class05-chunk-8](assets/fig/class05-chunk-8-1.png)
