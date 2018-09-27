@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Class05</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Class05">
+	<meta name="author" content="Yu-Ru Lin">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>Class05</h1>
+	</header>
+  <section class="slide " id="toc">
+  <div>
+    <h2>Class05</h2>
+    <ul>
+<li><a href="#set-up">Set up</a></li>
+<li><a href="#svm">SVM</a></li>
+<li><a href="#ada">AdaBoost</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide modal" id="set-up">
+  <div>
+    <h2>Install R packages</h2>
+    <pre><code class="r">## this tutorial uses the following packages
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="svm">
+  <div>
+    <h2>SVM</h2>
+    <p>The examples are taken from <a href="http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R">Data Mining Algorithms In R</a></p>
+
+<pre><code class="r">library(e1071)
+</code></pre>
+
+<pre><code>## 
+## Attaching package: &#39;e1071&#39;
+</code></pre>
+
+<pre><code>## The following objects are masked from &#39;package:PerformanceAnalytics&#39;:
+## 
+##     kurtosis, skewness
+</code></pre>
+
+<pre><code>## The following object is masked from &#39;package:Hmisc&#39;:
+## 
+##     impute
+</code></pre>
+
+<pre><code class="r">library(MASS)
+data(cats)
+model &lt;- svm(Sex~., data = cats)
+
+print(model)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## svm(formula = Sex ~ ., data = cats)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  radial 
+##        cost:  1 
+##       gamma:  0.5 
+## 
+## Number of Support Vectors:  84
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-4">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">summary(model)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## svm(formula = Sex ~ ., data = cats)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  radial 
+##        cost:  1 
+##       gamma:  0.5 
+## 
+## Number of Support Vectors:  84
+## 
+##  ( 39 45 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  F M
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-5">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">plot(model,cats)
+</code></pre>
+
+<p><img src="assets/fig/class05-chunk-4-1.png" alt="plot of chunk class05-chunk-4"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-6">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">## run svm with training / testing sets
+index &lt;- 1:nrow(cats)
+testindex &lt;- sample(index, trunc(length(index)/3))
+testset &lt;- cats[testindex,]
+trainset &lt;- cats[-testindex,]
+model &lt;- svm(Sex~., data = trainset)
+prediction &lt;- predict(model, testset[,-1])
+tab &lt;- table(pred = prediction, true = testset[,1])
+
+## tune hyperparameters using a grid search over the supplied parameter ranges
+tuned &lt;- tune.svm(Sex~., data = trainset, gamma = 10^(-6:-1), cost = 10^(1:2))
+summary(tuned)
+</code></pre>
+
+<pre><code>## 
+## Parameter tuning of &#39;svm&#39;:
+## 
+## - sampling method: 10-fold cross validation 
+## 
+## - best parameters:
+##  gamma cost
+##    0.1  100
+## 
+## - best performance: 0.1733333 
+## 
+## - Detailed performance results:
+##    gamma cost     error dispersion
+## 1  1e-06   10 0.3022222 0.07403703
+## 2  1e-05   10 0.3022222 0.07403703
+## 3  1e-04   10 0.3022222 0.07403703
+## 4  1e-03   10 0.3022222 0.07403703
+## 5  1e-02   10 0.2911111 0.10194272
+## 6  1e-01   10 0.2166667 0.13055227
+## 7  1e-06  100 0.3022222 0.07403703
+## 8  1e-05  100 0.3022222 0.07403703
+## 9  1e-04  100 0.3022222 0.07403703
+## 10 1e-03  100 0.2911111 0.10194272
+## 11 1e-02  100 0.2166667 0.13880244
+## 12 1e-01  100 0.1733333 0.12529252
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="ada">
+  <div>
+    <h2>AdaBoost</h2>
+    <pre><code class="r">library(ada)
+</code></pre>
+
+<pre><code>## Loading required package: rpart
+</code></pre>
+
+<pre><code>## 
+## Attaching package: &#39;rpart&#39;
+</code></pre>
+
+<pre><code>## The following object is masked from &#39;package:survival&#39;:
+## 
+##     solder
+</code></pre>
+
+<pre><code class="r">library(MASS)
+data(cats)
+
+index &lt;- 1:nrow(cats)
+testindex &lt;- sample(index, trunc(length(index)/3))
+testset &lt;- cats[testindex,]
+trainset &lt;- cats[-testindex,]
+model &lt;- ada(Sex~., data = trainset)
+pred &lt;- addtest(model, testset[,-1], testset[,1])
+summary(pred)
+</code></pre>
+
+<pre><code>## Call:
+## ada(Sex ~ ., data = trainset)
+## 
+## Loss: exponential Method: discrete   Iteration: 50 
+## 
+## Training Results
+## 
+## Accuracy: 0.844 Kappa: 0.646 
+## 
+## Testing Results
+## 
+## Accuracy: 0.792 Kappa: 0.545
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-8">
+  <div>
+    <h2>NA</h2>
+    <pre><code class="r">## plot of variables ordered by the variable importance measure (based on improvement)
+varplot(pred)
+</code></pre>
+
+<p><img src="assets/fig/class05-chunk-7-1.png" alt="plot of chunk class05-chunk-7"></p>
+
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {
+	      inlineMath: [['$','$'], ['\\(','\\)']],
+	      processEscapes: true
+	    }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script> -->
+	<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>

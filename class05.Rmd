@@ -1,0 +1,89 @@
+---
+title       : Class05
+subtitle    : classification
+author      : Yu-Ru Lin
+job         : 
+framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+toc         : true
+toc_depth   : 2
+
+--- #toc
+## Class05
+
+* [Set up](#set-up)
+* [SVM](#svm)
+* [AdaBoost](#ada)
+
+--- #set-up .modal 
+
+## Install R packages
+```{r, eval=FALSE}
+## this tutorial uses the following packages
+```
+
+--- .modal #svm
+## SVM
+The examples are taken from [Data Mining Algorithms In R](http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R)
+
+```{r}
+library(e1071)
+library(MASS)
+data(cats)
+model <- svm(Sex~., data = cats)
+
+print(model)
+```
+
+--- .modal
+```{r, dependson=c(-1)}
+summary(model)
+```
+
+--- .modal
+```{r, dependson=c(-1)}
+plot(model,cats)
+```
+
+--- .scode-nowrap .compact
+```{r, dependson=c(-1)}
+## run svm with training / testing sets
+index <- 1:nrow(cats)
+testindex <- sample(index, trunc(length(index)/3))
+testset <- cats[testindex,]
+trainset <- cats[-testindex,]
+model <- svm(Sex~., data = trainset)
+prediction <- predict(model, testset[,-1])
+tab <- table(pred = prediction, true = testset[,1])
+
+## tune hyperparameters using a grid search over the supplied parameter ranges
+tuned <- tune.svm(Sex~., data = trainset, gamma = 10^(-6:-1), cost = 10^(1:2))
+summary(tuned)
+```
+
+--- .modal #ada
+## AdaBoost
+
+```{r}
+library(ada)
+library(MASS)
+data(cats)
+
+index <- 1:nrow(cats)
+testindex <- sample(index, trunc(length(index)/3))
+testset <- cats[testindex,]
+trainset <- cats[-testindex,]
+model <- ada(Sex~., data = trainset)
+pred <- addtest(model, testset[,-1], testset[,1])
+summary(pred)
+```
+
+--- .modal
+```{r, dependson=c(-1)}
+## plot of variables ordered by the variable importance measure (based on improvement)
+varplot(pred)
+```
