@@ -30,6 +30,7 @@ toc_depth   : 2
 ## SVM
 The examples are taken from [Data Mining Algorithms In R](http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R)
 
+
 ```{r}
 library(e1071)
 library(MASS)
@@ -47,11 +48,11 @@ summary(model)
 
 --- .modal
 ## SVM
-```{r, dependson=c(-1),fig.width=6, fig.height=5}
+```{r, dependson=c(-1),fig.width=7, fig.height=5}
 plot(model,cats)
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## SVM
 ```{r, dependson=c(-1)}
 ## run svm with training / testing sets

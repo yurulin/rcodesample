@@ -32,6 +32,7 @@ toc_depth   : 2
 The examples are taken from [Data Mining Algorithms In R](http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R)
 
 
+
 ```r
 library(e1071)
 library(MASS)
@@ -95,7 +96,7 @@ plot(model,cats)
 
 ![plot of chunk class05-chunk-4](assets/fig/class05-chunk-4-1.png)
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## SVM
 
 ```r
