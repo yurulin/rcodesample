@@ -40,16 +40,19 @@ print(model)
 ```
 
 --- .modal
+## SVM
 ```{r, dependson=c(-1)}
 summary(model)
 ```
 
 --- .modal
-```{r, dependson=c(-1)}
+## SVM
+```{r, dependson=c(-1),fig.width=6, fig.height=5}
 plot(model,cats)
 ```
 
 --- .scode-nowrap .compact
+## SVM
 ```{r, dependson=c(-1)}
 ## run svm with training / testing sets
 index <- 1:nrow(cats)
@@ -67,7 +70,6 @@ summary(tuned)
 
 --- .modal #ada
 ## AdaBoost
-
 ```{r}
 library(ada)
 library(MASS)
@@ -83,6 +85,7 @@ summary(pred)
 ```
 
 --- .modal
+## AdaBoost
 ```{r, dependson=c(-1)}
 ## plot of variables ordered by the variable importance measure (based on improvement)
 varplot(pred)

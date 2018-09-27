@@ -13,7 +13,7 @@ author("mydeck-DM-slides")
 library(slidify)
 
 opts_knit$set(unnamed.chunk.label='class05-chunk')
-opts_chunk$set(echo=TRUE, message=TRUE, warning=FALSE, fig.width=4, fig.height=4)
+opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=4, fig.height=4)
 
 ## Step 3: Generate Deck
 slidify("index.Rmd")

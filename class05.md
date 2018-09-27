@@ -34,26 +34,6 @@ The examples are taken from [Data Mining Algorithms In R](http://en.wikibooks.or
 
 ```r
 library(e1071)
-```
-
-```
-## 
-## Attaching package: 'e1071'
-```
-
-```
-## The following objects are masked from 'package:PerformanceAnalytics':
-## 
-##     kurtosis, skewness
-```
-
-```
-## The following object is masked from 'package:Hmisc':
-## 
-##     impute
-```
-
-```r
 library(MASS)
 data(cats)
 model <- svm(Sex~., data = cats)
@@ -77,6 +57,7 @@ print(model)
 ```
 
 --- .modal
+## SVM
 
 ```r
 summary(model)
@@ -106,6 +87,7 @@ summary(model)
 ```
 
 --- .modal
+## SVM
 
 ```r
 plot(model,cats)
@@ -114,6 +96,7 @@ plot(model,cats)
 ![plot of chunk class05-chunk-4](assets/fig/class05-chunk-4-1.png)
 
 --- .scode-nowrap .compact
+## SVM
 
 ```r
 ## run svm with training / testing sets
@@ -138,50 +121,31 @@ summary(tuned)
 ## 
 ## - best parameters:
 ##  gamma cost
-##    0.1  100
+##    0.1   10
 ## 
-## - best performance: 0.1733333 
+## - best performance: 0.1955556 
 ## 
 ## - Detailed performance results:
 ##    gamma cost     error dispersion
-## 1  1e-06   10 0.3022222 0.07403703
-## 2  1e-05   10 0.3022222 0.07403703
-## 3  1e-04   10 0.3022222 0.07403703
-## 4  1e-03   10 0.3022222 0.07403703
-## 5  1e-02   10 0.2911111 0.10194272
-## 6  1e-01   10 0.2166667 0.13055227
-## 7  1e-06  100 0.3022222 0.07403703
-## 8  1e-05  100 0.3022222 0.07403703
-## 9  1e-04  100 0.3022222 0.07403703
-## 10 1e-03  100 0.2911111 0.10194272
-## 11 1e-02  100 0.2166667 0.13880244
-## 12 1e-01  100 0.1733333 0.12529252
+## 1  1e-06   10 0.3211111 0.15030376
+## 2  1e-05   10 0.3211111 0.15030376
+## 3  1e-04   10 0.3211111 0.15030376
+## 4  1e-03   10 0.3211111 0.15030376
+## 5  1e-02   10 0.2277778 0.13761141
+## 6  1e-01   10 0.1955556 0.09927031
+## 7  1e-06  100 0.3211111 0.15030376
+## 8  1e-05  100 0.3211111 0.15030376
+## 9  1e-04  100 0.3211111 0.15030376
+## 10 1e-03  100 0.2277778 0.13761141
+## 11 1e-02  100 0.2266667 0.12430327
+## 12 1e-01  100 0.1955556 0.09927031
 ```
 
 --- .modal #ada
 ## AdaBoost
 
-
 ```r
 library(ada)
-```
-
-```
-## Loading required package: rpart
-```
-
-```
-## 
-## Attaching package: 'rpart'
-```
-
-```
-## The following object is masked from 'package:survival':
-## 
-##     solder
-```
-
-```r
 library(MASS)
 data(cats)
 
@@ -202,14 +166,15 @@ summary(pred)
 ## 
 ## Training Results
 ## 
-## Accuracy: 0.844 Kappa: 0.646 
+## Accuracy: 0.812 Kappa: 0.578 
 ## 
 ## Testing Results
 ## 
-## Accuracy: 0.792 Kappa: 0.545
+## Accuracy: 0.729 Kappa: 0.402
 ```
 
 --- .modal
+## AdaBoost
 
 ```r
 ## plot of variables ordered by the variable importance measure (based on improvement)
