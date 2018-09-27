@@ -26,7 +26,7 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- .modal #svm
+--- .scode-nowrap .compact #svm
 ## SVM
 The examples are taken from [Data Mining Algorithms In R](http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R)
 
@@ -39,7 +39,7 @@ model <- svm(Sex~., data = cats)
 print(model)
 ```
 
---- .modal
+--- .scode-nowrap .compact
 ## SVM
 ```{r, dependson=c(-1)}
 summary(model)
@@ -68,7 +68,7 @@ tuned <- tune.svm(Sex~., data = trainset, gamma = 10^(-6:-1), cost = 10^(1:2))
 summary(tuned)
 ```
 
---- .modal #ada
+--- .scode-nowrap .compact #ada
 ## AdaBoost
 ```{r}
 library(ada)

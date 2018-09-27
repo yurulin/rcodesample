@@ -27,7 +27,7 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- .modal #svm
+--- .scode-nowrap .compact #svm
 ## SVM
 The examples are taken from [Data Mining Algorithms In R](http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R)
 
@@ -56,7 +56,7 @@ print(model)
 ## Number of Support Vectors:  84
 ```
 
---- .modal
+--- .scode-nowrap .compact
 ## SVM
 
 ```r
@@ -141,7 +141,7 @@ summary(tuned)
 ## 12 1e-01  100 0.1955556 0.09927031
 ```
 
---- .modal #ada
+--- .scode-nowrap .compact #ada
 ## AdaBoost
 
 ```r
