@@ -21,7 +21,7 @@ toc_depth   : 2
 ```
 
 --- .sscode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 library(MASS) # for the example dataset 
@@ -35,7 +35,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 do.classification <- function(train.set, test.set, 
@@ -123,7 +123,7 @@ do.classification <- function(train.set, test.set,
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 pre.test <- function(dataset, cl.name, r=0.6, prob.cutoff=0.5) {
@@ -159,7 +159,7 @@ pre.test <- function(dataset, cl.name, r=0.6, prob.cutoff=0.5) {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 k.fold.cv <- function(dataset, cl.name, k.fold=10, prob.cutoff=0.5) {
@@ -214,7 +214,7 @@ k.fold.cv <- function(dataset, cl.name, k.fold=10, prob.cutoff=0.5) {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 my.classifier <- function(dataset, cl.name='knn', do.cv=F) {
@@ -233,7 +233,7 @@ my.classifier <- function(dataset, cl.name='knn', do.cv=F) {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 load.data.example <- function() {
@@ -253,7 +253,7 @@ load.data.example <- function() {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 load.data.task <- function() {
@@ -266,7 +266,7 @@ load.data.task <- function() {
 ```
 
 --- .scode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 ### main ###
@@ -281,7 +281,7 @@ dataset = load.data.example()
 ```
 
 --- .scode-nowrap .compact 
-## 
+## hw3 sample
 
 ```r
 dataset[1:3,]
@@ -294,8 +294,8 @@ dataset[1:3,]
 ## 3 0   2 9.5
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 ## cl.name can take 'lr','knn','nb','dtree','svm','ada'
@@ -317,8 +317,8 @@ my.classifier(dataset, cl.name='svm',do.cv=F)
 
 ![plot of chunk hw3-chunk-11](assets/fig/hw3-chunk-11-1.png)
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 my.classifier(dataset, cl.name='lr',do.cv=F)
@@ -339,8 +339,8 @@ my.classifier(dataset, cl.name='lr',do.cv=F)
 
 ![plot of chunk hw3-chunk-12](assets/fig/hw3-chunk-12-1.png)
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 my.classifier(dataset, cl.name='knn',do.cv=F)
@@ -361,8 +361,8 @@ my.classifier(dataset, cl.name='knn',do.cv=F)
 
 ![plot of chunk hw3-chunk-13](assets/fig/hw3-chunk-13-1.png)
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 my.classifier(dataset, cl.name='nb',do.cv=F)
@@ -383,8 +383,8 @@ my.classifier(dataset, cl.name='nb',do.cv=F)
 
 ![plot of chunk hw3-chunk-14](assets/fig/hw3-chunk-14-1.png)
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 my.classifier(dataset, cl.name='ada',do.cv=F)
@@ -405,8 +405,8 @@ my.classifier(dataset, cl.name='ada',do.cv=F)
 
 ![plot of chunk hw3-chunk-15](assets/fig/hw3-chunk-15-1.png)
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 ## run k-fold cross-validation by setting do.cv=T 
@@ -459,8 +459,8 @@ my.classifier(dataset, cl.name='svm',do.cv=T)
 ## auc= 0.7569642
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 my.classifier(dataset, cl.name='ada',do.cv=T)
@@ -512,8 +512,8 @@ my.classifier(dataset, cl.name='ada',do.cv=T)
 ## auc= 0.8296776
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 
 ```r
 my.classifier(dataset, cl.name='nb',do.cv=T)

@@ -20,7 +20,7 @@ toc_depth   : 2
 ```
 
 --- .sscode-nowrap .compact 
-## 
+## hw3 sample
 ```{r}
 library(MASS) # for the example dataset 
 library(plyr) # for recoding data
@@ -33,7 +33,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 do.classification <- function(train.set, test.set, 
                               cl.name, verbose=F) {
@@ -120,7 +120,7 @@ do.classification <- function(train.set, test.set,
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 pre.test <- function(dataset, cl.name, r=0.6, prob.cutoff=0.5) {
   ## Let's use 60% random sample as training and remaining as testing
@@ -155,7 +155,7 @@ pre.test <- function(dataset, cl.name, r=0.6, prob.cutoff=0.5) {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 k.fold.cv <- function(dataset, cl.name, k.fold=10, prob.cutoff=0.5) {
   ## default: 10-fold CV, cut-off 0.5 
@@ -209,7 +209,7 @@ k.fold.cv <- function(dataset, cl.name, k.fold=10, prob.cutoff=0.5) {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 my.classifier <- function(dataset, cl.name='knn', do.cv=F) {
   n.obs <- nrow(dataset) # no. of observations in dataset
@@ -227,7 +227,7 @@ my.classifier <- function(dataset, cl.name='knn', do.cv=F) {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 load.data.example <- function() {
   ## this is an example for loading the cats data
@@ -246,7 +246,7 @@ load.data.example <- function() {
 ```
 
 --- .ssscode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 load.data.task <- function() {
   data.url = 'http://www.yurulin.com/class/spring2015_datamining/data'
@@ -258,64 +258,64 @@ load.data.task <- function() {
 ```
 
 --- .scode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 ### main ###
 dataset = load.data.example()
 ```
 
 --- .scode-nowrap .compact 
-## 
+## hw3 sample
 ```{r, dependson=c(-1)}
 dataset[1:3,]
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 ## cl.name can take 'lr','knn','nb','dtree','svm','ada'
 my.classifier(dataset, cl.name='svm',do.cv=F)
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 my.classifier(dataset, cl.name='lr',do.cv=F)
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 my.classifier(dataset, cl.name='knn',do.cv=F)
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 my.classifier(dataset, cl.name='nb',do.cv=F)
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 my.classifier(dataset, cl.name='ada',do.cv=F)
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 ## run k-fold cross-validation by setting do.cv=T 
 my.classifier(dataset, cl.name='svm',do.cv=T)
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 my.classifier(dataset, cl.name='ada',do.cv=T)
 ```
 
---- .scode-nowrap .compact 
-## 
+--- .ssscode-nowrap .compact 
+## hw3 sample
 ```{r, dependson=c(-1)}
 my.classifier(dataset, cl.name='nb',do.cv=T)
 ```

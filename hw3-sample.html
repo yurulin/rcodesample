@@ -46,7 +46,7 @@
 </section>
 <section class="slide sscode-nowrap compact" id="slide-2">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">library(MASS) # for the example dataset 
 library(plyr) # for recoding data
 library(ROCR) # for plotting roc
@@ -61,7 +61,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 </section>
 <section class="slide ssscode-nowrap compact" id="slide-3">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">do.classification &lt;- function(train.set, test.set, 
                               cl.name, verbose=F) {
   ## note: to plot ROC later, we want the raw probabilities,
@@ -150,7 +150,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 </section>
 <section class="slide ssscode-nowrap compact" id="slide-4">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">pre.test &lt;- function(dataset, cl.name, r=0.6, prob.cutoff=0.5) {
   ## Let&#39;s use 60% random sample as training and remaining as testing
   ## by default use 0.5 as cut-off
@@ -187,7 +187,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 </section>
 <section class="slide ssscode-nowrap compact" id="slide-5">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">k.fold.cv &lt;- function(dataset, cl.name, k.fold=10, prob.cutoff=0.5) {
   ## default: 10-fold CV, cut-off 0.5 
   n.obs &lt;- nrow(dataset) # no. of observations 
@@ -243,7 +243,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 </section>
 <section class="slide ssscode-nowrap compact" id="slide-6">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">my.classifier &lt;- function(dataset, cl.name=&#39;knn&#39;, do.cv=F) {
   n.obs &lt;- nrow(dataset) # no. of observations in dataset
   n.cols &lt;- ncol(dataset) # no. of predictors
@@ -263,7 +263,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 </section>
 <section class="slide ssscode-nowrap compact" id="slide-7">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">load.data.example &lt;- function() {
   ## this is an example for loading the cats data
   ## you will modify this code to load your own data
@@ -284,7 +284,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 </section>
 <section class="slide ssscode-nowrap compact" id="slide-8">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">load.data.task &lt;- function() {
   data.url = &#39;http://www.yurulin.com/class/spring2015_datamining/data&#39;
   dataset &lt;- read.csv(sprintf(&quot;%s/statlog.csv&quot;,data.url))
@@ -298,7 +298,7 @@ set.seed(12345) # set the seed so you can get exactly the same results whenever 
 </section>
 <section class="slide scode-nowrap compact" id="slide-9">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">### main ###
 dataset = load.data.example()
 </code></pre>
@@ -313,7 +313,7 @@ dataset = load.data.example()
 </section>
 <section class="slide scode-nowrap compact" id="slide-10">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">dataset[1:3,]
 </code></pre>
 
@@ -325,9 +325,9 @@ dataset = load.data.example()
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-11">
+<section class="slide ssscode-nowrap compact" id="slide-11">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">## cl.name can take &#39;lr&#39;,&#39;knn&#39;,&#39;nb&#39;,&#39;dtree&#39;,&#39;svm&#39;,&#39;ada&#39;
 my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=F)
 </code></pre>
@@ -348,9 +348,9 @@ my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=F)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-12">
+<section class="slide ssscode-nowrap compact" id="slide-12">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">my.classifier(dataset, cl.name=&#39;lr&#39;,do.cv=F)
 </code></pre>
 
@@ -370,9 +370,9 @@ my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=F)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-13">
+<section class="slide ssscode-nowrap compact" id="slide-13">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">my.classifier(dataset, cl.name=&#39;knn&#39;,do.cv=F)
 </code></pre>
 
@@ -392,9 +392,9 @@ my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=F)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-14">
+<section class="slide ssscode-nowrap compact" id="slide-14">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">my.classifier(dataset, cl.name=&#39;nb&#39;,do.cv=F)
 </code></pre>
 
@@ -414,9 +414,9 @@ my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=F)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-15">
+<section class="slide ssscode-nowrap compact" id="slide-15">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">my.classifier(dataset, cl.name=&#39;ada&#39;,do.cv=F)
 </code></pre>
 
@@ -436,9 +436,9 @@ my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=F)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-16">
+<section class="slide ssscode-nowrap compact" id="slide-16">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">## run k-fold cross-validation by setting do.cv=T 
 my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=T)
 </code></pre>
@@ -488,9 +488,9 @@ my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=T)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-17">
+<section class="slide ssscode-nowrap compact" id="slide-17">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">my.classifier(dataset, cl.name=&#39;ada&#39;,do.cv=T)
 </code></pre>
 
@@ -539,9 +539,9 @@ my.classifier(dataset, cl.name=&#39;svm&#39;,do.cv=T)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-18">
+<section class="slide ssscode-nowrap compact" id="slide-18">
   <div>
-    <h2>NA</h2>
+    <h2>hw3 sample</h2>
     <pre><code class="r">my.classifier(dataset, cl.name=&#39;nb&#39;,do.cv=T)
 </code></pre>
 
