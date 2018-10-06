@@ -65,7 +65,7 @@ plot(food$Red, food$White, type="n", xlim=c(3,19), xlab="Red Meat", ylab="White 
 text(x=food$Red, y=food$White, labels=food$Country, col=grpMeat$cluster+1)
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## k-means
 ```{r, dependson=c(-1)}
 ## same analysis, but now with clustering on all nine features;
@@ -84,3 +84,162 @@ plot(food$Red, food$White, type="n", xlim=c(3,19), xlab="Red Meat", ylab="White 
 text(x=food$Red, y=food$White, labels=food$Country, col=rainbow(7)[grpProtein$cluster])
 ```
 
+--- .scode-nowrap .compact #hclu
+## Hierarchical clustering 
+Protein consumption data
+
+```{r}
+## use library 'cluster'
+library(cluster)
+## load the data
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+food = read.csv(sprintf("%s/protein.csv",data.url))
+food[1:3,] ## take a look at the first three rows
+```
+
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+## consider just Red and White meat clusters;
+## use the program 'agnes' in the package cluster;
+## argument:
+## diss=FALSE indicates that we use the dissimilarity matrix that is being calculated from raw data;
+## metric="euclidian" indicates that we use Euclidian distance;
+## no standardization is used as the default (stand = FALSE);
+## use average linkage by default (method = "average"); 
+food2 = food[,c("WhiteMeat","RedMeat")]
+food2agg = agnes(food2, diss=FALSE, metric="euclidian")
+food2agg
+```
+
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+plot(food2agg, which.plots=2) ## dendrogram
+```
+--- .sscode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+food2agg$merge  ## describes the sequential merge steps
+```
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+## identical result obtained by first computing the distance matrix
+food2aggv = agnes(daisy(food2), metric="euclidian", diss=T)
+plot(food2aggv, which.plots=2)
+```
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+## use all nine features with Euclidean distance and average linkage
+foodagg = agnes(food[,-1],diss=FALSE,metric="euclidian")
+plot(foodagg, which.plots=2)  ## dendrogram
+```
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+# foodagg$merge  ## describes the sequential merge steps
+
+## Using data on all nine variables (features)
+## Euclidean distance and single linkage
+foodaggsin=agnes(food[,-1],diss=FALSE,metric="euclidian",method="single")
+plot(foodaggsin, which.plots=2)	## dendrogram
+```
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+# foodaggsin$merge	## describes the sequential merge steps
+
+## Euclidean distance and complete linkage
+foodaggcomp=agnes(food[,-1],diss=FALSE,metric="euclidian",method="complete")
+plot(foodaggcomp, which.plots=2)	## dendrogram
+```
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+# foodaggcomp$merge	## describes the sequential merge steps
+
+## use hclust,cutree for hierarchical clustering
+data.dist = dist(food[,-1]) ## use dist to obtain distance matrix
+hc = hclust(data.dist,method='complete')
+data.dist
+```
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+plot(hc)
+```
+--- .scode-nowrap .compact 
+## Hierarchical clustering 
+```{r, dependson=c(-1)}
+hc1 = cutree(hc,k=3)
+print(hc1)
+```
+--- .scode-nowrap .compact #eval
+## Clustering evaluation
+* purity and entropy
+* an "elbow" in the plot of SSE against cluster solutions
+
+```{r}
+cluster.purity <- function(clusters, classes) {
+  sum(apply(table(classes, clusters), 2, max)) / length(clusters)
+}
+
+cluster.entropy <- function(clusters,classes) {
+  en <- function(x) {
+    s = sum(x)
+    sum(sapply(x/s, function(p) {if (p) -p*log2(p) else 0} ) )
+  }
+  M = table(classes, clusters)
+  m = apply(M, 2, en)
+  c = colSums(M) / sum(M)
+  sum(m*c)
+}
+
+## test the purity and entropy functions
+n = 20
+classes = sample(3, n, replace=T) ## randomly assign classes
+classes
+```
+
+--- .scode-nowrap .compact 
+## Clustering evaluation
+```{r, dependson=c(-1)}
+clusters = sample(2, n, replace=T) ## randomly assign clusters
+clusters
+```
+--- .scode-nowrap .compact 
+## Clustering evaluation
+```{r, dependson=c(-1)}
+table(classes, clusters) ## confusion matrix
+```
+--- .scode-nowrap .compact 
+## Clustering evaluation
+```{r, dependson=c(-1)}
+cluster.purity(clusters,classes)  ## purity
+```
+--- .scode-nowrap .compact 
+## Clustering evaluation
+```{r, dependson=c(-1)}
+cluster.entropy(clusters,classes) ## entropy
+```
+--- .scode-nowrap .compact 
+## Clustering evaluation
+```{r, dependson=c(-1)}
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+food = read.csv(sprintf("%s/protein.csv",data.url))
+
+
+wssplot <- function(data, nc=15, seed=1234) {
+  wss = dim(nc)
+  for (i in 2:nc) {
+    set.seed(seed)
+    wss[i] = sum(kmeans(data, centers=i)$withinss)
+  }
+  plot(1:nc, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")
+}
+
+n.clusters = 10
+wssplot(scale(food[,-1]),nc=n.clusters)
+```
