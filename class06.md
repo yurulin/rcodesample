@@ -248,6 +248,7 @@ plot(food2agg, which.plots=2) ## dendrogram
 ```
 
 ![plot of chunk class06-chunk-10](assets/fig/class06-chunk-10-1.png)
+
 --- .sscode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -282,6 +283,7 @@ food2agg$merge  ## describes the sequential merge steps
 ## [23,]   20   22
 ## [24,]   19   23
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -292,6 +294,7 @@ plot(food2aggv, which.plots=2)
 ```
 
 ![plot of chunk class06-chunk-12](assets/fig/class06-chunk-12-1.png)
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -302,6 +305,7 @@ plot(foodagg, which.plots=2)  ## dendrogram
 ```
 
 ![plot of chunk class06-chunk-13](assets/fig/class06-chunk-13-1.png)
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -315,6 +319,7 @@ plot(foodaggsin, which.plots=2)	## dendrogram
 ```
 
 ![plot of chunk class06-chunk-14](assets/fig/class06-chunk-14-1.png)
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -327,6 +332,7 @@ plot(foodaggcomp, which.plots=2)	## dendrogram
 ```
 
 ![plot of chunk class06-chunk-15](assets/fig/class06-chunk-15-1.png)
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -441,6 +447,7 @@ data.dist
 ## 24 11.101802 26.583454          
 ## 25 36.405906 15.791770 40.275551
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -449,6 +456,7 @@ plot(hc)
 ```
 
 ![plot of chunk class06-chunk-17](assets/fig/class06-chunk-17-1.png)
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
@@ -460,6 +468,7 @@ print(hc1)
 ```
 ##  [1] 1 2 2 3 1 2 1 2 2 1 1 2 1 2 2 1 1 3 1 2 2 2 1 2 3
 ```
+
 --- .scode-nowrap .compact #eval
 ## Clustering evaluation
 * purity and entropy
@@ -503,6 +512,7 @@ clusters
 ```
 ##  [1] 1 1 2 2 2 2 1 1 2 2 2 1 1 2 2 1 1 1 2 2
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 
@@ -517,6 +527,7 @@ table(classes, clusters) ## confusion matrix
 ##       2 3 4
 ##       3 4 4
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 
@@ -527,6 +538,7 @@ cluster.purity(clusters,classes)  ## purity
 ```
 ## [1] 0.4
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 
@@ -537,6 +549,7 @@ cluster.entropy(clusters,classes) ## entropy
 ```
 ## [1] 1.553665
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 

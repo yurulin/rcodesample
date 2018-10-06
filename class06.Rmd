@@ -114,14 +114,16 @@ food2agg
 
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=7, fig.height=5}
 plot(food2agg, which.plots=2) ## dendrogram
 ```
+
 --- .sscode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
 food2agg$merge  ## describes the sequential merge steps
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
@@ -129,6 +131,7 @@ food2agg$merge  ## describes the sequential merge steps
 food2aggv = agnes(daisy(food2), metric="euclidian", diss=T)
 plot(food2aggv, which.plots=2)
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
@@ -136,6 +139,7 @@ plot(food2aggv, which.plots=2)
 foodagg = agnes(food[,-1],diss=FALSE,metric="euclidian")
 plot(foodagg, which.plots=2)  ## dendrogram
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
@@ -146,6 +150,7 @@ plot(foodagg, which.plots=2)  ## dendrogram
 foodaggsin=agnes(food[,-1],diss=FALSE,metric="euclidian",method="single")
 plot(foodaggsin, which.plots=2)	## dendrogram
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
@@ -155,6 +160,7 @@ plot(foodaggsin, which.plots=2)	## dendrogram
 foodaggcomp=agnes(food[,-1],diss=FALSE,metric="euclidian",method="complete")
 plot(foodaggcomp, which.plots=2)	## dendrogram
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
@@ -165,17 +171,20 @@ data.dist = dist(food[,-1]) ## use dist to obtain distance matrix
 hc = hclust(data.dist,method='complete')
 data.dist
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
 plot(hc)
 ```
+
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
 hc1 = cutree(hc,k=3)
 print(hc1)
 ```
+
 --- .scode-nowrap .compact #eval
 ## Clustering evaluation
 * purity and entropy
@@ -209,21 +218,25 @@ classes
 clusters = sample(2, n, replace=T) ## randomly assign clusters
 clusters
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 ```{r, dependson=c(-1)}
 table(classes, clusters) ## confusion matrix
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 ```{r, dependson=c(-1)}
 cluster.purity(clusters,classes)  ## purity
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 ```{r, dependson=c(-1)}
 cluster.entropy(clusters,classes) ## entropy
 ```
+
 --- .scode-nowrap .compact 
 ## Clustering evaluation
 ```{r, dependson=c(-1)}
