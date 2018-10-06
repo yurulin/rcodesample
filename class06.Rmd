@@ -140,11 +140,10 @@ foodagg = agnes(food[,-1],diss=FALSE,metric="euclidian")
 plot(foodagg, which.plots=2)  ## dendrogram
 ```
 
---- .scode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
 # foodagg$merge  ## describes the sequential merge steps
-
 ## Using data on all nine variables (features)
 ## Euclidean distance and single linkage
 foodaggsin=agnes(food[,-1],diss=FALSE,metric="euclidian",method="single")
@@ -189,7 +188,6 @@ print(hc1)
 ## Clustering evaluation
 * purity and entropy
 * an "elbow" in the plot of SSE against cluster solutions
-
 ```{r}
 cluster.purity <- function(clusters, classes) {
   sum(apply(table(classes, clusters), 2, max)) / length(clusters)
@@ -205,7 +203,11 @@ cluster.entropy <- function(clusters,classes) {
   c = colSums(M) / sum(M)
   sum(m*c)
 }
+```
 
+--- .scode-nowrap .compact 
+## Clustering evaluation
+```{r, dependson=c(-1)}
 ## test the purity and entropy functions
 n = 20
 classes = sample(3, n, replace=T) ## randomly assign classes

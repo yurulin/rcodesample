@@ -306,12 +306,11 @@ plot(foodagg, which.plots=2)  ## dendrogram
 
 ![plot of chunk class06-chunk-13](assets/fig/class06-chunk-13-1.png)
 
---- .scode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Hierarchical clustering 
 
 ```r
 # foodagg$merge  ## describes the sequential merge steps
-
 ## Using data on all nine variables (features)
 ## Euclidean distance and single linkage
 foodaggsin=agnes(food[,-1],diss=FALSE,metric="euclidian",method="single")
@@ -474,7 +473,6 @@ print(hc1)
 * purity and entropy
 * an "elbow" in the plot of SSE against cluster solutions
 
-
 ```r
 cluster.purity <- function(clusters, classes) {
   sum(apply(table(classes, clusters), 2, max)) / length(clusters)
@@ -490,7 +488,12 @@ cluster.entropy <- function(clusters,classes) {
   c = colSums(M) / sum(M)
   sum(m*c)
 }
+```
 
+--- .scode-nowrap .compact 
+## Clustering evaluation
+
+```r
 ## test the purity and entropy functions
 n = 20
 classes = sample(3, n, replace=T) ## randomly assign classes
@@ -571,4 +574,4 @@ n.clusters = 10
 wssplot(scale(food[,-1]),nc=n.clusters)
 ```
 
-![plot of chunk class06-chunk-24](assets/fig/class06-chunk-24-1.png)
+![plot of chunk class06-chunk-25](assets/fig/class06-chunk-25-1.png)

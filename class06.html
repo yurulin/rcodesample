@@ -337,11 +337,10 @@ plot(foodagg, which.plots=2)  ## dendrogram
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-15">
+<section class="slide ssscode-nowrap compact" id="slide-15">
   <div>
     <h2>Hierarchical clustering</h2>
     <pre><code class="r"># foodagg$merge  ## describes the sequential merge steps
-
 ## Using data on all nine variables (features)
 ## Euclidean distance and single linkage
 foodaggsin=agnes(food[,-1],diss=FALSE,metric=&quot;euclidian&quot;,method=&quot;single&quot;)
@@ -525,8 +524,14 @@ cluster.entropy &lt;- function(clusters,classes) {
   c = colSums(M) / sum(M)
   sum(m*c)
 }
+</code></pre>
 
-## test the purity and entropy functions
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-21">
+  <div>
+    <h2>Clustering evaluation</h2>
+    <pre><code class="r">## test the purity and entropy functions
 n = 20
 classes = sample(3, n, replace=T) ## randomly assign classes
 classes
@@ -537,7 +542,7 @@ classes
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-21">
+<section class="slide scode-nowrap compact" id="slide-22">
   <div>
     <h2>Clustering evaluation</h2>
     <pre><code class="r">clusters = sample(2, n, replace=T) ## randomly assign clusters
@@ -549,7 +554,7 @@ clusters
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-22">
+<section class="slide scode-nowrap compact" id="slide-23">
   <div>
     <h2>Clustering evaluation</h2>
     <pre><code class="r">table(classes, clusters) ## confusion matrix
@@ -564,7 +569,7 @@ clusters
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-23">
+<section class="slide scode-nowrap compact" id="slide-24">
   <div>
     <h2>Clustering evaluation</h2>
     <pre><code class="r">cluster.purity(clusters,classes)  ## purity
@@ -575,7 +580,7 @@ clusters
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-24">
+<section class="slide scode-nowrap compact" id="slide-25">
   <div>
     <h2>Clustering evaluation</h2>
     <pre><code class="r">cluster.entropy(clusters,classes) ## entropy
@@ -586,7 +591,7 @@ clusters
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-25">
+<section class="slide scode-nowrap compact" id="slide-26">
   <div>
     <h2>Clustering evaluation</h2>
     <pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
@@ -606,7 +611,7 @@ n.clusters = 10
 wssplot(scale(food[,-1]),nc=n.clusters)
 </code></pre>
 
-<p><img src="assets/fig/class06-chunk-24-1.png" alt="plot of chunk class06-chunk-24"></p>
+<p><img src="assets/fig/class06-chunk-25-1.png" alt="plot of chunk class06-chunk-25"></p>
 
   </div>
 </section>
