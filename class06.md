@@ -28,10 +28,9 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- .modal #kmeans
+--- .scode-nowrap .compact #kmeans
 ## k-means
-
-protein consumption data
+Protein consumption data
 
 
 ```r
@@ -89,7 +88,7 @@ grpMeat
 ## [9] "ifault"
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## k-means
 
 ```r

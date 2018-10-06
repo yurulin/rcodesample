@@ -27,10 +27,9 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- .modal #kmeans
+--- .scode-nowrap .compact #kmeans
 ## k-means
-
-protein consumption data
+Protein consumption data
 
 ```{r}
 ## load the data:
@@ -50,7 +49,7 @@ grpMeat = kmeans(food[,c("WhiteMeat","RedMeat")], centers=3, nstart=10)
 grpMeat
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## k-means
 ```{r, dependson=c(-1)}
 ## list the cluster assignments
@@ -60,7 +59,7 @@ data.frame(food$Country[o],grpMeat$cluster[o])
 
 --- .scode-nowrap .compact
 ## k-means
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=5, fig.height=5}
 ## generate a scatter plot with cluster assignments
 plot(food$Red, food$White, type="n", xlim=c(3,19), xlab="Red Meat", ylab="White Meat")
 text(x=food$Red, y=food$White, labels=food$Country, col=grpMeat$cluster+1)
@@ -79,7 +78,7 @@ data.frame(food$Country[o],grpProtein$cluster[o])
 
 --- .scode-nowrap .compact
 ## k-means
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=5, fig.height=5}
 ## generate a scatter plot for the new result
 plot(food$Red, food$White, type="n", xlim=c(3,19), xlab="Red Meat", ylab="White Meat")
 text(x=food$Red, y=food$White, labels=food$Country, col=rainbow(7)[grpProtein$cluster])
