@@ -69,16 +69,16 @@
   /* smaller margin */
     margin-top: 0px ;
     margin-bottom: 0px ;
-    padding-top: 10px ;
-    padding-bottom: 10px ;	
+    padding-top: 0px ;
+    padding-bottom: 0px ;	
 }
 .compact-nowrap p, li, ol {
   font-size: 90%;
   line-height: 1.1em;
 
   /* smaller margin */
-    margin-top: 0px ;
-    margin-bottom: 0px ;
+    margin-top: 2px ;
+    margin-bottom: 2px ;
     padding-top: 2px ;
     padding-bottom: 2px ;	
 }
