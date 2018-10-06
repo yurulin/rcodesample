@@ -569,9 +569,14 @@ wssplot <- function(data, nc=15, seed=1234) {
   }
   plot(1:nc, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")
 }
+```
 
+--- .scode-nowrap .compact 
+## Clustering evaluation
+
+```r
 n.clusters = 10
 wssplot(scale(food[,-1]),nc=n.clusters)
 ```
 
-![plot of chunk class06-chunk-25](assets/fig/class06-chunk-25-1.png)
+![plot of chunk class06-chunk-26](assets/fig/class06-chunk-26-1.png)

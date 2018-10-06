@@ -606,12 +606,18 @@ wssplot &lt;- function(data, nc=15, seed=1234) {
   }
   plot(1:nc, wss, type=&quot;b&quot;, xlab=&quot;Number of Clusters&quot;, ylab=&quot;Within groups sum of squares&quot;)
 }
+</code></pre>
 
-n.clusters = 10
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-27">
+  <div>
+    <h2>Clustering evaluation</h2>
+    <pre><code class="r">n.clusters = 10
 wssplot(scale(food[,-1]),nc=n.clusters)
 </code></pre>
 
-<p><img src="assets/fig/class06-chunk-25-1.png" alt="plot of chunk class06-chunk-25"></p>
+<p><img src="assets/fig/class06-chunk-26-1.png" alt="plot of chunk class06-chunk-26"></p>
 
   </div>
 </section>

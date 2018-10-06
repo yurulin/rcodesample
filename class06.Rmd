@@ -254,7 +254,11 @@ wssplot <- function(data, nc=15, seed=1234) {
   }
   plot(1:nc, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")
 }
+```
 
+--- .scode-nowrap .compact 
+## Clustering evaluation
+```{r, dependson=c(-1)}
 n.clusters = 10
 wssplot(scale(food[,-1]),nc=n.clusters)
 ```
