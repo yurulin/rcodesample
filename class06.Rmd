@@ -85,7 +85,3 @@ plot(food$Red, food$White, type="n", xlim=c(3,19), xlab="Red Meat", ylab="White 
 text(x=food$Red, y=food$White, labels=food$Country, col=rainbow(7)[grpProtein$cluster])
 ```
 
---- .scode-nowrap .compact
-## k-means
-```{r, dependson=c(-1)}
-```
