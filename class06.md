@@ -190,6 +190,3 @@ text(x=food$Red, y=food$White, labels=food$Country, col=rainbow(7)[grpProtein$cl
 
 ![plot of chunk class06-chunk-7](assets/fig/class06-chunk-7-1.png)
 
---- .scode-nowrap .compact
-## k-means
-
