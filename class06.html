@@ -1,52 +1,44 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="en-US">
 <head>
-  <title>Class06</title>
-  <meta charset="utf-8">
-  <meta name="description" content="Class06">
-  <meta name="author" content="Yu-Ru Lin">
-  <meta name="generator" content="slidify" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
-  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
-    media="only screen and (max-device-width: 480px)" >
-  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
-  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/mystyle.css"></link>
-<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+	<title>Class06</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Class06">
+	<meta name="author" content="Yu-Ru Lin">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
 
-  
-  <!-- Grab CDN jQuery, fall back to local if offline -->
-  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
-  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
-  <script data-main="libraries/frameworks/io2012/js/slides" 
-    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
-  </script>
-  
-  
-
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
 </head>
-<body style="opacity: 0">
-  <slides class="layout-widescreen">
-    
-    <!-- LOGO SLIDE -->
-        <slide class="title-slide segue nobackground">
-  <hgroup class="auto-fadein">
-    <h1>Class06</h1>
-    <h2>clustering</h2>
-    <p>Yu-Ru Lin<br/>shower</p>
-  </hgroup>
-  <article></article>  
-</slide>
-    
-
-    <!-- SLIDES -->
-    <slide class="" id="toc" style="background:;">
-  <hgroup>
+<body class="list">
+  <header class="caption">
+  	<h1>Class06</h1>
+	</header>
+  <section class="slide " id="toc">
+  <div>
     <h2>Class06</h2>
-  </hgroup>
-  <article data-timings="">
     <ul>
 <li><a href="#set-up">Set up</a></li>
 <li><a href="#kmeans">k-means</a></li>
@@ -54,27 +46,19 @@
 <li><a href="#eval">Clustering evaluation</a></li>
 </ul>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="modal" id="set-up" style="background:;">
-  <hgroup>
+  </div>
+</section>
+<section class="slide modal" id="set-up">
+  <div>
     <h2>Install R packages</h2>
-  </hgroup>
-  <article data-timings="">
     <pre><code class="r">## this tutorial uses the following packages
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="modal" id="kmeans" style="background:;">
-  <hgroup>
+  </div>
+</section>
+<section class="slide modal" id="kmeans">
+  <div>
     <h2>k-means</h2>
-  </hgroup>
-  <article data-timings="">
     <p>protein consumption data</p>
 
 <pre><code class="r">## load the data:
@@ -95,15 +79,11 @@ dim(food)
 ## 3 Belgium    13.5       9.3  4.1 17.5  4.5    26.6    5.7  2.1    4.0
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="scode-nowrap compact" id="slide-4" style="background:;">
-  <hgroup>
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-4">
+  <div>
     <h2>k-means</h2>
-  </hgroup>
-  <article data-timings="">
     <pre><code class="r">## k-means clustering on just Red and White meat, with k=3 clusters
 set.seed(1) ## fix the random seed to produce the same results 
 grpMeat = kmeans(food[,c(&quot;WhiteMeat&quot;,&quot;RedMeat&quot;)], centers=3, nstart=10)
@@ -132,15 +112,11 @@ grpMeat
 ## [9] &quot;ifault&quot;
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="scode-nowrap compact" id="slide-5" style="background:;">
-  <hgroup>
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-5">
+  <div>
     <h2>k-means</h2>
-  </hgroup>
-  <article data-timings="">
     <pre><code class="r">## list the cluster assignments
 o=order(grpMeat$cluster)
 data.frame(food$Country[o],grpMeat$cluster[o])
@@ -174,15 +150,11 @@ data.frame(food$Country[o],grpMeat$cluster[o])
 ## 25       W Germany                  3
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="scode-nowrap compact" id="slide-6" style="background:;">
-  <hgroup>
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-6">
+  <div>
     <h2>k-means</h2>
-  </hgroup>
-  <article data-timings="">
     <pre><code class="r">## generate a scatter plot with cluster assignments
 plot(food$Red, food$White, type=&quot;n&quot;, xlim=c(3,19), xlab=&quot;Red Meat&quot;, ylab=&quot;White Meat&quot;)
 text(x=food$Red, y=food$White, labels=food$Country, col=grpMeat$cluster+1)
@@ -190,15 +162,11 @@ text(x=food$Red, y=food$White, labels=food$Country, col=grpMeat$cluster+1)
 
 <p><img src="assets/fig/class06-chunk-5-1.png" alt="plot of chunk class06-chunk-5"></p>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="scode-nowrap compact" id="slide-7" style="background:;">
-  <hgroup>
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-7">
+  <div>
     <h2>k-means</h2>
-  </hgroup>
-  <article data-timings="">
     <pre><code class="r">## same analysis, but now with clustering on all nine features;
 ## change the number of clusters to 7
 set.seed(1)
@@ -235,15 +203,11 @@ data.frame(food$Country[o],grpProtein$cluster[o])
 ## 25            USSR                     7
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="scode-nowrap compact" id="slide-8" style="background:;">
-  <hgroup>
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-8">
+  <div>
     <h2>k-means</h2>
-  </hgroup>
-  <article data-timings="">
     <pre><code class="r">## generate a scatter plot for the new result
 plot(food$Red, food$White, type=&quot;n&quot;, xlim=c(3,19), xlab=&quot;Red Meat&quot;, ylab=&quot;White Meat&quot;)
 text(x=food$Red, y=food$White, labels=food$Country, col=rainbow(7)[grpProtein$cluster])
@@ -251,89 +215,36 @@ text(x=food$Red, y=food$White, labels=food$Country, col=rainbow(7)[grpProtein$cl
 
 <p><img src="assets/fig/class06-chunk-7-1.png" alt="plot of chunk class06-chunk-7"></p>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-    <slide class="backdrop"></slide>
-  </slides>
-  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
-    <ul>
-      <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Class06'>
-         1
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Install R packages'>
-         2
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='k-means'>
-         3
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='k-means'>
-         4
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='k-means'>
-         5
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='k-means'>
-         6
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='k-means'>
-         7
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='k-means'>
-         8
-      </a>
-    </li>
-  </ul>
-  </div>  <!--[if IE]>
-    <script 
-      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
-    </script>
-    <script>CFInstall.check({mode: 'overlay'});</script>
-  <![endif]-->
-</body>
-  <!-- Load Javascripts for Widgets -->
-  
-  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        inlineMath: [['$','$'], ['\\(','\\)']],
-        processEscapes: true
-      }
-    });
-  </script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script> -->
-  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {
+	      inlineMath: [['$','$'], ['\\(','\\)']],
+	      processEscapes: true
+	    }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script> -->
+	<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
 </script>
 <!-- LOAD HIGHLIGHTER JS FILES -->
-  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
-   
-  </html>
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>
