@@ -1,0 +1,91 @@
+---
+title       : Class06
+subtitle    : clustering
+author      : Yu-Ru Lin
+job         : 
+  framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+toc         : true
+toc_depth   : 2
+
+--- #toc
+## Class06
+  
+* [Set up](#set-up)
+* [k-means](#kmeans)
+* [Hierarchical clustering](#hclu)
+* [Clustering evaluation](#eval)
+
+--- #set-up .modal 
+
+## Install R packages
+```{r, eval=FALSE}
+## this tutorial uses the following packages
+```
+
+--- .modal #kmeans
+## k-means
+
+protein consumption data
+
+```{r}
+## load the data:
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+food = read.csv(sprintf("%s/protein.csv",data.url))
+dim(food)
+
+food[1:3,] ## take a look at the first three rows
+```
+
+--- .scode-nowrap .compact
+## k-means
+```{r, dependson=c(-1)}
+## k-means clustering on just Red and White meat, with k=3 clusters
+set.seed(1) ## fix the random seed to produce the same results 
+grpMeat = kmeans(food[,c("WhiteMeat","RedMeat")], centers=3, nstart=10)
+grpMeat
+```
+
+--- .scode-nowrap .compact
+## k-means
+```{r, dependson=c(-1)}
+## list the cluster assignments
+o=order(grpMeat$cluster)
+data.frame(food$Country[o],grpMeat$cluster[o])
+```
+
+--- .scode-nowrap .compact
+## k-means
+```{r, dependson=c(-1)}
+## generate a scatter plot with cluster assignments
+plot(food$Red, food$White, type="n", xlim=c(3,19), xlab="Red Meat", ylab="White Meat")
+text(x=food$Red, y=food$White, labels=food$Country, col=grpMeat$cluster+1)
+```
+
+--- .scode-nowrap .compact
+## k-means
+```{r, dependson=c(-1)}
+## same analysis, but now with clustering on all nine features;
+## change the number of clusters to 7
+set.seed(1)
+grpProtein = kmeans(food[,-1], centers=7, nstart=10) 
+o=order(grpProtein$cluster)
+data.frame(food$Country[o],grpProtein$cluster[o])
+```
+
+--- .scode-nowrap .compact
+## k-means
+```{r, dependson=c(-1)}
+## generate a scatter plot for the new result
+plot(food$Red, food$White, type="n", xlim=c(3,19), xlab="Red Meat", ylab="White Meat")
+text(x=food$Red, y=food$White, labels=food$Country, col=rainbow(7)[grpProtein$cluster])
+```
+
+--- .scode-nowrap .compact
+## k-means
+```{r, dependson=c(-1)}
+```
