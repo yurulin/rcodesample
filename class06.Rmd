@@ -151,7 +151,7 @@ foodaggsin=agnes(food[,-1],diss=FALSE,metric="euclidian",method="single")
 plot(foodaggsin, which.plots=2)	## dendrogram
 ```
 
---- .ssscode-nowrap .compact 
+--- .scode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1), fig.width=7, fig.height=5}
 # foodaggsin$merge	## describes the sequential merge steps
@@ -161,7 +161,7 @@ foodaggcomp=agnes(food[,-1],diss=FALSE,metric="euclidian",method="complete")
 plot(foodaggcomp, which.plots=2)	## dendrogram
 ```
 
---- .scode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Hierarchical clustering 
 ```{r, dependson=c(-1)}
 # foodaggcomp$merge	## describes the sequential merge steps

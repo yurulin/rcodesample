@@ -320,7 +320,7 @@ plot(foodaggsin, which.plots=2)	## dendrogram
 
 ![plot of chunk class06-chunk-14](assets/fig/class06-chunk-14-1.png)
 
---- .ssscode-nowrap .compact 
+--- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
 ```r
@@ -333,7 +333,7 @@ plot(foodaggcomp, which.plots=2)	## dendrogram
 
 ![plot of chunk class06-chunk-15](assets/fig/class06-chunk-15-1.png)
 
---- .scode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Hierarchical clustering 
 
 ```r
