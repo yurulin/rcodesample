@@ -126,7 +126,7 @@ food2agg$merge  ## describes the sequential merge steps
 
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=7, fig.height=5}
 ## identical result obtained by first computing the distance matrix
 food2aggv = agnes(daisy(food2), metric="euclidian", diss=T)
 plot(food2aggv, which.plots=2)
@@ -134,25 +134,26 @@ plot(food2aggv, which.plots=2)
 
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=7, fig.height=5}
 ## use all nine features with Euclidean distance and average linkage
 foodagg = agnes(food[,-1],diss=FALSE,metric="euclidian")
 plot(foodagg, which.plots=2)  ## dendrogram
 ```
 
---- .ssscode-nowrap .compact 
+--- .scode-nowrap .compact 
 ## Hierarchical clustering 
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=7, fig.height=5}
 # foodagg$merge  ## describes the sequential merge steps
+
 ## Using data on all nine variables (features)
 ## Euclidean distance and single linkage
 foodaggsin=agnes(food[,-1],diss=FALSE,metric="euclidian",method="single")
 plot(foodaggsin, which.plots=2)	## dendrogram
 ```
 
---- .scode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Hierarchical clustering 
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=7, fig.height=5}
 # foodaggsin$merge	## describes the sequential merge steps
 
 ## Euclidean distance and complete linkage
@@ -173,7 +174,7 @@ data.dist
 
 --- .scode-nowrap .compact 
 ## Hierarchical clustering 
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=7, fig.height=5}
 plot(hc)
 ```
 

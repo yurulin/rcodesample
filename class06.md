@@ -306,11 +306,12 @@ plot(foodagg, which.plots=2)  ## dendrogram
 
 ![plot of chunk class06-chunk-13](assets/fig/class06-chunk-13-1.png)
 
---- .ssscode-nowrap .compact 
+--- .scode-nowrap .compact 
 ## Hierarchical clustering 
 
 ```r
 # foodagg$merge  ## describes the sequential merge steps
+
 ## Using data on all nine variables (features)
 ## Euclidean distance and single linkage
 foodaggsin=agnes(food[,-1],diss=FALSE,metric="euclidian",method="single")
@@ -319,7 +320,7 @@ plot(foodaggsin, which.plots=2)	## dendrogram
 
 ![plot of chunk class06-chunk-14](assets/fig/class06-chunk-14-1.png)
 
---- .scode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Hierarchical clustering 
 
 ```r
