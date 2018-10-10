@@ -49,6 +49,10 @@ grpMeat = kmeans(food[,c("WhiteMeat","RedMeat")], centers=3, nstart=10)
 grpMeat
 ```
 
+--- .model
+## k-means
+See `?kmeans` [help page](https://www.rdocumentation.org/packages/stats/versions/3.5.1/topics/kmeans) for `totss`, `withinss`, `tot.withinss`, `betweenss`, etc.
+
 --- .sscode-nowrap .compact
 ## k-means
 ```{r, dependson=c(-1)}

@@ -88,6 +88,10 @@ grpMeat
 ## [9] "ifault"
 ```
 
+--- .model
+## k-means
+See `?kmeans` [help page](https://www.rdocumentation.org/packages/stats/versions/3.5.1/topics/kmeans) for `totss`, `withinss`, `tot.withinss`, `betweenss`, etc.
+
 --- .sscode-nowrap .compact
 ## k-means
 
