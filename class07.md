@@ -382,7 +382,7 @@ biplot(pcafood)
 
 --- #svd .ssscode-nowrap .compact
 ## SVD
-on a simple term-doc matrix example
+* on a simple term-doc matrix example
 
 ```r
 ## 9 documents and 12 terms

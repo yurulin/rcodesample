@@ -149,7 +149,7 @@ mtext(side=1, "European Protein Principal Components",  line=1, font=2)
 
 --- .scode-nowrap .compact 
 ## PCA on protein consumption data
-```{r, dependson=c(-1),fig.width=7, fig.height=5}
+```{r, dependson=c(-1),fig.width=6, fig.height=5}
 ## how do the PCs look?
 plot(foodpc[,1:2], type="n", xlim=c(-4,5))
 text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
@@ -157,7 +157,7 @@ text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
 
 --- .scode-nowrap .compact 
 ## PCA on protein consumption data
-```{r, dependson=c(-1),fig.width=7, fig.height=5}
+```{r, dependson=c(-1),fig.width=6, fig.height=5}
 plot(foodpc[,3:4], type="n", xlim=c(-3,3))
 text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 ```
@@ -177,7 +177,7 @@ biplot(pcafood)
 
 --- #svd .ssscode-nowrap .compact
 ## SVD
-on a simple term-doc matrix example
+* on a simple term-doc matrix example
 ```{r}
 ## 9 documents and 12 terms
 docs = c(
