@@ -1031,15 +1031,21 @@ all.plot &lt;- ggplot(all.mds, aes(x = x, y = y)) +
               labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;),
               solid = FALSE) +
   facet_wrap(~ congress)
-
-print(all.plot)
 </code></pre>
-
-<p><img src="assets/fig/class07-chunk-40-1.png" alt="plot of chunk class07-chunk-40"></p>
 
   </div>
 </section>
 <section class="slide ssscode-nowrap compact" id="slide-42">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">print(all.plot)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-41-1.png" alt="plot of chunk class07-chunk-41"></p>
+
+  </div>
+</section>
+<section class="slide sssscode-nowrap compact" id="slide-43">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## plot all congresses and save into images
@@ -1058,9 +1064,7 @@ if (0) { ## not run
            axis.text.x = theme_blank(),
            axis.text.y = theme_blank(),
            title = plot.title,
-           panel.grid.major = theme_blank()) +
-      xlab(&quot;&quot;) +
-      ylab(&quot;&quot;)
+           panel.grid.major = theme_blank()) + xlab(&quot;&quot;) + ylab(&quot;&quot;)
 
     # Build up point and text plots separately
     mds.point &lt;- mds.plot + geom_point(aes(shape = party,
@@ -1110,12 +1114,6 @@ if (0) { ## not run
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-43">
-  <div>
-    <h2>MDS on congress vote data</h2>
-    
-  </div>
-</section>
 <section class="slide scode-nowrap compact" id="slide-44">
   <div>
     <h2>MDS on congress vote data</h2>
@@ -1123,6 +1121,12 @@ if (0) { ## not run
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-45">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-46">
   <div>
     <h2>MDS on congress vote data</h2>
     

@@ -988,13 +988,18 @@ all.plot <- ggplot(all.mds, aes(x = x, y = y)) +
               labels = c("Dem.", "Rep.", "Ind."),
               solid = FALSE) +
   facet_wrap(~ congress)
+```
 
+--- .ssscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
 print(all.plot)
 ```
 
-![plot of chunk class07-chunk-40](assets/fig/class07-chunk-40-1.png)
+![plot of chunk class07-chunk-41](assets/fig/class07-chunk-41-1.png)
 
---- .ssscode-nowrap .compact 
+--- .sssscode-nowrap .compact 
 ## MDS on congress vote data
 
 ```r
@@ -1014,9 +1019,7 @@ if (0) { ## not run
            axis.text.x = theme_blank(),
            axis.text.y = theme_blank(),
            title = plot.title,
-           panel.grid.major = theme_blank()) +
-      xlab("") +
-      ylab("")
+           panel.grid.major = theme_blank()) + xlab("") + ylab("")
     
     # Build up point and text plots separately
     mds.point <- mds.plot + geom_point(aes(shape = party,
