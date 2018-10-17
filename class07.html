@@ -420,11 +420,8 @@ biplot(pcafood)
 <section class="slide ssscode-nowrap compact" id="svd">
   <div>
     <h2>SVD</h2>
-    <ul>
-<li>on a simple term-doc matrix example</li>
-</ul>
-
-<pre><code class="r">## 9 documents and 12 terms
+    <pre><code class="r">## on a simple term-doc matrix example
+## 9 documents and 12 terms
 docs = c(
   &quot;Human machine interface for Lab ABC computer applications&quot;,
   &quot;A survey of user opinion of computer system response time&quot;,
@@ -853,9 +850,169 @@ text(country.mds, labels=food$Country)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-35">
+<section class="slide sscode-nowrap compact" id="mds2">
   <div>
-    <h2>MDS on protein consumption data</h2>
+    <h2>MDS on congress vote data</h2>
+    <p>The example and code are modified from &quot;Machine Learning for Hackers&quot; by Drew Conway and John Myles White (O&#39;Reilly).</p>
+
+<pre><code class="r">library(&#39;foreign&#39;) ## for loading dta files using read.dta
+library(&#39;ggplot2&#39;)
+
+data.url = &#39;http://www.yurulin.com/class/spring2015_datamining/data/roll_call&#39;
+#data.dir = file.path(&quot;data&quot;, &quot;roll_call&quot;)
+#data.files = list.files(data.dir)
+data.files = c(&quot;sen101kh.dta&quot;, &quot;sen102kh.dta&quot;,
+               &quot;sen103kh.dta&quot;, &quot;sen104kh.dta&quot;,
+               &quot;sen105kh.dta&quot;, &quot;sen106kh.dta&quot;,
+               &quot;sen107kh.dta&quot;, &quot;sen108kh_7.dta&quot;,
+               &quot;sen109kh.dta&quot;, &quot;sen110kh_2008.dta&quot;,
+               &quot;sen111kh.dta&quot;)
+## Add all roll call vote data frames to a single list
+rollcall.data = lapply(data.files,
+                       function(f) {
+                         read.dta(file.path(data.url, f), convert.factors = FALSE)
+                       })
+dim(rollcall.data[[1]])
+</code></pre>
+
+<pre><code>## [1] 103 647
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-36">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">head(rollcall.data[[1]][,1:12])
+</code></pre>
+
+<pre><code>##   cong    id state dist  lstate party eh1 eh2        name V1 V2 V3
+## 1  101 99908    99    0 USA       200   0   0 BUSH         1  1  1
+## 2  101 14659    41    0 ALABAMA   100   0   1 SHELBY, RIC  1  1  1
+## 3  101 14705    41    0 ALABAMA   100   0   1 HEFLIN, HOW  1  1  1
+## 4  101 12109    81    0 ALASKA    200   0   1 STEVENS, TH  1  1  1
+## 5  101 14907    81    0 ALASKA    200   0   1 MURKOWSKI,   1  1  1
+## 6  101 14502    61    0 ARIZONA   100   0   1 DECONCINI,   1  1  1
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-37">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">## @see http://www.voteview.com/senate101.htm&#39;
+
+## This function takes a single data frame of roll call votes and returns a 
+## Senator-by-vote matrix.
+rollcall.simplified &lt;- function(df) {
+  no.pres &lt;- subset(df, state &lt; 99)
+  ## to group all Yea and Nay types together
+  for(i in 10:ncol(no.pres)) {
+    no.pres[,i] = ifelse(no.pres[,i] &gt; 6, 0, no.pres[,i])
+    no.pres[,i] = ifelse(no.pres[,i] &gt; 0 &amp; no.pres[,i] &lt; 4, 1, no.pres[,i])
+    no.pres[,i] = ifelse(no.pres[,i] &gt; 1, -1, no.pres[,i])
+  }
+
+  return(as.matrix(no.pres[,10:ncol(no.pres)]))
+}
+
+rollcall.simple = lapply(rollcall.data, rollcall.simplified)
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-38">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">## Multiply the matrix by its transpose to get Senator-to-Senator tranformation, 
+## and calculate the Euclidan distance between each Senator.
+rollcall.dist = lapply(rollcall.simple, function(m) dist(m %*% t(m)))
+
+## Do the MDS
+rollcall.mds = lapply(rollcall.dist,
+                      function(d) as.data.frame((cmdscale(d, k = 2)) * -1))
+
+## Add identification information about Senators back into MDS data frames
+congresses = 101:111
+
+for(i in 1:length(rollcall.mds)) {
+  names(rollcall.mds[[i]]) = c(&quot;x&quot;, &quot;y&quot;)
+
+  congress = subset(rollcall.data[[i]], state &lt; 99)
+
+  congress.names = sapply(as.character(congress$name),
+                          function(n) strsplit(n, &quot;[, ]&quot;)[[1]][1])
+
+  rollcall.mds[[i]] = transform(rollcall.mds[[i]],
+                                name = congress.names,
+                                party = as.factor(congress$party),
+                                congress = congresses[i])
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-39">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">head(rollcall.mds[[1]])
+</code></pre>
+
+<pre><code>##            x        y      name party congress
+## 2  -11.44068 293.0001    SHELBY   100      101
+## 3  283.82580 132.4369    HEFLIN   100      101
+## 4  885.85564 430.3451   STEVENS   200      101
+## 5 1714.21327 185.5262 MURKOWSKI   200      101
+## 6 -843.58421 220.1038 DECONCINI   100      101
+## 7 1594.50998 225.8166    MCCAIN   200      101
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-40">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">## Create a plot of just the 110th Congress
+cong.110 &lt;- rollcall.mds[[10]]
+
+base.110 &lt;- ggplot(cong.110, aes(x = x, y = y)) +
+  scale_alpha(guide=&quot;none&quot;) + theme_bw() +
+  theme(axis.ticks = element_blank(),
+       axis.text.x = element_blank(),
+       axis.text.y = element_blank()) +
+  xlab(&quot;&quot;) +
+  ylab(&quot;&quot;) +
+  scale_shape(name = &quot;Party&quot;, breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
+              labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;), solid = FALSE) +
+  scale_color_manual(name = &quot;Party&quot;, values = c(&quot;100&quot; = &quot;blue&quot;,
+                                                &quot;200&quot; = &quot;red&quot;,
+                                                &quot;328&quot;=&quot;grey&quot;),
+                     breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
+                     labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;))
+
+print(base.110 + geom_point(aes(shape = party,
+                                alpha = 0.75),size=4))
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-38-1.png" alt="plot of chunk class07-chunk-38"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-41">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">print(base.110 + geom_text(aes(color = party,
+                               alpha = 0.75,
+                               label = cong.110$name),size=4))
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-39-1.png" alt="plot of chunk class07-chunk-39"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-42">
+  <div>
+    <h2>MDS on congress vote data</h2>
     
   </div>
 </section>

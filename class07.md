@@ -382,9 +382,9 @@ biplot(pcafood)
 
 --- #svd .ssscode-nowrap .compact
 ## SVD
-* on a simple term-doc matrix example
 
 ```r
+## on a simple term-doc matrix example
 ## 9 documents and 12 terms
 docs = c(
   "Human machine interface for Lab ABC computer applications",
@@ -813,6 +813,162 @@ text(country.mds, labels=food$Country)
 
 ![plot of chunk class07-chunk-32](assets/fig/class07-chunk-32-1.png)
 
+--- .sscode-nowrap .compact #mds2
+## MDS on congress vote data
+The example and code are modified from "Machine Learning for Hackers" by Drew Conway and John Myles White (O'Reilly).
+
+
+```r
+library('foreign') ## for loading dta files using read.dta
+library('ggplot2')
+
+data.url = 'http://www.yurulin.com/class/spring2015_datamining/data/roll_call'
+#data.dir = file.path("data", "roll_call")
+#data.files = list.files(data.dir)
+data.files = c("sen101kh.dta", "sen102kh.dta",
+               "sen103kh.dta", "sen104kh.dta",
+               "sen105kh.dta", "sen106kh.dta",
+               "sen107kh.dta", "sen108kh_7.dta",
+               "sen109kh.dta", "sen110kh_2008.dta",
+               "sen111kh.dta")
+## Add all roll call vote data frames to a single list
+rollcall.data = lapply(data.files,
+                       function(f) {
+                         read.dta(file.path(data.url, f), convert.factors = FALSE)
+                       })
+dim(rollcall.data[[1]])
+```
+
+```
+## [1] 103 647
+```
+
+--- .ssscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+head(rollcall.data[[1]][,1:12])
+```
+
+```
+##   cong    id state dist  lstate party eh1 eh2        name V1 V2 V3
+## 1  101 99908    99    0 USA       200   0   0 BUSH         1  1  1
+## 2  101 14659    41    0 ALABAMA   100   0   1 SHELBY, RIC  1  1  1
+## 3  101 14705    41    0 ALABAMA   100   0   1 HEFLIN, HOW  1  1  1
+## 4  101 12109    81    0 ALASKA    200   0   1 STEVENS, TH  1  1  1
+## 5  101 14907    81    0 ALASKA    200   0   1 MURKOWSKI,   1  1  1
+## 6  101 14502    61    0 ARIZONA   100   0   1 DECONCINI,   1  1  1
+```
+
+--- .ssscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+## @see http://www.voteview.com/senate101.htm'
+
+## This function takes a single data frame of roll call votes and returns a 
+## Senator-by-vote matrix.
+rollcall.simplified <- function(df) {
+  no.pres <- subset(df, state < 99)
+  ## to group all Yea and Nay types together
+  for(i in 10:ncol(no.pres)) {
+    no.pres[,i] = ifelse(no.pres[,i] > 6, 0, no.pres[,i])
+    no.pres[,i] = ifelse(no.pres[,i] > 0 & no.pres[,i] < 4, 1, no.pres[,i])
+    no.pres[,i] = ifelse(no.pres[,i] > 1, -1, no.pres[,i])
+  }
+  
+  return(as.matrix(no.pres[,10:ncol(no.pres)]))
+}
+
+rollcall.simple = lapply(rollcall.data, rollcall.simplified)
+```
+
+--- .sscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+## Multiply the matrix by its transpose to get Senator-to-Senator tranformation, 
+## and calculate the Euclidan distance between each Senator.
+rollcall.dist = lapply(rollcall.simple, function(m) dist(m %*% t(m)))
+
+## Do the MDS
+rollcall.mds = lapply(rollcall.dist,
+                      function(d) as.data.frame((cmdscale(d, k = 2)) * -1))
+
+## Add identification information about Senators back into MDS data frames
+congresses = 101:111
+
+for(i in 1:length(rollcall.mds)) {
+  names(rollcall.mds[[i]]) = c("x", "y")
+  
+  congress = subset(rollcall.data[[i]], state < 99)
+  
+  congress.names = sapply(as.character(congress$name),
+                          function(n) strsplit(n, "[, ]")[[1]][1])
+  
+  rollcall.mds[[i]] = transform(rollcall.mds[[i]],
+                                name = congress.names,
+                                party = as.factor(congress$party),
+                                congress = congresses[i])
+}
+```
+
+--- .ssscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+head(rollcall.mds[[1]])
+```
+
+```
+##            x        y      name party congress
+## 2  -11.44068 293.0001    SHELBY   100      101
+## 3  283.82580 132.4369    HEFLIN   100      101
+## 4  885.85564 430.3451   STEVENS   200      101
+## 5 1714.21327 185.5262 MURKOWSKI   200      101
+## 6 -843.58421 220.1038 DECONCINI   100      101
+## 7 1594.50998 225.8166    MCCAIN   200      101
+```
+
+--- .sscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+## Create a plot of just the 110th Congress
+cong.110 <- rollcall.mds[[10]]
+
+base.110 <- ggplot(cong.110, aes(x = x, y = y)) +
+  scale_alpha(guide="none") + theme_bw() +
+  theme(axis.ticks = element_blank(),
+       axis.text.x = element_blank(),
+       axis.text.y = element_blank()) +
+  xlab("") +
+  ylab("") +
+  scale_shape(name = "Party", breaks = c("100", "200", "328"),
+              labels = c("Dem.", "Rep.", "Ind."), solid = FALSE) +
+  scale_color_manual(name = "Party", values = c("100" = "blue",
+                                                "200" = "red",
+                                                "328"="grey"),
+                     breaks = c("100", "200", "328"),
+                     labels = c("Dem.", "Rep.", "Ind."))
+
+print(base.110 + geom_point(aes(shape = party,
+                                alpha = 0.75),size=4))
+```
+
+![plot of chunk class07-chunk-38](assets/fig/class07-chunk-38-1.png)
+
 --- .scode-nowrap .compact 
-## MDS on protein consumption data
+## MDS on congress vote data
+
+```r
+print(base.110 + geom_text(aes(color = party,
+                               alpha = 0.75,
+                               label = cong.110$name),size=4))
+```
+
+![plot of chunk class07-chunk-39](assets/fig/class07-chunk-39-1.png)
+
+--- .scode-nowrap .compact 
+## MDS on congress vote data
 
