@@ -46,13 +46,15 @@
 <li><a href="#svd">SVD</a></li>
 <li><a href="#mds">MDS</a></li>
 <li><a href="#mds1">MDS on protein consumption data</a></li>
-<li><a href="#mds2">MDS on congress vote data</a>
---- #set-up .modal </li>
+<li><a href="#mds2">MDS on congress vote data</a></li>
 </ul>
 
-<h2>Install R packages</h2>
-
-<pre><code class="r">## this tutorial uses the following packages
+  </div>
+</section>
+<section class="slide modal" id="set-up">
+  <div>
+    <h2>Install R packages</h2>
+    <pre><code class="r">## this tutorial uses the following packages
 </code></pre>
 
   </div>
@@ -69,7 +71,7 @@
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-3">
+<section class="slide scode-nowrap compact" id="slide-4">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
@@ -91,7 +93,7 @@ data[1:3,]
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-4">
+<section class="slide scode-nowrap compact" id="slide-5">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">states = data[,1]; n = length(states)
@@ -105,7 +107,7 @@ plot(my.scaled.data,cex=0.9,col=&quot;blue&quot;,main=&quot;Plot of Scaled Data&
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-5">
+<section class="slide scode-nowrap compact" id="slide-6">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">## 2) Calculate the covariance matrix
@@ -120,7 +122,7 @@ my.cov
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-6">
+<section class="slide scode-nowrap compact" id="slide-7">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">## 3) Calculate the eigenvectors and eigenvalues of the covariance matrix
@@ -140,7 +142,7 @@ my.eigen
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-7">
+<section class="slide scode-nowrap compact" id="slide-8">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">## 3a) Plot the Eigenvectors over the scaled data
@@ -155,7 +157,7 @@ abline(0,pc2.slope,col=&quot;green&quot;)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-8">
+<section class="slide scode-nowrap compact" id="slide-9">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">## 4) Express the scaled data in terms of eigenvectors (principal components)
@@ -190,7 +192,7 @@ food[1:3,] ## take a look at the first three rows
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-10">
+<section class="slide ssscode-nowrap compact" id="slide-11">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## correlation matrix
@@ -222,7 +224,7 @@ cor(food[,-1])
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-11">
+<section class="slide ssscode-nowrap compact" id="slide-12">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## scale = TRUE: variables are first standardized. Default is FALSE
@@ -259,7 +261,7 @@ pcafood
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-12">
+<section class="slide ssscode-nowrap compact" id="slide-13">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## the loadings (i.e., a matrix whose columns contain the eigenvectors)
@@ -290,7 +292,7 @@ pcafood$rotation
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-13">
+<section class="slide ssscode-nowrap compact" id="slide-14">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## use &#39;predict&#39; to project data onto the loadings
@@ -354,7 +356,7 @@ foodpc
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-14">
+<section class="slide scode-nowrap compact" id="slide-15">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## how many principal components do we need?
@@ -368,7 +370,7 @@ mtext(side=1, &quot;European Protein Principal Components&quot;,  line=1, font=2
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-15">
+<section class="slide scode-nowrap compact" id="slide-16">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## how do the PCs look?
@@ -380,7 +382,7 @@ text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-16">
+<section class="slide scode-nowrap compact" id="slide-17">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">plot(foodpc[,3:4], type=&quot;n&quot;, xlim=c(-3,3))
@@ -391,7 +393,7 @@ text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 
   </div>
 </section>
-<section class="slide sscode-nowrap compact" id="slide-17">
+<section class="slide sscode-nowrap compact" id="slide-18">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">pcafood$rotation[,1]
@@ -405,7 +407,7 @@ text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-18">
+<section class="slide scode-nowrap compact" id="slide-19">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## plot both the observations and variables of a matrix
@@ -470,7 +472,7 @@ dim(tdm)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-20">
+<section class="slide scode-nowrap compact" id="slide-21">
   <div>
     <h2>SVD</h2>
     <pre><code class="r">rownames(tdm) = terms
@@ -494,7 +496,7 @@ tdm
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-21">
+<section class="slide scode-nowrap compact" id="slide-22">
   <div>
     <h2>SVD</h2>
     <pre><code class="r">## perform svd
@@ -514,7 +516,7 @@ cat(&quot;scale:&quot;); s
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-22">
+<section class="slide ssscode-nowrap compact" id="slide-23">
   <div>
     <h2>SVD</h2>
     <pre><code class="r">cat(&quot;term vector:&quot;); u
@@ -540,7 +542,7 @@ cat(&quot;scale:&quot;); s
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-23">
+<section class="slide ssscode-nowrap compact" id="slide-24">
   <div>
     <h2>SVD</h2>
     <pre><code class="r">cat(&quot;doc vector:&quot;); v
@@ -598,7 +600,7 @@ ex.matrix ## a customer-product matrix
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-25">
+<section class="slide scode-nowrap compact" id="slide-26">
   <div>
     <h2>MDS</h2>
     <pre><code class="r">t(ex.matrix) ## a product-customer matrix
@@ -615,7 +617,7 @@ ex.matrix ## a customer-product matrix
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-26">
+<section class="slide scode-nowrap compact" id="slide-27">
   <div>
     <h2>MDS</h2>
     <pre><code class="r">## convert matrix to customer-by-customer matrix
@@ -632,7 +634,7 @@ ex.mult
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-27">
+<section class="slide scode-nowrap compact" id="slide-28">
   <div>
     <h2>MDS</h2>
     <pre><code class="r">## calculate distance between A and D
@@ -644,7 +646,7 @@ sqrt(sum((ex.mult[1, ] - ex.mult[4, ]) ^ 2))
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-28">
+<section class="slide scode-nowrap compact" id="slide-29">
   <div>
     <h2>MDS</h2>
     <pre><code class="r">## calculate distance matrix
@@ -660,7 +662,7 @@ ex.dist
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-29">
+<section class="slide scode-nowrap compact" id="slide-30">
   <div>
     <h2>MDS</h2>
     <pre><code class="r">## visualize clusters
@@ -690,7 +692,7 @@ food[1:3,] ## take a look at the first three rows
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-31">
+<section class="slide ssscode-nowrap compact" id="slide-32">
   <div>
     <h2>MDS on protein consumption data</h2>
     <pre><code class="r">## calculate distance matrix
@@ -802,7 +804,7 @@ country.dist
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-32">
+<section class="slide ssscode-nowrap compact" id="slide-33">
   <div>
     <h2>MDS on protein consumption data</h2>
     <pre><code class="r">## visualize clusters
@@ -840,7 +842,7 @@ country.mds
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-33">
+<section class="slide scode-nowrap compact" id="slide-34">
   <div>
     <h2>MDS on protein consumption data</h2>
     <pre><code class="r">plot(country.mds, type = &#39;n&#39;)
@@ -883,7 +885,7 @@ dim(rollcall.data[[1]])
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-35">
+<section class="slide ssscode-nowrap compact" id="slide-36">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">head(rollcall.data[[1]][,1:12])
@@ -900,7 +902,7 @@ dim(rollcall.data[[1]])
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-36">
+<section class="slide ssscode-nowrap compact" id="slide-37">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## @see http://www.voteview.com/senate101.htm&#39;
@@ -924,7 +926,7 @@ rollcall.simple = lapply(rollcall.data, rollcall.simplified)
 
   </div>
 </section>
-<section class="slide sscode-nowrap compact" id="slide-37">
+<section class="slide sscode-nowrap compact" id="slide-38">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## Multiply the matrix by its transpose to get Senator-to-Senator tranformation, 
@@ -955,7 +957,7 @@ for(i in 1:length(rollcall.mds)) {
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-38">
+<section class="slide ssscode-nowrap compact" id="slide-39">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">head(rollcall.mds[[1]])
@@ -972,7 +974,7 @@ for(i in 1:length(rollcall.mds)) {
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-39">
+<section class="slide ssscode-nowrap compact" id="slide-40">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## Create a plot of just the 110th Congress
@@ -982,9 +984,7 @@ base.110 &lt;- ggplot(cong.110, aes(x = x, y = y)) +
   scale_alpha(guide=&quot;none&quot;) + theme_bw() +
   theme(axis.ticks = element_blank(),
        axis.text.x = element_blank(),
-       axis.text.y = element_blank()) +
-  xlab(&quot;&quot;) +
-  ylab(&quot;&quot;) +
+       axis.text.y = element_blank()) + xlab(&quot;&quot;) + ylab(&quot;&quot;) +
   scale_shape(name = &quot;Party&quot;, breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
               labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;), solid = FALSE) +
   scale_color_manual(name = &quot;Party&quot;, values = c(&quot;100&quot; = &quot;blue&quot;,
@@ -992,7 +992,6 @@ base.110 &lt;- ggplot(cong.110, aes(x = x, y = y)) +
                                                 &quot;328&quot;=&quot;grey&quot;),
                      breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
                      labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;))
-
 print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 </code></pre>
 
@@ -1000,7 +999,7 @@ print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-40">
+<section class="slide scode-nowrap compact" id="slide-41">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">print(base.110 + geom_text(aes(color = party,
@@ -1012,7 +1011,7 @@ print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-41">
+<section class="slide scode-nowrap compact" id="slide-42">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## Create a single visualization of MDS for all Congresses on a grid
@@ -1035,7 +1034,7 @@ all.plot &lt;- ggplot(all.mds, aes(x = x, y = y)) +
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-42">
+<section class="slide ssscode-nowrap compact" id="slide-43">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">print(all.plot)
@@ -1045,7 +1044,7 @@ all.plot &lt;- ggplot(all.mds, aes(x = x, y = y)) +
 
   </div>
 </section>
-<section class="slide sssscode-nowrap compact" id="slide-43">
+<section class="slide ssscode-nowrap compact" id="slide-44">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## plot all congresses and save into images
@@ -1097,8 +1096,14 @@ if (0) { ## not run
                                                 breaks = c(&quot;100&quot;, &quot;200&quot;),
                                                 labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;))
     }
+</code></pre>
 
-    ggsave(plot = mds.point,
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-45">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">    ggsave(plot = mds.point,
            filename = file.path(&#39;images_senate_plots&#39;,
                                 paste(congress, &quot;_point.pdf&quot;, sep = &quot;&quot;)),
            width = 8,
@@ -1114,19 +1119,13 @@ if (0) { ## not run
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-44">
-  <div>
-    <h2>MDS on congress vote data</h2>
-    
-  </div>
-</section>
-<section class="slide scode-nowrap compact" id="slide-45">
-  <div>
-    <h2>MDS on congress vote data</h2>
-    
-  </div>
-</section>
 <section class="slide scode-nowrap compact" id="slide-46">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-47">
   <div>
     <h2>MDS on congress vote data</h2>
     

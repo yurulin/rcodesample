@@ -22,6 +22,7 @@ toc_depth   : 2
 * [MDS](#mds)
 * [MDS on protein consumption data](#mds1)
 * [MDS on congress vote data](#mds2)
+
 --- #set-up .modal 
 
 ## Install R packages
@@ -941,9 +942,7 @@ base.110 <- ggplot(cong.110, aes(x = x, y = y)) +
   scale_alpha(guide="none") + theme_bw() +
   theme(axis.ticks = element_blank(),
        axis.text.x = element_blank(),
-       axis.text.y = element_blank()) +
-  xlab("") +
-  ylab("") +
+       axis.text.y = element_blank()) + xlab("") + ylab("") +
   scale_shape(name = "Party", breaks = c("100", "200", "328"),
               labels = c("Dem.", "Rep.", "Ind."), solid = FALSE) +
   scale_color_manual(name = "Party", values = c("100" = "blue",
@@ -951,7 +950,6 @@ base.110 <- ggplot(cong.110, aes(x = x, y = y)) +
                                                 "328"="grey"),
                      breaks = c("100", "200", "328"),
                      labels = c("Dem.", "Rep.", "Ind."))
-
 print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 ```
 
@@ -999,7 +997,7 @@ print(all.plot)
 
 ![plot of chunk class07-chunk-41](assets/fig/class07-chunk-41-1.png)
 
---- .sssscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## MDS on congress vote data
 
 ```r
@@ -1052,7 +1050,12 @@ if (0) { ## not run
                                                 breaks = c("100", "200"),
                                                 labels = c("Dem.", "Rep."))
     }
-    
+```
+
+--- .ssscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
     ggsave(plot = mds.point,
            filename = file.path('images_senate_plots',
                                 paste(congress, "_point.pdf", sep = "")),
@@ -1066,10 +1069,6 @@ if (0) { ## not run
   }
 }
 ```
-
---- .scode-nowrap .compact 
-## MDS on congress vote data
-
 
 --- .scode-nowrap .compact 
 ## MDS on congress vote data
