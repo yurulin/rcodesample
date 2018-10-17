@@ -577,7 +577,9 @@ cat(&quot;scale:&quot;); s
 <section class="slide scode-nowrap compact" id="mds">
   <div>
     <h2>MDS</h2>
-    <p>on a toy example</p>
+    <ul>
+<li>on a toy example</li>
+</ul>
 
 <pre><code class="r">set.seed(851982) # To make sure results are consistent
 ex.matrix = matrix(sample(c(-1, 0, 1), 24, replace = TRUE),
@@ -853,7 +855,9 @@ text(country.mds, labels=food$Country)
 <section class="slide sscode-nowrap compact" id="mds2">
   <div>
     <h2>MDS on congress vote data</h2>
-    <p>The example and code are modified from &quot;Machine Learning for Hackers&quot; by Drew Conway and John Myles White (O&#39;Reilly).</p>
+    <ul>
+<li>The example and code are modified from &quot;Machine Learning for Hackers&quot; by Drew Conway and John Myles White (O&#39;Reilly).</li>
+</ul>
 
 <pre><code class="r">library(&#39;foreign&#39;) ## for loading dta files using read.dta
 library(&#39;ggplot2&#39;)
@@ -969,7 +973,7 @@ for(i in 1:length(rollcall.mds)) {
 
   </div>
 </section>
-<section class="slide sscode-nowrap compact" id="slide-40">
+<section class="slide ssscode-nowrap compact" id="slide-40">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## Create a plot of just the 110th Congress
@@ -990,8 +994,7 @@ base.110 &lt;- ggplot(cong.110, aes(x = x, y = y)) +
                      breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
                      labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;))
 
-print(base.110 + geom_point(aes(shape = party,
-                                alpha = 0.75),size=4))
+print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 </code></pre>
 
 <p><img src="assets/fig/class07-chunk-38-1.png" alt="plot of chunk class07-chunk-38"></p>
@@ -1011,6 +1014,116 @@ print(base.110 + geom_point(aes(shape = party,
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-42">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">## Create a single visualization of MDS for all Congresses on a grid
+all.mds &lt;- do.call(rbind, rollcall.mds)
+all.plot &lt;- ggplot(all.mds, aes(x = x, y = y)) +
+  geom_point(aes(shape = party, alpha = 0.75), size = 2) +
+  scale_alpha(guide=&quot;none&quot;) +
+  theme_bw() +
+  theme(axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank()) +
+  xlab(&quot;&quot;) +
+  ylab(&quot;&quot;) +
+  scale_shape(name = &quot;Party&quot;,
+              breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
+              labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;),
+              solid = FALSE) +
+  facet_wrap(~ congress)
+
+print(all.plot)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-40-1.png" alt="plot of chunk class07-chunk-40"></p>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-43">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">## plot all congresses and save into images
+if (0) { ## not run
+  for (i in 1:length(rollcall.mds)) {
+    mds &lt;- rollcall.mds[[i]]
+    congress &lt;- congresses[i]
+    plot.title &lt;- paste(&quot;Roll Call Vote MDS Clustering for &quot;,
+                        congress, &quot; U.S. Senate&quot;, sep = &quot;&quot;)
+
+    # Build base plot
+    mds.plot &lt;- ggplot(mds, aes(x = x, y = y)) +
+      scale_alpha(legend = FALSE) +
+      theme_bw() +
+      opts(axis.ticks = theme_blank(), 
+           axis.text.x = theme_blank(),
+           axis.text.y = theme_blank(),
+           title = plot.title,
+           panel.grid.major = theme_blank()) +
+      xlab(&quot;&quot;) +
+      ylab(&quot;&quot;)
+
+    # Build up point and text plots separately
+    mds.point &lt;- mds.plot + geom_point(aes(shape = party,
+                                           alpha = 0.75), size = 2)
+    mds.text &lt;- mds.plot + geom_text(aes(color = party,
+                                         alpha = 0.75,
+                                         label = mds$name),size = 2)
+
+    # Fix labels, shapes and colors
+    if(length(levels(mds$party)) &gt; 2) {
+      mds.point &lt;- mds.point + scale_shape(name = &quot;Party&quot;,
+                                           breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
+                                           labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;),
+                                           solid = FALSE)
+      mds.text &lt;- mds.text + scale_color_manual(name = &quot;Party&quot;,
+                                                values = c(&quot;100&quot; = &quot;black&quot;,
+                                                           &quot;200&quot; = &quot;dimgray&quot;,
+                                                           &quot;328&quot; = &quot;gray&quot;),
+                                                breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
+                                                labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;))
+    }
+    else {
+      mds.point &lt;- mds.point + scale_shape(name = &quot;Party&quot;,
+                                           breaks = c(&quot;100&quot;, &quot;200&quot;),
+                                           labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;),
+                                           solid = FALSE)
+      mds.text &lt;- mds.text + scale_color_manual(name = &quot;Party&quot;,
+                                                values = c(&quot;100&quot; = &quot;blue&quot;,
+                                                           &quot;200&quot; = &quot;red&quot;),
+                                                breaks = c(&quot;100&quot;, &quot;200&quot;),
+                                                labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;))
+    }
+
+    ggsave(plot = mds.point,
+           filename = file.path(&#39;images_senate_plots&#39;,
+                                paste(congress, &quot;_point.pdf&quot;, sep = &quot;&quot;)),
+           width = 8,
+           height = 5)
+    ggsave(plot = mds.text,
+           filename = file.path(&#39;images_senate_plots&#39;,
+                                paste(congress, &quot;_names.pdf&quot;, sep = &quot;&quot;)),
+           width = 8,
+           height = 5)
+  }
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-44">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-45">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-46">
   <div>
     <h2>MDS on congress vote data</h2>
     

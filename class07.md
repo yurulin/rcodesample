@@ -542,7 +542,7 @@ cat("doc vector:"); v
 
 --- #mds .scode-nowrap .compact 
 ## MDS
-on a toy example
+* on a toy example
 
 ```r
 set.seed(851982) # To make sure results are consistent
@@ -815,7 +815,7 @@ text(country.mds, labels=food$Country)
 
 --- .sscode-nowrap .compact #mds2
 ## MDS on congress vote data
-The example and code are modified from "Machine Learning for Hackers" by Drew Conway and John Myles White (O'Reilly).
+* The example and code are modified from "Machine Learning for Hackers" by Drew Conway and John Myles White (O'Reilly).
 
 
 ```r
@@ -930,7 +930,7 @@ head(rollcall.mds[[1]])
 ## 7 1594.50998 225.8166    MCCAIN   200      101
 ```
 
---- .sscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## MDS on congress vote data
 
 ```r
@@ -952,8 +952,7 @@ base.110 <- ggplot(cong.110, aes(x = x, y = y)) +
                      breaks = c("100", "200", "328"),
                      labels = c("Dem.", "Rep.", "Ind."))
 
-print(base.110 + geom_point(aes(shape = party,
-                                alpha = 0.75),size=4))
+print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 ```
 
 ![plot of chunk class07-chunk-38](assets/fig/class07-chunk-38-1.png)
@@ -968,6 +967,110 @@ print(base.110 + geom_text(aes(color = party,
 ```
 
 ![plot of chunk class07-chunk-39](assets/fig/class07-chunk-39-1.png)
+
+--- .scode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+## Create a single visualization of MDS for all Congresses on a grid
+all.mds <- do.call(rbind, rollcall.mds)
+all.plot <- ggplot(all.mds, aes(x = x, y = y)) +
+  geom_point(aes(shape = party, alpha = 0.75), size = 2) +
+  scale_alpha(guide="none") +
+  theme_bw() +
+  theme(axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank()) +
+  xlab("") +
+  ylab("") +
+  scale_shape(name = "Party",
+              breaks = c("100", "200", "328"),
+              labels = c("Dem.", "Rep.", "Ind."),
+              solid = FALSE) +
+  facet_wrap(~ congress)
+
+print(all.plot)
+```
+
+![plot of chunk class07-chunk-40](assets/fig/class07-chunk-40-1.png)
+
+--- .ssscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+## plot all congresses and save into images
+if (0) { ## not run
+  for (i in 1:length(rollcall.mds)) {
+    mds <- rollcall.mds[[i]]
+    congress <- congresses[i]
+    plot.title <- paste("Roll Call Vote MDS Clustering for ",
+                        congress, " U.S. Senate", sep = "")
+    
+    # Build base plot
+    mds.plot <- ggplot(mds, aes(x = x, y = y)) +
+      scale_alpha(legend = FALSE) +
+      theme_bw() +
+      opts(axis.ticks = theme_blank(), 
+           axis.text.x = theme_blank(),
+           axis.text.y = theme_blank(),
+           title = plot.title,
+           panel.grid.major = theme_blank()) +
+      xlab("") +
+      ylab("")
+    
+    # Build up point and text plots separately
+    mds.point <- mds.plot + geom_point(aes(shape = party,
+                                           alpha = 0.75), size = 2)
+    mds.text <- mds.plot + geom_text(aes(color = party,
+                                         alpha = 0.75,
+                                         label = mds$name),size = 2)
+    
+    # Fix labels, shapes and colors
+    if(length(levels(mds$party)) > 2) {
+      mds.point <- mds.point + scale_shape(name = "Party",
+                                           breaks = c("100", "200", "328"),
+                                           labels = c("Dem.", "Rep.", "Ind."),
+                                           solid = FALSE)
+      mds.text <- mds.text + scale_color_manual(name = "Party",
+                                                values = c("100" = "black",
+                                                           "200" = "dimgray",
+                                                           "328" = "gray"),
+                                                breaks = c("100", "200", "328"),
+                                                labels = c("Dem.", "Rep.", "Ind."))
+    }
+    else {
+      mds.point <- mds.point + scale_shape(name = "Party",
+                                           breaks = c("100", "200"),
+                                           labels = c("Dem.", "Rep."),
+                                           solid = FALSE)
+      mds.text <- mds.text + scale_color_manual(name = "Party",
+                                                values = c("100" = "blue",
+                                                           "200" = "red"),
+                                                breaks = c("100", "200"),
+                                                labels = c("Dem.", "Rep."))
+    }
+    
+    ggsave(plot = mds.point,
+           filename = file.path('images_senate_plots',
+                                paste(congress, "_point.pdf", sep = "")),
+           width = 8,
+           height = 5)
+    ggsave(plot = mds.text,
+           filename = file.path('images_senate_plots',
+                                paste(congress, "_names.pdf", sep = "")),
+           width = 8,
+           height = 5)
+  }
+}
+```
+
+--- .scode-nowrap .compact 
+## MDS on congress vote data
+
+
+--- .scode-nowrap .compact 
+## MDS on congress vote data
+
 
 --- .scode-nowrap .compact 
 ## MDS on congress vote data
