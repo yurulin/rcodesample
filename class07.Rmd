@@ -254,7 +254,7 @@ cat("term vector:"); u
 cat("doc vector:"); v
 ```
 
---- .scode-nowrap .compact  #mds
+--- #mds .scode-nowrap .compact 
 ## MDS
 on a toy example
 ```{r, dependson=c(-1)}
@@ -305,7 +305,7 @@ plot(ex.mds, type = 'n')
 text(ex.mds, c('A', 'B', 'C', 'D'))
 ```
 
---- .sscode-nowrap .compact #mds
+--- .sscode-nowrap .compact #mds1
 ## MDS on protein consumption data
 ```{r, dependson=c(-1)}
 ## load the data:

@@ -540,7 +540,7 @@ cat("doc vector:"); v
 ## Graph minors: A survey                                         0.52993707
 ```
 
---- .scode-nowrap .compact  #mds
+--- #mds .scode-nowrap .compact 
 ## MDS
 on a toy example
 
@@ -636,7 +636,7 @@ text(ex.mds, c('A', 'B', 'C', 'D'))
 
 ![plot of chunk class07-chunk-28](assets/fig/class07-chunk-28-1.png)
 
---- .sscode-nowrap .compact #mds
+--- .sscode-nowrap .compact #mds1
 ## MDS on protein consumption data
 
 ```r
