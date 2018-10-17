@@ -65,7 +65,12 @@
 <li>Express the scaled data in terms of eigenvectors (principal components)</li>
 </ul>
 
-<pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-4">
+  <div>
+    <h2>PCA</h2>
+    <pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
 data = read.csv(sprintf(&quot;%s/unemp.csv&quot;,data.url))
 data[1:3,]
 </code></pre>
@@ -84,7 +89,7 @@ data[1:3,]
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-4">
+<section class="slide scode-nowrap compact" id="slide-5">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">states = data[,1]; n = length(states)
@@ -96,7 +101,12 @@ plot(my.scaled.data,cex=0.9,col=&quot;blue&quot;,main=&quot;Plot of Scaled Data&
 
 <p><img src="assets/fig/class07-chunk-3-1.png" alt="plot of chunk class07-chunk-3"></p>
 
-<pre><code class="r">## 2) Calculate the covariance matrix
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-6">
+  <div>
+    <h2>PCA</h2>
+    <pre><code class="r">## 2) Calculate the covariance matrix
 my.cov = cov(my.scaled.data)
 my.cov
 </code></pre>
@@ -108,7 +118,7 @@ my.cov
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-5">
+<section class="slide scode-nowrap compact" id="slide-7">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">## 3) Calculate the eigenvectors and eigenvalues of the covariance matrix
@@ -128,7 +138,7 @@ my.eigen
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-6">
+<section class="slide scode-nowrap compact" id="slide-8">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">## 3a) Plot the Eigenvectors over the scaled data
@@ -139,11 +149,11 @@ abline(0,pc1.slope,col=&quot;red&quot;)
 abline(0,pc2.slope,col=&quot;green&quot;)
 </code></pre>
 
-<p><img src="assets/fig/class07-chunk-5-1.png" alt="plot of chunk class07-chunk-5"></p>
+<p><img src="assets/fig/class07-chunk-6-1.png" alt="plot of chunk class07-chunk-6"></p>
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-7">
+<section class="slide scode-nowrap compact" id="slide-9">
   <div>
     <h2>PCA</h2>
     <pre><code class="r">## 4) Express the scaled data in terms of eigenvectors (principal components)
@@ -157,7 +167,7 @@ abline(0,0,col=&quot;red&quot;)
 abline(0,90,col=&quot;green&quot;)
 </code></pre>
 
-<p><img src="assets/fig/class07-chunk-6-1.png" alt="plot of chunk class07-chunk-6"></p>
+<p><img src="assets/fig/class07-chunk-7-1.png" alt="plot of chunk class07-chunk-7"></p>
 
   </div>
 </section>
@@ -178,7 +188,7 @@ food[1:3,] ## take a look at the first three rows
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-9">
+<section class="slide ssscode-nowrap compact" id="slide-11">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## correlation matrix
@@ -210,7 +220,7 @@ cor(food[,-1])
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-10">
+<section class="slide ssscode-nowrap compact" id="slide-12">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## scale = TRUE: variables are first standardized. Default is FALSE
@@ -247,7 +257,7 @@ pcafood
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-11">
+<section class="slide ssscode-nowrap compact" id="slide-13">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## the loadings (i.e., a matrix whose columns contain the eigenvectors)
@@ -278,7 +288,7 @@ pcafood$rotation
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-12">
+<section class="slide ssscode-nowrap compact" id="slide-14">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## use &#39;predict&#39; to project data onto the loadings
@@ -342,7 +352,7 @@ foodpc
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-13">
+<section class="slide scode-nowrap compact" id="slide-15">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## how many principal components do we need?
@@ -352,11 +362,11 @@ plot(pcafood, main=&quot;&quot;) ## same as screeplot(pcafood)
 mtext(side=1, &quot;European Protein Principal Components&quot;,  line=1, font=2)
 </code></pre>
 
-<p><img src="assets/fig/class07-chunk-12-1.png" alt="plot of chunk class07-chunk-12"></p>
+<p><img src="assets/fig/class07-chunk-13-1.png" alt="plot of chunk class07-chunk-13"></p>
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-14">
+<section class="slide scode-nowrap compact" id="slide-16">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## how do the PCs look?
@@ -364,22 +374,22 @@ plot(foodpc[,1:2], type=&quot;n&quot;, xlim=c(-4,5))
 text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
 </code></pre>
 
-<p><img src="assets/fig/class07-chunk-13-1.png" alt="plot of chunk class07-chunk-13"></p>
+<p><img src="assets/fig/class07-chunk-14-1.png" alt="plot of chunk class07-chunk-14"></p>
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-15">
+<section class="slide scode-nowrap compact" id="slide-17">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">plot(foodpc[,3:4], type=&quot;n&quot;, xlim=c(-3,3))
 text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 </code></pre>
 
-<p><img src="assets/fig/class07-chunk-14-1.png" alt="plot of chunk class07-chunk-14"></p>
+<p><img src="assets/fig/class07-chunk-15-1.png" alt="plot of chunk class07-chunk-15"></p>
 
   </div>
 </section>
-<section class="slide sscode-nowrap compact" id="slide-16">
+<section class="slide sscode-nowrap compact" id="slide-18">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">pcafood$rotation[,1]
@@ -393,14 +403,14 @@ text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 
   </div>
 </section>
-<section class="slide compact" id="slide-17">
+<section class="slide scode-nowrap compact" id="slide-19">
   <div>
     <h2>PCA on protein consumption data</h2>
     <pre><code class="r">## plot both the observations and variables of a matrix
 biplot(pcafood)
 </code></pre>
 
-<p><img src="assets/fig/class07-chunk-16-1.png" alt="plot of chunk class07-chunk-16"></p>
+<p><img src="assets/fig/class07-chunk-17-1.png" alt="plot of chunk class07-chunk-17"></p>
 
   </div>
 </section>

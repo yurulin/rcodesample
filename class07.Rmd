@@ -27,12 +27,14 @@ toc_depth   : 2
 ```
 
 --- #pca .compact
-
 ## PCA process
    * Center the data according to the mean
    * Calculate the covariance matrix
    * Calculate the eigenvectors and eigenvalues of the covariance matrix
    * Express the scaled data in terms of eigenvectors (principal components)
+
+--- .scode-nowrap .compact
+## PCA
 ```{r}
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
 data = read.csv(sprintf("%s/unemp.csv",data.url))
@@ -48,10 +50,16 @@ data = (as.matrix(data[,-1]))
 ## 1) Center the data according to the mean
 my.scaled.data = apply(data,2,function(x) (x-mean(x)))
 plot(my.scaled.data,cex=0.9,col="blue",main="Plot of Scaled Data")
+```
+
+--- .scode-nowrap .compact
+## PCA
+```{r, dependson=c(-1)}
 ## 2) Calculate the covariance matrix
 my.cov = cov(my.scaled.data)
 my.cov
 ```
+
 
 --- .scode-nowrap .compact
 ## PCA
@@ -138,7 +146,7 @@ mtext(side=1, "European Protein Principal Components",  line=1, font=2)
 
 --- .scode-nowrap .compact 
 ## PCA on protein consumption data
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1),fig.width=7, fig.height=5}
 ## how do the PCs look?
 plot(foodpc[,1:2], type="n", xlim=c(-4,5))
 text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
@@ -146,7 +154,7 @@ text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
 
 --- .scode-nowrap .compact 
 ## PCA on protein consumption data
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1),fig.width=7, fig.height=5}
 plot(foodpc[,3:4], type="n", xlim=c(-3,3))
 text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 ```
@@ -157,9 +165,9 @@ text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 pcafood$rotation[,1]
 ```
 
----  .compact 
+--- .scode-nowrap .compact 
 ## PCA on protein consumption data
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1),fig.width=7, fig.height=5}
 ## plot both the observations and variables of a matrix
 biplot(pcafood)
 ```

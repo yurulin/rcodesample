@@ -28,12 +28,14 @@ toc_depth   : 2
 ```
 
 --- #pca .compact
-
 ## PCA process
    * Center the data according to the mean
    * Calculate the covariance matrix
    * Calculate the eigenvectors and eigenvalues of the covariance matrix
    * Express the scaled data in terms of eigenvectors (principal components)
+
+--- .scode-nowrap .compact
+## PCA
 
 ```r
 data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
@@ -69,6 +71,9 @@ plot(my.scaled.data,cex=0.9,col="blue",main="Plot of Scaled Data")
 
 ![plot of chunk class07-chunk-3](assets/fig/class07-chunk-3-1.png)
 
+--- .scode-nowrap .compact
+## PCA
+
 ```r
 ## 2) Calculate the covariance matrix
 my.cov = cov(my.scaled.data)
@@ -80,6 +85,7 @@ my.cov
 ## mean   1.2308637 0.3930731
 ## stddev 0.3930731 0.2279926
 ```
+
 
 --- .scode-nowrap .compact
 ## PCA
@@ -113,7 +119,7 @@ abline(0,pc1.slope,col="red")
 abline(0,pc2.slope,col="green")
 ```
 
-![plot of chunk class07-chunk-5](assets/fig/class07-chunk-5-1.png)
+![plot of chunk class07-chunk-6](assets/fig/class07-chunk-6-1.png)
 
 --- .scode-nowrap .compact
 ## PCA
@@ -130,7 +136,7 @@ abline(0,0,col="red")
 abline(0,90,col="green")
 ```
 
-![plot of chunk class07-chunk-6](assets/fig/class07-chunk-6-1.png)
+![plot of chunk class07-chunk-7](assets/fig/class07-chunk-7-1.png)
 
 --- .scode-nowrap .compact #pca1
 ## PCA on protein consumption data
@@ -324,7 +330,7 @@ plot(pcafood, main="") ## same as screeplot(pcafood)
 mtext(side=1, "European Protein Principal Components",  line=1, font=2)
 ```
 
-![plot of chunk class07-chunk-12](assets/fig/class07-chunk-12-1.png)
+![plot of chunk class07-chunk-13](assets/fig/class07-chunk-13-1.png)
 
 --- .scode-nowrap .compact 
 ## PCA on protein consumption data
@@ -335,7 +341,7 @@ plot(foodpc[,1:2], type="n", xlim=c(-4,5))
 text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
 ```
 
-![plot of chunk class07-chunk-13](assets/fig/class07-chunk-13-1.png)
+![plot of chunk class07-chunk-14](assets/fig/class07-chunk-14-1.png)
 
 --- .scode-nowrap .compact 
 ## PCA on protein consumption data
@@ -345,7 +351,7 @@ plot(foodpc[,3:4], type="n", xlim=c(-3,3))
 text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
 ```
 
-![plot of chunk class07-chunk-14](assets/fig/class07-chunk-14-1.png)
+![plot of chunk class07-chunk-15](assets/fig/class07-chunk-15-1.png)
 
 --- .sscode-nowrap .compact 
 ## PCA on protein consumption data
@@ -361,7 +367,7 @@ pcafood$rotation[,1]
 ## -0.2972477  0.4203344  0.1104199
 ```
 
----  .compact 
+--- .scode-nowrap .compact 
 ## PCA on protein consumption data
 
 ```r
@@ -369,4 +375,4 @@ pcafood$rotation[,1]
 biplot(pcafood)
 ```
 
-![plot of chunk class07-chunk-16](assets/fig/class07-chunk-16-1.png)
+![plot of chunk class07-chunk-17](assets/fig/class07-chunk-17-1.png)

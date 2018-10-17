@@ -24,6 +24,7 @@ slidify("class04.Rmd")
 slidify("class05.Rmd")
 slidify("hw3-sample.Rmd")
 slidify("class06.Rmd")
+slidify("class07.Rmd")
 
 slidify("rlab01.Rmd")
 slidify("rlab02.Rmd")
