@@ -43,6 +43,9 @@
 <li><a href="#set-up">Set up</a></li>
 <li><a href="#pca">PCA process</a></li>
 <li><a href="#pca1">PCA on protein consumption data</a></li>
+<li><a href="#svd">SVD</a></li>
+<li><a href="#mds">MDS</a></li>
+<li><a href="#mds1">MDS on protein consumption data</a></li>
 </ul>
 
   </div>
@@ -412,6 +415,446 @@ biplot(pcafood)
 
 <p><img src="assets/fig/class07-chunk-17-1.png" alt="plot of chunk class07-chunk-17"></p>
 
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="svd">
+  <div>
+    <h2>SVD</h2>
+    <p>on a simple term-doc matrix example</p>
+
+<pre><code class="r">## 9 documents and 12 terms
+docs = c(
+  &quot;Human machine interface for Lab ABC computer applications&quot;,
+  &quot;A survey of user opinion of computer system response time&quot;,
+  &quot;The EPS user interface management system&quot;,
+  &quot;System and human system engineering testing of EPS&quot;,
+  &quot;Relation of user-perceived response time to error measurement&quot;,
+  &quot;The generation of random, binary, unordered trees&quot;,
+  &quot;The intersection graph of paths in trees&quot;,
+  &quot;Graph minors IV: Widths of trees and well-quasi-ordering&quot;,
+  &quot;Graph minors: A survey&quot;
+)
+terms = c(
+  &quot;human&quot;,
+  &quot;interface&quot;,
+  &quot;computer&quot;,
+  &quot;user&quot;,
+  &quot;system&quot;,
+  &quot;response&quot;,
+  &quot;time&quot;,
+  &quot;EPS&quot;,
+  &quot;survey&quot;,
+  &quot;trees&quot;,
+  &quot;graph&quot;,
+  &quot;minors&quot;
+)
+data = c(
+  1, 0, 0, 1, 0, 0, 0, 0, 0 ,
+  1, 0, 1, 0, 0, 0, 0, 0, 0 ,
+  1, 1, 0, 0, 0, 0, 0, 0, 0 ,
+  0, 1, 1, 0, 1, 0, 0, 0, 0 ,
+  0, 1, 1, 2, 0, 0, 0, 0, 0 ,
+  0, 1, 0, 0, 1, 0, 0, 0, 0 ,
+  0, 1, 0, 0, 1, 0, 0, 0, 0 ,
+  0, 0, 1, 1, 0, 0, 0, 0, 0 ,
+  0, 1, 0, 0, 0, 0, 0, 0, 1 ,
+  0, 0, 0, 0, 0, 1, 1, 1, 0 ,
+  0, 0, 0, 0, 0, 0, 1, 1, 1 ,
+  0, 0, 0, 0, 0, 0, 0, 1, 1 
+)
+## construct term-doc matrix
+tdm = matrix(data,nrow=12,ncol=9,byrow=T)
+dim(tdm)
+</code></pre>
+
+<pre><code>## [1] 12  9
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-21">
+  <div>
+    <h2>SVD</h2>
+    <pre><code class="r">rownames(tdm) = terms
+tdm
+</code></pre>
+
+<pre><code>##           [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+## human        1    0    0    1    0    0    0    0    0
+## interface    1    0    1    0    0    0    0    0    0
+## computer     1    1    0    0    0    0    0    0    0
+## user         0    1    1    0    1    0    0    0    0
+## system       0    1    1    2    0    0    0    0    0
+## response     0    1    0    0    1    0    0    0    0
+## time         0    1    0    0    1    0    0    0    0
+## EPS          0    0    1    1    0    0    0    0    0
+## survey       0    1    0    0    0    0    0    0    1
+## trees        0    0    0    0    0    1    1    1    0
+## graph        0    0    0    0    0    0    1    1    1
+## minors       0    0    0    0    0    0    0    1    1
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-22">
+  <div>
+    <h2>SVD</h2>
+    <pre><code class="r">## perform svd
+S = svd(tdm,nu=2,nv=2)
+u = S$u; s = S$d; v = S$v
+rownames(u) = terms
+rownames(v) = docs
+cat(&quot;scale:&quot;); s
+</code></pre>
+
+<pre><code>## scale:
+</code></pre>
+
+<pre><code>## [1] 3.3408838 2.5417010 2.3539435 1.6445323 1.5048316 1.3063820 0.8459031
+## [8] 0.5601344 0.3636768
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-23">
+  <div>
+    <h2>SVD</h2>
+    <pre><code class="r">cat(&quot;term vector:&quot;); u
+</code></pre>
+
+<pre><code>## term vector:
+</code></pre>
+
+<pre><code>##                  [,1]        [,2]
+## human     -0.22135078 -0.11317962
+## interface -0.19764540 -0.07208778
+## computer  -0.24047023  0.04315195
+## user      -0.40359886  0.05707026
+## system    -0.64448115 -0.16730121
+## response  -0.26503747  0.10715957
+## time      -0.26503747  0.10715957
+## EPS       -0.30082816 -0.14127047
+## survey    -0.20591786  0.27364743
+## trees     -0.01274618  0.49016179
+## graph     -0.03613585  0.62278523
+## minors    -0.03175633  0.45050892
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-24">
+  <div>
+    <h2>SVD</h2>
+    <pre><code class="r">cat(&quot;doc vector:&quot;); v
+</code></pre>
+
+<pre><code>## doc vector:
+</code></pre>
+
+<pre><code>##                                                                       [,1]
+## Human machine interface for Lab ABC computer applications     -0.197392802
+## A survey of user opinion of computer system response time     -0.605990269
+## The EPS user interface management system                      -0.462917508
+## System and human system engineering testing of EPS            -0.542114417
+## Relation of user-perceived response time to error measurement -0.279469108
+## The generation of random, binary, unordered trees             -0.003815213
+## The intersection graph of paths in trees                      -0.014631468
+## Graph minors IV: Widths of trees and well-quasi-ordering      -0.024136835
+## Graph minors: A survey                                        -0.081957368
+##                                                                      [,2]
+## Human machine interface for Lab ABC computer applications     -0.05591352
+## A survey of user opinion of computer system response time      0.16559288
+## The EPS user interface management system                      -0.12731206
+## System and human system engineering testing of EPS            -0.23175523
+## Relation of user-perceived response time to error measurement  0.10677472
+## The generation of random, binary, unordered trees              0.19284794
+## The intersection graph of paths in trees                       0.43787488
+## Graph minors IV: Widths of trees and well-quasi-ordering       0.61512190
+## Graph minors: A survey                                         0.52993707
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="mds">
+  <div>
+    <h2>MDS</h2>
+    <p>on a toy example</p>
+
+<pre><code class="r">set.seed(851982) # To make sure results are consistent
+ex.matrix = matrix(sample(c(-1, 0, 1), 24, replace = TRUE),
+                   nrow = 4,
+                   ncol = 6)
+row.names(ex.matrix) = c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;)
+colnames(ex.matrix) = c(&#39;P1&#39;, &#39;P2&#39;, &#39;P3&#39;, &#39;P4&#39;, &#39;P5&#39;, &#39;P6&#39;)
+ex.matrix ## a customer-product matrix
+</code></pre>
+
+<pre><code>##   P1 P2 P3 P4 P5 P6
+## A  0 -1  0 -1  0  0
+## B -1  0  1  1  1  0
+## C  0  0  0  1 -1  1
+## D  1  0  1 -1  0  0
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-26">
+  <div>
+    <h2>MDS</h2>
+    <pre><code class="r">t(ex.matrix) ## a product-customer matrix
+</code></pre>
+
+<pre><code>##     A  B  C  D
+## P1  0 -1  0  1
+## P2 -1  0  0  0
+## P3  0  1  0  1
+## P4 -1  1  1 -1
+## P5  0  1 -1  0
+## P6  0  0  1  0
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-27">
+  <div>
+    <h2>MDS</h2>
+    <pre><code class="r">## convert matrix to customer-by-customer matrix
+ex.mult = ex.matrix %*% t(ex.matrix)
+ex.mult
+</code></pre>
+
+<pre><code>##    A  B  C  D
+## A  2 -1 -1  1
+## B -1  4  0 -1
+## C -1  0  3 -1
+## D  1 -1 -1  3
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-28">
+  <div>
+    <h2>MDS</h2>
+    <pre><code class="r">## calculate distance between A and D
+sqrt(sum((ex.mult[1, ] - ex.mult[4, ]) ^ 2))
+</code></pre>
+
+<pre><code>## [1] 2.236068
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-29">
+  <div>
+    <h2>MDS</h2>
+    <pre><code class="r">## calculate distance matrix
+ex.dist = dist(ex.mult)
+ex.dist
+</code></pre>
+
+<pre><code>##          A        B        C
+## B 6.244998                  
+## C 5.477226 5.000000         
+## D 2.236068 6.782330 6.082763
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-30">
+  <div>
+    <h2>MDS</h2>
+    <pre><code class="r">## visualize clusters
+ex.mds &lt;- cmdscale(ex.dist)
+plot(ex.mds, type = &#39;n&#39;)
+text(ex.mds, c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;))
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-28-1.png" alt="plot of chunk class07-chunk-28"></p>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="mds">
+  <div>
+    <h2>MDS on protein consumption data</h2>
+    <pre><code class="r">## load the data:
+data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+food = read.csv(sprintf(&quot;%s/protein.csv&quot;,data.url))
+food[1:3,] ## take a look at the first three rows
+</code></pre>
+
+<pre><code>##   Country RedMeat WhiteMeat Eggs Milk Fish Cereals Starch Nuts Fr.Veg
+## 1 Albania    10.1       1.4  0.5  8.9  0.2    42.3    0.6  5.5    1.7
+## 2 Austria     8.9      14.0  4.3 19.9  2.1    28.0    3.6  1.3    4.3
+## 3 Belgium    13.5       9.3  4.1 17.5  4.5    26.6    5.7  2.1    4.0
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-32">
+  <div>
+    <h2>MDS on protein consumption data</h2>
+    <pre><code class="r">## calculate distance matrix
+country.dist = dist(food[,-1])
+country.dist
+</code></pre>
+
+<pre><code>##            1         2         3         4         5         6         7
+## 2  23.176281                                                            
+## 3  21.650173  7.868291                                                  
+## 4  15.688212 32.304489 32.786125                                        
+## 5  15.154537 10.305338 10.609901 24.005416                              
+## 6  30.157586 11.956588 11.119802 40.334105 19.420608                    
+## 7  22.865913 10.742905  8.928606 33.614729 10.613670 15.184532          
+## 8  30.990966 17.421251 17.603125 40.335096 24.019992 12.249898 23.827505
+## 9  23.174124 11.010904  6.007495 33.263494 13.435029 12.718490 13.855324
+## 10 12.136309 19.529721 18.254862 19.315538 15.025645 24.466099 22.109274
+## 11 13.157127 16.974982 18.784036 18.399185  9.179869 26.734809 17.517991
+## 12 27.902509 10.039422  9.146584 38.359745 17.582093  8.938121 16.177763
+## 13 10.624500 14.688771 13.568714 21.013329  8.705171 21.595833 15.622740
+## 14 28.302120  6.763875  9.675743 38.526744 16.352676  8.360024 13.268760
+## 15 26.805410 13.684663 10.803703 38.174730 18.727253  6.688049 14.985326
+## 16 17.643979  9.942334 12.201639 24.493877  8.255301 17.813759 14.874811
+## 17 23.111036 22.931201 19.200781 33.293843 19.060430 23.926972 15.156187
+## 18 10.319399 25.261235 25.878563  8.334867 17.311557 33.292191 26.731629
+## 19 17.149927 17.440183 13.916537 28.887367 13.070578 21.187732 11.784312
+## 20 29.987998 13.032268 11.632283 41.480598 20.430370  4.795832 15.584287
+## 21 24.928899  7.583535  7.525955 35.509013 14.971640  9.650389 14.647184
+## 22 24.308435 12.920526  6.830081 36.419500 16.497273 11.740528 14.780054
+## 23 11.034038 19.042846 18.416840 16.675431 12.635268 25.334759 21.369137
+## 24 29.143953 10.131634  9.066422 40.619823 17.151385  9.901010 10.558409
+## 25 15.474818 31.946987 32.684859  4.875449 23.977698 39.874177 33.279423
+##            8         9        10        11        12        13        14
+## 2                                                                       
+## 3                                                                       
+## 4                                                                       
+## 5                                                                       
+## 6                                                                       
+## 7                                                                       
+## 8                                                                       
+## 9  18.181309                                                            
+## 10 24.107053 18.254588                                                  
+## 11 29.983829 21.256293 14.933185                                        
+## 12 11.569356 10.153325 22.976510 25.019193                              
+## 13 23.755420 15.157836  7.976841 10.702803 20.037215                    
+## 14 14.677534 12.350304 24.062834 23.208619  6.827884 19.872343          
+## 15 11.688028 13.150285 21.419617 25.669437 10.883014 18.766726 11.551623
+## 16 19.358977 14.013208 12.358803 11.992498 16.008748  9.066973 15.336884
+## 17 31.176273 21.854061 22.156489 22.031568 27.137612 17.866169 25.384838
+## 18 33.398054 27.116969 13.341664 11.638728 31.295687 14.311184 31.244840
+## 19 26.571413 17.215110 16.268682 16.165704 21.806192 10.910545 20.661317
+## 20 11.908820 14.027117 25.157305 27.655198  8.884256 21.877386  8.497647
+## 21 13.054118  8.182298 20.039960 22.139557  5.097058 16.668833  6.297619
+## 22 15.951176  6.987131 20.320187 24.172091  8.241966 17.261518 11.987076
+## 23 24.692711 19.434248  8.175573 12.493198 23.017385  9.462029 24.233448
+## 24 18.878824 12.459936 26.280411 24.701012  9.709789 21.096682  6.525335
+## 25 39.330014 33.723137 18.747800 17.615902 37.953919 20.721245 37.969725
+##           15        16        17        18        19        20        21
+## 2                                                                       
+## 3                                                                       
+## 4                                                                       
+## 5                                                                       
+## 6                                                                       
+## 7                                                                       
+## 8                                                                       
+## 9                                                                       
+## 10                                                                      
+## 11                                                                      
+## 12                                                                      
+## 13                                                                      
+## 14                                                                      
+## 15                                                                      
+## 16 16.913308                                                            
+## 17 20.662768 21.676946                                                  
+## 18 31.020638 17.429859 27.650859                                        
+## 19 17.575836 15.496774  8.788629 22.286094                              
+## 20  5.557877 19.150196 24.082774 34.196052 20.789420                    
+## 21 10.653638 13.500370 24.844516 28.574464 19.311396  9.537819          
+## 22 10.523783 17.070735 22.770156 29.726924 17.655028 10.903211  7.969316
+## 23 22.826301 10.812955 24.005208  9.880283 17.884910 26.293155 20.975700
+## 24 12.152366 18.513239 22.834842 33.438600 19.048097  9.090105  9.624968
+## 25 37.451569 23.728464 32.829408  6.910861 28.132721 40.833932 35.278889
+##           22        23        24
+## 2                               
+## 3                               
+## 4                               
+## 5                               
+## 6                               
+## 7                               
+## 8                               
+## 9                               
+## 10                              
+## 11                              
+## 12                              
+## 13                              
+## 14                              
+## 15                              
+## 16                              
+## 17                              
+## 18                              
+## 19                              
+## 20                              
+## 21                              
+## 22                              
+## 23 21.605786                    
+## 24 11.101802 26.583454          
+## 25 36.405906 15.791770 40.275551
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-33">
+  <div>
+    <h2>MDS on protein consumption data</h2>
+    <pre><code class="r">## visualize clusters
+country.mds &lt;- cmdscale(country.dist)
+country.mds 
+</code></pre>
+
+<pre><code>##             [,1]         [,2]
+##  [1,]  14.102253   1.32182853
+##  [2,]  -5.461275  -1.54779209
+##  [3,]  -6.076615   1.47936225
+##  [4,]  26.115946  -3.31886209
+##  [5,]   3.317268   2.09233294
+##  [6,] -13.860785  -1.37385677
+##  [7,]  -4.902451   8.35954024
+##  [8,] -12.262293 -11.29011726
+##  [9,]  -6.345336  -0.67163472
+## [10,]   9.036383  -3.03261543
+## [11,]  10.804568   2.36343759
+## [12,] -11.857348  -5.31221411
+## [13,]   6.308735   1.31411427
+## [14,] -11.808532  -2.13277291
+## [15,] -11.005402   0.07710031
+## [16,]   2.526200  -2.99904424
+## [17,]   0.784241  16.75315196
+## [18,]  19.067295  -2.59125512
+## [19,]   1.923092  10.48292903
+## [20,] -14.841949  -0.72624862
+## [21,]  -9.067809  -3.99988465
+## [22,]  -9.310863  -0.69769430
+## [23,]  10.586310  -4.35466293
+## [24,] -13.513808   3.35281843
+## [25,]  25.742175  -3.54796030
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-34">
+  <div>
+    <h2>MDS on protein consumption data</h2>
+    <pre><code class="r">plot(country.mds, type = &#39;n&#39;)
+text(country.mds, labels=food$Country)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-32-1.png" alt="plot of chunk class07-chunk-32"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-35">
+  <div>
+    <h2>MDS on protein consumption data</h2>
+    
   </div>
 </section>
   <div class="progress">

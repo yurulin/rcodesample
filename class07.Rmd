@@ -18,6 +18,9 @@ toc_depth   : 2
 * [Set up](#set-up)
 * [PCA process](#pca)
 * [PCA on protein consumption data](#pca1)
+* [SVD](#svd)
+* [MDS](#mds)
+* [MDS on protein consumption data](#mds1)
 
 --- #set-up .modal 
 
@@ -170,4 +173,171 @@ pcafood$rotation[,1]
 ```{r, dependson=c(-1),fig.width=7, fig.height=5}
 ## plot both the observations and variables of a matrix
 biplot(pcafood)
+```
+
+--- #svd .ssscode-nowrap .compact
+## SVD
+on a simple term-doc matrix example
+```{r}
+## 9 documents and 12 terms
+docs = c(
+  "Human machine interface for Lab ABC computer applications",
+  "A survey of user opinion of computer system response time",
+  "The EPS user interface management system",
+  "System and human system engineering testing of EPS",
+  "Relation of user-perceived response time to error measurement",
+  "The generation of random, binary, unordered trees",
+  "The intersection graph of paths in trees",
+  "Graph minors IV: Widths of trees and well-quasi-ordering",
+  "Graph minors: A survey"
+)
+terms = c(
+  "human",
+  "interface",
+  "computer",
+  "user",
+  "system",
+  "response",
+  "time",
+  "EPS",
+  "survey",
+  "trees",
+  "graph",
+  "minors"
+)
+data = c(
+  1, 0, 0, 1, 0, 0, 0, 0, 0 ,
+  1, 0, 1, 0, 0, 0, 0, 0, 0 ,
+  1, 1, 0, 0, 0, 0, 0, 0, 0 ,
+  0, 1, 1, 0, 1, 0, 0, 0, 0 ,
+  0, 1, 1, 2, 0, 0, 0, 0, 0 ,
+  0, 1, 0, 0, 1, 0, 0, 0, 0 ,
+  0, 1, 0, 0, 1, 0, 0, 0, 0 ,
+  0, 0, 1, 1, 0, 0, 0, 0, 0 ,
+  0, 1, 0, 0, 0, 0, 0, 0, 1 ,
+  0, 0, 0, 0, 0, 1, 1, 1, 0 ,
+  0, 0, 0, 0, 0, 0, 1, 1, 1 ,
+  0, 0, 0, 0, 0, 0, 0, 1, 1 
+)
+## construct term-doc matrix
+tdm = matrix(data,nrow=12,ncol=9,byrow=T)
+dim(tdm)
+```
+
+--- .scode-nowrap .compact 
+## SVD
+```{r, dependson=c(-1)}
+rownames(tdm) = terms
+tdm
+```
+
+--- .scode-nowrap .compact 
+## SVD
+```{r, dependson=c(-1)}
+## perform svd
+S = svd(tdm,nu=2,nv=2)
+u = S$u; s = S$d; v = S$v
+rownames(u) = terms
+rownames(v) = docs
+cat("scale:"); s
+```
+
+--- .ssscode-nowrap .compact 
+## SVD
+```{r, dependson=c(-1)}
+cat("term vector:"); u
+```
+
+--- .ssscode-nowrap .compact 
+## SVD
+```{r, dependson=c(-1)}
+cat("doc vector:"); v
+```
+
+--- .scode-nowrap .compact  #mds
+## MDS
+on a toy example
+```{r, dependson=c(-1)}
+set.seed(851982) # To make sure results are consistent
+ex.matrix = matrix(sample(c(-1, 0, 1), 24, replace = TRUE),
+                   nrow = 4,
+                   ncol = 6)
+row.names(ex.matrix) = c('A', 'B', 'C', 'D')
+colnames(ex.matrix) = c('P1', 'P2', 'P3', 'P4', 'P5', 'P6')
+ex.matrix ## a customer-product matrix
+```
+
+--- .scode-nowrap .compact 
+## MDS
+```{r, dependson=c(-1)}
+t(ex.matrix) ## a product-customer matrix
+```
+
+--- .scode-nowrap .compact 
+## MDS
+```{r, dependson=c(-1)}
+## convert matrix to customer-by-customer matrix
+ex.mult = ex.matrix %*% t(ex.matrix)
+ex.mult
+```
+
+--- .scode-nowrap .compact 
+## MDS
+```{r, dependson=c(-1)}
+## calculate distance between A and D
+sqrt(sum((ex.mult[1, ] - ex.mult[4, ]) ^ 2))
+```
+
+--- .scode-nowrap .compact 
+## MDS
+```{r, dependson=c(-1)}
+## calculate distance matrix
+ex.dist = dist(ex.mult)
+ex.dist
+```
+
+--- .scode-nowrap .compact 
+## MDS
+```{r, dependson=c(-1)}
+## visualize clusters
+ex.mds <- cmdscale(ex.dist)
+plot(ex.mds, type = 'n')
+text(ex.mds, c('A', 'B', 'C', 'D'))
+```
+
+--- .sscode-nowrap .compact #mds
+## MDS on protein consumption data
+```{r, dependson=c(-1)}
+## load the data:
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+food = read.csv(sprintf("%s/protein.csv",data.url))
+food[1:3,] ## take a look at the first three rows
+```
+
+--- .ssscode-nowrap .compact 
+## MDS on protein consumption data
+```{r, dependson=c(-1)}
+## calculate distance matrix
+country.dist = dist(food[,-1])
+country.dist
+```
+
+--- .ssscode-nowrap .compact 
+## MDS on protein consumption data
+```{r, dependson=c(-1)}
+## visualize clusters
+country.mds <- cmdscale(country.dist)
+country.mds 
+```
+
+--- .scode-nowrap .compact 
+## MDS on protein consumption data
+```{r, dependson=c(-1)}
+plot(country.mds, type = 'n')
+text(country.mds, labels=food$Country)
+```
+
+--- .scode-nowrap .compact 
+## MDS on protein consumption data
+```{r, dependson=c(-1)}
 ```
