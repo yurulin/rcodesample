@@ -21,7 +21,7 @@ toc_depth   : 2
 * [SVD](#svd)
 * [MDS](#mds)
 * [MDS on protein consumption data](#mds1)
-
+* [MDS on congress vote data](#mds2)
 --- #set-up .modal 
 
 ## Install R packages
