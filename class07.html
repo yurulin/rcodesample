@@ -974,7 +974,7 @@ for(i in 1:length(rollcall.mds)) {
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-40">
+<section class="slide sscode-nowrap compact" id="slide-40">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## Create a plot of just the 110th Congress
@@ -992,19 +992,15 @@ base.110 &lt;- ggplot(cong.110, aes(x = x, y = y)) +
                                                 &quot;328&quot;=&quot;grey&quot;),
                      breaks = c(&quot;100&quot;, &quot;200&quot;, &quot;328&quot;),
                      labels = c(&quot;Dem.&quot;, &quot;Rep.&quot;, &quot;Ind.&quot;))
-print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 </code></pre>
-
-<p><img src="assets/fig/class07-chunk-38-1.png" alt="plot of chunk class07-chunk-38"></p>
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-41">
+<section class="slide sscode-nowrap compact" id="slide-41">
   <div>
     <h2>MDS on congress vote data</h2>
-    <pre><code class="r">print(base.110 + geom_text(aes(color = party,
-                               alpha = 0.75,
-                               label = cong.110$name),size=4))
+    <pre><code class="r">print(base.110 + geom_point(aes(shape = party,
+                                alpha = 0.75),size=4))
 </code></pre>
 
 <p><img src="assets/fig/class07-chunk-39-1.png" alt="plot of chunk class07-chunk-39"></p>
@@ -1012,6 +1008,18 @@ print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-42">
+  <div>
+    <h2>MDS on congress vote data</h2>
+    <pre><code class="r">print(base.110 + geom_text(aes(color = party,
+                               alpha = 0.75,
+                               label = cong.110$name),size=4))
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-40-1.png" alt="plot of chunk class07-chunk-40"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-43">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## Create a single visualization of MDS for all Congresses on a grid
@@ -1034,17 +1042,17 @@ all.plot &lt;- ggplot(all.mds, aes(x = x, y = y)) +
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-43">
+<section class="slide ssscode-nowrap compact" id="slide-44">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">print(all.plot)
 </code></pre>
 
-<p><img src="assets/fig/class07-chunk-41-1.png" alt="plot of chunk class07-chunk-41"></p>
+<p><img src="assets/fig/class07-chunk-42-1.png" alt="plot of chunk class07-chunk-42"></p>
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-44">
+<section class="slide ssscode-nowrap compact" id="slide-45">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">## plot all congresses and save into images
@@ -1100,7 +1108,7 @@ if (0) { ## not run
 
   </div>
 </section>
-<section class="slide ssscode-nowrap compact" id="slide-45">
+<section class="slide ssscode-nowrap compact" id="slide-46">
   <div>
     <h2>MDS on congress vote data</h2>
     <pre><code class="r">    ggsave(plot = mds.point,
@@ -1117,18 +1125,6 @@ if (0) { ## not run
 }
 </code></pre>
 
-  </div>
-</section>
-<section class="slide scode-nowrap compact" id="slide-46">
-  <div>
-    <h2>MDS on congress vote data</h2>
-    
-  </div>
-</section>
-<section class="slide scode-nowrap compact" id="slide-47">
-  <div>
-    <h2>MDS on congress vote data</h2>
-    
   </div>
 </section>
   <div class="progress">

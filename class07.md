@@ -931,7 +931,7 @@ head(rollcall.mds[[1]])
 ## 7 1594.50998 225.8166    MCCAIN   200      101
 ```
 
---- .ssscode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## MDS on congress vote data
 
 ```r
@@ -950,10 +950,17 @@ base.110 <- ggplot(cong.110, aes(x = x, y = y)) +
                                                 "328"="grey"),
                      breaks = c("100", "200", "328"),
                      labels = c("Dem.", "Rep.", "Ind."))
-print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
 ```
 
-![plot of chunk class07-chunk-38](assets/fig/class07-chunk-38-1.png)
+--- .sscode-nowrap .compact 
+## MDS on congress vote data
+
+```r
+print(base.110 + geom_point(aes(shape = party,
+                                alpha = 0.75),size=4))
+```
+
+![plot of chunk class07-chunk-39](assets/fig/class07-chunk-39-1.png)
 
 --- .scode-nowrap .compact 
 ## MDS on congress vote data
@@ -964,7 +971,7 @@ print(base.110 + geom_text(aes(color = party,
                                label = cong.110$name),size=4))
 ```
 
-![plot of chunk class07-chunk-39](assets/fig/class07-chunk-39-1.png)
+![plot of chunk class07-chunk-40](assets/fig/class07-chunk-40-1.png)
 
 --- .scode-nowrap .compact 
 ## MDS on congress vote data
@@ -995,7 +1002,7 @@ all.plot <- ggplot(all.mds, aes(x = x, y = y)) +
 print(all.plot)
 ```
 
-![plot of chunk class07-chunk-41](assets/fig/class07-chunk-41-1.png)
+![plot of chunk class07-chunk-42](assets/fig/class07-chunk-42-1.png)
 
 --- .ssscode-nowrap .compact 
 ## MDS on congress vote data
@@ -1069,11 +1076,4 @@ if (0) { ## not run
   }
 }
 ```
-
---- .scode-nowrap .compact 
-## MDS on congress vote data
-
-
---- .scode-nowrap .compact 
-## MDS on congress vote data
 

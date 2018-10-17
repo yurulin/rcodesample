@@ -426,7 +426,7 @@ for(i in 1:length(rollcall.mds)) {
 head(rollcall.mds[[1]])
 ```
 
---- .ssscode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## MDS on congress vote data
 ```{r, dependson=c(-1), fig.width=7, fig.height=5}
 ## Create a plot of just the 110th Congress
@@ -444,7 +444,13 @@ base.110 <- ggplot(cong.110, aes(x = x, y = y)) +
                                                 "328"="grey"),
                      breaks = c("100", "200", "328"),
                      labels = c("Dem.", "Rep.", "Ind."))
-print(base.110 + geom_point(aes(shape = party, alpha = 0.75),size=4))
+```
+
+--- .sscode-nowrap .compact 
+## MDS on congress vote data
+```{r, dependson=c(-1), fig.width=7, fig.height=5}
+print(base.110 + geom_point(aes(shape = party,
+                                alpha = 0.75),size=4))
 ```
 
 --- .scode-nowrap .compact 
@@ -553,12 +559,3 @@ if (0) { ## not run
 }
 ```
 
---- .scode-nowrap .compact 
-## MDS on congress vote data
-```{r, dependson=c(-1)}
-```
-
---- .scode-nowrap .compact 
-## MDS on congress vote data
-```{r, dependson=c(-1)}
-```
