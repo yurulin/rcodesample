@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Class07</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Class07">
+	<meta name="author" content="Yu-Ru Lin">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>Class07</h1>
+	</header>
+  <section class="slide " id="toc">
+  <div>
+    <h2>Class07</h2>
+    <ul>
+<li><a href="#set-up">Set up</a></li>
+<li><a href="#pca">PCA process</a></li>
+<li><a href="#pca1">PCA on protein consumption data</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide modal" id="set-up">
+  <div>
+    <h2>Install R packages</h2>
+    <pre><code class="r">## this tutorial uses the following packages
+</code></pre>
+
+  </div>
+</section>
+<section class="slide compact" id="pca">
+  <div>
+    <h2>PCA process</h2>
+    <ul>
+<li>Center the data according to the mean</li>
+<li>Calculate the covariance matrix</li>
+<li>Calculate the eigenvectors and eigenvalues of the covariance matrix</li>
+<li>Express the scaled data in terms of eigenvectors (principal components)</li>
+</ul>
+
+<pre><code class="r">data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+data = read.csv(sprintf(&quot;%s/unemp.csv&quot;,data.url))
+data[1:3,]
+</code></pre>
+
+<pre><code>##   state     mean   stddev
+## 1    AL 6.644952 2.527530
+## 2    AK 8.033173 1.464966
+## 3    AZ 6.120673 1.743672
+</code></pre>
+
+<pre><code class="r">dim(data)
+</code></pre>
+
+<pre><code>## [1] 50  3
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-4">
+  <div>
+    <h2>PCA</h2>
+    <pre><code class="r">states = data[,1]; n = length(states)
+data = (as.matrix(data[,-1]))
+## 1) Center the data according to the mean
+my.scaled.data = apply(data,2,function(x) (x-mean(x)))
+plot(my.scaled.data,cex=0.9,col=&quot;blue&quot;,main=&quot;Plot of Scaled Data&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-3-1.png" alt="plot of chunk class07-chunk-3"></p>
+
+<pre><code class="r">## 2) Calculate the covariance matrix
+my.cov = cov(my.scaled.data)
+my.cov
+</code></pre>
+
+<pre><code>##             mean    stddev
+## mean   1.2308637 0.3930731
+## stddev 0.3930731 0.2279926
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-5">
+  <div>
+    <h2>PCA</h2>
+    <pre><code class="r">## 3) Calculate the eigenvectors and eigenvalues of the covariance matrix
+my.eigen = eigen(my.cov)
+my.eigen
+</code></pre>
+
+<pre><code>## eigen() decomposition
+## $values
+## [1] 1.36656552 0.09229076
+## 
+## $vectors
+##            [,1]       [,2]
+## [1,] -0.9452548  0.3263333
+## [2,] -0.3263333 -0.9452548
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-6">
+  <div>
+    <h2>PCA</h2>
+    <pre><code class="r">## 3a) Plot the Eigenvectors over the scaled data
+plot(my.scaled.data,cex=0.9,col=&quot;blue&quot;,main=&quot;Plot of Scaled Data&quot;)
+pc1.slope = my.eigen$vectors[2,1] /my.eigen$vectors[1,1]
+pc2.slope = my.eigen$vectors[2,2] /my.eigen$vectors[1,2]
+abline(0,pc1.slope,col=&quot;red&quot;)
+abline(0,pc2.slope,col=&quot;green&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-5-1.png" alt="plot of chunk class07-chunk-5"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-7">
+  <div>
+    <h2>PCA</h2>
+    <pre><code class="r">## 4) Express the scaled data in terms of eigenvectors (principal components)
+## get the P matrix (loadings, i.e., a matrix whose columns contain the eigenvectors)
+loadings = my.eigen$vectors 
+## project data onto the loadings
+scores = my.scaled.data %*% loadings 
+## plot the projected data on the first two PCs
+plot(scores,ylim=c(-3,3),main=&#39;Data in terms of EigenVectors / PCs&#39;,xlab=&#39;PC1&#39;,ylab=&#39;PC2&#39;)
+abline(0,0,col=&quot;red&quot;)
+abline(0,90,col=&quot;green&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-6-1.png" alt="plot of chunk class07-chunk-6"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="pca1">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## load the data:
+data.url = &#39;http://www.yurulin.com/class/spring2014_datamining/data/data_text&#39;
+food = read.csv(sprintf(&quot;%s/protein.csv&quot;,data.url))
+food[1:3,] ## take a look at the first three rows
+</code></pre>
+
+<pre><code>##   Country RedMeat WhiteMeat Eggs Milk Fish Cereals Starch Nuts Fr.Veg
+## 1 Albania    10.1       1.4  0.5  8.9  0.2    42.3    0.6  5.5    1.7
+## 2 Austria     8.9      14.0  4.3 19.9  2.1    28.0    3.6  1.3    4.3
+## 3 Belgium    13.5       9.3  4.1 17.5  4.5    26.6    5.7  2.1    4.0
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-9">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## correlation matrix
+## we strip the first column (country labels) from the data set
+cor(food[,-1])
+</code></pre>
+
+<pre><code>##               RedMeat  WhiteMeat        Eggs       Milk        Fish
+## RedMeat    1.00000000  0.1530027  0.58560895  0.5029311  0.06095745
+## WhiteMeat  0.15300271  1.0000000  0.62040916  0.2814839 -0.23400923
+## Eggs       0.58560895  0.6204092  1.00000000  0.5755331  0.06557136
+## Milk       0.50293110  0.2814839  0.57553312  1.0000000  0.13788370
+## Fish       0.06095745 -0.2340092  0.06557136  0.1378837  1.00000000
+## Cereals   -0.49987746 -0.4137969 -0.71243682 -0.5927366 -0.52423080
+## Starch     0.13542594  0.3137721  0.45223071  0.2224112  0.40385286
+## Nuts      -0.34944855 -0.6349618 -0.55978097 -0.6210875 -0.14715294
+## Fr.Veg    -0.07422123 -0.0613167 -0.04551755 -0.4083641  0.26613865
+##               Cereals      Starch       Nuts      Fr.Veg
+## RedMeat   -0.49987746  0.13542594 -0.3494486 -0.07422123
+## WhiteMeat -0.41379691  0.31377205 -0.6349618 -0.06131670
+## Eggs      -0.71243682  0.45223071 -0.5597810 -0.04551755
+## Milk      -0.59273662  0.22241118 -0.6210875 -0.40836414
+## Fish      -0.52423080  0.40385286 -0.1471529  0.26613865
+## Cereals    1.00000000 -0.53326231  0.6509973  0.04654808
+## Starch    -0.53326231  1.00000000 -0.4743116  0.08440956
+## Nuts       0.65099727 -0.47431155  1.0000000  0.37496971
+## Fr.Veg     0.04654808  0.08440956  0.3749697  1.00000000
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-10">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## scale = TRUE: variables are first standardized. Default is FALSE
+pcafood = prcomp(food[,-1], scale=TRUE) 
+pcafood
+</code></pre>
+
+<pre><code>## Standard deviations (1, .., p=9):
+## [1] 2.0016087 1.2786710 1.0620355 0.9770691 0.6810568 0.5702026 0.5211586
+## [8] 0.3410160 0.3148204
+## 
+## Rotation (n x k) = (9 x 9):
+##                  PC1         PC2         PC3          PC4         PC5
+## RedMeat   -0.3026094 -0.05625165 -0.29757957 -0.646476536  0.32216008
+## WhiteMeat -0.3105562 -0.23685334  0.62389724  0.036992271 -0.30016494
+## Eggs      -0.4266785 -0.03533576  0.18152828 -0.313163873  0.07911048
+## Milk      -0.3777273 -0.18458877 -0.38565773  0.003318279 -0.20041361
+## Fish      -0.1356499  0.64681970 -0.32127431  0.215955001 -0.29003065
+## Cereals    0.4377434 -0.23348508  0.09591750  0.006204117  0.23816783
+## Starch    -0.2972477  0.35282564  0.24297503  0.336684733  0.73597332
+## Nuts       0.4203344  0.14331056 -0.05438778 -0.330287545  0.15053689
+## Fr.Veg     0.1104199  0.53619004  0.40755612 -0.462055746 -0.23351666
+##                   PC6         PC7         PC8        PC9
+## RedMeat   -0.45986989  0.15033385 -0.01985770  0.2459995
+## WhiteMeat -0.12100707 -0.01966356 -0.02787648  0.5923966
+## Eggs       0.36124872 -0.44327151 -0.49120023 -0.3333861
+## Milk       0.61843780  0.46209500  0.08142193  0.1780841
+## Fish      -0.13679059 -0.10639350 -0.44873197  0.3128262
+## Cereals    0.08075842  0.40496408 -0.70299504  0.1522596
+## Starch     0.14766670  0.15275311  0.11453956  0.1218582
+## Nuts       0.44701001 -0.40726235  0.18379989  0.5182749
+## Fr.Veg     0.11854972  0.44997782  0.09196337 -0.2029503
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-11">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## the loadings (i.e., a matrix whose columns contain the eigenvectors)
+pcafood$rotation
+</code></pre>
+
+<pre><code>##                  PC1         PC2         PC3          PC4         PC5
+## RedMeat   -0.3026094 -0.05625165 -0.29757957 -0.646476536  0.32216008
+## WhiteMeat -0.3105562 -0.23685334  0.62389724  0.036992271 -0.30016494
+## Eggs      -0.4266785 -0.03533576  0.18152828 -0.313163873  0.07911048
+## Milk      -0.3777273 -0.18458877 -0.38565773  0.003318279 -0.20041361
+## Fish      -0.1356499  0.64681970 -0.32127431  0.215955001 -0.29003065
+## Cereals    0.4377434 -0.23348508  0.09591750  0.006204117  0.23816783
+## Starch    -0.2972477  0.35282564  0.24297503  0.336684733  0.73597332
+## Nuts       0.4203344  0.14331056 -0.05438778 -0.330287545  0.15053689
+## Fr.Veg     0.1104199  0.53619004  0.40755612 -0.462055746 -0.23351666
+##                   PC6         PC7         PC8        PC9
+## RedMeat   -0.45986989  0.15033385 -0.01985770  0.2459995
+## WhiteMeat -0.12100707 -0.01966356 -0.02787648  0.5923966
+## Eggs       0.36124872 -0.44327151 -0.49120023 -0.3333861
+## Milk       0.61843780  0.46209500  0.08142193  0.1780841
+## Fish      -0.13679059 -0.10639350 -0.44873197  0.3128262
+## Cereals    0.08075842  0.40496408 -0.70299504  0.1522596
+## Starch     0.14766670  0.15275311  0.11453956  0.1218582
+## Nuts       0.44701001 -0.40726235  0.18379989  0.5182749
+## Fr.Veg     0.11854972  0.44997782  0.09196337 -0.2029503
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-12">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## use &#39;predict&#39; to project data onto the loadings
+foodpc = predict(pcafood)
+foodpc  
+</code></pre>
+
+<pre><code>##              PC1         PC2         PC3        PC4         PC5
+##  [1,]  3.4853673 -1.63047985 -1.76123326 -0.2296580  0.02325397
+##  [2,] -1.4226694 -1.04123130  1.33780391 -0.1680973 -0.93344658
+##  [3,] -1.6220323  0.15949557  0.21653445 -0.5207260  0.75509039
+##  [4,]  3.1340813 -1.30106563  0.15128956 -0.2141894 -0.48474537
+##  [5,] -0.3704646 -0.60266842  1.19594183  0.4639821  0.25682380
+##  [6,] -2.3652688  0.28544582 -0.75226337  0.9673412 -0.75243310
+##  [7,] -1.4222108  0.45030085  1.30254017  1.1359613  0.42294279
+##  [8,] -1.5638563 -0.59600255 -2.04950734  1.4153084  0.03720310
+##  [9,] -1.4879824  0.78536517  0.00188261 -1.9574576  0.25045870
+## [10,]  2.2397000  1.00105887 -0.88260339 -1.7943200 -0.40497731
+## [11,]  1.4574398 -0.81595115  1.91416751  0.2173883 -0.04139773
+## [12,] -2.6634775 -0.76370648 -0.01988068 -0.4347281  1.01438731
+## [13,]  1.5345653  0.39898708  0.12608962 -1.2224605 -0.80354036
+## [14,] -1.6414454 -0.91199089  0.76648819  0.1261517 -0.76127751
+## [15,] -0.9747029  0.82202867 -1.70407650  1.1376216 -0.41487370
+## [16,] -0.1218695  0.53174194  1.47478926  0.4582224 -0.02321953
+## [17,]  1.7058540  4.28893399  0.04363280  0.8935596 -0.38528872
+## [18,]  2.7568124 -1.11878536  0.07008085  0.6150113  0.31709607
+## [19,]  1.3118074  2.55352416  0.51528370 -0.3592043  0.51590218
+## [20,] -1.6337300 -0.20738445 -1.28037195  0.7341013 -0.81982482
+## [21,] -0.9123182 -0.75105865 -0.15425409 -1.1704447 -0.83095955
+## [22,] -1.7353682 -0.09397944 -1.15268145 -1.7336921  1.08393948
+## [23,]  0.7825965 -0.11077014 -0.36967910  0.9275729  1.66955744
+## [24,] -2.0938353 -0.29377901  0.80397944 -0.1087951 -0.06836077
+## [25,]  3.6230077 -1.03802883  0.20604724  0.8215511  0.37768982
+##               PC6         PC7         PC8         PC9
+##  [1,] -1.03426476 -0.47174197  0.76155126 -0.10325325
+##  [2,]  0.21842810 -0.18115417 -0.25100249 -0.21744631
+##  [3,] -0.28980510 -0.19559674 -0.20331176 -0.03317146
+##  [4,] -0.69557793  0.46478244 -0.80824466 -0.29986287
+##  [5,] -0.82309047  0.31494841  0.01229809 -0.14944825
+##  [6,] -0.17032964 -0.22581590 -0.62102079  0.48027941
+##  [7,] -0.64831247 -0.55478278 -0.16317720 -0.25990129
+##  [8,]  0.83420035  0.72623047  0.22591749 -0.13308980
+##  [9,] -0.89894837  0.94647514 -0.02222005  0.54360773
+## [10,]  1.14447671 -0.14739068 -0.30583067  0.38796520
+## [11,]  0.53910843 -0.76810179  0.14561849  0.53694446
+## [12,]  0.48232591 -0.02866861  0.02299904 -0.07946587
+## [13,]  0.21408555  0.14999185 -0.08040607 -0.73235148
+## [14,]  0.29752197 -0.06209574  0.45992565  0.26087199
+## [15,] -0.05645162 -0.04278766 -0.10734586 -0.14732974
+## [16,]  0.58830002  1.26072252  0.19159633 -0.22099984
+## [17,] -0.69709651  0.04649963  0.20502225  0.26348804
+## [18,]  0.13051679 -0.13307908 -0.02689368  0.33803173
+## [19,]  0.66928818 -0.59721082  0.23532802 -0.47673575
+## [20,]  0.04407662 -0.54116219 -0.07221780 -0.10839228
+## [21,] -0.09024236  0.51229089  0.52929748  0.06656513
+## [22,] -0.09656499 -0.65096941 -0.23920906 -0.13193590
+## [23,]  0.18542992  0.57410168 -0.05202711  0.09168518
+## [24,] -0.20099295 -0.45677673  0.35662909 -0.02527918
+## [25,]  0.35391862  0.06129122 -0.19327598  0.14922442
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-13">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## how many principal components do we need?
+## plot the variances against the number of the principal component;
+## retain only factors with eigenvalues greater than 1
+plot(pcafood, main=&quot;&quot;) ## same as screeplot(pcafood)
+mtext(side=1, &quot;European Protein Principal Components&quot;,  line=1, font=2)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-12-1.png" alt="plot of chunk class07-chunk-12"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-14">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## how do the PCs look?
+plot(foodpc[,1:2], type=&quot;n&quot;, xlim=c(-4,5))
+text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-13-1.png" alt="plot of chunk class07-chunk-13"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-15">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">plot(foodpc[,3:4], type=&quot;n&quot;, xlim=c(-3,3))
+text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-14-1.png" alt="plot of chunk class07-chunk-14"></p>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-16">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">pcafood$rotation[,1]
+</code></pre>
+
+<pre><code>##    RedMeat  WhiteMeat       Eggs       Milk       Fish    Cereals 
+## -0.3026094 -0.3105562 -0.4266785 -0.3777273 -0.1356499  0.4377434 
+##     Starch       Nuts     Fr.Veg 
+## -0.2972477  0.4203344  0.1104199
+</code></pre>
+
+  </div>
+</section>
+<section class="slide compact" id="slide-17">
+  <div>
+    <h2>PCA on protein consumption data</h2>
+    <pre><code class="r">## plot both the observations and variables of a matrix
+biplot(pcafood)
+</code></pre>
+
+<p><img src="assets/fig/class07-chunk-16-1.png" alt="plot of chunk class07-chunk-16"></p>
+
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {
+	      inlineMath: [['$','$'], ['\\(','\\)']],
+	      processEscapes: true
+	    }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script> -->
+	<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>

@@ -1,0 +1,165 @@
+---
+title       : Class07
+subtitle    : Dimension Reduction
+author      : Yu-Ru Lin
+job         : 
+framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+toc         : true
+toc_depth   : 2
+
+--- #toc
+## Class07
+  
+* [Set up](#set-up)
+* [PCA process](#pca)
+* [PCA on protein consumption data](#pca1)
+
+--- #set-up .modal 
+
+## Install R packages
+```{r, eval=FALSE}
+## this tutorial uses the following packages
+```
+
+--- #pca .compact
+
+## PCA process
+   * Center the data according to the mean
+   * Calculate the covariance matrix
+   * Calculate the eigenvectors and eigenvalues of the covariance matrix
+   * Express the scaled data in terms of eigenvectors (principal components)
+```{r}
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+data = read.csv(sprintf("%s/unemp.csv",data.url))
+data[1:3,]
+dim(data)
+```
+
+--- .scode-nowrap .compact
+## PCA
+```{r, dependson=c(-1)}
+states = data[,1]; n = length(states)
+data = (as.matrix(data[,-1]))
+## 1) Center the data according to the mean
+my.scaled.data = apply(data,2,function(x) (x-mean(x)))
+plot(my.scaled.data,cex=0.9,col="blue",main="Plot of Scaled Data")
+## 2) Calculate the covariance matrix
+my.cov = cov(my.scaled.data)
+my.cov
+```
+
+--- .scode-nowrap .compact
+## PCA
+```{r, dependson=c(-1)}
+## 3) Calculate the eigenvectors and eigenvalues of the covariance matrix
+my.eigen = eigen(my.cov)
+my.eigen
+```
+
+--- .scode-nowrap .compact
+## PCA
+```{r, dependson=c(-1)}
+## 3a) Plot the Eigenvectors over the scaled data
+plot(my.scaled.data,cex=0.9,col="blue",main="Plot of Scaled Data")
+pc1.slope = my.eigen$vectors[2,1] /my.eigen$vectors[1,1]
+pc2.slope = my.eigen$vectors[2,2] /my.eigen$vectors[1,2]
+abline(0,pc1.slope,col="red")
+abline(0,pc2.slope,col="green")
+```
+
+--- .scode-nowrap .compact
+## PCA
+```{r, dependson=c(-1)}
+## 4) Express the scaled data in terms of eigenvectors (principal components)
+## get the P matrix (loadings, i.e., a matrix whose columns contain the eigenvectors)
+loadings = my.eigen$vectors 
+## project data onto the loadings
+scores = my.scaled.data %*% loadings 
+## plot the projected data on the first two PCs
+plot(scores,ylim=c(-3,3),main='Data in terms of EigenVectors / PCs',xlab='PC1',ylab='PC2')
+abline(0,0,col="red")
+abline(0,90,col="green")
+```
+
+--- .scode-nowrap .compact #pca1
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## load the data:
+data.url = 'http://www.yurulin.com/class/spring2014_datamining/data/data_text'
+food = read.csv(sprintf("%s/protein.csv",data.url))
+food[1:3,] ## take a look at the first three rows
+```
+
+--- .ssscode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## correlation matrix
+## we strip the first column (country labels) from the data set
+cor(food[,-1])
+```
+
+--- .ssscode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## scale = TRUE: variables are first standardized. Default is FALSE
+pcafood = prcomp(food[,-1], scale=TRUE) 
+pcafood
+```
+
+--- .ssscode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## the loadings (i.e., a matrix whose columns contain the eigenvectors)
+pcafood$rotation
+```
+
+--- .ssscode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## use 'predict' to project data onto the loadings
+foodpc = predict(pcafood)
+foodpc  
+```
+
+--- .scode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## how many principal components do we need?
+## plot the variances against the number of the principal component;
+## retain only factors with eigenvalues greater than 1
+plot(pcafood, main="") ## same as screeplot(pcafood)
+mtext(side=1, "European Protein Principal Components",  line=1, font=2)
+```
+
+--- .scode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## how do the PCs look?
+plot(foodpc[,1:2], type="n", xlim=c(-4,5))
+text(x=foodpc[,1], y=foodpc[,2], labels=food$Country)
+```
+
+--- .scode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+plot(foodpc[,3:4], type="n", xlim=c(-3,3))
+text(x=foodpc[,3], y=foodpc[,4], labels=food$Country)
+```
+
+--- .sscode-nowrap .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+pcafood$rotation[,1]
+```
+
+---  .compact 
+## PCA on protein consumption data
+```{r, dependson=c(-1)}
+## plot both the observations and variables of a matrix
+biplot(pcafood)
+```
