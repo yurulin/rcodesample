@@ -116,7 +116,7 @@ dist.mat  ## check distance matrix
 
 --- .sscode-nowrap .compact
 ## Text processing
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=6, fig.height=4}
 ## generate mds plot
 doc.mds = cmdscale(dist.mat, k = 2)
 data = data.frame(x = doc.mds[, 1], y = doc.mds[, 2], topic = df$topic, id = row.names(df))
@@ -126,7 +126,7 @@ ggplot(data, aes(x = x, y = y, color=topic)) +
 
 --- .sscode-nowrap .compact
 ## Text processing
-```{r, dependson=c(-1)}
+```{r, dependson=c(-1), fig.width=6, fig.height=4}
 td.mat.w = lw_tf(td.mat) * gw_idf(td.mat)  ## tf-idf weighting
 dist.mat = dist(t(as.matrix(td.mat.w))) ## compute distance matrix
 
