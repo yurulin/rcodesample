@@ -155,3 +155,111 @@ wc[1:3,]
 ```{r, dependson=c(-1)}
 wordcloud(wc$word, wc$freq, min.freq=2)
 ```
+
+--- #lsa .sscode-nowrap .compact
+## LSA
+```{r, dependson=c(-1)}
+## compute svd (do lsa manually)
+k = 3
+S = svd(as.matrix(td.mat.w),nu=k,nv=k)
+u = S$u; s = S$d; v = S$v
+td.mat.svd = S$u %*% diag(S$d[1:k]) %*% t(S$v) ## X ~ U * S * V^t
+dist.mat = dist(t(td.mat.svd))
+doc.mds = cmdscale(dist.mat, k = 2)
+data = data.frame(x = doc.mds[, 1], y = doc.mds[, 2], topic = df$topic, id = row.names(df))
+ggplot(data, aes(x = x, y = y, color=topic)) + 
+  geom_point() + geom_text(aes(x = x, y = y - 0.2, label = id))
+```
+
+--- .sscode-nowrap .compact
+## LSA
+```{r, dependson=c(-1)}
+## run mds by lsa package
+lsa.space = lsa(td.mat.w,dims=3)  ## create LSA space
+dist.mat = dist(t(as.textmatrix(lsa.space)))  ## compute distance matrix
+dist.mat  ## check distance mantrix
+```
+
+--- .sscode-nowrap .compact
+## LSA
+```{r, dependson=c(-1)}
+doc.mds = cmdscale(dist.mat, k = 2)
+data = data.frame(x = doc.mds[, 1], y = doc.mds[, 2], topic = df$topic, id = row.names(df))
+ggplot(data, aes(x = x, y = y, color=topic)) + 
+  geom_point() + geom_text(aes(x = x, y = y - 0.2, label = id))
+```
+
+--- .sscode-nowrap .compact
+## LSA
+```{r, dependson=c(-1)}
+## generate 3d plot
+library(scatterplot3d)
+doc.mds = cmdscale(dist.mat, k = 3)
+colors = rep(c("blue", "green", "red"), each = 3)
+scatterplot3d(doc.mds[, 1], doc.mds[, 2], doc.mds[, 3], color = colors, 
+              pch = 16, main = "Semantic Space Scaled to 3D", xlab = "x", ylab = "y", 
+              zlab = "z", type = "h")
+```
+
+--- .sscode-nowrap .compact #lda
+## LDA
+```{r, dependson=c(-1)}
+## run LDA topic model
+library(topicmodels)
+lda = LDA(t(td.mat), 3)
+terms(lda)
+topics(lda)
+```
+
+--- .sscode-nowrap .compact
+## LDA
+```{r, dependson=c(-1)}
+terms <- as.data.frame(t(posterior(lda)$terms))
+head(terms)
+```
+
+--- .sscode-nowrap .compact
+## LDA
+```{r, dependson=c(-1)}
+topics <- as.data.frame(t(posterior(lda)$topics))
+head(topics)
+```
+
+--- .sscode-nowrap .compact #nmf
+## NMF
+```{r, dependson=c(-1)}
+## run NMF
+library(NMF)
+# V ~ WH' 
+# V is an n x p matrix
+# W = n x r  term feature matrix
+# H = r x p  doc feature matrix
+set.seed(12345)
+res = nmf(td.mat, 3,"lee") # lee & seung method
+V.hat = fitted(res) 
+dim(V.hat) ## estimated target matrix
+```
+
+--- .sscode-nowrap .compact 
+## NMF
+```{r, dependson=c(-1)}
+w = basis(res) ##  W  term feature matrix matrix
+dim(w) # n x r (n=95, r=3)
+```
+
+--- .sscode-nowrap .compact 
+## NMF
+```{r, dependson=c(-1)}
+h = coef(res) ## H  doc feature matrix
+dim(h) #  r x p (r=3, p=9)
+```
+
+--- .sscode-nowrap .compact 
+## NMF
+```{r, dependson=c(-1)}
+doc2 = data.frame(t(h))
+features = cbind(doc2$X1,doc2$X2,doc2$X3)
+scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors, 
+              pch = 16, main = "Semantic Space Scaled to 3D", xlab = "x", ylab = "y", 
+              zlab = "z", type = "h")
+```

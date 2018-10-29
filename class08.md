@@ -286,3 +286,248 @@ wordcloud(wc$word, wc$freq, min.freq=2)
 ```
 
 ![plot of chunk class08-chunk-14](assets/fig/class08-chunk-14-1.png)
+
+--- #lsa .sscode-nowrap .compact
+## LSA
+
+```r
+## compute svd (do lsa manually)
+k = 3
+S = svd(as.matrix(td.mat.w),nu=k,nv=k)
+u = S$u; s = S$d; v = S$v
+td.mat.svd = S$u %*% diag(S$d[1:k]) %*% t(S$v) ## X ~ U * S * V^t
+dist.mat = dist(t(td.mat.svd))
+doc.mds = cmdscale(dist.mat, k = 2)
+data = data.frame(x = doc.mds[, 1], y = doc.mds[, 2], topic = df$topic, id = row.names(df))
+ggplot(data, aes(x = x, y = y, color=topic)) + 
+  geom_point() + geom_text(aes(x = x, y = y - 0.2, label = id))
+```
+
+![plot of chunk class08-chunk-15](assets/fig/class08-chunk-15-1.png)
+
+--- .sscode-nowrap .compact
+## LSA
+
+```r
+## run mds by lsa package
+lsa.space = lsa(td.mat.w,dims=3)  ## create LSA space
+dist.mat = dist(t(as.textmatrix(lsa.space)))  ## compute distance matrix
+dist.mat  ## check distance mantrix
+```
+
+```
+##              1            2            3            4            5
+## 2 1.880226e+01                                                    
+## 3 7.275635e+00 2.125116e+01                                       
+## 4 1.426830e+01 1.655290e+01 1.005893e+01                          
+## 5 1.426830e+01 1.655290e+01 1.005893e+01 1.783840e-14             
+## 6 1.426830e+01 1.655290e+01 1.005893e+01 1.441393e-14 3.562600e-15
+## 7 2.293723e+01 2.379318e+01 2.022884e+01 1.778350e+01 1.778350e+01
+## 8 1.431204e+01 1.663369e+01 1.003659e+01 9.631855e-01 9.631855e-01
+## 9 1.489724e+01 1.718917e+01 1.063050e+01 4.079201e+00 4.079201e+00
+##              6            7            8
+## 2                                       
+## 3                                       
+## 4                                       
+## 5                                       
+## 6                                       
+## 7 1.778350e+01                          
+## 8 9.631855e-01 1.682537e+01             
+## 9 4.079201e+00 1.372079e+01 3.116292e+00
+```
+
+--- .sscode-nowrap .compact
+## LSA
+
+```r
+doc.mds = cmdscale(dist.mat, k = 2)
+data = data.frame(x = doc.mds[, 1], y = doc.mds[, 2], topic = df$topic, id = row.names(df))
+ggplot(data, aes(x = x, y = y, color=topic)) + 
+  geom_point() + geom_text(aes(x = x, y = y - 0.2, label = id))
+```
+
+![plot of chunk class08-chunk-17](assets/fig/class08-chunk-17-1.png)
+
+--- .sscode-nowrap .compact
+## LSA
+
+```r
+## generate 3d plot
+library(scatterplot3d)
+doc.mds = cmdscale(dist.mat, k = 3)
+colors = rep(c("blue", "green", "red"), each = 3)
+scatterplot3d(doc.mds[, 1], doc.mds[, 2], doc.mds[, 3], color = colors, 
+              pch = 16, main = "Semantic Space Scaled to 3D", xlab = "x", ylab = "y", 
+              zlab = "z", type = "h")
+```
+
+![plot of chunk class08-chunk-18](assets/fig/class08-chunk-18-1.png)
+
+--- .sscode-nowrap .compact #lda
+## LDA
+
+```r
+## run LDA topic model
+library(topicmodels)
+lda = LDA(t(td.mat), 3)
+terms(lda)
+```
+
+```
+##     Topic 1     Topic 2     Topic 3 
+##      "data"    "govern" "scientist"
+```
+
+```r
+topics(lda)
+```
+
+```
+## 1 2 3 4 5 6 7 8 9 
+## 1 3 1 3 3 3 2 2 2
+```
+
+--- .sscode-nowrap .compact
+## LDA
+
+```r
+terms <- as.data.frame(t(posterior(lda)$terms))
+head(terms)
+```
+
+```
+##                   1            2            3
+## big      0.07407407 1.412457e-73 1.235900e-73
+## buzz     0.03703704 1.412457e-73 1.235900e-73
+## constant 0.03703704 1.412457e-73 1.235900e-73
+## data     0.14814815 3.720076e-44 2.083333e-02
+## inform   0.03703704 3.720076e-44 2.083333e-02
+## inund    0.03703704 1.412457e-73 1.235900e-73
+```
+
+--- .sscode-nowrap .compact
+## LDA
+
+```r
+topics <- as.data.frame(t(posterior(lda)$topics))
+head(topics)
+```
+
+```
+##             1            2           3           4           5           6
+## 1 0.997878498 0.0009285266 0.997715864 0.001483164 0.001236887 0.001483164
+## 2 0.001060751 0.0009285266 0.001142068 0.001483164 0.001236887 0.001483164
+## 3 0.001060751 0.9981429469 0.001142068 0.997033673 0.997526226 0.997033673
+##              7           8           9
+## 1 0.0007079183 0.001647145 0.001236887
+## 2 0.9985841633 0.996705709 0.997526226
+## 3 0.0007079183 0.001647145 0.001236887
+```
+
+--- .sscode-nowrap .compact #nmf
+## NMF
+
+```r
+## run NMF
+library(NMF)
+```
+
+```
+## Error in library(NMF): there is no package called 'NMF'
+```
+
+```r
+# V ~ WH' 
+# V is an n x p matrix
+# W = n x r  term feature matrix
+# H = r x p  doc feature matrix
+set.seed(12345)
+res = nmf(td.mat, 3,"lee") # lee & seung method
+```
+
+```
+## Error in nmf(td.mat, 3, "lee"): could not find function "nmf"
+```
+
+```r
+V.hat = fitted(res) 
+```
+
+```
+## Error: $ operator is invalid for atomic vectors
+```
+
+```r
+dim(V.hat) ## estimated target matrix
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'V.hat' not found
+```
+
+--- .sscode-nowrap .compact 
+## NMF
+
+```r
+w = basis(res) ##  W  term feature matrix matrix
+```
+
+```
+## Error in basis(res): could not find function "basis"
+```
+
+```r
+dim(w) # n x r (n=95, r=3)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'w' not found
+```
+
+--- .sscode-nowrap .compact 
+## NMF
+
+```r
+h = coef(res) ## H  doc feature matrix
+```
+
+```
+## Error: $ operator is invalid for atomic vectors
+```
+
+```r
+dim(h) #  r x p (r=3, p=9)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'h' not found
+```
+
+--- .sscode-nowrap .compact 
+## NMF
+
+```r
+doc2 = data.frame(t(h))
+```
+
+```
+## Error in t(h): object 'h' not found
+```
+
+```r
+features = cbind(doc2$X1,doc2$X2,doc2$X3)
+```
+
+```
+## Error in cbind(doc2$X1, doc2$X2, doc2$X3): object 'doc2' not found
+```
+
+```r
+scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors, 
+              pch = 16, main = "Semantic Space Scaled to 3D", xlab = "x", ylab = "y", 
+              zlab = "z", type = "h")
+```
+
+```
+## Error in scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors, : object 'features' not found
+```
