@@ -18,6 +18,8 @@ knit        : slidify::knit2slides
 * [class04: Classification](class04.html)
 * [class05: Classification](class05.html)
 * [class06: Clustering](class06.html)
+* [class07: Dimension Reduction](class07.html)
+* [class08: Text Mining](class08.html)
 * [R Lab: Part I](rlab01.html)
 * [R Lab: Part II](rlab02.html)
 
