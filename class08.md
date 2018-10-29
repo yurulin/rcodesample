@@ -28,6 +28,7 @@ toc_depth   : 2
 
 ```r
 ## this tutorial uses the following packages
+install.packages('NMF')
 ```
 
 --- #text .sscode-nowrap .compact
@@ -287,7 +288,7 @@ wordcloud(wc$word, wc$freq, min.freq=2)
 
 ![plot of chunk class08-chunk-14](assets/fig/class08-chunk-14-1.png)
 
---- #lsa .sscode-nowrap .compact
+--- .sscode-nowrap .compact #lsa
 ## LSA
 
 ```r

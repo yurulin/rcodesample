@@ -27,6 +27,7 @@ toc_depth   : 2
 ## Install R packages
 ```{r, eval=FALSE}
 ## this tutorial uses the following packages
+install.packages('NMF')
 ```
 
 --- #text .sscode-nowrap .compact
@@ -156,7 +157,7 @@ wc[1:3,]
 wordcloud(wc$word, wc$freq, min.freq=2)
 ```
 
---- #lsa .sscode-nowrap .compact
+--- .sscode-nowrap .compact #lsa
 ## LSA
 ```{r, dependson=c(-1)}
 ## compute svd (do lsa manually)
