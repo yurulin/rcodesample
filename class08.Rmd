@@ -259,3 +259,7 @@ scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors,
               pch = 16, main = "Semantic Space Scaled to 3D", xlab = "x", ylab = "y", 
               zlab = "z", type = "h")
 ```
+
+--- .model #textclassify
+## Text classification
+* There are other R packages for text mining. For example, [RTextTools](http://www.rtexttools.com/documentation.html) has largely been used for topic classification.

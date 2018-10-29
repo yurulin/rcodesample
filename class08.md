@@ -478,3 +478,7 @@ scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors,
 ```
 
 ![plot of chunk class08-chunk-24](assets/fig/class08-chunk-24-1.png)
+
+--- .model #textclassify
+## Text classification
+* There are other R packages for text mining. For example, [RTextTools](http://www.rtexttools.com/documentation.html) has largely been used for topic classification.
