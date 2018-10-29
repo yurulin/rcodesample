@@ -36,3 +36,7 @@ rpart
 ada
 plyr
 foreign
+NLP
+tm
+SnowballC
+lsa

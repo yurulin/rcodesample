@@ -46,6 +46,7 @@ data[1:3,]
 dim(data)
 ```
 
+
 --- .scode-nowrap .compact
 ## PCA
 ```{r, dependson=c(-1)}

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Class08</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<meta name="description" content="Class08">
+	<meta name="author" content="Yu-Ru Lin">
+	<meta name="generator" content="slidify" />
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="libraries/frameworks/shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" media="print"
+	  href="libraries/frameworks/shower/themes/ribbon/styles/print.css">
+	<link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css">  <link rel="stylesheet" href = "assets/css/mystyle.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+	<!--
+		To apply styles to the certain slides
+		use slide ID to get needed elements
+		-->
+	<style>
+		#Cover h2 {
+      margin:65px 0 0;
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+		#FitToWidth h2,
+		#FitToHeight h2 {
+			color:#FFF;
+			text-align:center;
+			}
+	</style> 
+</head>
+<body class="list">
+  <header class="caption">
+  	<h1>Class08</h1>
+	</header>
+  <section class="slide " id="toc">
+  <div>
+    <h2>Class08</h2>
+    <ul>
+<li><a href="#set-up">Set up</a></li>
+<li><a href="#text">Text processing</a></li>
+<li><a href="#lsa">LSA</a></li>
+<li><a href="#lda">LDA</a></li>
+<li><a href="#nmf">NMF</a></li>
+<li><a href="#textclassify">Text classification</a></li>
+</ul>
+
+  </div>
+</section>
+<section class="slide modal" id="set-up">
+  <div>
+    <h2>Install R packages</h2>
+    <pre><code class="r">## this tutorial uses the following packages
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="text">
+  <div>
+    <h2>Text processing</h2>
+    <pre><code class="r">## load libraries
+library(tm)
+library(lsa)
+library(ggplot2)
+
+## prepare a toy example with 9 documents in three topics: big data, global warming, government shutdown
+text = c(
+  &quot;With all the buzz surrounding big data, the data management practitioner is constantly inundated with information regarding big data technologies.&quot;,
+  &quot;We create so much data every day that 90 percent of the information in the world today has been created in the last two years alone, according to IBM.&quot;,
+  &quot;Random algorithms and probabilistic data structures are algorithmically efficient and can provide shockingly good practical results.&quot;,
+  &quot;Scientists will issue their starkest warning yet about the mounting dangers of global warming.&quot;,
+  &quot;Scientists are more certain than ever that humans are causing the majority of climate change, a major new report has shown.&quot;,
+  &quot;There&#39;s a consensus among leading scientists that global warming is caused by human activity.&quot;,
+  &quot;The mood in financial markets was cautious on Monday as the partial shut-down of the American government entered a seventh day and lawmakers appeared to be making little headway in raising the country&#39;s debt ceiling.&quot;,
+  &quot;President Obama must continue to refuse to negotiate policy while the government is shut down. &quot;,
+  &quot;The stock market is closing at its lowest level in a month as the U.S. government enters a second week of being partially shut down.&quot;
+)
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-4">
+  <div>
+    <h2>Text processing</h2>
+    
+  </div>
+</section>
+  <div class="progress">
+    <div></div>
+  </div>
+    <footer class = 'foot'>
+      <a href="index.html"><img src = 'assets/img/arrow_up_circle.png' style="width:30px;height:30px;"></a></img>
+      <a href="#toc"><img src = 'assets/img/circle-info.png' style="width:32px;height:32px;"></a></img>
+    </footer>    
+	<script src="libraries/frameworks/shower/shower.js"></script>
+	<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {
+	      inlineMath: [['$','$'], ['\\(','\\)']],
+	      processEscapes: true
+	    }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script> -->
+	<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+	<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+	 
+		<!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+	<!-- Photos by John Carey — fiftyfootshadows.net -->
+</body>
+</html>
