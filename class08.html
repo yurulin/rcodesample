@@ -461,8 +461,8 @@ library(NMF)
 # V is an n x p matrix
 # W = n x r  term feature matrix
 # H = r x p  doc feature matrix
-set.seed(1234)
-res = nmf(td.mat, 3,&quot;lee&quot;) # lee &amp; seung method
+set.seed(12345)
+res = nmf(td.mat.w, 3,&quot;lee&quot;) # lee &amp; seung method
 V.hat = fitted(res) 
 dim(V.hat) ## estimated target matrix
 </code></pre>
