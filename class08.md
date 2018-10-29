@@ -435,7 +435,7 @@ library(NMF)
 # V is an n x p matrix
 # W = n x r  term feature matrix
 # H = r x p  doc feature matrix
-set.seed(12345)
+set.seed(1234)
 res = nmf(td.mat, 3,"lee") # lee & seung method
 V.hat = fitted(res) 
 dim(V.hat) ## estimated target matrix
@@ -457,9 +457,6 @@ dim(w) # n x r (n=95, r=3)
 ## [1] 95  3
 ```
 
---- .sscode-nowrap .compact 
-## NMF
-
 ```r
 h = coef(res) ## H  doc feature matrix
 dim(h) #  r x p (r=3, p=9)
@@ -480,4 +477,4 @@ scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors,
               zlab = "z", type = "h")
 ```
 
-![plot of chunk class08-chunk-25](assets/fig/class08-chunk-25-1.png)
+![plot of chunk class08-chunk-24](assets/fig/class08-chunk-24-1.png)

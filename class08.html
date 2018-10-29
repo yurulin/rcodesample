@@ -461,7 +461,7 @@ library(NMF)
 # V is an n x p matrix
 # W = n x r  term feature matrix
 # H = r x p  doc feature matrix
-set.seed(12345)
+set.seed(1234)
 res = nmf(td.mat, 3,&quot;lee&quot;) # lee &amp; seung method
 V.hat = fitted(res) 
 dim(V.hat) ## estimated target matrix
@@ -482,12 +482,7 @@ dim(w) # n x r (n=95, r=3)
 <pre><code>## [1] 95  3
 </code></pre>
 
-  </div>
-</section>
-<section class="slide sscode-nowrap compact" id="slide-25">
-  <div>
-    <h2>NMF</h2>
-    <pre><code class="r">h = coef(res) ## H  doc feature matrix
+<pre><code class="r">h = coef(res) ## H  doc feature matrix
 dim(h) #  r x p (r=3, p=9)
 </code></pre>
 
@@ -496,7 +491,7 @@ dim(h) #  r x p (r=3, p=9)
 
   </div>
 </section>
-<section class="slide sscode-nowrap compact" id="slide-26">
+<section class="slide sscode-nowrap compact" id="slide-25">
   <div>
     <h2>NMF</h2>
     <pre><code class="r">doc2 = data.frame(t(h))
@@ -506,7 +501,7 @@ scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors,
               zlab = &quot;z&quot;, type = &quot;h&quot;)
 </code></pre>
 
-<p><img src="assets/fig/class08-chunk-25-1.png" alt="plot of chunk class08-chunk-25"></p>
+<p><img src="assets/fig/class08-chunk-24-1.png" alt="plot of chunk class08-chunk-24"></p>
 
   </div>
 </section>
