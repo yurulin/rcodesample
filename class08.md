@@ -375,8 +375,8 @@ terms(lda)
 ```
 
 ```
-##     Topic 1     Topic 2     Topic 3 
-## "algorithm"      "data" "scientist"
+## Topic 1 Topic 2 Topic 3 
+## "major" "creat"  "data"
 ```
 
 ```r
@@ -385,7 +385,7 @@ topics(lda)
 
 ```
 ## 1 2 3 4 5 6 7 8 9 
-## 2 2 1 3 3 3 3 1 1
+## 3 2 3 2 1 2 1 3 3
 ```
 
 --- .sscode-nowrap .compact
@@ -397,13 +397,13 @@ head(terms)
 ```
 
 ```
-##                     1          2            3
-## big      1.727188e-73 0.06666667 1.108008e-73
-## buzz     1.727188e-73 0.03333333 1.108008e-73
-## constant 1.727188e-73 0.03333333 1.108008e-73
-## data     2.941176e-02 0.13333333 2.428340e-73
-## inform   1.615910e-73 0.06666667 1.036622e-73
-## inund    1.727188e-73 0.03333333 1.108008e-73
+##                      1             2          3
+## big      2.541422e-153 1.794414e-153 0.04166667
+## buzz     2.541422e-153 1.794414e-153 0.02083333
+## constant 2.541422e-153 1.794414e-153 0.02083333
+## data     2.708628e-127  2.777778e-02 0.08333333
+## inform   2.612834e-127  2.777778e-02 0.02083333
+## inund    2.541422e-153 1.794414e-153 0.02083333
 ```
 
 --- .sscode-nowrap .compact
@@ -416,13 +416,13 @@ head(topics)
 
 ```
 ##             1            2           3           4           5           6
-## 1 0.001058933 0.0009269345 0.997719778 0.001480625 0.001234768 0.001480625
-## 2 0.997882134 0.9981461311 0.001140111 0.001480625 0.001234768 0.001480625
-## 3 0.001058933 0.0009269345 0.001140111 0.997038751 0.997530464 0.997038751
-##              7           8           9
-## 1 0.0007067037 0.996711346 0.997530464
-## 2 0.0007067037 0.001644327 0.001234768
-## 3 0.9985865926 0.001644327 0.001234768
+## 1 0.001054909 0.0009234107 0.001135779 0.001475006 0.997539843 0.001475006
+## 2 0.001054909 0.9981531785 0.001135779 0.997049989 0.001230078 0.997049989
+## 3 0.997890182 0.0009234107 0.997728441 0.001475006 0.001230078 0.001475006
+##              7          8           9
+## 1 0.9985919692 0.00163809 0.001230078
+## 2 0.0007040154 0.00163809 0.001230078
+## 3 0.0007040154 0.99672382 0.997539843
 ```
 
 --- .sscode-nowrap .compact #nmf
@@ -431,39 +431,18 @@ head(topics)
 ```r
 ## run NMF
 library(NMF)
-```
-
-```
-## Error in library(NMF): there is no package called 'NMF'
-```
-
-```r
 # V ~ WH' 
 # V is an n x p matrix
 # W = n x r  term feature matrix
 # H = r x p  doc feature matrix
 set.seed(12345)
 res = nmf(td.mat, 3,"lee") # lee & seung method
-```
-
-```
-## Error in nmf(td.mat, 3, "lee"): could not find function "nmf"
-```
-
-```r
 V.hat = fitted(res) 
-```
-
-```
-## Error: $ operator is invalid for atomic vectors
-```
-
-```r
 dim(V.hat) ## estimated target matrix
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'V.hat' not found
+## [1] 95  9
 ```
 
 --- .sscode-nowrap .compact 
@@ -471,18 +450,11 @@ dim(V.hat) ## estimated target matrix
 
 ```r
 w = basis(res) ##  W  term feature matrix matrix
-```
-
-```
-## Error in basis(res): could not find function "basis"
-```
-
-```r
 dim(w) # n x r (n=95, r=3)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'w' not found
+## [1] 95  3
 ```
 
 --- .sscode-nowrap .compact 
@@ -490,18 +462,11 @@ dim(w) # n x r (n=95, r=3)
 
 ```r
 h = coef(res) ## H  doc feature matrix
-```
-
-```
-## Error: $ operator is invalid for atomic vectors
-```
-
-```r
 dim(h) #  r x p (r=3, p=9)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'h' not found
+## [1] 3 9
 ```
 
 --- .sscode-nowrap .compact 
@@ -509,26 +474,10 @@ dim(h) #  r x p (r=3, p=9)
 
 ```r
 doc2 = data.frame(t(h))
-```
-
-```
-## Error in t(h): object 'h' not found
-```
-
-```r
 features = cbind(doc2$X1,doc2$X2,doc2$X3)
-```
-
-```
-## Error in cbind(doc2$X1, doc2$X2, doc2$X3): object 'doc2' not found
-```
-
-```r
 scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors, 
               pch = 16, main = "Semantic Space Scaled to 3D", xlab = "x", ylab = "y", 
               zlab = "z", type = "h")
 ```
 
-```
-## Error in scatterplot3d(features[, 1], features[, 2], features[, 3], color = colors, : object 'features' not found
-```
+![plot of chunk class08-chunk-25](assets/fig/class08-chunk-25-1.png)

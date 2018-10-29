@@ -43,3 +43,9 @@ lsa
 wordcloud
 scatterplot3d
 topicmodels
+registry
+pkgmaker
+rngtools
+BiocGenerics
+Biobase
+NMF
