@@ -51,7 +51,107 @@ text = c(
 )
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Text processing
 ```{r, dependson=c(-1)}
+## give the topic labels
+topic = factor(rep(c("big data", "global warming", "gov shutdown"), each = 3))
+df = data.frame(text, topic, stringsAsFactors = FALSE)
+df[1:3,]
+dim(df)
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+## prepare corpus
+corpus = Corpus(VectorSource(df$text))
+corpus = tm_map(corpus, tolower) ## convert text to lower case
+inspect(corpus[1:3])  
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+corpus = tm_map(corpus, removePunctuation) ## remove punctuations
+inspect(corpus[1:3]) 
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+corpus = tm_map(corpus, removeNumbers) ## remove numbers
+inspect(corpus[1:3]) 
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+corpus = tm_map(corpus, function(x) removeWords(x, stopwords("english"))) ## remove stopwords
+inspect(corpus[1:3]) 
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+corpus = tm_map(corpus, stemDocument, language = "english") ## stemming
+inspect(corpus[1:3])
+corpus  # check corpus
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+td.mat = as.matrix(TermDocumentMatrix(corpus))
+td.mat[1:3,]
+dim(td.mat) ## dimension of term-doc matrix
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+dist.mat = dist(t(as.matrix(td.mat))) ## compute distance matrix
+dist.mat  ## check distance matrix
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+## generate mds plot
+doc.mds = cmdscale(dist.mat, k = 2)
+data = data.frame(x = doc.mds[, 1], y = doc.mds[, 2], topic = df$topic, id = row.names(df))
+ggplot(data, aes(x = x, y = y, color=topic)) + 
+  geom_point() + geom_text(aes(x = x, y = y - 0.2, label = id))
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+td.mat.w = lw_tf(td.mat) * gw_idf(td.mat)  ## tf-idf weighting
+dist.mat = dist(t(as.matrix(td.mat.w))) ## compute distance matrix
+
+## generate mds plot using new distance matrix
+doc.mds = cmdscale(dist.mat, k = 2)
+data = data.frame(x = doc.mds[, 1], y = doc.mds[, 2], topic = df$topic, id = row.names(df))
+ggplot(data, aes(x = x, y = y, color=topic)) + 
+  geom_point() + geom_text(aes(x = x, y = y - 0.2, label = id))
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+## generate wordcloud
+library(wordcloud)
+m = as.matrix(td.mat)
+## calculate the frequency of words
+v = sort(rowSums(m), decreasing=TRUE) 
+words = names(v)
+wc = data.frame(word=words, freq=v)
+wc[1:3,]
+```
+
+--- .sscode-nowrap .compact
+## Text processing
+```{r, dependson=c(-1)}
+wordcloud(wc$word, wc$freq, min.freq=2)
 ```
