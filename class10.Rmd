@@ -461,6 +461,11 @@ compare(membership(sg), membership(le), method="rand")
 ## highlight between-community edges
 le = leading.eigenvector.community(g,steps=1)
 le
+```
+
+--- .ssscode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
 V(g)$color = ifelse(le$membership==1, "lightblue", "green")
 
 scale <- function(v, a, b) {
@@ -472,15 +477,6 @@ E(g)$color = "grey"
 E(g)[ V(g)[ color=="lightblue" ] %--% V(g)[ color=="green" ] ]$color = "red"
 set.seed(1)
 plot(g, layout=layout.kamada.kawai, vertex.label.font=2)
-```
-
---- #attr .scode-nowrap .compact
-## 
-```{r, dependson=c(-1)}
-## load the karet network from file (in pajek format)
-ifilename = 'http://igraph.sourceforge.net/karate.net'
-## url.show(ifilename)
-g = read.graph(ifilename, format="pajek")
 ```
 
 --- .scode-nowrap .compact #attr
@@ -568,7 +564,3 @@ set.seed(1)
 plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
 ```
 
---- .scode-nowrap .compact
-## graph with attributes
-```{r, dependson=c(-1)}
-```

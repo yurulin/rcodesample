@@ -812,6 +812,9 @@ le
 ## 
 ```
 
+--- .ssscode-nowrap .compact
+## network community
+
 ```r
 V(g)$color = ifelse(le$membership==1, "lightblue", "green")
 
@@ -826,21 +829,7 @@ set.seed(1)
 plot(g, layout=layout.kamada.kawai, vertex.label.font=2)
 ```
 
-![plot of chunk class10-chunk-45](assets/fig/class10-chunk-45-1.png)
-
---- #attr .scode-nowrap .compact
-## 
-
-```r
-## load the karet network from file (in pajek format)
-ifilename = 'http://igraph.sourceforge.net/karate.net'
-## url.show(ifilename)
-g = read.graph(ifilename, format="pajek")
-```
-
-```
-## Error in read.graph.pajek(file, ...): At foreign.c:586 : Parse error in Pajek file, line 1 (syntax error, unexpected NEWLINE, expecting VERTICESLINE), Parse error
-```
+![plot of chunk class10-chunk-46](assets/fig/class10-chunk-46-1.png)
 
 --- .scode-nowrap .compact #attr
 ## graph with attributes
@@ -984,10 +973,10 @@ g
 ```
 
 ```
-## IGRAPH 4a73e77 DN-- 10 34 -- 
+## IGRAPH 3977450 DN-- 10 34 -- 
 ## + attr: name (v/c), age (v/n), gender (v/c), room (e/c), friend
 ## | (e/n), advice (e/n)
-## + edges from 4a73e77 (vertex names):
+## + edges from 3977450 (vertex names):
 ##  [1] Bob      ->Alice     Cecil    ->Bob       Cecil    ->Alice    
 ##  [4] David    ->Alice     David    ->Bob       Esmeralda->Alice    
 ##  [7] Frank    ->Alice     Frank    ->Esmeralda Gabi     ->Bob      
@@ -1036,7 +1025,4 @@ plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
 ```
 
 ![plot of chunk class10-chunk-55](assets/fig/class10-chunk-55-1.png)
-
---- .scode-nowrap .compact
-## graph with attributes
 
