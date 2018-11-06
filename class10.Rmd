@@ -84,7 +84,7 @@ el = get.edgelist(g)
 el
 ```
 
----  .scode-nowrap .compact
+---  .scode-nowrap 
 ## network representation
 ```{r, dependson=c(-1)}
 degree(g)
@@ -142,7 +142,7 @@ el = get.edgelist(g)
 el
 ```
 
---- #cen .scode-nowrap .modal
+--- #cen .scode-nowrap
 ## network centrality
 
 * degree centrality

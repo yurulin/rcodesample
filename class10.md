@@ -121,7 +121,7 @@ el
 ## [4,]    3    2
 ```
 
----  .scode-nowrap .compact
+---  .scode-nowrap 
 ## network representation
 
 ```r
@@ -279,7 +279,7 @@ el
 ## [3,]    2    3
 ```
 
---- #cen .scode-nowrap .modal
+--- #cen .scode-nowrap
 ## network centrality
 
 * degree centrality
