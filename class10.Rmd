@@ -30,11 +30,13 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- #rep .scode-nowrap .compact
+--- #rep .sscode-nowrap .modal
 ## network representation
- * Network mining using igraph
- * adjacency matrices and adjacency lists
- * directed and undirected networks
+
+* Network mining using igraph
+* adjacency matrices and adjacency lists
+* directed and undirected networks
+
 ```{r}
 library(igraph)
 
@@ -140,13 +142,15 @@ el = get.edgelist(g)
 el
 ```
 
---- #cen .scode-nowrap .compact
+--- #cen .scode-nowrap .modal
 ## network centrality
- * degree centrality
- * closeness centrality
- * betweenness centrality
- * PageRank
- * HITS (authority and hub scores)
+
+* degree centrality
+* closeness centrality
+* betweenness centrality
+* PageRank
+* HITS (authority and hub scores)
+
 ```{r, dependson=c(-1)}
 ## KARATE network.
 ## Zachary's karate club: social network of friendships between 34 members of a karate club at a US university in the 1970s. Please cite W. W. Zachary, An information flow model for conflict and fission in small groups, Journal of Anthropological Research 33, 452-473 (1977).

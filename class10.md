@@ -31,11 +31,13 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- #rep .scode-nowrap .compact
+--- #rep .sscode-nowrap .modal
 ## network representation
- * Network mining using igraph
- * adjacency matrices and adjacency lists
- * directed and undirected networks
+
+* Network mining using igraph
+* adjacency matrices and adjacency lists
+* directed and undirected networks
+
 
 ```r
 library(igraph)
@@ -277,13 +279,15 @@ el
 ## [3,]    2    3
 ```
 
---- #cen .scode-nowrap .compact
+--- #cen .scode-nowrap .modal
 ## network centrality
- * degree centrality
- * closeness centrality
- * betweenness centrality
- * PageRank
- * HITS (authority and hub scores)
+
+* degree centrality
+* closeness centrality
+* betweenness centrality
+* PageRank
+* HITS (authority and hub scores)
+
 
 ```r
 ## KARATE network.
