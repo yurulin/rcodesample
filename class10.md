@@ -37,6 +37,7 @@ toc_depth   : 2
 * Network mining using igraph
 * adjacency matrices and adjacency lists
 * directed and undirected networks
+*
 
 
 ```r
