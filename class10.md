@@ -823,7 +823,7 @@ scale <- function(v, a, b) {
 }
 
 V(g)$size = scale(sapply(le$eigenvector,abs), 10, 20)
-E(g)$color = "grey"
+E(g)$color = "darkgrey"
 E(g)[ V(g)[ color=="lightblue" ] %--% V(g)[ color=="green" ] ]$color = "red"
 set.seed(1)
 plot(g, layout=layout.kamada.kawai, vertex.label.font=2)
@@ -973,10 +973,10 @@ g
 ```
 
 ```
-## IGRAPH 3977450 DN-- 10 34 -- 
+## IGRAPH 00d8760 DN-- 10 34 -- 
 ## + attr: name (v/c), age (v/n), gender (v/c), room (e/c), friend
 ## | (e/n), advice (e/n)
-## + edges from 3977450 (vertex names):
+## + edges from 00d8760 (vertex names):
 ##  [1] Bob      ->Alice     Cecil    ->Bob       Cecil    ->Alice    
 ##  [4] David    ->Alice     David    ->Bob       Esmeralda->Alice    
 ##  [7] Frank    ->Alice     Frank    ->Esmeralda Gabi     ->Bob      
