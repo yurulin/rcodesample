@@ -1,0 +1,490 @@
+---
+title       : Class10
+subtitle    : Network Mining
+author      : Yu-Ru Lin
+job         : 
+framework   : shower        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+toc         : true
+toc_depth   : 2
+
+--- #toc
+## Class10
+  
+* [Set up](#set-up)
+* [network representation](#rep)
+* [network centrality](#cen)
+* [network layout](#layout)
+* [network community](#comm)
+* [plotting the diameter](#dim)
+* [graph with attributes](#attr)
+
+--- #set-up .modal 
+
+## Install R packages
+```{r, eval=FALSE}
+## this tutorial uses the following packages
+```
+
+--- #rep .scode-nowrap .compact
+## network representation
+ * Network mining using igraph
+ * adjacency matrices and adjacency lists
+ * directed and undirected networks
+```{r}
+library(igraph)
+
+## create a toy matrix
+m = matrix(nrow=3,ncol=3)
+m[1,1]=0
+m[1,2]=1
+m[1,3]=1
+m[2,1]=1
+m[2,2]=0
+m[2,3]=0
+m[3,1]=0
+m[3,2]=1
+m[3,3]=0
+m
+```
+
+--- #rep .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+lab = c('a','b','c') ## label nodes as 'a','b','c'
+## create directed graph from the toy matrix
+g = graph.adjacency(m,mode="directed") 
+g
+```
+
+--- .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+set.seed(1) ## reset random seed before drawing
+plot(g,vertex.label=lab,edge.color='black')
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+adj = get.adjacency(g)
+adj
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+el = get.edgelist(g)
+el
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+degree(g)
+degree(g, mode="in")
+degree(g, mode="out")
+colSums(m) ## in-degree
+rowSums(m) ## out-degree
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+## how far apart?
+shortest.paths(g, mode='out')
+diameter(g)
+average.path.length(g,directed=T) ## 8/6
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+## how dense are they?
+graph.density(g) ## 4/6
+
+## connected components of a graph
+clusters(g)
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+## create undirected graph from the same matrix
+g = graph.adjacency(m,mode="undirected") 
+g
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(g,vertex.label=lab,edge.color='black')
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+adj = get.adjacency(g)
+adj
+```
+
+---  .scode-nowrap .compact
+## network representation
+```{r, dependson=c(-1)}
+el = get.edgelist(g)
+el
+```
+
+--- #cen .scode-nowrap .compact
+## network centrality
+ * degree centrality
+ * closeness centrality
+ * betweenness centrality
+ * PageRank
+ * HITS (authority and hub scores)
+```{r, dependson=c(-1)}
+## KARATE network.
+## Zachary's karate club: social network of friendships between 34 members of a karate club at a US university in the 1970s. Please cite W. W. Zachary, An information flow model for conflict and fission in small groups, Journal of Anthropological Research 33, 452-473 (1977).
+
+## load the famous karate network from igraph package
+g = graph.famous("Zachary")
+g
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+set.seed(1)
+E(g)$color = "black"
+plot(g)
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+## obtain node degrees
+deg = degree(g)
+deg
+top = order(deg,decreasing=T)[1:5] ## the top-5 nodes with highest degrees
+top 
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+## size node by degree
+V(g)$size = abs(deg) * 1.5
+V(g)$label.color = "black"
+E(g)$color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g)
+title("degree centrality")
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+## compute node closeness centrality
+clo = closeness(g)
+clo
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+top = order(clo,decreasing=T)[1:5]
+
+## size node by closeness
+V(g)$size = abs(clo) * 1000
+V(g)$label.color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g)
+title("closeness")
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+## compute node betweenness centrality
+bet = betweenness(g)
+bet
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+top = order(bet,decreasing=T)[1:5]
+
+## size node by betweenness
+V(g)$size = abs(bet) * 0.1
+V(g)$label.color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g)
+title("betweenness")
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+pg = page.rank(g)$vector
+pg
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+top = order(pg,decreasing=T)[1:5]
+
+## size node by pagerank
+V(g)$size = abs(pg) * 250
+V(g)$label.color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g)
+title("PageRank")
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+## compute HITS
+aut = authority.score(g)$vector
+top = order(aut,decreasing=T)[1:5]
+
+## size node by authority scores
+V(g)$size = abs(aut) * 20
+V(g)$label.color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g)
+title("HITS (authority)")
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+hub = hub.score(g)$vector 
+top = order(hub,decreasing=T)[1:5]
+
+## size node by hub scores
+V(g)$size = abs(aut) * 20
+V(g)$label.color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g)
+title("HITS (hub)")
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+## apply HITS on the toy matrix (directed network)
+m
+lab = c('a','b','c') ## label nodes as 'a','b','c'
+## create directed graph from the toy matrix
+g = graph.adjacency(m,mode="directed") 
+g
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+aut = authority.score(g)$vector
+top = order(aut,decreasing=T)[1:5]
+
+## size node by authority scores
+V(g)$size = abs(aut) * 30
+V(g)$label.color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g,edge.color='black')
+title("HITS (authority)")
+```
+
+--- .scode-nowrap .compact
+## network centrality
+```{r, dependson=c(-1)}
+hub = hub.score(g)$vector 
+top = order(hub,decreasing=T)[1:5]
+
+## size node by hub scores
+V(g)$size = abs(hub) * 30
+V(g)$label.color = "black"
+V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
+set.seed(1)
+plot(g,edge.color='black')
+title("HITS (hub)")
+```
+
+--- #layout .scode-nowrap .compact
+## network layout
+```{r, dependson=c(-1)}
+## load the famous karate network from igraph package
+g = graph.famous("Zachary")
+E(g)$color = "black"
+
+set.seed(1)
+plot(g, layout=layout.random, main='random')
+```
+
+--- .scode-nowrap .compact
+## network layout
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, main='kamada kawai (KK)')
+```
+
+--- .scode-nowrap .compact
+## network layout
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(g, layout=layout.circle, main = 'circle')
+```
+
+--- .scode-nowrap .compact
+## network layout
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(g, layout=layout.fruchterman.reingold, main = 'fruchterman reingold (FR)')
+```
+
+--- .scode-nowrap .compact
+## network layout
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(g, layout=layout.lgl, main = 'lgl')
+```
+
+--- .scode-nowrap .compact
+## network layout
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(g, layout=layout.graphopt, main = 'graphopt')
+```
+
+--- #comm .scode-nowrap .compact
+## network community
+ * modularity
+ * random walk
+ * spin-glass
+ * eigenvector
+ * ...
+```{r, dependson=c(-1)}
+g = graph.famous("Zachary")
+
+## get random-walk community
+wc = walktrap.community(g)
+modularity(wc)
+membership(wc)
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(wc, g, main='random-walk community')
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+dend = as.dendrogram(wc, use.modularity=TRUE)
+plot(dend, nodePar=list(pch=c(NA, 20)))
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+dendPlot(wc)
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+## get modularity-based community
+fc = fastgreedy.community(g)
+modularity(fc)
+membership(fc)
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+set.seed(1)
+plot(fc, g, main='modularity community')
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+dendPlot(fc)
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+sg = spinglass.community(g)
+modularity(sg)
+set.seed(1)
+plot(sg, g, main='spin-glass community')
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+le = leading.eigenvector.community(g)
+modularity(sg)
+set.seed(1)
+plot(le, g, main='eigenvector community')
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+## compare the simlarity between two community assignment
+## @see http://hosho.ees.hokudai.ac.jp/~kubo/Rdoc/library/igraph/html/compare.communities.html
+compare(sg, le, method="rand")
+compare(sg, le, method="nmi")
+compare(membership(sg), membership(le), method="rand")
+```
+
+--- .scode-nowrap .compact
+## network community
+```{r, dependson=c(-1)}
+## highlight between-community edges
+le = leading.eigenvector.community(g,steps=1)
+le
+V(g)$color = ifelse(le$membership==1, "lightblue", "green")
+
+scale <- function(v, a, b) {
+  v = v-min(v) ; v = v/max(v) ; v = v * (b-a) ; v+a
+}
+
+V(g)$size = scale(sapply(le$eigenvector,abs), 10, 20)
+E(g)$color = "grey"
+E(g)[ V(g)[ color=="lightblue" ] %--% V(g)[ color=="green" ] ]$color = "red"
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, vertex.label.font=2)
+```
+
+--- #dim .scode-nowrap .compact
+## plotting the diameter
+```{r, dependson=c(-1)}
+## load the karet network from file (in pajek format)
+ifilename = 'http://igraph.sourceforge.net/karate.net'
+## url.show(ifilename)
+g = read.graph(ifilename, format="pajek")
+```
+
+--- .scode-nowrap .compact
+## plotting the diameter
+```{r, dependson=c(-1)}
+```

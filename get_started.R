@@ -12,8 +12,8 @@ author("mydeck-DM-slides")
 # add mystyle.css to mydeck-DM-slides/assets/css
 library(slidify)
 
-opts_knit$set(unnamed.chunk.label='class08-chunk')
-opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=4, fig.height=4)
+opts_knit$set(unnamed.chunk.label='class10-chunk')
+opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=6, fig.height=5)
 
 ## Step 3: Generate Deck
 slidify("index.Rmd")
@@ -26,6 +26,7 @@ slidify("hw3-sample.Rmd")
 slidify("class06.Rmd")
 slidify("class07.Rmd")
 slidify("class08.Rmd")
+slidify("class10.Rmd")
 
 slidify("rlab01.Rmd")
 slidify("rlab02.Rmd")
