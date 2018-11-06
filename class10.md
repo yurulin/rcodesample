@@ -279,7 +279,7 @@ el
 ## [3,]    2    3
 ```
 
---- #cen .scode-nowrap
+--- #cen .sscode-nowrap
 ## network centrality
 
 * degree centrality
@@ -538,12 +538,10 @@ g
 
 ```r
 aut = authority.score(g)$vector
-top = order(aut,decreasing=T)[1]
 
 ## size node by authority scores
 V(g)$size = abs(aut) * 30
 V(g)$label.color = "black"
-V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
 set.seed(1)
 plot(g,edge.color='black')
 title("HITS (authority)")
@@ -556,12 +554,10 @@ title("HITS (authority)")
 
 ```r
 hub = hub.score(g)$vector 
-top = order(hub,decreasing=T)[1]
 
 ## size node by hub scores
 V(g)$size = abs(hub) * 30
 V(g)$label.color = "black"
-V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
 set.seed(1)
 plot(g,edge.color='black')
 title("HITS (hub)")
@@ -633,7 +629,7 @@ plot(g, layout=layout.graphopt, main = 'graphopt')
 
 ![plot of chunk class10-chunk-34](assets/fig/class10-chunk-34-1.png)
 
---- #comm .scode-nowrap .compact
+--- #comm .scode-nowrap 
 ## network community
  * modularity
  * random walk

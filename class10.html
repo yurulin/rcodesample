@@ -296,7 +296,7 @@ el
 
   </div>
 </section>
-<section class="slide scode-nowrap" id="cen">
+<section class="slide sscode-nowrap" id="cen">
   <div>
     <h2>network centrality</h2>
     <ul>
@@ -558,12 +558,10 @@ g
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">aut = authority.score(g)$vector
-top = order(aut,decreasing=T)[1]
 
 ## size node by authority scores
 V(g)$size = abs(aut) * 30
 V(g)$label.color = &quot;black&quot;
-V(g)[ top ]$label.color = &quot;red&quot; ## highlight the top-5 nodes
 set.seed(1)
 plot(g,edge.color=&#39;black&#39;)
 title(&quot;HITS (authority)&quot;)
@@ -577,12 +575,10 @@ title(&quot;HITS (authority)&quot;)
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">hub = hub.score(g)$vector 
-top = order(hub,decreasing=T)[1]
 
 ## size node by hub scores
 V(g)$size = abs(hub) * 30
 V(g)$label.color = &quot;black&quot;
-V(g)[ top ]$label.color = &quot;red&quot; ## highlight the top-5 nodes
 set.seed(1)
 plot(g,edge.color=&#39;black&#39;)
 title(&quot;HITS (hub)&quot;)
@@ -662,7 +658,7 @@ plot(g, layout=layout.graphopt, main = &#39;graphopt&#39;)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="comm">
+<section class="slide scode-nowrap" id="comm">
   <div>
     <h2>network community</h2>
     <ul>
