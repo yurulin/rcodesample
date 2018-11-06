@@ -31,7 +31,7 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- #rep .sscode-nowrap .modal
+--- #rep .sscode-nowrap .compact
 ## network representation
 
 * Network mining using igraph
