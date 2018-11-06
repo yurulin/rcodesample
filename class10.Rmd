@@ -178,7 +178,7 @@ top = order(deg,decreasing=T)[1:5] ## the top-5 nodes with highest degrees
 top 
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 ## size node by degree
@@ -199,7 +199,7 @@ clo = closeness(g)
 clo
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 top = order(clo,decreasing=T)[1:5]
@@ -221,7 +221,7 @@ bet = betweenness(g)
 bet
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 top = order(bet,decreasing=T)[1:5]
@@ -242,7 +242,7 @@ pg = page.rank(g)$vector
 pg
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 top = order(pg,decreasing=T)[1:5]
@@ -256,7 +256,7 @@ plot(g)
 title("PageRank")
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 ## compute HITS
@@ -272,7 +272,7 @@ plot(g)
 title("HITS (authority)")
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 hub = hub.score(g)$vector 
@@ -298,11 +298,11 @@ g = graph.adjacency(m,mode="directed")
 g
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 aut = authority.score(g)$vector
-top = order(aut,decreasing=T)[1:5]
+top = order(aut,decreasing=T)[1]
 
 ## size node by authority scores
 V(g)$size = abs(aut) * 30
@@ -313,11 +313,11 @@ plot(g,edge.color='black')
 title("HITS (authority)")
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 ```{r, dependson=c(-1)}
 hub = hub.score(g)$vector 
-top = order(hub,decreasing=T)[1:5]
+top = order(hub,decreasing=T)[1]
 
 ## size node by hub scores
 V(g)$size = abs(hub) * 30

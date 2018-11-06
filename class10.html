@@ -363,7 +363,7 @@ top
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-18">
+<section class="slide sscode-nowrap compact" id="slide-18">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">## size node by degree
@@ -398,7 +398,7 @@ clo
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-20">
+<section class="slide sscode-nowrap compact" id="slide-20">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">top = order(clo,decreasing=T)[1:5]
@@ -435,7 +435,7 @@ bet
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-22">
+<section class="slide sscode-nowrap compact" id="slide-22">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">top = order(bet,decreasing=T)[1:5]
@@ -471,7 +471,7 @@ pg
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-24">
+<section class="slide sscode-nowrap compact" id="slide-24">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">top = order(pg,decreasing=T)[1:5]
@@ -489,7 +489,7 @@ title(&quot;PageRank&quot;)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-25">
+<section class="slide sscode-nowrap compact" id="slide-25">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">## compute HITS
@@ -509,7 +509,7 @@ title(&quot;HITS (authority)&quot;)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-26">
+<section class="slide sscode-nowrap compact" id="slide-26">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">hub = hub.score(g)$vector 
@@ -554,22 +554,17 @@ g
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-28">
+<section class="slide sscode-nowrap compact" id="slide-28">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">aut = authority.score(g)$vector
-top = order(aut,decreasing=T)[1:5]
+top = order(aut,decreasing=T)[1]
 
 ## size node by authority scores
 V(g)$size = abs(aut) * 30
 V(g)$label.color = &quot;black&quot;
 V(g)[ top ]$label.color = &quot;red&quot; ## highlight the top-5 nodes
-</code></pre>
-
-<pre><code>## Error in simple_vs_index(x, lazy_eval(args[[1]])): Unknown vertex selected
-</code></pre>
-
-<pre><code class="r">set.seed(1)
+set.seed(1)
 plot(g,edge.color=&#39;black&#39;)
 title(&quot;HITS (authority)&quot;)
 </code></pre>
@@ -578,22 +573,17 @@ title(&quot;HITS (authority)&quot;)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-29">
+<section class="slide sscode-nowrap compact" id="slide-29">
   <div>
     <h2>network centrality</h2>
     <pre><code class="r">hub = hub.score(g)$vector 
-top = order(hub,decreasing=T)[1:5]
+top = order(hub,decreasing=T)[1]
 
 ## size node by hub scores
 V(g)$size = abs(hub) * 30
 V(g)$label.color = &quot;black&quot;
 V(g)[ top ]$label.color = &quot;red&quot; ## highlight the top-5 nodes
-</code></pre>
-
-<pre><code>## Error in simple_vs_index(x, lazy_eval(args[[1]])): Unknown vertex selected
-</code></pre>
-
-<pre><code class="r">set.seed(1)
+set.seed(1)
 plot(g,edge.color=&#39;black&#39;)
 title(&quot;HITS (hub)&quot;)
 </code></pre>

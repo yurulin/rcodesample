@@ -346,7 +346,7 @@ top
 ## [1] 34  1 33  3  2
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
@@ -380,7 +380,7 @@ clo
 ## [31] 0.01388889 0.01639344 0.01562500 0.01666667
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
@@ -416,7 +416,7 @@ bet
 ## [31]   7.6095238  73.0095238  76.6904762 160.5515873
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
@@ -451,7 +451,7 @@ pg
 ## [31] 0.024590155 0.037158087 0.071693226 0.100919182
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
@@ -468,7 +468,7 @@ title("PageRank")
 
 ![plot of chunk class10-chunk-23](assets/fig/class10-chunk-23-1.png)
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
@@ -487,7 +487,7 @@ title("HITS (authority)")
 
 ![plot of chunk class10-chunk-24](assets/fig/class10-chunk-24-1.png)
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
@@ -533,24 +533,17 @@ g
 ## [1] 1->2 1->3 2->1 3->2
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
 aut = authority.score(g)$vector
-top = order(aut,decreasing=T)[1:5]
+top = order(aut,decreasing=T)[1]
 
 ## size node by authority scores
 V(g)$size = abs(aut) * 30
 V(g)$label.color = "black"
 V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
-```
-
-```
-## Error in simple_vs_index(x, lazy_eval(args[[1]])): Unknown vertex selected
-```
-
-```r
 set.seed(1)
 plot(g,edge.color='black')
 title("HITS (authority)")
@@ -558,24 +551,17 @@ title("HITS (authority)")
 
 ![plot of chunk class10-chunk-27](assets/fig/class10-chunk-27-1.png)
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## network centrality
 
 ```r
 hub = hub.score(g)$vector 
-top = order(hub,decreasing=T)[1:5]
+top = order(hub,decreasing=T)[1]
 
 ## size node by hub scores
 V(g)$size = abs(hub) * 30
 V(g)$label.color = "black"
 V(g)[ top ]$label.color = "red" ## highlight the top-5 nodes
-```
-
-```
-## Error in simple_vs_index(x, lazy_eval(args[[1]])): Unknown vertex selected
-```
-
-```r
 set.seed(1)
 plot(g,edge.color='black')
 title("HITS (hub)")
