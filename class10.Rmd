@@ -53,7 +53,7 @@ m[3,3]=0
 m
 ```
 
---- #rep .scode-nowrap .compact
+--- .scode-nowrap .compact
 ## network representation
 ```{r, dependson=c(-1)}
 lab = c('a','b','c') ## label nodes as 'a','b','c'

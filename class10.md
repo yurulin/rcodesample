@@ -62,7 +62,7 @@ m
 ## [3,]    0    1    0
 ```
 
---- #rep .scode-nowrap .compact
+--- .scode-nowrap .compact
 ## network representation
 
 ```r
