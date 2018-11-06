@@ -829,8 +829,8 @@ plot(g, layout=layout.kamada.kawai, vertex.label.font=2)
 
 ![plot of chunk class10-chunk-45](assets/fig/class10-chunk-45-1.png)
 
---- #dim .scode-nowrap .compact
-## plotting the diameter
+--- #attr .scode-nowrap .compact
+## 
 
 ```r
 ## load the karet network from file (in pajek format)
@@ -843,6 +843,59 @@ g = read.graph(ifilename, format="pajek")
 ## Error in read.graph.pajek(file, ...): At foreign.c:586 : Parse error in Pajek file, line 1 (syntax error, unexpected NEWLINE, expecting VERTICESLINE), Parse error
 ```
 
+--- .scode-nowrap .compact #attr
+## graph with attributes
+
+```r
+## @see https://github.com/igraph/igraph/tree/master/doc/presentations/wien08
+traits = read.csv("http://cneurocvs.rmki.kfki.hu/igraphbook/traits.csv", head=FALSE)
+traits[1:3,]
+```
+
+```
+##               V1 V2 V3
+## 1 Alice Anderson 48  F
+## 2   Bob Bradford 33  M
+## 3   Cecil Connor 45  F
+```
+
 --- .scode-nowrap .compact
-## plotting the diameter
+## graph with attributes
+
+```r
+rel = read.csv("http://cneurocvs.rmki.kfki.hu/igraphbook/relations.csv", head=FALSE)
+rel[1:3,]
+```
+
+```
+##      V1    V2 V3 V4 V5
+## 1   Bob Alice  N  4  4
+## 2 Cecil   Bob  N  5  5
+## 3 Cecil Alice  Y  5  5
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+
+```r
+g = graph.empty(directed=T)
+g = add.vertices(g, nrow(traits), 
+                 name=as.character(traits[,1]), age=traits[,2],
+                 gender=as.character(traits[,3]))
+V(g)$name
+```
+
+```
+##  [1] "Alice Anderson"    "Bob Bradford"      "Cecil Connor"     
+##  [4] "David Daugher"     "Esmeralda Escobar" "Frank Finley"     
+##  [7] "Gabi Garbo"        "Helen Hunt"        "Iris Irving"      
+## [10] "James Jones"
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+
+
+--- .scode-nowrap .compact
+## graph with attributes
 

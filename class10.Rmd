@@ -475,8 +475,8 @@ set.seed(1)
 plot(g, layout=layout.kamada.kawai, vertex.label.font=2)
 ```
 
---- #dim .scode-nowrap .compact
-## plotting the diameter
+--- #attr .scode-nowrap .compact
+## 
 ```{r, dependson=c(-1)}
 ## load the karet network from file (in pajek format)
 ifilename = 'http://igraph.sourceforge.net/karate.net'
@@ -484,7 +484,37 @@ ifilename = 'http://igraph.sourceforge.net/karate.net'
 g = read.graph(ifilename, format="pajek")
 ```
 
+--- .scode-nowrap .compact #attr
+## graph with attributes
+```{r, dependson=c(-1)}
+## @see https://github.com/igraph/igraph/tree/master/doc/presentations/wien08
+traits = read.csv("http://cneurocvs.rmki.kfki.hu/igraphbook/traits.csv", head=FALSE)
+traits[1:3,]
+```
+
 --- .scode-nowrap .compact
-## plotting the diameter
+## graph with attributes
+```{r, dependson=c(-1)}
+rel = read.csv("http://cneurocvs.rmki.kfki.hu/igraphbook/relations.csv", head=FALSE)
+rel[1:3,]
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+```{r, dependson=c(-1)}
+g = graph.empty(directed=T)
+g = add.vertices(g, nrow(traits), 
+                 name=as.character(traits[,1]), age=traits[,2],
+                 gender=as.character(traits[,3]))
+V(g)$name
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
 ```{r, dependson=c(-1)}
 ```
