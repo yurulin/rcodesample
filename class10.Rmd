@@ -30,13 +30,12 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- #rep .sscode-nowrap .compact
+--- #rep .sscode-nowrap 
 ## network representation
 
 * Network mining using igraph
 * adjacency matrices and adjacency lists
 * directed and undirected networks
-*
 
 ```{r}
 library(igraph)
