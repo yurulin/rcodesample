@@ -45,7 +45,6 @@
 <li><a href="#cen">network centrality</a></li>
 <li><a href="#layout">network layout</a></li>
 <li><a href="#comm">network community</a></li>
-<li><a href="#dim">plotting the diameter</a></li>
 <li><a href="#attr">graph with attributes</a></li>
 </ul>
 
@@ -899,7 +898,7 @@ rel[1:3,]
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-50">
+<section class="slide sscode-nowrap compact" id="slide-50">
   <div>
     <h2>graph with attributes</h2>
     <pre><code class="r">g = graph.empty(directed=T)
@@ -915,15 +914,154 @@ V(g)$name
 ## [10] &quot;James Jones&quot;
 </code></pre>
 
+<pre><code class="r">V(g)$age
+</code></pre>
+
+<pre><code>##  [1] 48 33 45 34 21 36 44 40 25 47
+</code></pre>
+
+<pre><code class="r">V(g)$gender
+</code></pre>
+
+<pre><code>##  [1] &quot;F&quot; &quot;M&quot; &quot;F&quot; &quot;M&quot; &quot;F&quot; &quot;M&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;M&quot;
+</code></pre>
+
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-51">
   <div>
     <h2>graph with attributes</h2>
-    
+    <pre><code class="r">names = sapply(strsplit(V(g)$name, &quot; &quot;), &quot;[&quot;,1)
+V(g)$name = names
+ids = (1:length(names)) # index starts from 1
+names(ids) = names
+ids
+</code></pre>
+
+<pre><code>##     Alice       Bob     Cecil     David Esmeralda     Frank      Gabi 
+##         1         2         3         4         5         6         7 
+##     Helen      Iris     James 
+##         8         9        10
+</code></pre>
+
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-52">
+<section class="slide sscode-nowrap compact" id="slide-52">
+  <div>
+    <h2>graph with attributes</h2>
+    <pre><code class="r">from = as.character(rel[,1])
+to = as.character(rel[,2])
+edges = matrix(c(ids[from], ids[to]), nc=2)
+edges
+</code></pre>
+
+<pre><code>##       [,1] [,2]
+##  [1,]    2    1
+##  [2,]    3    2
+##  [3,]    3    1
+##  [4,]    4    1
+##  [5,]    4    2
+##  [6,]    5    1
+##  [7,]    6    1
+##  [8,]    6    5
+##  [9,]    7    2
+## [10,]    7    1
+## [11,]    8    1
+## [12,]    9    3
+## [13,]    9    2
+## [14,]    9    5
+## [15,]   10    1
+## [16,]   10    2
+## [17,]   10    7
+## [18,]    1    2
+## [19,]    2    3
+## [20,]    1    3
+## [21,]    1    4
+## [22,]    2    4
+## [23,]    1    5
+## [24,]    1    6
+## [25,]    5    6
+## [26,]    2    7
+## [27,]    1    7
+## [28,]    1    8
+## [29,]    3    9
+## [30,]    2    9
+## [31,]    5    9
+## [32,]    1   10
+## [33,]    2   10
+## [34,]    7   10
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-53">
+  <div>
+    <h2>graph with attributes</h2>
+    <pre><code class="r">g = add.edges(g, t(edges), 
+              room=as.character(rel[,3]),
+              friend=rel[,4], advice=rel[,5])
+g
+</code></pre>
+
+<pre><code>## IGRAPH 4a73e77 DN-- 10 34 -- 
+## + attr: name (v/c), age (v/n), gender (v/c), room (e/c), friend
+## | (e/n), advice (e/n)
+## + edges from 4a73e77 (vertex names):
+##  [1] Bob      -&gt;Alice     Cecil    -&gt;Bob       Cecil    -&gt;Alice    
+##  [4] David    -&gt;Alice     David    -&gt;Bob       Esmeralda-&gt;Alice    
+##  [7] Frank    -&gt;Alice     Frank    -&gt;Esmeralda Gabi     -&gt;Bob      
+## [10] Gabi     -&gt;Alice     Helen    -&gt;Alice     Iris     -&gt;Cecil    
+## [13] Iris     -&gt;Bob       Iris     -&gt;Esmeralda James    -&gt;Alice    
+## [16] James    -&gt;Bob       James    -&gt;Gabi      Alice    -&gt;Bob      
+## [19] Bob      -&gt;Cecil     Alice    -&gt;Cecil     Alice    -&gt;David    
+## + ... omitted several edges
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-54">
+  <div>
+    <h2>graph with attributes</h2>
+    <pre><code class="r">male = which(V(g)$gender==&#39;M&#39;)
+V(g)$shape = &quot;circle&quot;
+V(g)$shape[male] =&quot;rectangle&quot;
+E(g)$color = &quot;black&quot;
+E(g)[ room==&quot;Y&quot; ]$color = &quot;red&quot;
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+</code></pre>
+
+<p><img src="assets/fig/class10-chunk-53-1.png" alt="plot of chunk class10-chunk-53"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-55">
+  <div>
+    <h2>graph with attributes</h2>
+    <pre><code class="r">E(g)$color = &quot;black&quot;
+E(g)[ advice&gt;2 ]$color = &quot;green&quot;
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+</code></pre>
+
+<p><img src="assets/fig/class10-chunk-54-1.png" alt="plot of chunk class10-chunk-54"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-56">
+  <div>
+    <h2>graph with attributes</h2>
+    <pre><code class="r">E(g)$color = &quot;black&quot;
+E(g)[ friend&gt;4 ]$color = &quot;skyblue&quot;
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+</code></pre>
+
+<p><img src="assets/fig/class10-chunk-55-1.png" alt="plot of chunk class10-chunk-55"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-57">
   <div>
     <h2>graph with attributes</h2>
     

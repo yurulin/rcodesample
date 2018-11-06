@@ -20,7 +20,6 @@ toc_depth   : 2
 * [network centrality](#cen)
 * [network layout](#layout)
 * [network community](#comm)
-* [plotting the diameter](#dim)
 * [graph with attributes](#attr)
 
 --- #set-up .modal 
@@ -874,7 +873,7 @@ rel[1:3,]
 ## 3 Cecil Alice  Y  5  5
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## graph with attributes
 
 ```r
@@ -892,9 +891,151 @@ V(g)$name
 ## [10] "James Jones"
 ```
 
+```r
+V(g)$age
+```
+
+```
+##  [1] 48 33 45 34 21 36 44 40 25 47
+```
+
+```r
+V(g)$gender
+```
+
+```
+##  [1] "F" "M" "F" "M" "F" "M" "F" "F" "F" "M"
+```
+
 --- .scode-nowrap .compact
 ## graph with attributes
 
+```r
+names = sapply(strsplit(V(g)$name, " "), "[",1)
+V(g)$name = names
+ids = (1:length(names)) # index starts from 1
+names(ids) = names
+ids
+```
+
+```
+##     Alice       Bob     Cecil     David Esmeralda     Frank      Gabi 
+##         1         2         3         4         5         6         7 
+##     Helen      Iris     James 
+##         8         9        10
+```
+
+--- .sscode-nowrap .compact
+## graph with attributes
+
+```r
+from = as.character(rel[,1])
+to = as.character(rel[,2])
+edges = matrix(c(ids[from], ids[to]), nc=2)
+edges
+```
+
+```
+##       [,1] [,2]
+##  [1,]    2    1
+##  [2,]    3    2
+##  [3,]    3    1
+##  [4,]    4    1
+##  [5,]    4    2
+##  [6,]    5    1
+##  [7,]    6    1
+##  [8,]    6    5
+##  [9,]    7    2
+## [10,]    7    1
+## [11,]    8    1
+## [12,]    9    3
+## [13,]    9    2
+## [14,]    9    5
+## [15,]   10    1
+## [16,]   10    2
+## [17,]   10    7
+## [18,]    1    2
+## [19,]    2    3
+## [20,]    1    3
+## [21,]    1    4
+## [22,]    2    4
+## [23,]    1    5
+## [24,]    1    6
+## [25,]    5    6
+## [26,]    2    7
+## [27,]    1    7
+## [28,]    1    8
+## [29,]    3    9
+## [30,]    2    9
+## [31,]    5    9
+## [32,]    1   10
+## [33,]    2   10
+## [34,]    7   10
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+
+```r
+g = add.edges(g, t(edges), 
+              room=as.character(rel[,3]),
+              friend=rel[,4], advice=rel[,5])
+g
+```
+
+```
+## IGRAPH 4a73e77 DN-- 10 34 -- 
+## + attr: name (v/c), age (v/n), gender (v/c), room (e/c), friend
+## | (e/n), advice (e/n)
+## + edges from 4a73e77 (vertex names):
+##  [1] Bob      ->Alice     Cecil    ->Bob       Cecil    ->Alice    
+##  [4] David    ->Alice     David    ->Bob       Esmeralda->Alice    
+##  [7] Frank    ->Alice     Frank    ->Esmeralda Gabi     ->Bob      
+## [10] Gabi     ->Alice     Helen    ->Alice     Iris     ->Cecil    
+## [13] Iris     ->Bob       Iris     ->Esmeralda James    ->Alice    
+## [16] James    ->Bob       James    ->Gabi      Alice    ->Bob      
+## [19] Bob      ->Cecil     Alice    ->Cecil     Alice    ->David    
+## + ... omitted several edges
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+
+```r
+male = which(V(g)$gender=='M')
+V(g)$shape = "circle"
+V(g)$shape[male] ="rectangle"
+E(g)$color = "black"
+E(g)[ room=="Y" ]$color = "red"
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+```
+
+![plot of chunk class10-chunk-53](assets/fig/class10-chunk-53-1.png)
+
+--- .scode-nowrap .compact
+## graph with attributes
+
+```r
+E(g)$color = "black"
+E(g)[ advice>2 ]$color = "green"
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+```
+
+![plot of chunk class10-chunk-54](assets/fig/class10-chunk-54-1.png)
+
+--- .scode-nowrap .compact
+## graph with attributes
+
+```r
+E(g)$color = "black"
+E(g)[ friend>4 ]$color = "skyblue"
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+```
+
+![plot of chunk class10-chunk-55](assets/fig/class10-chunk-55-1.png)
 
 --- .scode-nowrap .compact
 ## graph with attributes

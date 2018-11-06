@@ -20,7 +20,6 @@ toc_depth   : 2
 * [network centrality](#cen)
 * [network layout](#layout)
 * [network community](#comm)
-* [plotting the diameter](#dim)
 * [graph with attributes](#attr)
 
 --- #set-up .modal 
@@ -499,7 +498,7 @@ rel = read.csv("http://cneurocvs.rmki.kfki.hu/igraphbook/relations.csv", head=FA
 rel[1:3,]
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## graph with attributes
 ```{r, dependson=c(-1)}
 g = graph.empty(directed=T)
@@ -507,11 +506,66 @@ g = add.vertices(g, nrow(traits),
                  name=as.character(traits[,1]), age=traits[,2],
                  gender=as.character(traits[,3]))
 V(g)$name
+V(g)$age
+V(g)$gender
 ```
 
 --- .scode-nowrap .compact
 ## graph with attributes
 ```{r, dependson=c(-1)}
+names = sapply(strsplit(V(g)$name, " "), "[",1)
+V(g)$name = names
+ids = (1:length(names)) # index starts from 1
+names(ids) = names
+ids
+```
+
+--- .sscode-nowrap .compact
+## graph with attributes
+```{r, dependson=c(-1)}
+from = as.character(rel[,1])
+to = as.character(rel[,2])
+edges = matrix(c(ids[from], ids[to]), nc=2)
+edges
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+```{r, dependson=c(-1)}
+g = add.edges(g, t(edges), 
+              room=as.character(rel[,3]),
+              friend=rel[,4], advice=rel[,5])
+g
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+```{r, dependson=c(-1)}
+male = which(V(g)$gender=='M')
+V(g)$shape = "circle"
+V(g)$shape[male] ="rectangle"
+E(g)$color = "black"
+E(g)[ room=="Y" ]$color = "red"
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+```{r, dependson=c(-1)}
+E(g)$color = "black"
+E(g)[ advice>2 ]$color = "green"
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
+```
+
+--- .scode-nowrap .compact
+## graph with attributes
+```{r, dependson=c(-1)}
+E(g)$color = "black"
+E(g)[ friend>4 ]$color = "skyblue"
+set.seed(1)
+plot(g, layout=layout.kamada.kawai, edge.color=E(g)$color)
 ```
 
 --- .scode-nowrap .compact
