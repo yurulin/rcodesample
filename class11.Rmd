@@ -17,6 +17,7 @@ toc_depth   : 2
   
 * [Set up](#set-up)
 * [Data manipulation](#data)
+* [Sample dataset](#sample)
 
 --- #set-up .modal 
 
@@ -26,7 +27,7 @@ toc_depth   : 2
 install.packages('recommenderlab')
 ```
 
---- .modal 
+--- .compact
 ## Recommendation
 
 * The sample code is based on the examples given in http://cran.r-project.org/web/packages/recommenderlab/vignettes/recommenderlab.pdf
@@ -36,7 +37,7 @@ install.packages('recommenderlab')
 library(recommenderlab)
 ```
 
---- .modal #data
+--- .scode-nowrap .compact #data
 ## Data manipulation
 
 ```{r, dependson=c(-1)}
@@ -48,7 +49,7 @@ m = matrix(sample(c(as.numeric(0:5), NA), 50,
 m
 ```
 
---- .modal 
+--- .scode-nowrap .compact 
 ## Data manipulation
 
 ```{r, dependson=c(-1)}
@@ -57,8 +58,146 @@ r = as(m, "realRatingMatrix") ## store the matrix in sparse format
 identical(as(r, "matrix"),m)
 ```
 
---- .modal 
+--- .sscode-nowrap .compact
 ## Data manipulation
+
+```{r, dependson=c(-1)}
+## a list of users
+as(r, "list")
+```
+
+--- .sscode-nowrap .compact
+## Data manipulation
+
+```{r, dependson=c(-1)}
+## rating data in data.frame format
+head(as(r, "data.frame"))
+```
+
+--- .scode-nowrap .compact
+## Data manipulation
+
+```{r, dependson=c(-1)}
+## normalization: remove rating bias by subtracting the row mean from all ratings in the row
+r_m = normalize(r)
+r_m
+```
+
+--- .scode-nowrap .compact
+## Data manipulation
+
+```{r, dependson=c(-1)}
+r_z = normalize(r,method="Z-score")
+r_z
+```
+
+--- .scode-nowrap .compact
+## Data manipulation
+
+```{r, dependson=c(-1)}
+## visualize the matrices
+image(r, main = "Raw Ratings")
+```
+
+--- .scode-nowrap .compact
+## Data manipulation
+
+```{r, dependson=c(-1)}
+image(r_m, main = "Normalized Ratings")
+```
+
+--- .scode-nowrap .compact
+## Data manipulation
+
+```{r, dependson=c(-1)}
+image(r_z, main = "Normalized Ratings (Z-score)")
+```
+
+--- .sscode-nowrap .compact
+## Data manipulation
+
+```{r, dependson=c(-1)}
+## Binarization: transform the real-valued matrix into a 0-1 matrix based on a user specified threshold (min_ratings)
+r_b = binarize(r, minRating=4)
+as(r_b, "matrix")
+```
+
+--- .scode-nowrap .compact #sample
+## Sample dataset
+
+```{r, dependson=c(-1)}
+## load the Jester5k data: it contains a sample of 5000 users from the anonymous ratings data from the Jester Online Joke Recommender System collected between April 1999 and May 2003 (Goldberg, Roeder, Gupta, and Perkins, 2001).
+
+data(Jester5k)
+Jester5k
+```
+
+--- .sscode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+## use only a subset of the data containing a sample of 1000 users
+r = sample(Jester5k, 1000)
+
+## the ratings for the first user
+rowCounts(r[1,])
+as(r[1,], "list")
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+rowMeans(r[1,]) ## The user has rated 100 jokes, the list shows the ratings and the user's rating average is 1.4731
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+## generate a histogram to show the distribution of the ratings
+hist(getRatings(r), breaks=100)
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+## the distribution after normalization
+hist(getRatings(normalize(r)), breaks=100)
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+hist(getRatings(normalize(r, method="Z-score")), breaks=100)
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+## how many jokes each user has rated
+hist(rowCounts(r), breaks=50)
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+## the mean rating for each joke
+hist(colMeans(r), breaks=20)
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
+
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact
+## Sample dataset
 
 ```{r, dependson=c(-1)}
 ```
