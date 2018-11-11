@@ -24,12 +24,14 @@ toc_depth   : 2
 
 ```r
 ## this tutorial uses the following packages
+install.packages('recommenderlab')
 ```
 
 --- .modal 
 ## Recommendation
 
 * The sample code is based on the examples given in http://cran.r-project.org/web/packages/recommenderlab/vignettes/recommenderlab.pdf
+* See information about the installation and more details about what the package can do in the manual.
 
 
 ```r
