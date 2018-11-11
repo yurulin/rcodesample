@@ -278,17 +278,17 @@ rowCounts(r[1,])
 <section class="slide scode-nowrap compact" id="slide-16">
   <div>
     <h2>Sample dataset</h2>
-    <pre><code class="r">rowMeans(r[1,]) ## The user has rated 100 jokes, the list shows the ratings and the user&#39;s rating average is 1.4731
+    <pre><code class="r">rowMeans(r[1,]) ## The user has rated 38 jokes, the list shows the ratings and the user&#39;s rating average is 1.4731
 </code></pre>
 
 <pre><code>## Error in rowMeans(r[1, ]): &#39;x&#39; must be an array of at least two dimensions
 </code></pre>
 
-<pre><code class="r">rowMeans(as(r[1,], &quot;matrix&quot;))
+<pre><code class="r">rowMeans(as(r[1,], &quot;matrix&quot;),na.rm=TRUE)
 </code></pre>
 
-<pre><code>## u175 
-##   NA
+<pre><code>##     u175 
+## 2.421842
 </code></pre>
 
   </div>

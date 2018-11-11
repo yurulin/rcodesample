@@ -261,7 +261,7 @@ as(r[1,], "list")
 
 
 ```r
-rowMeans(r[1,]) ## The user has rated 100 jokes, the list shows the ratings and the user's rating average is 1.4731
+rowMeans(r[1,]) ## The user has rated 38 jokes, the list shows the ratings and the user's rating average is 1.4731
 ```
 
 ```
@@ -269,12 +269,12 @@ rowMeans(r[1,]) ## The user has rated 100 jokes, the list shows the ratings and 
 ```
 
 ```r
-rowMeans(as(r[1,], "matrix"))
+rowMeans(as(r[1,], "matrix"),na.rm=TRUE)
 ```
 
 ```
-## u175 
-##   NA
+##     u175 
+## 2.421842
 ```
 
 --- .scode-nowrap .compact
