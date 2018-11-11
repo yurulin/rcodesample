@@ -557,6 +557,108 @@ error
 ## Evaluation
 
 
+```r
+scheme = evaluationScheme(Jester5k[1:1000], method="cross", k=4, given=3, goodRating=5)
+scheme
+```
+
+```
+## Evaluation scheme with 3 items given
+## Method: 'cross-validation' with 4 run(s).
+## Good ratings: >=5.000000
+## Data set: 1000 x 100 rating matrix of class 'realRatingMatrix' with 72358 ratings.
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+```r
+## evaluate top-1, top-3, top-5, top-10, top-15 and top-20 recommendation lists
+results = evaluate(scheme, method="POPULAR", n=c(1,3,5,10,15,20))
+```
+
+```
+## POPULAR run fold/sample [model time/prediction time]
+## 	 1  [0.008sec/0.812sec] 
+## 	 2  [0.008sec/0.496sec] 
+## 	 3  [0.008sec/0.48sec] 
+## 	 4  [0.008sec/0.48sec]
+```
+
+```r
+results
+```
+
+```
+## Evaluation results for 4 folds/samples using method 'POPULAR'.
+```
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+
+```r
+## getConfusionMatrix() will return the confusion matrices for the 4 runs (we used 4-fold cross evaluation)
+getConfusionMatrix(results)[[1]] ## confusion matrix of the first run
+```
+
+```
+##       TP     FP     FN     TN precision     recall        TPR         FPR
+## 1  0.488  0.512 16.016 79.984    0.4880 0.04038575 0.04038575 0.006030783
+## 3  1.296  1.704 15.208 78.792    0.4320 0.11019655 0.11019655 0.020377245
+## 5  2.084  2.916 14.420 77.580    0.4168 0.16708598 0.16708598 0.034883361
+## 10 4.052  5.948 12.452 74.548    0.4052 0.31214877 0.31214877 0.070909131
+## 15 5.736  9.264 10.768 71.232    0.3824 0.41957216 0.41957216 0.110525891
+## 20 7.128 12.872  9.376 67.624    0.3564 0.50118749 0.50118749 0.154023324
+```
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+
+```r
+## The average for all runs
+avg(results)
+```
+
+```
+##       TP     FP     FN     TN precision     recall        TPR         FPR
+## 1  0.451  0.549 16.720 79.280    0.4510 0.03702692 0.03702692 0.006504849
+## 3  1.254  1.746 15.917 78.083    0.4180 0.09574697 0.09574697 0.020981728
+## 5  2.032  2.968 15.139 76.861    0.4064 0.14672405 0.14672405 0.035638995
+## 10 3.926  6.074 13.245 73.755    0.3926 0.28081508 0.28081508 0.073154805
+## 15 5.649  9.351 11.522 70.478    0.3766 0.39294814 0.39294814 0.112698641
+## 20 7.042 12.958 10.129 66.871    0.3521 0.47678138 0.47678138 0.156597293
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+```r
+plot(results, annotate=TRUE)
+```
+
+![plot of chunk class11-chunk-32](assets/fig/class11-chunk-32-1.png)
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+```r
+## comparison of several recommender algorithms
+scheme <- evaluationScheme(Jester5k[1:1000], method="split", train = .9, k=1, given=20, goodRating=5)
+scheme
+```
+
+```
+## Evaluation scheme with 20 items given
+## Method: 'split' with 1 run(s).
+## Training set proportion: 0.900
+## Good ratings: >=5.000000
+## Data set: 1000 x 100 rating matrix of class 'realRatingMatrix' with 72358 ratings.
+```
 
 --- .scode-nowrap .compact
 ## Evaluation

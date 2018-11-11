@@ -290,6 +290,49 @@ error
 ## Evaluation
 
 ```{r, dependson=c(-1)}
+scheme = evaluationScheme(Jester5k[1:1000], method="cross", k=4, given=3, goodRating=5)
+scheme
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+## evaluate top-1, top-3, top-5, top-10, top-15 and top-20 recommendation lists
+results = evaluate(scheme, method="POPULAR", n=c(1,3,5,10,15,20))
+results
+```
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+## getConfusionMatrix() will return the confusion matrices for the 4 runs (we used 4-fold cross evaluation)
+getConfusionMatrix(results)[[1]] ## confusion matrix of the first run
+```
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+## The average for all runs
+avg(results)
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+plot(results, annotate=TRUE)
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+## comparison of several recommender algorithms
+scheme <- evaluationScheme(Jester5k[1:1000], method="split", train = .9, k=1, given=20, goodRating=5)
+scheme
 ```
 
 --- .scode-nowrap .compact
