@@ -31,4 +31,8 @@ toc_depth   : 2
 
 * The sample code is based on the examples given in http://cran.r-project.org/web/packages/recommenderlab/vignettes/recommenderlab.pdf
 
+```r
+library("recommenderlab")
 ```
+
+
