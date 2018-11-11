@@ -64,12 +64,20 @@ m
 ##   u5 NA NA NA NA NA NA NA  3 NA   0
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Data manipulation
 
 
 ```r
 r = as(m, "realRatingMatrix") ## store the matrix in sparse format
+r
+```
+
+```
+## 5 x 10 rating matrix of class 'realRatingMatrix' with 16 ratings.
+```
+
+```r
 ## The realRatingMatrix can be coerced back into a matrix which is identical to the original matrix
 identical(as(r, "matrix"),m)
 ```
@@ -128,7 +136,7 @@ head(as(r, "data.frame"))
 ## 3    u3   i2      3
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Data manipulation
 
 
@@ -141,6 +149,20 @@ r_m
 ```
 ## 5 x 10 rating matrix of class 'realRatingMatrix' with 16 ratings.
 ## Normalized using center on rows.
+```
+
+```r
+getRatingMatrix(r_m)
+```
+
+```
+## 5 x 10 sparse Matrix of class "dgCMatrix"
+##                                                      
+## u1  .        . . 1 .         .  .         .   -1  .  
+## u2  .        . . . .         .  .        -0.5  .  0.5
+## u3  0.000000 0 . . 1.000000 -3  0.000000  1.0  .  1.0
+## u4 -1.333333 . . . 2.666667  . -1.333333  .    .  .  
+## u5  .        . . . .         .  .         1.5  . -1.5
 ```
 
 --- .scode-nowrap .compact
@@ -227,7 +249,7 @@ Jester5k
 
 
 ```r
-set.seed(1) ## reset random seed before sampling
+set.seed(1234) ## reset random seed before sampling
 
 ## use only a subset of the data containing a sample of 1000 users
 r = sample(Jester5k, 1000)
@@ -237,8 +259,8 @@ rowCounts(r[1,])
 ```
 
 ```
-## u175 
-##   38
+## u5092 
+##    70
 ```
 
 ```r
@@ -246,15 +268,19 @@ as(r[1,], "list")
 ```
 
 ```
-## $u175
-##    j5    j7    j8   j10   j13   j15   j16   j17   j18   j19   j20   j21 
-## -4.32  3.45  4.37  5.73 -9.76  2.77  2.48 -0.10  0.58  1.12  5.58  5.49 
-##   j27   j28   j29   j32   j33   j35   j36   j47   j48   j49   j50   j53 
-##  3.98  4.76  3.16  2.72 -6.50  3.64  1.17  3.40  3.16  8.69  0.58  1.99 
-##   j54   j56   j59   j60   j61   j62   j65   j66   j68   j69   j74   j77 
-##  7.72  7.14  0.05  7.82  3.59  6.84  3.35 -8.06  7.43 -0.68  2.91  1.70 
-##   j81   j95 
-## -3.06  7.14
+## $u5092
+##    j1    j2    j3    j4    j5    j6    j7    j8    j9   j10   j11   j12 
+## -3.40 -3.40 -1.99  1.31 -4.03 -0.15 -4.22 -4.56 -4.37 -0.34  0.53 -5.87 
+##   j13   j14   j15   j16   j17   j18   j19   j20   j21   j22   j23   j24 
+## -2.57 -5.39  0.44 -3.98 -3.35 -4.03 -4.03 -0.29 -3.79 -3.59  0.05 -6.94 
+##   j25   j26   j27   j28   j29   j30   j31   j32   j33   j34   j35   j36 
+## -0.53 -2.57  1.80 -5.87  2.14 -4.42 -1.70  0.68 -7.82 -0.49 -0.92  2.38 
+##   j37   j38   j39   j40   j41   j42   j43   j44   j45   j46   j47   j48 
+## -7.96 -5.15 -5.87 -7.23 -4.37 -2.33 -5.15  0.34  3.40 -1.60 -2.04 -3.11 
+##   j49   j50   j51   j52   j53   j54   j55   j56   j57   j58   j59   j60 
+##  2.82  2.96 -3.35  1.07  0.10 -6.99  0.78 -2.57 -6.75 -6.60 -4.51  1.46 
+##   j61   j62   j63   j64   j65   j66   j67   j68   j69   j70 
+## -1.55  1.12 -7.48 -7.96  2.52  0.49 -3.25 -1.21  2.18 -5.87
 ```
 
 --- .scode-nowrap .compact
@@ -262,15 +288,23 @@ as(r[1,], "list")
 
 
 ```r
-## The user has rated 38 jokes
-## the list shows the ratings and the user's rating average is 2.42
+rowMeans(r[1,])
+```
+
+```
+## Error in rowMeans(r[1, ]): 'x' must be an array of at least two dimensions
+```
+
+```r
+## The user has rated 70 jokes
+## the list shows the ratings and the user's rating average
 
 rowMeans(as(r[1,], "matrix"),na.rm=TRUE)
 ```
 
 ```
-##     u175 
-## 2.421842
+##     u5092 
+## -2.413429
 ```
 
 --- .scode-nowrap .compact
@@ -322,10 +356,16 @@ hist(rowCounts(r), breaks=50)
 
 ```r
 ## the mean rating for each joke
-hist(colMeans(as(r, "matrix")), breaks=20)
+hist(colMeans(r), breaks=20)
 ```
 
-![plot of chunk class11-chunk-20](assets/fig/class11-chunk-20-1.png)
+```
+## Error in colMeans(r): 'x' must be an array of at least two dimensions
+```
+
+```r
+#hist(colMeans(as(r, "matrix")), breaks=20)
+```
 
 --- .scode-nowrap .compact #recommender
 ## Recommender System
@@ -466,6 +506,46 @@ e
 ## Evaluation
 
 
+```r
+## create a user-based collaborative filtering
+r1 = Recommender(getData(e, "train"), "UBCF")
+r1
+```
+
+```
+## Recommender of type 'UBCF' for 'realRatingMatrix' 
+## learned using 900 users.
+```
+
+```r
+## create an item-based collaborative filtering
+r2 = Recommender(getData(e, "train"), "IBCF")
+r2
+```
+
+```
+## Recommender of type 'IBCF' for 'realRatingMatrix' 
+## learned using 900 users.
+```
+
+```r
+## compute predicted ratings for the known part (rated items) of the test data (15 items for each user)
+p1 = predict(r1, getData(e, "known"), type="ratings")
+p1
+```
+
+```
+## 100 x 100 rating matrix of class 'realRatingMatrix' with 8500 ratings.
+```
+
+```r
+p2 = predict(r2, getData(e, "known"), type="ratings")
+p2
+```
+
+```
+## 100 x 100 rating matrix of class 'realRatingMatrix' with 8465 ratings.
+```
 
 --- .scode-nowrap .compact
 ## Evaluation

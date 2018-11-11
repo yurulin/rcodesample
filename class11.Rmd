@@ -51,11 +51,12 @@ m = matrix(sample(c(as.numeric(0:5), NA), 50,
 m
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Data manipulation
 
 ```{r, dependson=c(-1)}
 r = as(m, "realRatingMatrix") ## store the matrix in sparse format
+r
 ## The realRatingMatrix can be coerced back into a matrix which is identical to the original matrix
 identical(as(r, "matrix"),m)
 ```
@@ -76,13 +77,14 @@ as(r, "list")
 head(as(r, "data.frame"))
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Data manipulation
 
 ```{r, dependson=c(-1)}
 ## normalization: remove rating bias by subtracting the row mean from all ratings in the row
 r_m = normalize(r)
 r_m
+getRatingMatrix(r_m)
 ```
 
 --- .scode-nowrap .compact
@@ -138,7 +140,7 @@ Jester5k
 ## Sample dataset
 
 ```{r, dependson=c(-1)}
-set.seed(1) ## reset random seed before sampling
+set.seed(1234) ## reset random seed before sampling
 
 ## use only a subset of the data containing a sample of 1000 users
 r = sample(Jester5k, 1000)
@@ -152,8 +154,9 @@ as(r[1,], "list")
 ## Sample dataset
 
 ```{r, dependson=c(-1)}
-## The user has rated 38 jokes
-## the list shows the ratings and the user's rating average is 2.42
+rowMeans(r[1,])
+## The user has rated 70 jokes
+## the list shows the ratings and the user's rating average
 
 rowMeans(as(r[1,], "matrix"),na.rm=TRUE)
 ```
@@ -194,7 +197,8 @@ hist(rowCounts(r), breaks=50)
 
 ```{r, dependson=c(-1)}
 ## the mean rating for each joke
-hist(colMeans(as(r, "matrix")), breaks=20)
+hist(colMeans(r), breaks=20)
+#hist(colMeans(as(r, "matrix")), breaks=20)
 ```
 
 --- .scode-nowrap .compact #recommender
@@ -257,6 +261,18 @@ e
 ## Evaluation
 
 ```{r, dependson=c(-1)}
+## create a user-based collaborative filtering
+r1 = Recommender(getData(e, "train"), "UBCF")
+r1
+## create an item-based collaborative filtering
+r2 = Recommender(getData(e, "train"), "IBCF")
+r2
+
+## compute predicted ratings for the known part (rated items) of the test data (15 items for each user)
+p1 = predict(r1, getData(e, "known"), type="ratings")
+p1
+p2 = predict(r2, getData(e, "known"), type="ratings")
+p2
 ```
 
 --- .scode-nowrap .compact
