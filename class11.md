@@ -348,7 +348,6 @@ hist(rowCounts(r), breaks=50)
 
 ```r
 ## the mean rating for each joke
-#hist(colMeans(r), breaks=20)
 hist(colMeans(as(r, "matrix")), breaks=20)
 ```
 
@@ -580,10 +579,10 @@ results = evaluate(scheme, method="POPULAR", n=c(1,3,5,10,15,20))
 
 ```
 ## POPULAR run fold/sample [model time/prediction time]
-## 	 1  [0.008sec/0.812sec] 
-## 	 2  [0.008sec/0.496sec] 
-## 	 3  [0.008sec/0.48sec] 
-## 	 4  [0.008sec/0.48sec]
+## 	 1  [0.008sec/0.46sec] 
+## 	 2  [0.008sec/0.444sec] 
+## 	 3  [0.008sec/0.436sec] 
+## 	 4  [0.008sec/0.444sec]
 ```
 
 ```r
@@ -647,30 +646,156 @@ plot(results, annotate=TRUE)
 
 
 ```r
+plot(results, "prec/rec", annotate=TRUE)
+```
+
+![plot of chunk class11-chunk-33](assets/fig/class11-chunk-33-1.png)
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+```r
 ## comparison of several recommender algorithms
-scheme <- evaluationScheme(Jester5k[1:1000], method="split", train = .9, k=1, given=20, goodRating=5)
+set.seed(2016)
+scheme <- evaluationScheme(Jester5k[1:1000], method="split", train = .9, k=1, given=-5, goodRating=5)
 scheme
 ```
 
 ```
-## Evaluation scheme with 20 items given
+## Evaluation scheme using all-but-5 items
 ## Method: 'split' with 1 run(s).
 ## Training set proportion: 0.900
 ## Good ratings: >=5.000000
 ## Data set: 1000 x 100 rating matrix of class 'realRatingMatrix' with 72358 ratings.
 ```
 
+--- .sscode-nowrap .compact
+## Evaluation
+
+
+```r
+algorithms <- list(
+"random items" = list(name="RANDOM", param=NULL),
+"popular items" = list(name="POPULAR", param=NULL),
+"user-based CF" = list(name="UBCF", param=list(nn=50)),
+"item-based CF" = list(name="IBCF", param=list(k=50)),
+"SVD approximation" = list(name="SVD", param=list(k = 50))
+)
+## run algorithms
+results <- evaluate(scheme, algorithms, type = "topNList",
+  n=c(1, 3, 5, 10, 15, 20))
+```
+
+```
+## RANDOM run fold/sample [model time/prediction time]
+## 	 1  [0sec/0.024sec] 
+## POPULAR run fold/sample [model time/prediction time]
+## 	 1  [0.012sec/0.18sec] 
+## UBCF run fold/sample [model time/prediction time]
+## 	 1  [0.008sec/0.208sec] 
+## IBCF run fold/sample [model time/prediction time]
+## 	 1  [0.064sec/0.028sec] 
+## SVD run fold/sample [model time/prediction time]
+## 	 1  [0.096sec/0.016sec]
+```
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+
+```r
+results
+```
+
+```
+## List of evaluation results for 5 recommenders:
+## Evaluation results for 1 folds/samples using method 'RANDOM'.
+## Evaluation results for 1 folds/samples using method 'POPULAR'.
+## Evaluation results for 1 folds/samples using method 'UBCF'.
+## Evaluation results for 1 folds/samples using method 'IBCF'.
+## Evaluation results for 1 folds/samples using method 'SVD'.
+```
+
+```r
+names(results)
+```
+
+```
+## [1] "random items"      "popular items"     "user-based CF"    
+## [4] "item-based CF"     "SVD approximation"
+```
+
+```r
+results[["user-based CF"]]
+```
+
+```
+## Evaluation results for 1 folds/samples using method 'UBCF'.
+```
+
 --- .scode-nowrap .compact
 ## Evaluation
 
 
+```r
+plot(results, annotate=c(1,3), legend="bottomright")
+```
+
+![plot of chunk class11-chunk-37](assets/fig/class11-chunk-37-1.png)
 
 --- .scode-nowrap .compact
 ## Evaluation
 
 
+```r
+plot(results, "prec/rec", annotate=3, legend="topleft")
+```
+
+![plot of chunk class11-chunk-38](assets/fig/class11-chunk-38-1.png)
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+
+```r
+## run algorithms
+results <- evaluate(scheme, algorithms, type = "ratings")
+```
+
+```
+## RANDOM run fold/sample [model time/prediction time]
+## 	 1  [0.032sec/0.012sec] 
+## POPULAR run fold/sample [model time/prediction time]
+## 	 1  [0.008sec/0.004sec] 
+## UBCF run fold/sample [model time/prediction time]
+## 	 1  [0.012sec/0.164sec] 
+## IBCF run fold/sample [model time/prediction time]
+## 	 1  [0.06sec/0.008sec] 
+## SVD run fold/sample [model time/prediction time]
+## 	 1  [0.544sec/0.008sec]
+```
+
+```r
+results
+```
+
+```
+## List of evaluation results for 5 recommenders:
+## Evaluation results for 1 folds/samples using method 'RANDOM'.
+## Evaluation results for 1 folds/samples using method 'POPULAR'.
+## Evaluation results for 1 folds/samples using method 'UBCF'.
+## Evaluation results for 1 folds/samples using method 'IBCF'.
+## Evaluation results for 1 folds/samples using method 'SVD'.
+```
 
 --- .scode-nowrap .compact
 ## Evaluation
 
+
+```r
+plot(results, ylim = c(0,100))
+```
+
+![plot of chunk class11-chunk-40](assets/fig/class11-chunk-40-1.png)
 

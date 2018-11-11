@@ -196,7 +196,6 @@ hist(rowCounts(r), breaks=50)
 
 ```{r, dependson=c(-1)}
 ## the mean rating for each joke
-#hist(colMeans(r), breaks=20)
 hist(colMeans(as(r, "matrix")), breaks=20)
 ```
 
@@ -330,25 +329,71 @@ plot(results, annotate=TRUE)
 ## Evaluation
 
 ```{r, dependson=c(-1)}
+plot(results, "prec/rec", annotate=TRUE)
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
 ## comparison of several recommender algorithms
-scheme <- evaluationScheme(Jester5k[1:1000], method="split", train = .9, k=1, given=20, goodRating=5)
+set.seed(2016)
+scheme <- evaluationScheme(Jester5k[1:1000], method="split", train = .9, k=1, given=-5, goodRating=5)
 scheme
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Evaluation
 
 ```{r, dependson=c(-1)}
+algorithms <- list(
+"random items" = list(name="RANDOM", param=NULL),
+"popular items" = list(name="POPULAR", param=NULL),
+"user-based CF" = list(name="UBCF", param=list(nn=50)),
+"item-based CF" = list(name="IBCF", param=list(k=50)),
+"SVD approximation" = list(name="SVD", param=list(k = 50))
+)
+## run algorithms
+results <- evaluate(scheme, algorithms, type = "topNList",
+  n=c(1, 3, 5, 10, 15, 20))
+```
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+results
+names(results)
+results[["user-based CF"]]
 ```
 
 --- .scode-nowrap .compact
 ## Evaluation
 
 ```{r, dependson=c(-1)}
+plot(results, annotate=c(1,3), legend="bottomright")
 ```
 
 --- .scode-nowrap .compact
 ## Evaluation
 
 ```{r, dependson=c(-1)}
+plot(results, "prec/rec", annotate=3, legend="topleft")
 ```
+
+--- .sscode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+## run algorithms
+results <- evaluate(scheme, algorithms, type = "ratings")
+results
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+plot(results, ylim = c(0,100))
+```
+

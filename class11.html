@@ -360,7 +360,6 @@ hist(rowCounts(r), breaks=50)
   <div>
     <h2>Sample dataset</h2>
     <pre><code class="r">## the mean rating for each joke
-#hist(colMeans(r), breaks=20)
 hist(colMeans(as(r, &quot;matrix&quot;)), breaks=20)
 </code></pre>
 
@@ -566,10 +565,10 @@ results = evaluate(scheme, method=&quot;POPULAR&quot;, n=c(1,3,5,10,15,20))
 </code></pre>
 
 <pre><code>## POPULAR run fold/sample [model time/prediction time]
-##   1  [0.008sec/0.812sec] 
-##   2  [0.008sec/0.496sec] 
-##   3  [0.008sec/0.48sec] 
-##   4  [0.008sec/0.48sec]
+##   1  [0.008sec/0.46sec] 
+##   2  [0.008sec/0.444sec] 
+##   3  [0.008sec/0.436sec] 
+##   4  [0.008sec/0.444sec]
 </code></pre>
 
 <pre><code class="r">results
@@ -629,12 +628,23 @@ avg(results)
 <section class="slide scode-nowrap compact" id="slide-34">
   <div>
     <h2>Evaluation</h2>
+    <pre><code class="r">plot(results, &quot;prec/rec&quot;, annotate=TRUE)
+</code></pre>
+
+<p><img src="assets/fig/class11-chunk-33-1.png" alt="plot of chunk class11-chunk-33"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-35">
+  <div>
+    <h2>Evaluation</h2>
     <pre><code class="r">## comparison of several recommender algorithms
-scheme &lt;- evaluationScheme(Jester5k[1:1000], method=&quot;split&quot;, train = .9, k=1, given=20, goodRating=5)
+set.seed(2016)
+scheme &lt;- evaluationScheme(Jester5k[1:1000], method=&quot;split&quot;, train = .9, k=1, given=-5, goodRating=5)
 scheme
 </code></pre>
 
-<pre><code>## Evaluation scheme with 20 items given
+<pre><code>## Evaluation scheme using all-but-5 items
 ## Method: &#39;split&#39; with 1 run(s).
 ## Training set proportion: 0.900
 ## Good ratings: &gt;=5.000000
@@ -643,22 +653,124 @@ scheme
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-35">
+<section class="slide sscode-nowrap compact" id="slide-36">
   <div>
     <h2>Evaluation</h2>
-    
+    <pre><code class="r">algorithms &lt;- list(
+&quot;random items&quot; = list(name=&quot;RANDOM&quot;, param=NULL),
+&quot;popular items&quot; = list(name=&quot;POPULAR&quot;, param=NULL),
+&quot;user-based CF&quot; = list(name=&quot;UBCF&quot;, param=list(nn=50)),
+&quot;item-based CF&quot; = list(name=&quot;IBCF&quot;, param=list(k=50)),
+&quot;SVD approximation&quot; = list(name=&quot;SVD&quot;, param=list(k = 50))
+)
+## run algorithms
+results &lt;- evaluate(scheme, algorithms, type = &quot;topNList&quot;,
+  n=c(1, 3, 5, 10, 15, 20))
+</code></pre>
+
+<pre><code>## RANDOM run fold/sample [model time/prediction time]
+##   1  [0sec/0.024sec] 
+## POPULAR run fold/sample [model time/prediction time]
+##   1  [0.012sec/0.18sec] 
+## UBCF run fold/sample [model time/prediction time]
+##   1  [0.008sec/0.208sec] 
+## IBCF run fold/sample [model time/prediction time]
+##   1  [0.064sec/0.028sec] 
+## SVD run fold/sample [model time/prediction time]
+##   1  [0.096sec/0.016sec]
+</code></pre>
+
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-36">
+<section class="slide sscode-nowrap compact" id="slide-37">
   <div>
     <h2>Evaluation</h2>
-    
+    <pre><code class="r">results
+</code></pre>
+
+<pre><code>## List of evaluation results for 5 recommenders:
+## Evaluation results for 1 folds/samples using method &#39;RANDOM&#39;.
+## Evaluation results for 1 folds/samples using method &#39;POPULAR&#39;.
+## Evaluation results for 1 folds/samples using method &#39;UBCF&#39;.
+## Evaluation results for 1 folds/samples using method &#39;IBCF&#39;.
+## Evaluation results for 1 folds/samples using method &#39;SVD&#39;.
+</code></pre>
+
+<pre><code class="r">names(results)
+</code></pre>
+
+<pre><code>## [1] &quot;random items&quot;      &quot;popular items&quot;     &quot;user-based CF&quot;    
+## [4] &quot;item-based CF&quot;     &quot;SVD approximation&quot;
+</code></pre>
+
+<pre><code class="r">results[[&quot;user-based CF&quot;]]
+</code></pre>
+
+<pre><code>## Evaluation results for 1 folds/samples using method &#39;UBCF&#39;.
+</code></pre>
+
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-37">
+<section class="slide scode-nowrap compact" id="slide-38">
   <div>
     <h2>Evaluation</h2>
-    
+    <pre><code class="r">plot(results, annotate=c(1,3), legend=&quot;bottomright&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class11-chunk-37-1.png" alt="plot of chunk class11-chunk-37"></p>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-39">
+  <div>
+    <h2>Evaluation</h2>
+    <pre><code class="r">plot(results, &quot;prec/rec&quot;, annotate=3, legend=&quot;topleft&quot;)
+</code></pre>
+
+<p><img src="assets/fig/class11-chunk-38-1.png" alt="plot of chunk class11-chunk-38"></p>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-40">
+  <div>
+    <h2>Evaluation</h2>
+    <pre><code class="r">## run algorithms
+results &lt;- evaluate(scheme, algorithms, type = &quot;ratings&quot;)
+</code></pre>
+
+<pre><code>## RANDOM run fold/sample [model time/prediction time]
+##   1  [0.032sec/0.012sec] 
+## POPULAR run fold/sample [model time/prediction time]
+##   1  [0.008sec/0.004sec] 
+## UBCF run fold/sample [model time/prediction time]
+##   1  [0.012sec/0.164sec] 
+## IBCF run fold/sample [model time/prediction time]
+##   1  [0.06sec/0.008sec] 
+## SVD run fold/sample [model time/prediction time]
+##   1  [0.544sec/0.008sec]
+</code></pre>
+
+<pre><code class="r">results
+</code></pre>
+
+<pre><code>## List of evaluation results for 5 recommenders:
+## Evaluation results for 1 folds/samples using method &#39;RANDOM&#39;.
+## Evaluation results for 1 folds/samples using method &#39;POPULAR&#39;.
+## Evaluation results for 1 folds/samples using method &#39;UBCF&#39;.
+## Evaluation results for 1 folds/samples using method &#39;IBCF&#39;.
+## Evaluation results for 1 folds/samples using method &#39;SVD&#39;.
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-41">
+  <div>
+    <h2>Evaluation</h2>
+    <pre><code class="r">plot(results, ylim = c(0,100))
+</code></pre>
+
+<p><img src="assets/fig/class11-chunk-40-1.png" alt="plot of chunk class11-chunk-40"></p>
+
   </div>
 </section>
   <div class="progress">
