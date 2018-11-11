@@ -63,10 +63,7 @@ install.packages(&#39;recommenderlab&#39;)
 <li>See information about the installation and more details about what the package can do in the manual.</li>
 </ul>
 
-<pre><code class="r">library(&quot;recommenderlab&quot;)
-</code></pre>
-
-<pre><code>## Error in library(&quot;recommenderlab&quot;): there is no package called &#39;recommenderlab&#39;
+<pre><code class="r">library(recommenderlab)
 </code></pre>
 
   </div>
@@ -84,11 +81,11 @@ m
 
 <pre><code>##     item
 ## user i1 i2 i3 i4 i5 i6 i7 i8 i9 i10
-##   u1 NA NA NA NA NA  4  2 NA NA   4
-##   u2 NA NA NA NA NA  4 NA NA NA   4
-##   u3  3 NA NA NA NA  0 NA  2  5   4
-##   u4  2  0  1 NA NA NA NA NA NA   4
-##   u5  2 NA  5  5 NA NA NA NA NA  NA
+##   u1 NA NA NA  3 NA NA NA NA  1  NA
+##   u2 NA NA NA NA NA NA NA  3 NA   4
+##   u3  3  3 NA NA  4  0  3  4 NA   4
+##   u4  1 NA NA NA  5 NA  1 NA NA  NA
+##   u5 NA NA NA NA NA NA NA  3 NA   0
 </code></pre>
 
   </div>
@@ -97,16 +94,11 @@ m
   <div>
     <h2>Data manipulation</h2>
     <pre><code class="r">r = as(m, &quot;realRatingMatrix&quot;) ## store the matrix in sparse format
-</code></pre>
-
-<pre><code>## Error in as(m, &quot;realRatingMatrix&quot;): no method or default for coercing &quot;matrix&quot; to &quot;realRatingMatrix&quot;
-</code></pre>
-
-<pre><code class="r">## The realRatingMatrix can be coerced back into a matrix which is identical to the original matrix
+## The realRatingMatrix can be coerced back into a matrix which is identical to the original matrix
 identical(as(r, &quot;matrix&quot;),m)
 </code></pre>
 
-<pre><code>## Error in .class1(object): object &#39;r&#39; not found
+<pre><code>## [1] TRUE
 </code></pre>
 
   </div>

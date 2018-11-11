@@ -33,7 +33,7 @@ install.packages('recommenderlab')
 * See information about the installation and more details about what the package can do in the manual.
 
 ```{r}
-library("recommenderlab")
+library(recommenderlab)
 ```
 
 --- .modal #data

@@ -50,3 +50,6 @@ BiocGenerics
 Biobase
 NMF
 igraph
+arules
+proxy
+recommenderlab
