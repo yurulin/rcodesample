@@ -268,6 +268,15 @@ rowMeans(r[1,]) ## The user has rated 100 jokes, the list shows the ratings and 
 ## Error in rowMeans(r[1, ]): 'x' must be an array of at least two dimensions
 ```
 
+```r
+rowMeans(as(r[1,], "matrix"))
+```
+
+```
+## u175 
+##   NA
+```
+
 --- .scode-nowrap .compact
 ## Sample dataset
 

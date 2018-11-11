@@ -284,6 +284,13 @@ rowCounts(r[1,])
 <pre><code>## Error in rowMeans(r[1, ]): &#39;x&#39; must be an array of at least two dimensions
 </code></pre>
 
+<pre><code class="r">rowMeans(as(r[1,], &quot;matrix&quot;))
+</code></pre>
+
+<pre><code>## u175 
+##   NA
+</code></pre>
+
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-17">

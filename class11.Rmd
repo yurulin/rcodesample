@@ -152,6 +152,8 @@ as(r[1,], "list")
 
 ```{r, dependson=c(-1)}
 rowMeans(r[1,]) ## The user has rated 100 jokes, the list shows the ratings and the user's rating average is 1.4731
+
+rowMeans(as(r[1,], "matrix"))
 ```
 
 --- .scode-nowrap .compact
