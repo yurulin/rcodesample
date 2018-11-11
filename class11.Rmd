@@ -19,6 +19,7 @@ toc_depth   : 2
 * [Data manipulation](#data)
 * [Sample dataset](#sample)
 * [Recommender System](#recommender)
+* [Evaluation](#eval)
 
 --- #set-up .modal 
 
@@ -151,7 +152,8 @@ as(r[1,], "list")
 ## Sample dataset
 
 ```{r, dependson=c(-1)}
-rowMeans(r[1,]) ## The user has rated 38 jokes, the list shows the ratings and the user's rating average is 1.4731
+## The user has rated 38 jokes
+## the list shows the ratings and the user's rating average is 2.42
 
 rowMeans(as(r[1,], "matrix"),na.rm=TRUE)
 ```
@@ -192,7 +194,7 @@ hist(rowCounts(r), breaks=50)
 
 ```{r, dependson=c(-1)}
 ## the mean rating for each joke
-hist(colMeans(r), breaks=20)
+hist(colMeans(as(r, "matrix")), breaks=20)
 ```
 
 --- .scode-nowrap .compact #recommender
@@ -223,11 +225,48 @@ as(recom, "list")
 ## Recommender System
 
 ```{r, dependson=c(-1)}
+## extract sublists of the best items in the top-N
+recom3 = bestN(recom, n = 3)
+recom3
+as(recom3, "list")
 ```
 
 --- .scode-nowrap .compact
 ## Recommender System
 
 ```{r, dependson=c(-1)}
+## predict ratings
+recom = predict(r, Jester5k[1001:1002], type="ratings")
+recom
+
+as(recom, "matrix")[,1:10] 
+## The prediction contains NA for the items rated by the active users
 ```
 
+--- .scode-nowrap .compact #eval
+## Evaluation
+
+```{r, dependson=c(-1)}
+## evaluation scheme -- determines what and how data is used for training and evaluation;
+## splits the first 1000 users in Jester5k into a training set (90%) and a test set (10%)
+e = evaluationScheme(Jester5k[1:1000], method="split", train=0.9, given=15, goodRating=5)
+e
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+```

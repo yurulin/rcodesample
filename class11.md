@@ -19,6 +19,7 @@ toc_depth   : 2
 * [Data manipulation](#data)
 * [Sample dataset](#sample)
 * [Recommender System](#recommender)
+* [Evaluation](#eval)
 
 --- #set-up .modal 
 
@@ -261,14 +262,9 @@ as(r[1,], "list")
 
 
 ```r
-rowMeans(r[1,]) ## The user has rated 38 jokes, the list shows the ratings and the user's rating average is 1.4731
-```
+## The user has rated 38 jokes
+## the list shows the ratings and the user's rating average is 2.42
 
-```
-## Error in rowMeans(r[1, ]): 'x' must be an array of at least two dimensions
-```
-
-```r
 rowMeans(as(r[1,], "matrix"),na.rm=TRUE)
 ```
 
@@ -326,12 +322,10 @@ hist(rowCounts(r), breaks=50)
 
 ```r
 ## the mean rating for each joke
-hist(colMeans(r), breaks=20)
+hist(colMeans(as(r, "matrix")), breaks=20)
 ```
 
-```
-## Error in colMeans(r): 'x' must be an array of at least two dimensions
-```
+![plot of chunk class11-chunk-20](assets/fig/class11-chunk-20-1.png)
 
 --- .scode-nowrap .compact #recommender
 ## Recommender System
@@ -396,9 +390,89 @@ as(recom, "list")
 ## Recommender System
 
 
+```r
+## extract sublists of the best items in the top-N
+recom3 = bestN(recom, n = 3)
+recom3
+```
+
+```
+## Recommendations as 'topNList' with n = 3 for 2 users.
+```
+
+```r
+as(recom3, "list")
+```
+
+```
+## $u20089
+## [1] "j89" "j72" "j47"
+## 
+## $u11691
+## [1] "j89" "j93" "j76"
+```
 
 --- .scode-nowrap .compact
 ## Recommender System
 
+
+```r
+## predict ratings
+recom = predict(r, Jester5k[1001:1002], type="ratings")
+recom
+```
+
+```
+## 2 x 100 rating matrix of class 'realRatingMatrix' with 97 ratings.
+```
+
+```r
+as(recom, "matrix")[,1:10] 
+```
+
+```
+##               j1        j2         j3        j4 j5 j6 j7 j8        j9
+## u20089 -1.013133 -1.631921 -1.8756885 -3.684513 NA NA NA NA -2.742669
+## u11691        NA        NA -0.6376646 -2.446489 NA NA NA NA -1.504646
+##               j10
+## u20089 -0.8324626
+## u11691         NA
+```
+
+```r
+## The prediction contains NA for the items rated by the active users
+```
+
+--- .scode-nowrap .compact #eval
+## Evaluation
+
+
+```r
+## evaluation scheme -- determines what and how data is used for training and evaluation;
+## splits the first 1000 users in Jester5k into a training set (90%) and a test set (10%)
+e = evaluationScheme(Jester5k[1:1000], method="split", train=0.9, given=15, goodRating=5)
+e
+```
+
+```
+## Evaluation scheme with 15 items given
+## Method: 'split' with 1 run(s).
+## Training set proportion: 0.900
+## Good ratings: >=5.000000
+## Data set: 1000 x 100 rating matrix of class 'realRatingMatrix' with 72358 ratings.
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+
+--- .scode-nowrap .compact
+## Evaluation
 
 
