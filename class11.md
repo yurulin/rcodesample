@@ -18,6 +18,7 @@ toc_depth   : 2
 * [Set up](#set-up)
 * [Data manipulation](#data)
 * [Sample dataset](#sample)
+* [Recommender System](#recommender)
 
 --- #set-up .modal 
 
@@ -323,12 +324,72 @@ hist(colMeans(r), breaks=20)
 ## Error in colMeans(r): 'x' must be an array of at least two dimensions
 ```
 
+--- .scode-nowrap .compact #recommender
+## Recommender System
+
+
+```r
+## (training) create a recommender which generates recommendations solely on the popularity of items (the number of users who have the item in their profile)
+r = Recommender(Jester5k[1:1000], method = "POPULAR")
+r
+```
+
+```
+## Recommender of type 'POPULAR' for 'realRatingMatrix' 
+## learned using 1000 users.
+```
+
+```r
+## get the model by getModel()
+names(getModel(r))
+```
+
+```
+## [1] "topN"                  "ratings"               "normalize"            
+## [4] "aggregationRatings"    "aggregationPopularity" "verbose"
+```
+
+--- .sscode-nowrap .compact
+## Recommender System
+
+
+```r
+getModel(r)$topN
+```
+
+```
+## Recommendations as 'topNList' with n = 100 for 1 users.
+```
+
+```r
+## (prediction) create top-5 recommendation lists for two users who were not used to learn the model
+recom = predict(r, Jester5k[1001:1002], n=5)
+recom
+```
+
+```
+## Recommendations as 'topNList' with n = 5 for 2 users.
+```
+
+```r
+as(recom, "list")
+```
+
+```
+## $u20089
+## [1] "j89" "j72" "j47" "j93" "j76"
+## 
+## $u11691
+## [1] "j89" "j93" "j76" "j88" "j96"
+```
+
 --- .scode-nowrap .compact
-## Sample dataset
+## Recommender System
 
 
 
 --- .scode-nowrap .compact
-## Sample dataset
+## Recommender System
+
 
 

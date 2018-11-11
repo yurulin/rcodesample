@@ -18,6 +18,7 @@ toc_depth   : 2
 * [Set up](#set-up)
 * [Data manipulation](#data)
 * [Sample dataset](#sample)
+* [Recommender System](#recommender)
 
 --- #set-up .modal 
 
@@ -190,14 +191,39 @@ hist(rowCounts(r), breaks=50)
 hist(colMeans(r), breaks=20)
 ```
 
+--- .scode-nowrap .compact #recommender
+## Recommender System
+
+```{r, dependson=c(-1)}
+## (training) create a recommender which generates recommendations solely on the popularity of items (the number of users who have the item in their profile)
+r = Recommender(Jester5k[1:1000], method = "POPULAR")
+r
+## get the model by getModel()
+names(getModel(r))
+```
+
+--- .sscode-nowrap .compact
+## Recommender System
+
+```{r, dependson=c(-1)}
+getModel(r)$topN
+
+## (prediction) create top-5 recommendation lists for two users who were not used to learn the model
+recom = predict(r, Jester5k[1001:1002], n=5)
+recom
+
+as(recom, "list")
+```
+
 --- .scode-nowrap .compact
-## Sample dataset
+## Recommender System
 
 ```{r, dependson=c(-1)}
 ```
 
 --- .scode-nowrap .compact
-## Sample dataset
+## Recommender System
 
 ```{r, dependson=c(-1)}
 ```
+

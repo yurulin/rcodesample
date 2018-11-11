@@ -43,6 +43,7 @@
 <li><a href="#set-up">Set up</a></li>
 <li><a href="#data">Data manipulation</a></li>
 <li><a href="#sample">Sample dataset</a></li>
+<li><a href="#recommender">Recommender System</a></li>
 </ul>
 
   </div>
@@ -340,15 +341,66 @@ hist(colMeans(r), breaks=20)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-22">
+<section class="slide scode-nowrap compact" id="recommender">
   <div>
-    <h2>Sample dataset</h2>
+    <h2>Recommender System</h2>
+    <pre><code class="r">## (training) create a recommender which generates recommendations solely on the popularity of items (the number of users who have the item in their profile)
+r = Recommender(Jester5k[1:1000], method = &quot;POPULAR&quot;)
+r
+</code></pre>
+
+<pre><code>## Recommender of type &#39;POPULAR&#39; for &#39;realRatingMatrix&#39; 
+## learned using 1000 users.
+</code></pre>
+
+<pre><code class="r">## get the model by getModel()
+names(getModel(r))
+</code></pre>
+
+<pre><code>## [1] &quot;topN&quot;                  &quot;ratings&quot;               &quot;normalize&quot;            
+## [4] &quot;aggregationRatings&quot;    &quot;aggregationPopularity&quot; &quot;verbose&quot;
+</code></pre>
+
+  </div>
+</section>
+<section class="slide sscode-nowrap compact" id="slide-23">
+  <div>
+    <h2>Recommender System</h2>
+    <pre><code class="r">getModel(r)$topN
+</code></pre>
+
+<pre><code>## Recommendations as &#39;topNList&#39; with n = 100 for 1 users.
+</code></pre>
+
+<pre><code class="r">## (prediction) create top-5 recommendation lists for two users who were not used to learn the model
+recom = predict(r, Jester5k[1001:1002], n=5)
+recom
+</code></pre>
+
+<pre><code>## Recommendations as &#39;topNList&#39; with n = 5 for 2 users.
+</code></pre>
+
+<pre><code class="r">as(recom, &quot;list&quot;)
+</code></pre>
+
+<pre><code>## $u20089
+## [1] &quot;j89&quot; &quot;j72&quot; &quot;j47&quot; &quot;j93&quot; &quot;j76&quot;
+## 
+## $u11691
+## [1] &quot;j89&quot; &quot;j93&quot; &quot;j76&quot; &quot;j88&quot; &quot;j96&quot;
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-24">
+  <div>
+    <h2>Recommender System</h2>
     
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-23">
+<section class="slide scode-nowrap compact" id="slide-25">
   <div>
-    <h2>Sample dataset</h2>
+    <h2>Recommender System</h2>
     
   </div>
 </section>
