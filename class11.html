@@ -301,13 +301,7 @@ rowCounts(r[1,])
 <section class="slide scode-nowrap compact" id="slide-16">
   <div>
     <h2>Sample dataset</h2>
-    <pre><code class="r">rowMeans(r[1,])
-</code></pre>
-
-<pre><code>## Error in rowMeans(r[1, ]): &#39;x&#39; must be an array of at least two dimensions
-</code></pre>
-
-<pre><code class="r">## The user has rated 70 jokes
+    <pre><code class="r">## The user has rated 70 jokes
 ## the list shows the ratings and the user&#39;s rating average
 
 rowMeans(as(r[1,], &quot;matrix&quot;),na.rm=TRUE)
@@ -366,14 +360,11 @@ hist(rowCounts(r), breaks=50)
   <div>
     <h2>Sample dataset</h2>
     <pre><code class="r">## the mean rating for each joke
-hist(colMeans(r), breaks=20)
+#hist(colMeans(r), breaks=20)
+hist(colMeans(as(r, &quot;matrix&quot;)), breaks=20)
 </code></pre>
 
-<pre><code>## Error in colMeans(r): &#39;x&#39; must be an array of at least two dimensions
-</code></pre>
-
-<pre><code class="r">#hist(colMeans(as(r, &quot;matrix&quot;)), breaks=20)
-</code></pre>
+<p><img src="assets/fig/class11-chunk-20-1.png" alt="plot of chunk class11-chunk-20"></p>
 
   </div>
 </section>
@@ -496,7 +487,7 @@ e
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-27">
+<section class="slide sscode-nowrap compact" id="slide-27">
   <div>
     <h2>Evaluation</h2>
     <pre><code class="r">## create a user-based collaborative filtering
@@ -537,10 +528,40 @@ p2
 <section class="slide scode-nowrap compact" id="slide-28">
   <div>
     <h2>Evaluation</h2>
-    
+    <pre><code class="r">## calculate the error between the prediction and the unknown part of the test data
+error &lt;- rbind(
+  UBCF = calcPredictionAccuracy(p1, getData(e, &quot;unknown&quot;)),
+  IBCF = calcPredictionAccuracy(p2, getData(e, &quot;unknown&quot;))
+)
+error
+</code></pre>
+
+<pre><code>##          RMSE      MSE      MAE
+## UBCF 4.401871 19.37647 3.462665
+## IBCF 5.077923 25.78531 3.981371
+</code></pre>
+
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-29">
+  <div>
+    <h2>Evaluation</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-30">
+  <div>
+    <h2>Evaluation</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-31">
+  <div>
+    <h2>Evaluation</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-32">
   <div>
     <h2>Evaluation</h2>
     

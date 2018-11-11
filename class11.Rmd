@@ -154,7 +154,6 @@ as(r[1,], "list")
 ## Sample dataset
 
 ```{r, dependson=c(-1)}
-rowMeans(r[1,])
 ## The user has rated 70 jokes
 ## the list shows the ratings and the user's rating average
 
@@ -197,8 +196,8 @@ hist(rowCounts(r), breaks=50)
 
 ```{r, dependson=c(-1)}
 ## the mean rating for each joke
-hist(colMeans(r), breaks=20)
-#hist(colMeans(as(r, "matrix")), breaks=20)
+#hist(colMeans(r), breaks=20)
+hist(colMeans(as(r, "matrix")), breaks=20)
 ```
 
 --- .scode-nowrap .compact #recommender
@@ -257,7 +256,7 @@ e = evaluationScheme(Jester5k[1:1000], method="split", train=0.9, given=15, good
 e
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Evaluation
 
 ```{r, dependson=c(-1)}
@@ -273,6 +272,30 @@ p1 = predict(r1, getData(e, "known"), type="ratings")
 p1
 p2 = predict(r2, getData(e, "known"), type="ratings")
 p2
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+## calculate the error between the prediction and the unknown part of the test data
+error <- rbind(
+  UBCF = calcPredictionAccuracy(p1, getData(e, "unknown")),
+  IBCF = calcPredictionAccuracy(p2, getData(e, "unknown"))
+)
+error
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+```{r, dependson=c(-1)}
 ```
 
 --- .scode-nowrap .compact

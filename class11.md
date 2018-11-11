@@ -288,14 +288,6 @@ as(r[1,], "list")
 
 
 ```r
-rowMeans(r[1,])
-```
-
-```
-## Error in rowMeans(r[1, ]): 'x' must be an array of at least two dimensions
-```
-
-```r
 ## The user has rated 70 jokes
 ## the list shows the ratings and the user's rating average
 
@@ -356,16 +348,11 @@ hist(rowCounts(r), breaks=50)
 
 ```r
 ## the mean rating for each joke
-hist(colMeans(r), breaks=20)
+#hist(colMeans(r), breaks=20)
+hist(colMeans(as(r, "matrix")), breaks=20)
 ```
 
-```
-## Error in colMeans(r): 'x' must be an array of at least two dimensions
-```
-
-```r
-#hist(colMeans(as(r, "matrix")), breaks=20)
-```
+![plot of chunk class11-chunk-20](assets/fig/class11-chunk-20-1.png)
 
 --- .scode-nowrap .compact #recommender
 ## Recommender System
@@ -502,7 +489,7 @@ e
 ## Data set: 1000 x 100 rating matrix of class 'realRatingMatrix' with 72358 ratings.
 ```
 
---- .scode-nowrap .compact
+--- .sscode-nowrap .compact
 ## Evaluation
 
 
@@ -546,6 +533,35 @@ p2
 ```
 ## 100 x 100 rating matrix of class 'realRatingMatrix' with 8465 ratings.
 ```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+```r
+## calculate the error between the prediction and the unknown part of the test data
+error <- rbind(
+  UBCF = calcPredictionAccuracy(p1, getData(e, "unknown")),
+  IBCF = calcPredictionAccuracy(p2, getData(e, "unknown"))
+)
+error
+```
+
+```
+##          RMSE      MSE      MAE
+## UBCF 4.401871 19.37647 3.462665
+## IBCF 5.077923 25.78531 3.981371
+```
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
+
+--- .scode-nowrap .compact
+## Evaluation
+
+
 
 --- .scode-nowrap .compact
 ## Evaluation
