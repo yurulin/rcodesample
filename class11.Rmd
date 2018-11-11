@@ -30,8 +30,33 @@ toc_depth   : 2
 
 * The sample code is based on the examples given in http://cran.r-project.org/web/packages/recommenderlab/vignettes/recommenderlab.pdf
 
-```r
+```{r}
 library("recommenderlab")
 ```
 
+--- .modal #data
+## Data manipulation
 
+```{r, dependson=c(-1)}
+## create a toy reating matrix
+m = matrix(sample(c(as.numeric(0:5), NA), 50,
+                  replace=TRUE, prob=c(rep(.4/6,6),.6)), ncol=10,
+           dimnames=list(user=paste("u", 1:5, sep=''),
+                         item=paste("i", 1:10, sep='')))
+m
+```
+
+--- .modal 
+## Data manipulation
+
+```{r, dependson=c(-1)}
+r = as(m, "realRatingMatrix") ## store the matrix in sparse format
+## The realRatingMatrix can be coerced back into a matrix which is identical to the original matrix
+identical(as(r, "matrix"),m)
+```
+
+--- .modal 
+## Data manipulation
+
+```{r, dependson=c(-1)}
+```

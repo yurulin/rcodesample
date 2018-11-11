@@ -64,6 +64,55 @@
 <pre><code class="r">library(&quot;recommenderlab&quot;)
 </code></pre>
 
+<pre><code>## Error in library(&quot;recommenderlab&quot;): there is no package called &#39;recommenderlab&#39;
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="data">
+  <div>
+    <h2>Data manipulation</h2>
+    <pre><code class="r">## create a toy reating matrix
+m = matrix(sample(c(as.numeric(0:5), NA), 50,
+                  replace=TRUE, prob=c(rep(.4/6,6),.6)), ncol=10,
+           dimnames=list(user=paste(&quot;u&quot;, 1:5, sep=&#39;&#39;),
+                         item=paste(&quot;i&quot;, 1:10, sep=&#39;&#39;)))
+m
+</code></pre>
+
+<pre><code>##     item
+## user i1 i2 i3 i4 i5 i6 i7 i8 i9 i10
+##   u1 NA NA NA NA NA  4  2 NA NA   4
+##   u2 NA NA NA NA NA  4 NA NA NA   4
+##   u3  3 NA NA NA NA  0 NA  2  5   4
+##   u4  2  0  1 NA NA NA NA NA NA   4
+##   u5  2 NA  5  5 NA NA NA NA NA  NA
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-5">
+  <div>
+    <h2>Data manipulation</h2>
+    <pre><code class="r">r = as(m, &quot;realRatingMatrix&quot;) ## store the matrix in sparse format
+</code></pre>
+
+<pre><code>## Error in as(m, &quot;realRatingMatrix&quot;): no method or default for coercing &quot;matrix&quot; to &quot;realRatingMatrix&quot;
+</code></pre>
+
+<pre><code class="r">## The realRatingMatrix can be coerced back into a matrix which is identical to the original matrix
+identical(as(r, &quot;matrix&quot;),m)
+</code></pre>
+
+<pre><code>## Error in .class1(object): object &#39;r&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide modal" id="slide-6">
+  <div>
+    <h2>Data manipulation</h2>
+    
   </div>
 </section>
   <div class="progress">
