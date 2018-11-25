@@ -311,6 +311,60 @@ print(f)
 library(arules) ## assumig you have installed arules
 cat(readLines("sample-data/toy-transaction.txt"),sep='\n') 
 ## see what's inside the toy transactions
+
+tr = read.transactions("sample-data/toy-transaction.txt",format="basket",sep=",")
+tr
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+inspect(tr)
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+image(tr)
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+itemFrequencyPlot(tr, support = 0.1)
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+length(tr)
+```
+
+--- .sscode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+## mine frequent itemsets by using the Apriori algorithm
+rules = apriori(tr, parameter= list(supp=0.5, conf=0.5))
+```
+
+--- .sscode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+## set up parameter for support and confidence
+inspect(rules)
+```
+
+--- .sscode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+summary(rules)
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+quality(rules) = cbind(quality(rules), coverage = interestMeasure(rules, method="coverage", tr))
+inspect(head(SORT(rules, by = "coverage")))
 ```
 
 --- .scode-nowrap .compact 

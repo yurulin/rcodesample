@@ -703,6 +703,155 @@ cat(readLines("sample-data/toy-transaction.txt"),sep='\n')
 
 ```r
 ## see what's inside the toy transactions
+
+tr = read.transactions("sample-data/toy-transaction.txt",format="basket",sep=",")
+tr
+```
+
+```
+## transactions in sparse format with
+##  6 transactions (rows) and
+##  4 items (columns)
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+
+```r
+inspect(tr)
+```
+
+```
+##     items    
+## [1] {A,B,C}  
+## [2] {B,C}    
+## [3] {A,B,D}  
+## [4] {A,B,C,D}
+## [5] {A}      
+## [6] {B}
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+
+```r
+image(tr)
+```
+
+![plot of chunk class12-chunk-29](assets/fig/class12-chunk-29-1.png)
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+
+```r
+itemFrequencyPlot(tr, support = 0.1)
+```
+
+![plot of chunk class12-chunk-30](assets/fig/class12-chunk-30-1.png)
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+
+```r
+length(tr)
+```
+
+```
+## [1] 6
+```
+
+--- .sscode-nowrap .compact 
+## Frequent patterns
+
+```r
+## mine frequent itemsets by using the Apriori algorithm
+rules = apriori(tr, parameter= list(supp=0.5, conf=0.5))
+```
+
+```
+## Apriori
+## 
+## Parameter specification:
+##  confidence minval smax arem  aval originalSupport maxtime support minlen
+##         0.5    0.1    1 none FALSE            TRUE       5     0.5      1
+##  maxlen target   ext
+##      10  rules FALSE
+## 
+## Algorithmic control:
+##  filter tree heap memopt load sort verbose
+##     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+## 
+## Absolute minimum support count: 3 
+## 
+## set item appearances ...[0 item(s)] done [0.00s].
+## set transactions ...[4 item(s), 6 transaction(s)] done [0.00s].
+## sorting and recoding items ... [3 item(s)] done [0.00s].
+## creating transaction tree ... done [0.00s].
+## checking subsets of size 1 2 done [0.00s].
+## writing ... [7 rule(s)] done [0.00s].
+## creating S4 object  ... done [0.00s].
+```
+
+--- .sscode-nowrap .compact 
+## Frequent patterns
+
+```r
+## set up parameter for support and confidence
+inspect(rules)
+```
+
+```
+##     lhs    rhs support   confidence lift count
+## [1] {}  => {C} 0.5000000 0.5000000  1.0  3    
+## [2] {}  => {A} 0.6666667 0.6666667  1.0  4    
+## [3] {}  => {B} 0.8333333 0.8333333  1.0  5    
+## [4] {C} => {B} 0.5000000 1.0000000  1.2  3    
+## [5] {B} => {C} 0.5000000 0.6000000  1.2  3    
+## [6] {A} => {B} 0.5000000 0.7500000  0.9  3    
+## [7] {B} => {A} 0.5000000 0.6000000  0.9  3
+```
+
+--- .sscode-nowrap .compact 
+## Frequent patterns
+
+```r
+summary(rules)
+```
+
+```
+## set of 7 rules
+## 
+## rule length distribution (lhs + rhs):sizes
+## 1 2 
+## 3 4 
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   1.000   2.000   1.571   2.000   2.000 
+## 
+## summary of quality measures:
+##     support         confidence          lift           count      
+##  Min.   :0.5000   Min.   :0.5000   Min.   :0.900   Min.   :3.000  
+##  1st Qu.:0.5000   1st Qu.:0.6000   1st Qu.:0.950   1st Qu.:3.000  
+##  Median :0.5000   Median :0.6667   Median :1.000   Median :3.000  
+##  Mean   :0.5714   Mean   :0.7071   Mean   :1.029   Mean   :3.429  
+##  3rd Qu.:0.5833   3rd Qu.:0.7917   3rd Qu.:1.100   3rd Qu.:3.500  
+##  Max.   :0.8333   Max.   :1.0000   Max.   :1.200   Max.   :5.000  
+## 
+## mining info:
+##  data ntransactions support confidence
+##    tr             6     0.5        0.5
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+
+```r
+quality(rules) = cbind(quality(rules), coverage = interestMeasure(rules, method="coverage", tr))
+inspect(head(SORT(rules, by = "coverage")))
+```
+
+```
+## Error in SORT(rules, by = "coverage"): could not find function "SORT"
 ```
 
 --- .scode-nowrap .compact 
