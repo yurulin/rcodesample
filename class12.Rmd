@@ -270,7 +270,7 @@ evaluator <- function(subset) {
   #here you must define a function that returns a double value to evaluate the given subset
   #consider high values for good evaluation and low values for bad evaluation.
   #k-fold cross validation
-  k <- 5
+  k <- 4
   splits <- runif(nrow(iris))
   results = sapply(1:k, function(i) {
     test.idx <- (splits >= (i - 1) / k) & (splits < i / k)

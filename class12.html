@@ -614,7 +614,7 @@ evaluator &lt;- function(subset) {
   #here you must define a function that returns a double value to evaluate the given subset
   #consider high values for good evaluation and low values for bad evaluation.
   #k-fold cross validation
-  k &lt;- 5
+  k &lt;- 4
   splits &lt;- runif(nrow(iris))
   results = sapply(1:k, function(i) {
     test.idx &lt;- (splits &gt;= (i - 1) / k) &amp; (splits &lt; i / k)
@@ -657,7 +657,7 @@ print(f)
 </code></pre>
 
 <pre><code>## species ~ V4 + V3 + V5 + V12 + V8
-## &lt;environment: 0x11c616f0&gt;
+## &lt;environment: 0x15e92be8&gt;
 </code></pre>
 
   </div>
