@@ -153,7 +153,7 @@ dim(m2g.df)
 m2g.df[1:10,] ## check a small part
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Sparse matrix
 ```{r, dependson=c(-1)}
 ## create a numeric index for genres, so that we can create a matrix
@@ -167,7 +167,7 @@ idx2m = match(as.character(m2g.df$movieID),m)
 idx2m[1:20]; length(idx2m)
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Sparse matrix
 ```{r, dependson=c(-1)}
 require(Matrix);require(MASS)

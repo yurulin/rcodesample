@@ -335,7 +335,7 @@ m2g.df[1:10,] ## check a small part
 ## 10       3   Romance
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Sparse matrix
 
 ```r
@@ -383,7 +383,7 @@ idx2m[1:20]; length(idx2m)
 ## [1] 20809
 ```
 
---- .scode-nowrap .compact 
+--- .sscode-nowrap .compact 
 ## Sparse matrix
 
 ```r
