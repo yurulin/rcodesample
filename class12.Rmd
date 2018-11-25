@@ -73,12 +73,15 @@ suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
   require(R.utils)
 )) ## assumig you have installed R.utils
 countLines(ifilename)
+```
 
+--- .scode .compact 
+## Big data set
+```{r, dependson=c(-1)}
 suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
   require(sqldf)
 )) ## assumig you have installed sqldf
 read.csv.sql(ifilename, "select count(*) from file", sep='\t')
-
 ```
 
 --- .scode-nowrap .compact 

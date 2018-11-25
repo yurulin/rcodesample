@@ -182,50 +182,19 @@ countLines(ifilename)
 ## [1] TRUE
 </code></pre>
 
-<pre><code class="r">suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
+  </div>
+</section>
+<section class="slide scode compact" id="slide-7">
+  <div>
+    <h2>Big data set</h2>
+    <pre><code class="r">suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
   require(sqldf)
 )) ## assumig you have installed sqldf
 read.csv.sql(ifilename, &quot;select count(*) from file&quot;, sep=&#39;\t&#39;)
 </code></pre>
 
-<pre><code>## Error in read.csv.sql(ifilename, &quot;select count(*) from file&quot;, sep = &quot;\t&quot;): could not find function &quot;read.csv.sql&quot;
-</code></pre>
-
-  </div>
-</section>
-<section class="slide scode-nowrap compact" id="slide-7">
-  <div>
-    <h2>Big data set</h2>
-    <pre><code class="r">sql = &#39;select id,title,year from file limit 1&#39; ## read 1 row
-df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
-</code></pre>
-
-<pre><code>## Error in read.csv.sql(ifilename, sql, sep = &quot;\t&quot;): could not find function &quot;read.csv.sql&quot;
-</code></pre>
-
-<pre><code class="r">df
-</code></pre>
-
-<pre><code>##    V1                            V2     V3                      V4
-## 1 103                 Unforgettable 118040 Escondido en la memoria
-## 2 104                 Happy Gilmore 116483             Terminagolf
-## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
-##                                                                                                                 V5
-## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
-## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
-## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
-## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
-## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
-##   V18    V19 V20
-## 1 3.0    358  36
-## 2 3.7 114875  83
-## 3 3.6  11573  83
-##                                                            V21
-## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
-## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
-## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+<pre><code>##   count(*)
+## 1    10197
 </code></pre>
 
   </div>
@@ -233,36 +202,13 @@ df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
 <section class="slide scode-nowrap compact" id="slide-8">
   <div>
     <h2>Big data set</h2>
-    <pre><code class="r">sql = &#39;select id,title,year from file limit 10&#39; ## read 10 rows
+    <pre><code class="r">sql = &#39;select id,title,year from file limit 1&#39; ## read 1 row
 df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
+df
 </code></pre>
 
-<pre><code>## Error in read.csv.sql(ifilename, sql, sep = &quot;\t&quot;): could not find function &quot;read.csv.sql&quot;
-</code></pre>
-
-<pre><code class="r">df
-</code></pre>
-
-<pre><code>##    V1                            V2     V3                      V4
-## 1 103                 Unforgettable 118040 Escondido en la memoria
-## 2 104                 Happy Gilmore 116483             Terminagolf
-## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
-##                                                                                                                 V5
-## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
-## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
-## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
-## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
-## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
-##   V18    V19 V20
-## 1 3.0    358  36
-## 2 3.7 114875  83
-## 3 3.6  11573  83
-##                                                            V21
-## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
-## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
-## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+<pre><code>##   id     title year
+## 1  1 Toy story 1995
 </code></pre>
 
   </div>
@@ -270,36 +216,22 @@ df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
 <section class="slide scode-nowrap compact" id="slide-9">
   <div>
     <h2>Big data set</h2>
-    <pre><code class="r">sql = &#39;select id,title,year from file limit 5,10&#39; ## skip the first 5 rows, and read the next 10 rows
+    <pre><code class="r">sql = &#39;select id,title,year from file limit 10&#39; ## read 10 rows
 df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
+df
 </code></pre>
 
-<pre><code>## Error in read.csv.sql(ifilename, sql, sep = &quot;\t&quot;): could not find function &quot;read.csv.sql&quot;
-</code></pre>
-
-<pre><code class="r">df
-</code></pre>
-
-<pre><code>##    V1                            V2     V3                      V4
-## 1 103                 Unforgettable 118040 Escondido en la memoria
-## 2 104                 Happy Gilmore 116483             Terminagolf
-## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
-##                                                                                                                 V5
-## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
-## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
-## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
-## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
-## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
-##   V18    V19 V20
-## 1 3.0    358  36
-## 2 3.7 114875  83
-## 3 3.6  11573  83
-##                                                            V21
-## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
-## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
-## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+<pre><code>##    id                       title year
+## 1   1                   Toy story 1995
+## 2   2                     Jumanji 1995
+## 3   3              Grumpy Old Men 1993
+## 4   4           Waiting to Exhale 1995
+## 5   5 Father of the Bride Part II 1995
+## 6   6                        Heat 1995
+## 7   7                     Sabrina 1954
+## 8   8                Tom and Huck 1995
+## 9   9                Sudden Death 1995
+## 10 10                   GoldenEye 1995
 </code></pre>
 
   </div>
@@ -307,36 +239,45 @@ df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
 <section class="slide scode-nowrap compact" id="slide-10">
   <div>
     <h2>Big data set</h2>
+    <pre><code class="r">sql = &#39;select id,title,year from file limit 5,10&#39; ## skip the first 5 rows, and read the next 10 rows
+df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
+df
+</code></pre>
+
+<pre><code>##    id                       title year
+## 1   6                        Heat 1995
+## 2   7                     Sabrina 1954
+## 3   8                Tom and Huck 1995
+## 4   9                Sudden Death 1995
+## 5  10                   GoldenEye 1995
+## 6  11      The American President 1995
+## 7  12 Dracula: Dead and Loving It 1995
+## 8  13                       Balto 1995
+## 9  14                       Nixon 1995
+## 10 15            Cutthroat Island 1995
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-11">
+  <div>
+    <h2>Big data set</h2>
     <pre><code class="r">sql = &#39;select year,count(*) from file group by year limit 10&#39; ## you can do more if you are familiar with SQL 
 df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
+df
 </code></pre>
 
-<pre><code>## Error in read.csv.sql(ifilename, sql, sep = &quot;\t&quot;): could not find function &quot;read.csv.sql&quot;
-</code></pre>
-
-<pre><code class="r">df
-</code></pre>
-
-<pre><code>##    V1                            V2     V3                      V4
-## 1 103                 Unforgettable 118040 Escondido en la memoria
-## 2 104                 Happy Gilmore 116483             Terminagolf
-## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
-##                                                                                                                 V5
-## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
-## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
-##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
-## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
-## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
-## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
-##   V18    V19 V20
-## 1 3.0    358  36
-## 2 3.7 114875  83
-## 3 3.6  11573  83
-##                                                            V21
-## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
-## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
-## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+<pre><code>##    year count(*)
+## 1  1903        1
+## 2  1915        1
+## 3  1916        1
+## 4  1917        2
+## 5  1918        1
+## 6  1919        3
+## 7  1920        4
+## 8  1921        2
+## 9  1922        9
+## 10 1923        4
 </code></pre>
 
 <ul>
@@ -346,13 +287,13 @@ df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-11">
+<section class="slide scode-nowrap compact" id="slide-12">
   <div>
     <h2>Sparse matrix</h2>
     
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-12">
+<section class="slide scode-nowrap compact" id="slide-13">
   <div>
     <h2>Sparse matrix</h2>
     
