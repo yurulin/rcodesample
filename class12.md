@@ -29,7 +29,7 @@ toc_depth   : 2
 ## this tutorial uses the following packages
 ```
 
---- .compact #big
+--- .scode-nowrap .compact #big
 ## Big data set
 
 * When dealing with big data files, do not read everything into memory.
