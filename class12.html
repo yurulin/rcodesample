@@ -540,21 +540,196 @@ HouseVotes84[1:3,]
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-22">
+<section class="slide ssscode-nowrap compact" id="slide-22">
   <div>
     <h2>Feature selection</h2>
-    
+    <pre><code class="r">## Feature Ranking --
+## calculate weights for each atribute using some function
+weights = chi.squared(Class~., HouseVotes84)
+</code></pre>
+
+<pre><code>## Error in chi.squared(Class ~ ., HouseVotes84): could not find function &quot;chi.squared&quot;
+</code></pre>
+
+<pre><code class="r">## the weights can be given by different functions: Pearson&#39;s correlation (linear.correlation), Spearman&#39;s correlation (rank.correlation), Chi-squared Filter (chi.squared), Information Gain (information.gain), etc.
+print(weights)
+</code></pre>
+
+<pre><code>## function (object, ...) 
+## standardGeneric(&quot;weights&quot;)
+## &lt;environment: 0x92ea670&gt;
+## attr(,&quot;generic&quot;)
+## [1] &quot;weights&quot;
+## attr(,&quot;generic&quot;)attr(,&quot;package&quot;)
+## [1] &quot;stats&quot;
+## attr(,&quot;package&quot;)
+## [1] &quot;stats&quot;
+## attr(,&quot;group&quot;)
+## list()
+## attr(,&quot;valueClass&quot;)
+## character(0)
+## attr(,&quot;signature&quot;)
+## [1] &quot;object&quot;
+## attr(,&quot;default&quot;)
+## Method Definition (Class &quot;derivedDefaultMethod&quot;):
+## 
+## function (object, ...) 
+## UseMethod(&quot;weights&quot;)
+## &lt;bytecode: 0x2d80788&gt;
+## &lt;environment: namespace:stats&gt;
+## 
+## Signatures:
+##         object
+## target  &quot;ANY&quot; 
+## defined &quot;ANY&quot; 
+## attr(,&quot;skeleton&quot;)
+## (function (object, ...) 
+## UseMethod(&quot;weights&quot;))(object, ...)
+## attr(,&quot;class&quot;)
+## [1] &quot;standardGeneric&quot;
+## attr(,&quot;class&quot;)attr(,&quot;package&quot;)
+## [1] &quot;methods&quot;
+</code></pre>
+
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-23">
   <div>
     <h2>Feature selection</h2>
-    
+    <pre><code class="r">## select a subset of 5 features with the lowest weight
+subset = cutoff.k(weights, 5)
+</code></pre>
+
+<pre><code>## Error in cutoff.k(weights, 5): could not find function &quot;cutoff.k&quot;
+</code></pre>
+
+<pre><code class="r">## print the results
+f = as.simple.formula(subset, &quot;Class&quot;)
+</code></pre>
+
+<pre><code>## Error in as.simple.formula(subset, &quot;Class&quot;): could not find function &quot;as.simple.formula&quot;
+</code></pre>
+
+<pre><code class="r">print(f)
+</code></pre>
+
+<pre><code>## Error in print(f): object &#39;f&#39; not found
+</code></pre>
+
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-24">
   <div>
     <h2>Feature selection</h2>
+    <pre><code class="r">## Feature Subset Selection (Wrappers) --
+library(rpart)
+data(iris)
+iris[1:3,]
+</code></pre>
+
+<pre><code>##      species sepal.len sepal.wid petal.len petal.wid
+## 1 versicolor       7.0       3.2       4.7       1.4
+## 2 versicolor       6.4       3.2       4.5       1.5
+## 3 versicolor       6.9       3.1       4.9       1.5
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-25">
+  <div>
+    <h2>Feature selection</h2>
+    <pre><code class="r">## define the evaluation function  
+evaluator &lt;- function(subset) {
+  #here you must define a function that returns a double value to evaluate the given subset
+  #consider high values for good evaluation and low values for bad evaluation.
+  #k-fold cross validation
+  k &lt;- 5
+  splits &lt;- runif(nrow(iris))
+  results = sapply(1:k, function(i) {
+    test.idx &lt;- (splits &gt;= (i - 1) / k) &amp; (splits &lt; i / k)
+    train.idx &lt;- !test.idx
+    test &lt;- iris[test.idx, , drop=FALSE]
+    train &lt;- iris[train.idx, , drop=FALSE]
+    tree &lt;- rpart(as.simple.formula(subset, &quot;Species&quot;), train)
+    error.rate = sum(test$Species != predict(tree, test, type=&quot;c&quot;)) / nrow(test)
+    return(1 - error.rate)
+  })
+  print(as.simple.formula(subset, &quot;Species&quot;))
+#   print(subset)
+  print(mean(results))
+  return(mean(results))
+}
+</code></pre>
+
+  </div>
+</section>
+<section class="slide ssscode-nowrap compact" id="slide-26">
+  <div>
+    <h2>Feature selection</h2>
+    <pre><code class="r">## perform the best subset search
+subset = best.first.search(names(iris)[-5], evaluator)
+</code></pre>
+
+<pre><code>## Error in best.first.search(names(iris)[-5], evaluator): could not find function &quot;best.first.search&quot;
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-27">
+  <div>
+    <h2>Feature selection</h2>
+    <pre><code class="r">## you can use different strategy for search the optimal subset: Best First Search (best.first.search), Exhaustive Search (exhaustive.search), Greedy Search (forward.search, backward.search), etc.
+
+## prints the result
+f = as.simple.formula(subset, &quot;Species&quot;)
+</code></pre>
+
+<pre><code>## Error in as.simple.formula(subset, &quot;Species&quot;): could not find function &quot;as.simple.formula&quot;
+</code></pre>
+
+<pre><code class="r">print(f)
+</code></pre>
+
+<pre><code>## Error in print(f): object &#39;f&#39; not found
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="freq">
+  <div>
+    <h2>Frequent patterns</h2>
+    <pre><code class="r">library(arules) ## assumig you have installed arules
+cat(readLines(&quot;sample-data/toy-transaction.txt&quot;),sep=&#39;\n&#39;) 
+</code></pre>
+
+<pre><code>## A,B,C
+## B,C
+## A,B,D
+## A,B,C,D
+## A
+## B
+</code></pre>
+
+<pre><code class="r">## see what&#39;s inside the toy transactions
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-29">
+  <div>
+    <h2>Frequent patterns</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-30">
+  <div>
+    <h2>Frequent patterns</h2>
+    
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-31">
+  <div>
+    <h2>Frequent patterns</h2>
     
   </div>
 </section>

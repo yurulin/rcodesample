@@ -231,17 +231,98 @@ data(HouseVotes84)
 HouseVotes84[1:3,]
 ```
 
---- .scode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Feature selection
 ```{r, dependson=c(-1)}
+## Feature Ranking --
+## calculate weights for each atribute using some function
+weights = chi.squared(Class~., HouseVotes84)
+## the weights can be given by different functions: Pearson's correlation (linear.correlation), Spearman's correlation (rank.correlation), Chi-squared Filter (chi.squared), Information Gain (information.gain), etc.
+print(weights)
 ```
 
 --- .scode-nowrap .compact 
 ## Feature selection
 ```{r, dependson=c(-1)}
+## select a subset of 5 features with the lowest weight
+subset = cutoff.k(weights, 5)
+
+## print the results
+f = as.simple.formula(subset, "Class")
+print(f)
 ```
 
 --- .scode-nowrap .compact 
 ## Feature selection
+```{r, dependson=c(-1)}
+## Feature Subset Selection (Wrappers) --
+library(rpart)
+data(iris)
+iris[1:3,]
+```
+
+--- .ssscode-nowrap .compact 
+## Feature selection
+```{r, dependson=c(-1)}
+## define the evaluation function  
+evaluator <- function(subset) {
+  #here you must define a function that returns a double value to evaluate the given subset
+  #consider high values for good evaluation and low values for bad evaluation.
+  #k-fold cross validation
+  k <- 5
+  splits <- runif(nrow(iris))
+  results = sapply(1:k, function(i) {
+    test.idx <- (splits >= (i - 1) / k) & (splits < i / k)
+    train.idx <- !test.idx
+    test <- iris[test.idx, , drop=FALSE]
+    train <- iris[train.idx, , drop=FALSE]
+    tree <- rpart(as.simple.formula(subset, "Species"), train)
+    error.rate = sum(test$Species != predict(tree, test, type="c")) / nrow(test)
+    return(1 - error.rate)
+  })
+  print(as.simple.formula(subset, "Species"))
+#   print(subset)
+  print(mean(results))
+  return(mean(results))
+}
+```
+
+--- .ssscode-nowrap .compact 
+## Feature selection
+```{r, dependson=c(-1)}
+## perform the best subset search
+subset = best.first.search(names(iris)[-5], evaluator)
+```
+
+--- .scode-nowrap .compact 
+## Feature selection
+```{r, dependson=c(-1)}
+## you can use different strategy for search the optimal subset: Best First Search (best.first.search), Exhaustive Search (exhaustive.search), Greedy Search (forward.search, backward.search), etc.
+
+## prints the result
+f = as.simple.formula(subset, "Species")
+print(f)
+```
+
+--- .scode-nowrap .compact #freq
+## Frequent patterns
+```{r, dependson=c(-1)}
+library(arules) ## assumig you have installed arules
+cat(readLines("sample-data/toy-transaction.txt"),sep='\n') 
+## see what's inside the toy transactions
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
 ```{r, dependson=c(-1)}
 ```

@@ -537,14 +537,197 @@ HouseVotes84[1:3,]
 ## 3   democrat <NA>  y  y <NA>  y  y  n  n  n   n    y   n   y   y   n    n
 ```
 
+--- .ssscode-nowrap .compact 
+## Feature selection
+
+```r
+## Feature Ranking --
+## calculate weights for each atribute using some function
+weights = chi.squared(Class~., HouseVotes84)
+```
+
+```
+## Error in chi.squared(Class ~ ., HouseVotes84): could not find function "chi.squared"
+```
+
+```r
+## the weights can be given by different functions: Pearson's correlation (linear.correlation), Spearman's correlation (rank.correlation), Chi-squared Filter (chi.squared), Information Gain (information.gain), etc.
+print(weights)
+```
+
+```
+## function (object, ...) 
+## standardGeneric("weights")
+## <environment: 0x92ea670>
+## attr(,"generic")
+## [1] "weights"
+## attr(,"generic")attr(,"package")
+## [1] "stats"
+## attr(,"package")
+## [1] "stats"
+## attr(,"group")
+## list()
+## attr(,"valueClass")
+## character(0)
+## attr(,"signature")
+## [1] "object"
+## attr(,"default")
+## Method Definition (Class "derivedDefaultMethod"):
+## 
+## function (object, ...) 
+## UseMethod("weights")
+## <bytecode: 0x2d80788>
+## <environment: namespace:stats>
+## 
+## Signatures:
+##         object
+## target  "ANY" 
+## defined "ANY" 
+## attr(,"skeleton")
+## (function (object, ...) 
+## UseMethod("weights"))(object, ...)
+## attr(,"class")
+## [1] "standardGeneric"
+## attr(,"class")attr(,"package")
+## [1] "methods"
+```
+
 --- .scode-nowrap .compact 
 ## Feature selection
 
+```r
+## select a subset of 5 features with the lowest weight
+subset = cutoff.k(weights, 5)
+```
+
+```
+## Error in cutoff.k(weights, 5): could not find function "cutoff.k"
+```
+
+```r
+## print the results
+f = as.simple.formula(subset, "Class")
+```
+
+```
+## Error in as.simple.formula(subset, "Class"): could not find function "as.simple.formula"
+```
+
+```r
+print(f)
+```
+
+```
+## Error in print(f): object 'f' not found
+```
 
 --- .scode-nowrap .compact 
 ## Feature selection
 
+```r
+## Feature Subset Selection (Wrappers) --
+library(rpart)
+data(iris)
+iris[1:3,]
+```
+
+```
+##      species sepal.len sepal.wid petal.len petal.wid
+## 1 versicolor       7.0       3.2       4.7       1.4
+## 2 versicolor       6.4       3.2       4.5       1.5
+## 3 versicolor       6.9       3.1       4.9       1.5
+```
+
+--- .ssscode-nowrap .compact 
+## Feature selection
+
+```r
+## define the evaluation function  
+evaluator <- function(subset) {
+  #here you must define a function that returns a double value to evaluate the given subset
+  #consider high values for good evaluation and low values for bad evaluation.
+  #k-fold cross validation
+  k <- 5
+  splits <- runif(nrow(iris))
+  results = sapply(1:k, function(i) {
+    test.idx <- (splits >= (i - 1) / k) & (splits < i / k)
+    train.idx <- !test.idx
+    test <- iris[test.idx, , drop=FALSE]
+    train <- iris[train.idx, , drop=FALSE]
+    tree <- rpart(as.simple.formula(subset, "Species"), train)
+    error.rate = sum(test$Species != predict(tree, test, type="c")) / nrow(test)
+    return(1 - error.rate)
+  })
+  print(as.simple.formula(subset, "Species"))
+#   print(subset)
+  print(mean(results))
+  return(mean(results))
+}
+```
+
+--- .ssscode-nowrap .compact 
+## Feature selection
+
+```r
+## perform the best subset search
+subset = best.first.search(names(iris)[-5], evaluator)
+```
+
+```
+## Error in best.first.search(names(iris)[-5], evaluator): could not find function "best.first.search"
+```
 
 --- .scode-nowrap .compact 
 ## Feature selection
+
+```r
+## you can use different strategy for search the optimal subset: Best First Search (best.first.search), Exhaustive Search (exhaustive.search), Greedy Search (forward.search, backward.search), etc.
+
+## prints the result
+f = as.simple.formula(subset, "Species")
+```
+
+```
+## Error in as.simple.formula(subset, "Species"): could not find function "as.simple.formula"
+```
+
+```r
+print(f)
+```
+
+```
+## Error in print(f): object 'f' not found
+```
+
+--- .scode-nowrap .compact #freq
+## Frequent patterns
+
+```r
+library(arules) ## assumig you have installed arules
+cat(readLines("sample-data/toy-transaction.txt"),sep='\n') 
+```
+
+```
+## A,B,C
+## B,C
+## A,B,D
+## A,B,C,D
+## A
+## B
+```
+
+```r
+## see what's inside the toy transactions
+```
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+
+
+--- .scode-nowrap .compact 
+## Frequent patterns
+
+
+--- .scode-nowrap .compact 
+## Frequent patterns
 
