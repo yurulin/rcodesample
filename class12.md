@@ -847,11 +847,17 @@ summary(rules)
 
 ```r
 quality(rules) = cbind(quality(rules), coverage = interestMeasure(rules, method="coverage", tr))
-inspect(head(SORT(rules, by = "coverage")))
+inspect(head(sort(rules, by = "coverage")))
 ```
 
 ```
-## Error in SORT(rules, by = "coverage"): could not find function "SORT"
+##     lhs    rhs support   confidence lift count coverage 
+## [1] {}  => {C} 0.5000000 0.5000000  1.0  3     1.0000000
+## [2] {}  => {A} 0.6666667 0.6666667  1.0  4     1.0000000
+## [3] {}  => {B} 0.8333333 0.8333333  1.0  5     1.0000000
+## [4] {B} => {C} 0.5000000 0.6000000  1.2  3     0.8333333
+## [5] {B} => {A} 0.5000000 0.6000000  0.9  3     0.8333333
+## [6] {A} => {B} 0.5000000 0.7500000  0.9  3     0.6666667
 ```
 
 --- .scode-nowrap .compact 

@@ -850,10 +850,16 @@ inspect(rules)
   <div>
     <h2>Frequent patterns</h2>
     <pre><code class="r">quality(rules) = cbind(quality(rules), coverage = interestMeasure(rules, method=&quot;coverage&quot;, tr))
-inspect(head(SORT(rules, by = &quot;coverage&quot;)))
+inspect(head(sort(rules, by = &quot;coverage&quot;)))
 </code></pre>
 
-<pre><code>## Error in SORT(rules, by = &quot;coverage&quot;): could not find function &quot;SORT&quot;
+<pre><code>##     lhs    rhs support   confidence lift count coverage 
+## [1] {}  =&gt; {C} 0.5000000 0.5000000  1.0  3     1.0000000
+## [2] {}  =&gt; {A} 0.6666667 0.6666667  1.0  4     1.0000000
+## [3] {}  =&gt; {B} 0.8333333 0.8333333  1.0  5     1.0000000
+## [4] {B} =&gt; {C} 0.5000000 0.6000000  1.2  3     0.8333333
+## [5] {B} =&gt; {A} 0.5000000 0.6000000  0.9  3     0.8333333
+## [6] {A} =&gt; {B} 0.5000000 0.7500000  0.9  3     0.6666667
 </code></pre>
 
   </div>
