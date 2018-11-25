@@ -628,12 +628,6 @@ evaluator <- function(subset) {
   print(mean(results))
   return(mean(results))
 }
-```
-
---- .ssscode-nowrap .compact 
-## Feature selection
-
-```r
 ## perform the best subset search
 subset = best.first.search(names(iris)[-5], evaluator)
 ```
@@ -641,6 +635,10 @@ subset = best.first.search(names(iris)[-5], evaluator)
 ```
 ## Error in eval(predvars, data, env): object 'Species' not found
 ```
+
+--- .ssscode-nowrap .compact 
+## Feature selection
+
 
 --- .scode-nowrap .compact 
 ## Feature selection
@@ -655,7 +653,7 @@ print(f)
 
 ```
 ## Species ~ V4 + V3 + V5 + V12 + V8
-## <environment: 0x169bec10>
+## <environment: 0x15d15770>
 ```
 
 --- .scode-nowrap .compact #freq

@@ -630,6 +630,11 @@ evaluator &lt;- function(subset) {
   print(mean(results))
   return(mean(results))
 }
+## perform the best subset search
+subset = best.first.search(names(iris)[-5], evaluator)
+</code></pre>
+
+<pre><code>## Error in eval(predvars, data, env): object &#39;Species&#39; not found
 </code></pre>
 
   </div>
@@ -637,13 +642,7 @@ evaluator &lt;- function(subset) {
 <section class="slide ssscode-nowrap compact" id="slide-26">
   <div>
     <h2>Feature selection</h2>
-    <pre><code class="r">## perform the best subset search
-subset = best.first.search(names(iris)[-5], evaluator)
-</code></pre>
-
-<pre><code>## Error in eval(predvars, data, env): object &#39;Species&#39; not found
-</code></pre>
-
+    
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-27">
@@ -657,7 +656,7 @@ print(f)
 </code></pre>
 
 <pre><code>## Species ~ V4 + V3 + V5 + V12 + V8
-## &lt;environment: 0x169bec10&gt;
+## &lt;environment: 0x15d15770&gt;
 </code></pre>
 
   </div>

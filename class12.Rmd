@@ -286,13 +286,13 @@ evaluator <- function(subset) {
   print(mean(results))
   return(mean(results))
 }
+## perform the best subset search
+subset = best.first.search(names(iris)[-5], evaluator)
 ```
 
 --- .ssscode-nowrap .compact 
 ## Feature selection
 ```{r, dependson=c(-1)}
-## perform the best subset search
-subset = best.first.search(names(iris)[-5], evaluator)
 ```
 
 --- .scode-nowrap .compact 
