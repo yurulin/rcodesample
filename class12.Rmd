@@ -30,9 +30,10 @@ toc_depth   : 2
 
 --- .compact #big
 ## Big data set
-When dealing with big data files, do not read everything into memory.
-We use the sample data from: http://grouplens.org/datasets/hetrec-2011/
-See: http://files.grouplens.org/datasets/hetrec2011/hetrec2011-movielens-readme.txt
+
+* When dealing with big data files, do not read everything into memory.
+* We use the sample data from: http://grouplens.org/datasets/hetrec-2011/
+* See: http://files.grouplens.org/datasets/hetrec2011/hetrec2011-movielens-readme.txt
   
 ```{r}
 ## give the input filename
@@ -43,7 +44,7 @@ lines = readLines(ifilename,n=3)
 lines
 ```
 
---- .sscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Big data set
 ```{r, dependson=c(-1)}
 ## read the first 3 rows into a data.frame object

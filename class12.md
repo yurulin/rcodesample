@@ -31,9 +31,10 @@ toc_depth   : 2
 
 --- .compact #big
 ## Big data set
-When dealing with big data files, do not read everything into memory.
-We use the sample data from: http://grouplens.org/datasets/hetrec-2011/
-See: http://files.grouplens.org/datasets/hetrec2011/hetrec2011-movielens-readme.txt
+
+* When dealing with big data files, do not read everything into memory.
+* We use the sample data from: http://grouplens.org/datasets/hetrec-2011/
+* See: http://files.grouplens.org/datasets/hetrec2011/hetrec2011-movielens-readme.txt
   
 
 ```r
@@ -51,7 +52,7 @@ lines
 ## [3] "2\tJumanji\t0113497\tJumanji\thttp://ia.media-imdb.com/images/M/MV5BMzM5NjE1OTMxNV5BMl5BanBnXkFtZTcwNDY2MzEzMQ@@._V1._SY314_CR3,0,214,314_.jpg\t1995\t1068044-jumanji\t5.6\t28\t13\t15\t46\t5.8\t5\t2\t3\t40\t3.2\t44587\t61\thttp://content8.flixster.com/movie/56/79/73/5679734_det.jpg"
 ```
 
---- .sscode-nowrap .compact 
+--- .ssscode-nowrap .compact 
 ## Big data set
 
 ```r
