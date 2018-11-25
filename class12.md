@@ -612,7 +612,7 @@ evaluator <- function(subset) {
   #here you must define a function that returns a double value to evaluate the given subset
   #consider high values for good evaluation and low values for bad evaluation.
   #k-fold cross validation
-  k <- 4
+  k <- 5
   splits <- runif(nrow(iris))
   results = sapply(1:k, function(i) {
     test.idx <- (splits >= (i - 1) / k) & (splits < i / k)
@@ -635,11 +635,37 @@ evaluator <- function(subset) {
 
 ```r
 ## perform the best subset search
-subset = best.first.search(names(iris)[-5], evaluator)
+subset = best.first.search(names(iris)[-1], evaluator)
 ```
 
 ```
-## Error in 1:numclass: result would be too long a vector
+## species ~ sepal.len
+## <environment: 0x1228ec28>
+## [1] 0.7069465
+## species ~ sepal.wid
+## <environment: 0x11305098>
+## [1] 0.5473992
+## species ~ petal.len
+## <environment: 0x17d57f18>
+## [1] 0.9178828
+## species ~ petal.wid
+## <environment: 0x180252a0>
+## [1] 0.9299431
+## species ~ sepal.len + petal.wid
+## <environment: 0x18a21828>
+## [1] 0.9252276
+## species ~ sepal.wid + petal.wid
+## <environment: 0x1909b4f8>
+## [1] 0.9363197
+## species ~ petal.len + petal.wid
+## <environment: 0x197174f8>
+## [1] 0.8923175
+## species ~ sepal.len + sepal.wid + petal.wid
+## <environment: 0x165a1db8>
+## [1] 0.9302277
+## species ~ sepal.wid + petal.len + petal.wid
+## <environment: 0x15ba1650>
+## [1] 0.9195238
 ```
 
 --- .scode-nowrap .compact 
@@ -654,8 +680,8 @@ print(f)
 ```
 
 ```
-## species ~ V4 + V3 + V5 + V12 + V8
-## <environment: 0x15e92be8>
+## species ~ sepal.wid + petal.wid
+## <environment: 0x1575b670>
 ```
 
 --- .scode-nowrap .compact #freq
