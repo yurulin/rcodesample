@@ -60,3 +60,6 @@ statnet.common
 scales
 intergraph
 sna
+R.methodsS3
+R.oo
+R.utils

@@ -95,3 +95,242 @@ df
 ## 2  http://content8.flixster.com/movie/56/79/73/5679734_det.jpg
 ## 3      http://content6.flixster.com/movie/25/60/256020_det.jpg
 ```
+
+--- .ssscode-nowrap .compact 
+## Big data set
+
+```r
+## read row 101--103
+df = read.csv(ifilename, sep='\t', nrows=3, skip=101, header=F) ## if we set 'header=T', the first non-skip row will be treated as header (which is incorrect)
+df
+```
+
+```
+##    V1                            V2     V3                      V4
+## 1 103                 Unforgettable 118040 Escondido en la memoria
+## 2 104                 Happy Gilmore 116483             Terminagolf
+## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
+##                                                                                                                 V5
+## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
+## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
+## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
+## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
+## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
+##   V18    V19 V20
+## 1 3.0    358  36
+## 2 3.7 114875  83
+## 3 3.6  11573  83
+##                                                            V21
+## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
+## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
+## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+
+```r
+## count how many lines in the file
+# length(readLines(ifilename)) ## not recommended because it reads the file in memory
+system(sprintf("wc -l %s",ifilename), intern=T ) 
+```
+
+```
+## [1] "10198 hetrec2011/movies.dat"
+```
+
+```r
+## you can use 'wc' command on unix-based machine (linux, mac, etc.)
+
+suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
+  require(R.utils)
+)) ## assumig you have installed R.utils
+countLines(ifilename)
+```
+
+```
+## [1] 10198
+## attr(,"lastLineHasNewline")
+## [1] TRUE
+```
+
+```r
+suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
+  require(sqldf)
+)) ## assumig you have installed sqldf
+read.csv.sql(ifilename, "select count(*) from file", sep='\t')
+```
+
+```
+## Error in read.csv.sql(ifilename, "select count(*) from file", sep = "\t"): could not find function "read.csv.sql"
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+
+```r
+sql = 'select id,title,year from file limit 1' ## read 1 row
+df = read.csv.sql(ifilename, sql, sep='\t')
+```
+
+```
+## Error in read.csv.sql(ifilename, sql, sep = "\t"): could not find function "read.csv.sql"
+```
+
+```r
+df
+```
+
+```
+##    V1                            V2     V3                      V4
+## 1 103                 Unforgettable 118040 Escondido en la memoria
+## 2 104                 Happy Gilmore 116483             Terminagolf
+## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
+##                                                                                                                 V5
+## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
+## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
+## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
+## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
+## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
+##   V18    V19 V20
+## 1 3.0    358  36
+## 2 3.7 114875  83
+## 3 3.6  11573  83
+##                                                            V21
+## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
+## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
+## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+
+```r
+sql = 'select id,title,year from file limit 10' ## read 10 rows
+df = read.csv.sql(ifilename, sql, sep='\t')
+```
+
+```
+## Error in read.csv.sql(ifilename, sql, sep = "\t"): could not find function "read.csv.sql"
+```
+
+```r
+df
+```
+
+```
+##    V1                            V2     V3                      V4
+## 1 103                 Unforgettable 118040 Escondido en la memoria
+## 2 104                 Happy Gilmore 116483             Terminagolf
+## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
+##                                                                                                                 V5
+## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
+## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
+## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
+## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
+## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
+##   V18    V19 V20
+## 1 3.0    358  36
+## 2 3.7 114875  83
+## 3 3.6  11573  83
+##                                                            V21
+## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
+## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
+## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+
+```r
+sql = 'select id,title,year from file limit 5,10' ## skip the first 5 rows, and read the next 10 rows
+df = read.csv.sql(ifilename, sql, sep='\t')
+```
+
+```
+## Error in read.csv.sql(ifilename, sql, sep = "\t"): could not find function "read.csv.sql"
+```
+
+```r
+df
+```
+
+```
+##    V1                            V2     V3                      V4
+## 1 103                 Unforgettable 118040 Escondido en la memoria
+## 2 104                 Happy Gilmore 116483             Terminagolf
+## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
+##                                                                                                                 V5
+## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
+## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
+## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
+## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
+## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
+##   V18    V19 V20
+## 1 3.0    358  36
+## 2 3.7 114875  83
+## 3 3.6  11573  83
+##                                                            V21
+## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
+## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
+## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+
+```r
+sql = 'select year,count(*) from file group by year limit 10' ## you can do more if you are familiar with SQL 
+df = read.csv.sql(ifilename, sql, sep='\t')
+```
+
+```
+## Error in read.csv.sql(ifilename, sql, sep = "\t"): could not find function "read.csv.sql"
+```
+
+```r
+df
+```
+
+```
+##    V1                            V2     V3                      V4
+## 1 103                 Unforgettable 118040 Escondido en la memoria
+## 2 104                 Happy Gilmore 116483             Terminagolf
+## 3 105 The Bridges of Madison County 112579  Los puentes de Madison
+##                                                                                                                 V5
+## 1 http://ia.media-imdb.com/images/M/MV5BNDM1MDg5MzY4OV5BMl5BanBnXkFtZTcwMDM5NjgyMQ@@._V1._SY314_CR2,0,214,314_.jpg
+## 2 http://ia.media-imdb.com/images/M/MV5BMjE1MzgxNjIyN15BMl5BanBnXkFtZTcwMjkzMjYyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+## 3 http://ia.media-imdb.com/images/M/MV5BMTQ5NzcyODM1Ml5BMl5BanBnXkFtZTcwODQwMDQyMQ@@._V1._SY314_CR6,0,214,314_.jpg
+##     V6                        V7  V8 V9 V10 V11 V12 V13 V14 V15 V16 V17
+## 1 1996             unforgettable 4.4 26   6  20  23 0.0   4   0   4   0
+## 2 1996             happy_gilmore 5.5 50  29  21  58 5.1  11   4   7  36
+## 3 1995 bridges_of_madison_county 7.2 40  36   4  90 7.9   9   9   0 100
+##   V18    V19 V20
+## 1 3.0    358  36
+## 2 3.7 114875  83
+## 3 3.6  11573  83
+##                                                            V21
+## 1 http://content8.flixster.com/movie/11/13/35/11133586_det.jpg
+## 2      http://content7.flixster.com/movie/25/96/259613_det.jpg
+## 3 http://content6.flixster.com/movie/10/92/73/10927328_det.jpg
+```
+
+* if you have mysql database, you can use 'RMySQL' package.
+* Other tips (using 'fread'): http://davetang.org/muse/2013/09/03/handling-big-data-in-r/
+
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+

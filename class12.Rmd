@@ -51,3 +51,77 @@ lines
 df = read.csv(ifilename, sep='\t', nrows=3) ## we saw from the first few lines that the field separator is <TAB>
 df
 ```
+
+--- .ssscode-nowrap .compact 
+## Big data set
+```{r, dependson=c(-1)}
+## read row 101--103
+df = read.csv(ifilename, sep='\t', nrows=3, skip=101, header=F) ## if we set 'header=T', the first non-skip row will be treated as header (which is incorrect)
+df
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+```{r, dependson=c(-1)}
+## count how many lines in the file
+# length(readLines(ifilename)) ## not recommended because it reads the file in memory
+system(sprintf("wc -l %s",ifilename), intern=T ) 
+## you can use 'wc' command on unix-based machine (linux, mac, etc.)
+
+suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
+  require(R.utils)
+)) ## assumig you have installed R.utils
+countLines(ifilename)
+
+suppressWarnings(suppressPackageStartupMessages( ## avoid printing warnings
+  require(sqldf)
+)) ## assumig you have installed sqldf
+read.csv.sql(ifilename, "select count(*) from file", sep='\t')
+
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+```{r, dependson=c(-1)}
+sql = 'select id,title,year from file limit 1' ## read 1 row
+df = read.csv.sql(ifilename, sql, sep='\t')
+df
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+```{r, dependson=c(-1)}
+sql = 'select id,title,year from file limit 10' ## read 10 rows
+df = read.csv.sql(ifilename, sql, sep='\t')
+df
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+```{r, dependson=c(-1)}
+sql = 'select id,title,year from file limit 5,10' ## skip the first 5 rows, and read the next 10 rows
+df = read.csv.sql(ifilename, sql, sep='\t')
+df
+```
+
+--- .scode-nowrap .compact 
+## Big data set
+```{r, dependson=c(-1)}
+sql = 'select year,count(*) from file group by year limit 10' ## you can do more if you are familiar with SQL 
+df = read.csv.sql(ifilename, sql, sep='\t')
+df
+```
+
+* if you have mysql database, you can use 'RMySQL' package.
+* Other tips (using 'fread'): http://davetang.org/muse/2013/09/03/handling-big-data-in-r/
+
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+```
