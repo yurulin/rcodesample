@@ -67,3 +67,5 @@ proto
 gsubfn
 RSQLite
 sqldf
+irlba
+mlbench

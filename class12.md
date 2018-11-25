@@ -28,6 +28,7 @@ toc_depth   : 2
 ```r
 ## this tutorial uses the following packages
 install.packages('sqldf')
+install.packages('FSelector')
 ```
 
 --- .scode-nowrap .compact #big
@@ -458,11 +459,92 @@ m2g[1:3,]
 ## [3,] . . . 1 . 1 . . . . . . . . . . . . . .
 ```
 
+--- .sscode-nowrap .compact 
+## Sparse matrix
+
+```r
+S = svd(m2g, nu=3, nv=3)
+S$d;dim(S$u);dim(S$v)
+```
+
+```
+##  [1] 80.339162 56.217046 47.467550 37.381261 35.152986 32.417355 28.714880
+##  [8] 26.351900 23.990882 22.435821 21.516690 20.879957 20.437864 19.828438
+## [15] 18.852950 15.975737 13.271108 11.726427  4.911211  1.000000
+```
+
+```
+## [1] 10197     3
+```
+
+```
+## [1] 20  3
+```
+
 --- .scode-nowrap .compact 
 ## Sparse matrix
 
+```r
+## if the matrix is very big, you can use package irlba to compute approximate SVD
+## this has been tested in Netflix matrix!
+require(irlba)
+S = irlba(m2g, nu=3, nv=3)
+S$d;dim(S$u);dim(S$v)
+```
+
+```
+## [1] 80.33916 56.21705 47.46755
+```
+
+```
+## [1] 10197     3
+```
+
+```
+## [1] 20  3
+```
+
+```r
+system.time({S = irlba(m2g, nu=5, nv=5)}) ## report the running time
+```
+
+```
+##    user  system elapsed 
+##   0.540   0.032   0.565
+```
+
+--- .scode-nowrap .compact #featureselection
+## Feature selection
+
+* With feature selection, you can reduce the dimension and complexity of future steps on the Data Mining process.
+* Examples adopted from: http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R/Dimensionality_Reduction/Feature_Selection
+
+
+```r
+require(FSelector) ## assumig you have installed FSelector
+## installation note: requires Java installed on your machine and the rJava package
+
+## load a dataset and use it as the main source of data
+require(mlbench)
+data(HouseVotes84)
+HouseVotes84[1:3,]
+```
+
+```
+##        Class   V1 V2 V3   V4 V5 V6 V7 V8 V9 V10  V11 V12 V13 V14 V15  V16
+## 1 republican    n  y  n    y  y  y  n  n  n   y <NA>   y   y   y   n    y
+## 2 republican    n  y  n    y  y  y  n  n  n   n    n   y   y   y   n <NA>
+## 3   democrat <NA>  y  y <NA>  y  y  n  n  n   n    y   n   y   y   n    n
+```
 
 --- .scode-nowrap .compact 
-## Sparse matrix
+## Feature selection
 
+
+--- .scode-nowrap .compact 
+## Feature selection
+
+
+--- .scode-nowrap .compact 
+## Feature selection
 
