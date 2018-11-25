@@ -11,7 +11,7 @@ author("mydeck-DM-slides")
 ## Step 2: Edit Deck
 # add mystyle.css to mydeck-DM-slides/assets/css
 library(slidify)
-
+library(knitr)
 opts_knit$set(unnamed.chunk.label='class12-chunk')
 opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=6, fig.height=5)
 
