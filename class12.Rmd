@@ -222,7 +222,8 @@ system.time({S = irlba(m2g, nu=5, nv=5)}) ## report the running time
 * Examples adopted from: http://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R/Dimensionality_Reduction/Feature_Selection
 
 ```{r, dependson=c(-1)}
-require(FSelector) ## assumig you have installed FSelector
+require(FSelector) 
+## assumig you have installed FSelector
 ## installation note: requires Java installed on your machine and the rJava package
 
 ## load a dataset and use it as the main source of data

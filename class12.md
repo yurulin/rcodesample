@@ -521,7 +521,8 @@ system.time({S = irlba(m2g, nu=5, nv=5)}) ## report the running time
 
 
 ```r
-require(FSelector) ## assumig you have installed FSelector
+require(FSelector) 
+## assumig you have installed FSelector
 ## installation note: requires Java installed on your machine and the rJava package
 
 ## load a dataset and use it as the main source of data
@@ -544,52 +545,28 @@ HouseVotes84[1:3,]
 ## Feature Ranking --
 ## calculate weights for each atribute using some function
 weights = chi.squared(Class~., HouseVotes84)
-```
-
-```
-## Error in chi.squared(Class ~ ., HouseVotes84): could not find function "chi.squared"
-```
-
-```r
 ## the weights can be given by different functions: Pearson's correlation (linear.correlation), Spearman's correlation (rank.correlation), Chi-squared Filter (chi.squared), Information Gain (information.gain), etc.
 print(weights)
 ```
 
 ```
-## function (object, ...) 
-## standardGeneric("weights")
-## <environment: 0x92ea670>
-## attr(,"generic")
-## [1] "weights"
-## attr(,"generic")attr(,"package")
-## [1] "stats"
-## attr(,"package")
-## [1] "stats"
-## attr(,"group")
-## list()
-## attr(,"valueClass")
-## character(0)
-## attr(,"signature")
-## [1] "object"
-## attr(,"default")
-## Method Definition (Class "derivedDefaultMethod"):
-## 
-## function (object, ...) 
-## UseMethod("weights")
-## <bytecode: 0x2d80788>
-## <environment: namespace:stats>
-## 
-## Signatures:
-##         object
-## target  "ANY" 
-## defined "ANY" 
-## attr(,"skeleton")
-## (function (object, ...) 
-## UseMethod("weights"))(object, ...)
-## attr(,"class")
-## [1] "standardGeneric"
-## attr(,"class")attr(,"package")
-## [1] "methods"
+##     attr_importance
+## V1      0.409330348
+## V2      0.004534049
+## V3      0.748864321
+## V4      0.923255954
+## V5      0.718768923
+## V6      0.428332508
+## V7      0.521967369
+## V8      0.661876085
+## V9      0.629797943
+## V10     0.083809300
+## V11     0.378240781
+## V12     0.714922593
+## V13     0.555971176
+## V14     0.625283342
+## V15     0.538263037
+## V16     0.353273580
 ```
 
 --- .scode-nowrap .compact 
@@ -598,27 +575,15 @@ print(weights)
 ```r
 ## select a subset of 5 features with the lowest weight
 subset = cutoff.k(weights, 5)
-```
 
-```
-## Error in cutoff.k(weights, 5): could not find function "cutoff.k"
-```
-
-```r
 ## print the results
 f = as.simple.formula(subset, "Class")
-```
-
-```
-## Error in as.simple.formula(subset, "Class"): could not find function "as.simple.formula"
-```
-
-```r
 print(f)
 ```
 
 ```
-## Error in print(f): object 'f' not found
+## Class ~ V4 + V3 + V5 + V12 + V8
+## <environment: 0x136f5e98>
 ```
 
 --- .scode-nowrap .compact 
@@ -674,7 +639,7 @@ subset = best.first.search(names(iris)[-5], evaluator)
 ```
 
 ```
-## Error in best.first.search(names(iris)[-5], evaluator): could not find function "best.first.search"
+## Error in eval(predvars, data, env): object 'Species' not found
 ```
 
 --- .scode-nowrap .compact 
@@ -685,18 +650,12 @@ subset = best.first.search(names(iris)[-5], evaluator)
 
 ## prints the result
 f = as.simple.formula(subset, "Species")
-```
-
-```
-## Error in as.simple.formula(subset, "Species"): could not find function "as.simple.formula"
-```
-
-```r
 print(f)
 ```
 
 ```
-## Error in print(f): object 'f' not found
+## Species ~ V4 + V3 + V5 + V12 + V8
+## <environment: 0x169bec10>
 ```
 
 --- .scode-nowrap .compact #freq
