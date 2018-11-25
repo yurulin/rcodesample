@@ -213,7 +213,8 @@ df
 ## Big data set
 
 ```r
-sql = 'select id,title,year from file limit 5,10' ## skip the first 5 rows, and read the next 10 rows
+sql = 'select id,title,year from file limit 5,10' 
+## skip the first 5 rows, and read the next 10 rows
 df = read.csv.sql(ifilename, sql, sep='\t')
 df
 ```
@@ -236,7 +237,8 @@ df
 ## Big data set
 
 ```r
-sql = 'select year,count(*) from file group by year limit 10' ## you can do more if you are familiar with SQL 
+sql = 'select year,count(*) from file group by year limit 10' 
+## you can do more if you are familiar with SQL 
 df = read.csv.sql(ifilename, sql, sep='\t')
 df
 ```
@@ -259,10 +261,208 @@ df
 * Other tips (using 'fread'): http://davetang.org/muse/2013/09/03/handling-big-data-in-r/
 
 
+--- .scode-nowrap .compact #sparse
+## Sparse matrix
+When dealing with big matrix, use sparse format to construct matrix.
+
+
+```r
+ifilename = sprintf('%s/movies.dat',data.path)
+movie.df = read.csv(ifilename, sep='\t')
+dim(movie.df)
+```
+
+```
+## [1] 10197    21
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+
+```r
+movie.df[1:3,1:4] ## check a small part
+```
+
+```
+##   id          title imdbID           spanishTitle
+## 1  1      Toy story 114709   Toy story (juguetes)
+## 2  2        Jumanji 113497                Jumanji
+## 3  3 Grumpy Old Men 107050 Dos viejos gru\xf1ones
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+
+```r
+ifilename = sprintf('%s/%s',data.path, 'movie_genres.dat')
+m2g.df = read.csv(ifilename, sep='\t', header=T)
+m2g.df[1:3,]
+```
+
+```
+##   movieID     genre
+## 1       1 Adventure
+## 2       1 Animation
+## 3       1  Children
+```
+
+```r
+dim(m2g.df)
+```
+
+```
+## [1] 20809     2
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+
+```r
+m2g.df[1:10,] ## check a small part
+```
+
+```
+##    movieID     genre
+## 1        1 Adventure
+## 2        1 Animation
+## 3        1  Children
+## 4        1    Comedy
+## 5        1   Fantasy
+## 6        2 Adventure
+## 7        2  Children
+## 8        2   Fantasy
+## 9        3    Comedy
+## 10       3   Romance
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+
+```r
+## create a numeric index for genres, so that we can create a matrix
+g = unique(as.character(m2g.df$genre))
+length(g) ## how many genres?
+```
+
+```
+## [1] 20
+```
+
+```r
+m = unique(as.character(m2g.df$movieID))
+length(m) ## how many movies?
+```
+
+```
+## [1] 10197
+```
+
+```r
+idx2g = match(as.character(m2g.df$genre),g)
+idx2g[1:20]; length(idx2g)
+```
+
+```
+##  [1]  1  2  3  4  5  1  3  5  4  6  4  7  6  4  8  9 10  4  6  1
+```
+
+```
+## [1] 20809
+```
+
+```r
+idx2m = match(as.character(m2g.df$movieID),m)
+idx2m[1:20]; length(idx2m)
+```
+
+```
+##  [1] 1 1 1 1 1 2 2 2 3 3 4 4 4 5 6 6 6 7 7 8
+```
+
+```
+## [1] 20809
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+
+```r
+require(Matrix);require(MASS)
+## construct a movie-to-genre sparse matrix; the format is (i,j,v), meaning entry(i,j)=v
+m2g = sparseMatrix(i=idx2m,j=idx2g,x=rep(1,nrow(m2g.df)) )
+dim(m2g)
+```
+
+```
+## [1] 10197    20
+```
+
+```r
+object.size(m2g)
+```
+
+```
+## 251256 bytes
+```
+
+```r
+print(object.size(m2g),units="Mb")  ## gives you size of the object in Mb
+```
+
+```
+## 0.2 Mb
+```
+
+```r
+## report current memory used by R, e.g., __ Mb in my machine
+# print(object.size(x=lapply(ls(), get)), units="Mb") 
+denseM2G = as.matrix(m2g) ## dense matrix
+print(object.size(denseM2G),units="Mb") 
+```
+
+```
+## 1.6 Mb
+```
+
+```r
+## report current memory used by R, e.g., __ Mb in my machine
+print(object.size(x=lapply(ls(), get)), units="Mb") 
+```
+
+```
+## 18 Mb
+```
+
+```r
+rm(denseM2G)
+## report current memory used by R, e.g., __ Mb in my machine
+print(object.size(x=lapply(ls(), get)), units="Mb")
+```
+
+```
+## 16.5 Mb
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+
+```r
+m2g[1:3,]
+```
+
+```
+## 3 x 20 sparse Matrix of class "dgCMatrix"
+##                                             
+## [1,] 1 1 1 1 1 . . . . . . . . . . . . . . .
+## [2,] 1 . 1 . 1 . . . . . . . . . . . . . . .
+## [3,] . . . 1 . 1 . . . . . . . . . . . . . .
+```
+
 --- .scode-nowrap .compact 
 ## Sparse matrix
 
 
 --- .scode-nowrap .compact 
 ## Sparse matrix
+
 

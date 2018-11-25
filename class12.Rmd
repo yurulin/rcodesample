@@ -103,7 +103,8 @@ df
 --- .scode-nowrap .compact 
 ## Big data set
 ```{r, dependson=c(-1)}
-sql = 'select id,title,year from file limit 5,10' ## skip the first 5 rows, and read the next 10 rows
+sql = 'select id,title,year from file limit 5,10' 
+## skip the first 5 rows, and read the next 10 rows
 df = read.csv.sql(ifilename, sql, sep='\t')
 df
 ```
@@ -111,7 +112,8 @@ df
 --- .scode-nowrap .compact 
 ## Big data set
 ```{r, dependson=c(-1)}
-sql = 'select year,count(*) from file group by year limit 10' ## you can do more if you are familiar with SQL 
+sql = 'select year,count(*) from file group by year limit 10' 
+## you can do more if you are familiar with SQL 
 df = read.csv.sql(ifilename, sql, sep='\t')
 df
 ```
@@ -120,6 +122,80 @@ df
 * Other tips (using 'fread'): http://davetang.org/muse/2013/09/03/handling-big-data-in-r/
 
 
+--- .scode-nowrap .compact #sparse
+## Sparse matrix
+When dealing with big matrix, use sparse format to construct matrix.
+
+```{r, dependson=c(-1)}
+ifilename = sprintf('%s/movies.dat',data.path)
+movie.df = read.csv(ifilename, sep='\t')
+dim(movie.df)
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+movie.df[1:3,1:4] ## check a small part
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+ifilename = sprintf('%s/%s',data.path, 'movie_genres.dat')
+m2g.df = read.csv(ifilename, sep='\t', header=T)
+m2g.df[1:3,]
+dim(m2g.df)
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+m2g.df[1:10,] ## check a small part
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+## create a numeric index for genres, so that we can create a matrix
+g = unique(as.character(m2g.df$genre))
+length(g) ## how many genres?
+m = unique(as.character(m2g.df$movieID))
+length(m) ## how many movies?
+idx2g = match(as.character(m2g.df$genre),g)
+idx2g[1:20]; length(idx2g)
+idx2m = match(as.character(m2g.df$movieID),m)
+idx2m[1:20]; length(idx2m)
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+require(Matrix);require(MASS)
+## construct a movie-to-genre sparse matrix; the format is (i,j,v), meaning entry(i,j)=v
+m2g = sparseMatrix(i=idx2m,j=idx2g,x=rep(1,nrow(m2g.df)) )
+dim(m2g)
+object.size(m2g)
+print(object.size(m2g),units="Mb")  ## gives you size of the object in Mb
+
+## report current memory used by R, e.g., __ Mb in my machine
+# print(object.size(x=lapply(ls(), get)), units="Mb") 
+denseM2G = as.matrix(m2g) ## dense matrix
+print(object.size(denseM2G),units="Mb") 
+
+## report current memory used by R, e.g., __ Mb in my machine
+print(object.size(x=lapply(ls(), get)), units="Mb") 
+
+rm(denseM2G)
+## report current memory used by R, e.g., __ Mb in my machine
+print(object.size(x=lapply(ls(), get)), units="Mb")
+```
+
+--- .scode-nowrap .compact 
+## Sparse matrix
+```{r, dependson=c(-1)}
+m2g[1:3,]
+```
+
 --- .scode-nowrap .compact 
 ## Sparse matrix
 ```{r, dependson=c(-1)}
@@ -129,3 +205,4 @@ df
 ## Sparse matrix
 ```{r, dependson=c(-1)}
 ```
+

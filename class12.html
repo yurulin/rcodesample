@@ -239,7 +239,8 @@ df
 <section class="slide scode-nowrap compact" id="slide-10">
   <div>
     <h2>Big data set</h2>
-    <pre><code class="r">sql = &#39;select id,title,year from file limit 5,10&#39; ## skip the first 5 rows, and read the next 10 rows
+    <pre><code class="r">sql = &#39;select id,title,year from file limit 5,10&#39; 
+## skip the first 5 rows, and read the next 10 rows
 df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
 df
 </code></pre>
@@ -262,7 +263,8 @@ df
 <section class="slide scode-nowrap compact" id="slide-11">
   <div>
     <h2>Big data set</h2>
-    <pre><code class="r">sql = &#39;select year,count(*) from file group by year limit 10&#39; ## you can do more if you are familiar with SQL 
+    <pre><code class="r">sql = &#39;select year,count(*) from file group by year limit 10&#39; 
+## you can do more if you are familiar with SQL 
 df = read.csv.sql(ifilename, sql, sep=&#39;\t&#39;)
 df
 </code></pre>
@@ -287,13 +289,190 @@ df
 
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-12">
+<section class="slide scode-nowrap compact" id="sparse">
+  <div>
+    <h2>Sparse matrix</h2>
+    <p>When dealing with big matrix, use sparse format to construct matrix.</p>
+
+<pre><code class="r">ifilename = sprintf(&#39;%s/movies.dat&#39;,data.path)
+movie.df = read.csv(ifilename, sep=&#39;\t&#39;)
+dim(movie.df)
+</code></pre>
+
+<pre><code>## [1] 10197    21
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-13">
+  <div>
+    <h2>Sparse matrix</h2>
+    <pre><code class="r">movie.df[1:3,1:4] ## check a small part
+</code></pre>
+
+<pre><code>##   id          title imdbID           spanishTitle
+## 1  1      Toy story 114709   Toy story (juguetes)
+## 2  2        Jumanji 113497                Jumanji
+## 3  3 Grumpy Old Men 107050 Dos viejos gru\xf1ones
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-14">
+  <div>
+    <h2>Sparse matrix</h2>
+    <pre><code class="r">ifilename = sprintf(&#39;%s/%s&#39;,data.path, &#39;movie_genres.dat&#39;)
+m2g.df = read.csv(ifilename, sep=&#39;\t&#39;, header=T)
+m2g.df[1:3,]
+</code></pre>
+
+<pre><code>##   movieID     genre
+## 1       1 Adventure
+## 2       1 Animation
+## 3       1  Children
+</code></pre>
+
+<pre><code class="r">dim(m2g.df)
+</code></pre>
+
+<pre><code>## [1] 20809     2
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-15">
+  <div>
+    <h2>Sparse matrix</h2>
+    <pre><code class="r">m2g.df[1:10,] ## check a small part
+</code></pre>
+
+<pre><code>##    movieID     genre
+## 1        1 Adventure
+## 2        1 Animation
+## 3        1  Children
+## 4        1    Comedy
+## 5        1   Fantasy
+## 6        2 Adventure
+## 7        2  Children
+## 8        2   Fantasy
+## 9        3    Comedy
+## 10       3   Romance
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-16">
+  <div>
+    <h2>Sparse matrix</h2>
+    <pre><code class="r">## create a numeric index for genres, so that we can create a matrix
+g = unique(as.character(m2g.df$genre))
+length(g) ## how many genres?
+</code></pre>
+
+<pre><code>## [1] 20
+</code></pre>
+
+<pre><code class="r">m = unique(as.character(m2g.df$movieID))
+length(m) ## how many movies?
+</code></pre>
+
+<pre><code>## [1] 10197
+</code></pre>
+
+<pre><code class="r">idx2g = match(as.character(m2g.df$genre),g)
+idx2g[1:20]; length(idx2g)
+</code></pre>
+
+<pre><code>##  [1]  1  2  3  4  5  1  3  5  4  6  4  7  6  4  8  9 10  4  6  1
+</code></pre>
+
+<pre><code>## [1] 20809
+</code></pre>
+
+<pre><code class="r">idx2m = match(as.character(m2g.df$movieID),m)
+idx2m[1:20]; length(idx2m)
+</code></pre>
+
+<pre><code>##  [1] 1 1 1 1 1 2 2 2 3 3 4 4 4 5 6 6 6 7 7 8
+</code></pre>
+
+<pre><code>## [1] 20809
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-17">
+  <div>
+    <h2>Sparse matrix</h2>
+    <pre><code class="r">require(Matrix);require(MASS)
+## construct a movie-to-genre sparse matrix; the format is (i,j,v), meaning entry(i,j)=v
+m2g = sparseMatrix(i=idx2m,j=idx2g,x=rep(1,nrow(m2g.df)) )
+dim(m2g)
+</code></pre>
+
+<pre><code>## [1] 10197    20
+</code></pre>
+
+<pre><code class="r">object.size(m2g)
+</code></pre>
+
+<pre><code>## 251256 bytes
+</code></pre>
+
+<pre><code class="r">print(object.size(m2g),units=&quot;Mb&quot;)  ## gives you size of the object in Mb
+</code></pre>
+
+<pre><code>## 0.2 Mb
+</code></pre>
+
+<pre><code class="r">## report current memory used by R, e.g., __ Mb in my machine
+# print(object.size(x=lapply(ls(), get)), units=&quot;Mb&quot;) 
+denseM2G = as.matrix(m2g) ## dense matrix
+print(object.size(denseM2G),units=&quot;Mb&quot;) 
+</code></pre>
+
+<pre><code>## 1.6 Mb
+</code></pre>
+
+<pre><code class="r">## report current memory used by R, e.g., __ Mb in my machine
+print(object.size(x=lapply(ls(), get)), units=&quot;Mb&quot;) 
+</code></pre>
+
+<pre><code>## 18 Mb
+</code></pre>
+
+<pre><code class="r">rm(denseM2G)
+## report current memory used by R, e.g., __ Mb in my machine
+print(object.size(x=lapply(ls(), get)), units=&quot;Mb&quot;)
+</code></pre>
+
+<pre><code>## 16.5 Mb
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-18">
+  <div>
+    <h2>Sparse matrix</h2>
+    <pre><code class="r">m2g[1:3,]
+</code></pre>
+
+<pre><code>## 3 x 20 sparse Matrix of class &quot;dgCMatrix&quot;
+##                                             
+## [1,] 1 1 1 1 1 . . . . . . . . . . . . . . .
+## [2,] 1 . 1 . 1 . . . . . . . . . . . . . . .
+## [3,] . . . 1 . 1 . . . . . . . . . . . . . .
+</code></pre>
+
+  </div>
+</section>
+<section class="slide scode-nowrap compact" id="slide-19">
   <div>
     <h2>Sparse matrix</h2>
     
   </div>
 </section>
-<section class="slide scode-nowrap compact" id="slide-13">
+<section class="slide scode-nowrap compact" id="slide-20">
   <div>
     <h2>Sparse matrix</h2>
     
