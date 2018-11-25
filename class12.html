@@ -621,20 +621,15 @@ evaluator &lt;- function(subset) {
     train.idx &lt;- !test.idx
     test &lt;- iris[test.idx, , drop=FALSE]
     train &lt;- iris[train.idx, , drop=FALSE]
-    tree &lt;- rpart(as.simple.formula(subset, &quot;Species&quot;), train)
-    error.rate = sum(test$Species != predict(tree, test, type=&quot;c&quot;)) / nrow(test)
+    tree &lt;- rpart(as.simple.formula(subset, &quot;species&quot;), train)
+    error.rate = sum(test$species != predict(tree, test, type=&quot;c&quot;)) / nrow(test)
     return(1 - error.rate)
   })
-  print(as.simple.formula(subset, &quot;Species&quot;))
+  print(as.simple.formula(subset, &quot;species&quot;))
 #   print(subset)
   print(mean(results))
   return(mean(results))
 }
-## perform the best subset search
-subset = best.first.search(names(iris)[-5], evaluator)
-</code></pre>
-
-<pre><code>## Error in eval(predvars, data, env): object &#39;Species&#39; not found
 </code></pre>
 
   </div>
@@ -642,7 +637,13 @@ subset = best.first.search(names(iris)[-5], evaluator)
 <section class="slide ssscode-nowrap compact" id="slide-26">
   <div>
     <h2>Feature selection</h2>
-    
+    <pre><code class="r">## perform the best subset search
+subset = best.first.search(names(iris)[-5], evaluator)
+</code></pre>
+
+<pre><code>## Error in 1:numclass: result would be too long a vector
+</code></pre>
+
   </div>
 </section>
 <section class="slide scode-nowrap compact" id="slide-27">
@@ -651,12 +652,12 @@ subset = best.first.search(names(iris)[-5], evaluator)
     <pre><code class="r">## you can use different strategy for search the optimal subset: Best First Search (best.first.search), Exhaustive Search (exhaustive.search), Greedy Search (forward.search, backward.search), etc.
 
 ## prints the result
-f = as.simple.formula(subset, &quot;Species&quot;)
+f = as.simple.formula(subset, &quot;species&quot;)
 print(f)
 </code></pre>
 
-<pre><code>## Species ~ V4 + V3 + V5 + V12 + V8
-## &lt;environment: 0x15d15770&gt;
+<pre><code>## species ~ V4 + V3 + V5 + V12 + V8
+## &lt;environment: 0x11c616f0&gt;
 </code></pre>
 
   </div>

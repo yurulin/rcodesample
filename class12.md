@@ -619,26 +619,28 @@ evaluator <- function(subset) {
     train.idx <- !test.idx
     test <- iris[test.idx, , drop=FALSE]
     train <- iris[train.idx, , drop=FALSE]
-    tree <- rpart(as.simple.formula(subset, "Species"), train)
-    error.rate = sum(test$Species != predict(tree, test, type="c")) / nrow(test)
+    tree <- rpart(as.simple.formula(subset, "species"), train)
+    error.rate = sum(test$species != predict(tree, test, type="c")) / nrow(test)
     return(1 - error.rate)
   })
-  print(as.simple.formula(subset, "Species"))
+  print(as.simple.formula(subset, "species"))
 #   print(subset)
   print(mean(results))
   return(mean(results))
 }
-## perform the best subset search
-subset = best.first.search(names(iris)[-5], evaluator)
-```
-
-```
-## Error in eval(predvars, data, env): object 'Species' not found
 ```
 
 --- .ssscode-nowrap .compact 
 ## Feature selection
 
+```r
+## perform the best subset search
+subset = best.first.search(names(iris)[-5], evaluator)
+```
+
+```
+## Error in 1:numclass: result would be too long a vector
+```
 
 --- .scode-nowrap .compact 
 ## Feature selection
@@ -647,13 +649,13 @@ subset = best.first.search(names(iris)[-5], evaluator)
 ## you can use different strategy for search the optimal subset: Best First Search (best.first.search), Exhaustive Search (exhaustive.search), Greedy Search (forward.search, backward.search), etc.
 
 ## prints the result
-f = as.simple.formula(subset, "Species")
+f = as.simple.formula(subset, "species")
 print(f)
 ```
 
 ```
-## Species ~ V4 + V3 + V5 + V12 + V8
-## <environment: 0x15d15770>
+## species ~ V4 + V3 + V5 + V12 + V8
+## <environment: 0x11c616f0>
 ```
 
 --- .scode-nowrap .compact #freq
