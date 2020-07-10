@@ -33,7 +33,7 @@ In this R Lab class, I will point you to several wonderful online resources (see
 
 ## Overview
 
-* Why R?
+* Why using R?
 * What is R?
 * What is RStudio?
 * [Installation](https://bookdown.org/rdpeng/exdata/getting-started-with-r.html)
