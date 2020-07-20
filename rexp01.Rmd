@@ -43,7 +43,7 @@ knit        : slidify::knit2slides
 
 * effect size: Cohen's d, or Pearson's r
 * t test with unequal variances (Welch's t test)
-* significance & p value
+* significance & p-value
 * df & t value
 * [details](http://yatani.jp/teaching/doku.php?id=hcistats:ttest)
 
