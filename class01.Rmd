@@ -36,14 +36,14 @@ it means you don't have this package and you need to install it.
 * Using GUI
 * Using command
 
---- .modal
+--- .code
 ## Install R packages (using command)
-```{r eval=FALSE}
+```{r eval=FALSE, include=FALSE}
 ## install directly from the default repository http://cran.r-project.org/
-install.packages('ggplot2') 
+install.packages('ggplot2')
 ```
 
-```{r eval=FALSE}
+```{r eval=FALSE, include=FALSE}
 ## download the package source, and then install from the downloaded file 
 download.file('http://cran.r-project.org/src/contrib/ggplot2_0.9.3.1.tar.gz',
              destfile='~/Downloads/ggplot2_0.9.3.1.tar.gz')
@@ -222,6 +222,9 @@ See:
 ```{r}
 require(lattice)  
 require(nutshell) # you will need to install this package
+## install the package from the archive source
+# install.packages('https://cran.r-project.org/src/contrib/Archive/nutshell/nutshell_1.02.tar.gz',repo=NULL, type="source")
+
 data(births2006.smpl)
 births2006.smpl[1:3,]
 ```
